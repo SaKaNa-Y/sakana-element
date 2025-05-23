@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref, computed, watch, useAttrs, shallowRef, nextTick } from 'vue';
 import { useFocusController, useId } from '@sakana-element/hooks';
+import { useFormItem } from '../Form';
 import { each, noop } from 'lodash-es';
 import type { InputProps, InputEmits, InputInstance } from './types';
 
 import Icon from '../Icon/Icon.vue';
+import { debugWarn } from '@sakana-element/utils';
 
 defineOptions({
   name: 'ErInput',
@@ -26,9 +28,10 @@ const pwdVisible = ref(false); //可见性
 const inputRef = shallowRef<HTMLInputElement>();
 const textareaRef = shallowRef<HTMLTextAreaElement>();
 
+const attrs = useAttrs(); //useAttrs获取父组件传入的属性
+const { formItem } = useFormItem();
 const _ref = computed(() => inputRef.value || textareaRef.value);
 
-const attrs = useAttrs(); //useAttrs获取父组件传入的属性
 const isDisabled = computed(() => props.disabled); //是否禁用
 
 //可清除为true，且有值，且不禁止，且聚焦，!!表示非空
@@ -54,6 +57,7 @@ const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(
   {
     afterBlur() {
       // form 校验
+      formItem?.validate('blur').catch((err) => debugWarn(err));
     },
   }
 );
@@ -63,6 +67,7 @@ const clear: InputInstance['clear'] = function () {
   each(['input', 'change', 'update:modelValue'], (e) => emits(e as any, ''));
   emits('clear');
   // 清空表单校验
+  formItem?.clearValidate();
 };
 const focus: InputInstance['focus'] = async function () {
   await nextTick();
@@ -95,6 +100,7 @@ watch(
   (newVal) => {
     innerValue.value = newVal;
     // 表单校验触发
+    formItem?.validate('change').catch((err) => debugWarn(err));
   }
 );
 
