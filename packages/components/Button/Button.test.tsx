@@ -13,7 +13,7 @@ describe('Button.vue', () => {
       const wrapper = mount(Button, {
         props: { type: type as any },
       });
-      expect(wrapper.classes()).toContain(`er-button--${type}`);
+      expect(wrapper.classes()).toContain(`px-button--${type}`);
     });
   });
 
@@ -24,7 +24,7 @@ describe('Button.vue', () => {
       const wrapper = mount(Button, {
         props: { size: size as any },
       });
-      expect(wrapper.classes()).toContain(`er-button--${size}`);
+      expect(wrapper.classes()).toContain(`px-button--${size}`);
     });
   });
 
@@ -41,7 +41,7 @@ describe('Button.vue', () => {
       const wrapper = mount(Button, {
         props: { [prop]: true },
         global: {
-          stubs: ['ErIcon'],
+          stubs: ['PxIcon'],
         },
       });
       expect(wrapper.classes()).toContain(className);
@@ -98,7 +98,7 @@ describe('Button.vue', () => {
     const wrapper = mount(Button, {
       props: { loading: true },
       global: {
-        stubs: ['ErIcon'],
+        stubs: ['PxIcon'],
       },
     });
     const iconElement = wrapper.findComponent(Icon);
@@ -119,7 +119,7 @@ describe('Button.vue', () => {
         default: 'loading button',
       },
       global: {
-        stubs: ['ErIcon'],
+        stubs: ['PxIcon'],
       },
     });
 
@@ -149,7 +149,7 @@ describe('Button.vue', () => {
         default: 'icon button',
       },
       global: {
-        stubs: ['ErIcon'],
+        stubs: ['PxIcon'],
       },
     });
 
@@ -168,7 +168,7 @@ describe('ButtonGroup.vue', () => {
       </ButtonGroup>
     ));
 
-    expect(wrapper.classes()).toContain('er-button-group');
+    expect(wrapper.classes()).toContain('px-button-group');
   });
 
   test('button group size', () => {
@@ -182,7 +182,7 @@ describe('ButtonGroup.vue', () => {
       ));
 
       const buttonWrapper = wrapper.findComponent(Button);
-      expect(buttonWrapper.classes()).toContain(`er-button--${size}`);
+      expect(buttonWrapper.classes()).toContain(`px-button--${size}`);
     });
   });
 
@@ -197,7 +197,7 @@ describe('ButtonGroup.vue', () => {
       ));
 
       const buttonWrapper = wrapper.findComponent(Button);
-      expect(buttonWrapper.classes()).toContain(`er-button--${type}`);
+      expect(buttonWrapper.classes()).toContain(`px-button--${type}`);
     });
   });
 

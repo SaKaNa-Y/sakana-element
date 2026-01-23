@@ -8,7 +8,7 @@ const activeNames = ref(['1'])
   <er-collapse v-model="activeNames" accordion>
     <er-collapse-item name="1">
       <template #title>
-        <span style="color: var(--er-color-danger)"> Consistency </span>
+        <span style="color: var(--px-color-danger)"> Consistency </span>
         <er-icon icon="question-circle" />
       </template>
       <div>

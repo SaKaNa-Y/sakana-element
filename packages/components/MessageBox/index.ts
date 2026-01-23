@@ -3,10 +3,10 @@ import { set } from 'lodash-es';
 
 import type { App } from 'vue';
 
-export const ErMessageBox = MessageBox;
+export const PxMessageBox = MessageBox;
 
 //挂载到vue实例上，挂载方法
-set(ErMessageBox, 'install', (app: App) => {
+set(PxMessageBox, 'install', (app: App) => {
   app.config.globalProperties.$msgbox = MessageBox;
   app.config.globalProperties.$messagebox = MessageBox;
   app.config.globalProperties.$alert = MessageBox.alert;
@@ -14,5 +14,5 @@ set(ErMessageBox, 'install', (app: App) => {
   app.config.globalProperties.$prompt = MessageBox.prompt;
 });
 
-export default ErMessageBox;
+export default PxMessageBox;
 export * from './types';

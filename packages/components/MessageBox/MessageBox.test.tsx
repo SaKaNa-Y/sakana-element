@@ -17,9 +17,9 @@ describe('MessageBox Component', () => {
 
     MessageBox(props);
     await rAF();
-    const header = document.querySelector('.er-message-box__header');
-    const title = document.querySelector('.er-message-box__title');
-    const message = document.querySelector('.er-message-box__message');
+    const header = document.querySelector('.px-message-box__header');
+    const title = document.querySelector('.px-message-box__title');
+    const message = document.querySelector('.px-message-box__message');
 
     expect(title).toBeTruthy();
     expect(header).toBeTruthy();
@@ -40,7 +40,7 @@ describe('MessageBox Component', () => {
     await rAF();
 
     const closeBtn = document.querySelector(
-      '.er-message-box__header-btn'
+      '.px-message-box__header-btn'
     ) as HTMLButtonElement;
     closeBtn.click();
 
@@ -62,7 +62,7 @@ describe('MessageBox Component', () => {
     await rAF();
 
     const confirmBtn = document.querySelector(
-      '.er-message-box__footer-btn'
+      '.px-message-box__footer-btn'
     ) as HTMLButtonElement;
     confirmBtn.click();
     await rAF();
@@ -83,7 +83,7 @@ describe('MessageBox Component', () => {
     await rAF();
 
     const cancelBtn = document.querySelector(
-      '.er-message-box__cancel-btn'
+      '.px-message-box__cancel-btn'
     ) as HTMLButtonElement;
     cancelBtn.click();
 
@@ -109,7 +109,7 @@ describe('MessageBox Component', () => {
     input.dispatchEvent(new Event('input'));
 
     const confirmBtn = document.querySelector(
-      '.er-message-box__confirm-btn'
+      '.px-message-box__confirm-btn'
     ) as HTMLButtonElement;
     confirmBtn.click();
 

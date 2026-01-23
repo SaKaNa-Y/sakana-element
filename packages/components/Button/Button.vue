@@ -2,11 +2,11 @@
 import { computed, ref, inject } from 'vue';
 import type { ButtonProps, ButtonEmits, ButtonInstance } from './types';
 import { throttle } from 'lodash-es';
-import ErIcon from '../Icon/Icon.vue';
+import PxIcon from '../Icon/Icon.vue';
 import { BUTTON_GROUP_CTX_KEY } from './contants';
 
 defineOptions({
-  name: 'ErButton',
+  name: 'PxButton',
 });
 const props = withDefaults(defineProps<ButtonProps>(), {
   tag: 'button',
@@ -47,11 +47,11 @@ defineExpose<ButtonInstance>({
     ref="_ref"
     :autofocus="autofocus"
     :type="tag === 'button' ? nativeType : void 0"
-    class="er-button"
+    class="px-button"
     :disabled="disabled || loading ? true : void 0"
     :class="{
-      [`er-button--${type}`]: type,
-      [`er-button--${size}`]: size,
+      [`px-button--${type}`]: type,
+      [`px-button--${size}`]: size,
       'is-plain': plain,
       'is-round': round,
       'is-circle': circle,
@@ -65,21 +65,21 @@ defineExpose<ButtonInstance>({
   >
     <template v-if="loading">
       <slot name="loading">
-        <er-icon
+        <px-icon
           class="loading-icon"
           :icon="loadingIcon ?? 'spinner'"
           :style="iconStyle"
           size="1x"
           spin
-        ></er-icon>
+        ></px-icon>
       </slot>
     </template>
-    <er-icon
+    <px-icon
       v-if="icon && !loading"
       :icon="icon"
       :style="iconStyle"
       size="1x"
-    ></er-icon>
+    ></px-icon>
     <slot></slot>
   </component>
 </template>

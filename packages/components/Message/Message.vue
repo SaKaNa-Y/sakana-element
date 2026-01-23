@@ -6,9 +6,9 @@ import { bind, delay } from 'lodash-es';
 import { useEventListener, useOffset } from '@sakana-element/hooks';
 import { addUnit } from '@sakana-element/utils';
 import { typeIconMap, RenderVnode } from '@sakana-element/utils';
-import ErIcon from '../Icon/Icon.vue';
+import PxIcon from '../Icon/Icon.vue';
 
-defineOptions({ name: 'ErMessage' });
+defineOptions({ name: 'PxMessage' });
 
 const props = withDefaults(defineProps<MessageProps>(), {
   type: 'info',
@@ -79,9 +79,9 @@ defineExpose<MessageCompInstance>({
   >
     <div
       ref="messageRef"
-      class="er-message"
+      class="px-message"
       :class="{
-        [`er-message--${type}`]: type,
+        [`px-message--${type}`]: type,
         'is-close': showClose,
         'text-center': center,
       }"
@@ -91,14 +91,14 @@ defineExpose<MessageCompInstance>({
       @mouseenter="clearTimer"
       @mouseleave="startTimmer"
     >
-      <er-icon class="er-message__icon" :icon="iconName" />
-      <div class="er-message__content">
+      <px-icon class="px-message__icon" :icon="iconName" />
+      <div class="px-message__content">
         <slot>
           <render-vnode v-if="message" :vNode="message" />
         </slot>
       </div>
-      <div class="er-message__close" v-if="showClose">
-        <er-icon icon="xmark" @click.stop="close" />
+      <div class="px-message__close" v-if="showClose">
+        <px-icon icon="xmark" @click.stop="close" />
       </div>
     </div>
   </Transition>

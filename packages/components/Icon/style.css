@@ -1,16 +1,16 @@
-.er-icon {
-  --er-icon-color: inherit;
+.px-icon {
+  --px-icon-color: inherit;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   position: relative;
   fill: currentColor;
-  color: var(--er-icon-color);
+  color: var(--px-icon-color);
   font-size: inherit;
 }
 
 @each $val in primary, info, success, warning, danger {
-  .er-icon--$(val) {
-    --er-icon-color: var(--er-color-$(val));
+  .px-icon--$(val) {
+    --px-icon-color: var(--px-color-$(val));
   }
 }

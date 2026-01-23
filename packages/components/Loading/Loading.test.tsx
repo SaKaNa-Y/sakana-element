@@ -14,7 +14,7 @@ describe('Loading', () => {
   it('should render mask', async () => {
     Loading();
     await rAF();
-    expect(document.querySelector('.er-loading__mask')).toBeTruthy();
+    expect(document.querySelector('.px-loading__mask')).toBeTruthy();
   });
 
   //测试Loading组件是否关闭并从DOM中移除
@@ -22,10 +22,10 @@ describe('Loading', () => {
     const instance = Loading();
 
     await rAF();
-    expect(document.querySelector('.er-loading')).toBeTruthy();
+    expect(document.querySelector('.px-loading')).toBeTruthy();
     instance.close();
     await rAF();
 
-    expect(document.querySelector('.er-loading')).toBeFalsy();
+    expect(document.querySelector('.px-loading')).toBeFalsy();
   });
 });

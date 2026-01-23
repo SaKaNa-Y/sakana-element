@@ -2,7 +2,7 @@ import Button from './Button.vue';
 import ButtonGroup from './ButtonGroup.vue';
 import { withInstall } from '@sakana-element/utils';
 
-export const ErButton = withInstall(Button);
-export const ErButtonGroup = withInstall(ButtonGroup);
+export const PxButton = withInstall(Button);
+export const PxButtonGroup = withInstall(ButtonGroup);
 
 export * from './types';

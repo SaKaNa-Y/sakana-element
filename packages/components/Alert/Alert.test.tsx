@@ -3,7 +3,7 @@ import type { AlertType } from './types'; // 类型
 import { mount } from '@vue/test-utils'; // 测试工具，用于挂载组件
 import Alert from './Alert.vue'; // 测试组件
 import Icon from '../Icon/Icon.vue'; // 测试组件
-import { ErAlert } from './index';
+import { PxAlert } from './index';
 import { withInstall } from '@sakana-element/utils';
 
 describe('Alert.vue', () => {
@@ -20,7 +20,7 @@ describe('Alert.vue', () => {
         default: desc,
       },
       global: {
-        stubs: ['ErIcon'],
+        stubs: ['PxIcon'],
       },
     });
     expect(wrapper.text()).toContain(title);
@@ -59,7 +59,7 @@ describe('Alert.vue', () => {
         default: desc,
       },
       global: {
-        stubs: ['ErIcon'],
+        stubs: ['PxIcon'],
       },
     });
 
@@ -83,7 +83,7 @@ describe('Alert.vue', () => {
         default: desc,
       },
       global: {
-        stubs: ['ErIcon'],
+        stubs: ['PxIcon'],
       },
     });
     wrapper.findComponent(Icon).trigger('click'); //模拟点击事件
@@ -116,7 +116,7 @@ describe('Alert.vue', () => {
       },
     });
     //class
-    const rootNode = wrapper.find('.er-alert');
+    const rootNode = wrapper.find('.px-alert');
     expect(rootNode.classes()).toContain('text-center');
   });
 
@@ -125,7 +125,7 @@ describe('Alert.vue', () => {
     const wrapper = mount(Alert, {
       props: { closable: false },
     });
-    expect(wrapper.find('.er-alert__close').exists()).toBe(false);
+    expect(wrapper.find('.px-alert__close').exists()).toBe(false);
   });
 
   //测试打开和关闭
@@ -134,24 +134,24 @@ describe('Alert.vue', () => {
       props: { title, closable: false },
     });
     await wrapper.vm.close();
-    expect(wrapper.find('.er-alert').attributes().style).toBe('display: none;');
+    expect(wrapper.find('.px-alert').attributes().style).toBe('display: none;');
     await wrapper.vm.open();
-    expect(wrapper.find('.er-alert').attributes().style).toBe('');
+    expect(wrapper.find('.px-alert').attributes().style).toBe('');
   });
 });
 
 describe('Alert/index', () => {
   it('should be exported with withInstall()', () => {
-    expect(ErAlert.install).toBeDefined();
+    expect(PxAlert.install).toBeDefined();
   });
   it('component should be exported', () => {
-    expect(ErAlert).toBe(Alert);
+    expect(PxAlert).toBe(Alert);
   });
 
   // 可选
   it('should enhance Alert component', () => {
     const enhancedAlert = withInstall(Alert);
-    expect(enhancedAlert).toBe(ErAlert);
+    expect(enhancedAlert).toBe(PxAlert);
   });
 
   // 可选

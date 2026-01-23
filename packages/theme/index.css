@@ -1,67 +1,197 @@
 @import './reset.css';
+@import './fonts/zpix.css';
 
 :root {
-  /* colors */
-  --er-color-white: #ffffff;
-  --er-color-black: #000000;
-  --colors: (primary: #409eff, success: #67c23a, warning: #e6a23c, danger: #f56c6c, info: #909399);
-  --er-bg-color: #ffffff;
-  --er-bg-color-page: #f2f3f5;
-  --er-bg-color-overlay: #ffffff;
-  --er-text-color-primary: #303133;
-  --er-text-color-regular: #606266;
-  --er-text-color-secondary: #909399;
-  --er-text-color-placeholder: #a8abb2;
-  --er-text-color-disabled: #c0c4cc;
-  --er-border-color: #dcdfe6;
-  --er-border-color-light: #e4e7ed;
-  --er-border-color-lighter: #ebeef5;
-  --er-border-color-extra-light: #f2f6fc;
-  --er-border-color-dark: #d4d7de;
-  --er-border-color-darker: #cdd0d6;
-  --er-fill-color: #f0f2f5;
-  --er-fill-color-light: #f5f7fa;
-  --er-fill-color-lighter: #fafafa;
-  --er-fill-color-extra-light: #fafcff;
-  --er-fill-color-dark: #ebedf0;
-  --er-fill-color-darker: #e6e8eb;
-  --er-fill-color-blank: #ffffff;
+  /* === TYPOGRAPHY === */
+  --px-font-family: 'zpix', 'Courier New', 'Consolas', monospace;
+  --px-font-size-base: 16px; /* Optimal for pixel font */
+  --px-font-size-large: 20px;
+  --px-font-size-medium: 18px;
+  --px-font-size-small: 14px;
+  --px-font-size-extra-large: 24px;
+  --px-font-size-extra-small: 12px;
+  --px-font-weight-primary: 500;
 
-  @each $val, $color in var(--colors) {
-    --er-color-$(val): $(color);
-    @for $i from 3 to 9 {
-      --er-color-$(val)-light-$(i): mix(#fff, $(color), 0$ (i));
-    }
-    --er-color-$(val)-dark-2: mix(#000, $(color), 0.2);
-  }
+  /* === PIXEL BORDER SYSTEM === */
+  --px-border-width: 2px;
+  --px-border-style: solid;
+  --px-border-pixel-size: 2px; /* For paintworklet */
+  --px-border-radius-base: 0px; /* No rounded corners */
+  --px-border-radius-small: 0px;
+  --px-border-radius-round: 0px;
+  --px-border-radius-circle: 0px;
 
-  /* border */
-  --er-border-width: 1px;
-  --er-border-style: solid;
-  --er-border-color-hover: var(--er-text-color-disabled);
-  --er-border: var(--er-border-width) var(--er-border-style) var(--er-border-color);
-  --er-border-radius-base: 4px;
-  --er-border-radius-small: 2px;
-  --er-border-radius-round: 20px;
-  --er-border-radius-circle: 100%;
+  /* === COLOR PALETTE - Light Mode === */
+  --px-color-white: #ffffff;
+  --px-color-black: #000000;
 
-  /*font*/
-  --er-font-size-extra-large: 20px;
-  --er-font-size-large: 18px;
-  --er-font-size-medium: 16px;
-  --er-font-size-base: 14px;
-  --er-font-size-small: 13px;
-  --er-font-size-extra-small: 12px;
-  --er-font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
-    '\5fae\8f6f\96c5\9ed1', Arial, sans-serif;
-  --er-font-weight-primary: 500;
+  /* Primary colors - bright, pixel-friendly */
+  --px-color-primary: #626aef;
+  --px-color-primary-dark: #4a52d6;
+  --px-color-primary-light-3: #8b92f3;
+  --px-color-primary-light-5: #a4a9f6;
+  --px-color-primary-light-7: #c3c6fa;
+  --px-color-primary-light-9: #e1e3fd;
 
-  /*disabled*/
-  --er-disabled-bg-color: var(--er-fill-color-light);
-  --er-disabled-text-color: var(--er-text-color-placeholder);
-  --er-disabled-border-color: var(--er-border-color-light);
+  --px-color-success: #22c55e;
+  --px-color-success-dark: #16a34a;
+  --px-color-success-light-3: #4ed67e;
+  --px-color-success-light-5: #6bde93;
+  --px-color-success-light-7: #9de9b8;
+  --px-color-success-light-9: #cef4dc;
 
-  /*animation*/
-  --er-transition-duration: 0.4s;
-  --er-transition-duration-fast: 0.2s;
+  --px-color-warning: #f59e0b;
+  --px-color-warning-dark: #d97706;
+  --px-color-warning-light-3: #f7b13c;
+  --px-color-warning-light-5: #f9c069;
+  --px-color-warning-light-7: #fbd89c;
+  --px-color-warning-light-9: #fdeccf;
+
+  --px-color-danger: #ef4444;
+  --px-color-danger-dark: #dc2626;
+  --px-color-danger-light-3: #f26969;
+  --px-color-danger-light-5: #f58888;
+  --px-color-danger-light-7: #f9b3b3;
+  --px-color-danger-light-9: #fcd9d9;
+
+  --px-color-info: #6b7280;
+  --px-color-info-dark: #4b5563;
+  --px-color-info-light-3: #8b9299;
+  --px-color-info-light-5: #a3a9b0;
+  --px-color-info-light-7: #c4c8cd;
+  --px-color-info-light-9: #e4e5e8;
+
+  /* Light mode backgrounds */
+  --px-bg-color: #ffffff;
+  --px-bg-color-page: #f9fafb;
+  --px-bg-color-overlay: #ffffff;
+
+  /* Fill colors */
+  --px-fill-color: #f0f2f5;
+  --px-fill-color-light: #f5f7fa;
+  --px-fill-color-lighter: #fafafa;
+  --px-fill-color-extra-light: #fafcff;
+  --px-fill-color-dark: #ebedf0;
+  --px-fill-color-darker: #e6e8eb;
+  --px-fill-color-blank: #ffffff;
+
+  /* Light mode text */
+  --px-text-color-primary: #1f2937;
+  --px-text-color-regular: #374151;
+  --px-text-color-secondary: #6b7280;
+  --px-text-color-placeholder: #9ca3af;
+  --px-text-color-disabled: #d1d5db;
+
+  /* Light mode borders */
+  --px-border-color: #e5e7eb;
+  --px-border-color-light: #f3f4f6;
+  --px-border-color-lighter: #f9fafb;
+  --px-border-color-extra-light: #fafcff;
+  --px-border-color-dark: #d1d5db;
+  --px-border-color-darker: #9ca3af;
+  --px-border-color-hover: var(--px-text-color-disabled);
+  --px-border: var(--px-border-width) var(--px-border-style) var(--px-border-color);
+
+  /* === PIXEL SHADOWS === */
+  --px-shadow-offset: 4px;
+  --px-shadow-color: var(--px-color-black);
+  --px-box-shadow-base: var(--px-shadow-offset) var(--px-shadow-offset) 0 0 var(--px-shadow-color);
+  --px-box-shadow-primary: var(--px-shadow-offset) var(--px-shadow-offset) 0 0 var(--px-color-primary);
+  --px-box-shadow-success: var(--px-shadow-offset) var(--px-shadow-offset) 0 0 var(--px-color-success);
+  --px-box-shadow-warning: var(--px-shadow-offset) var(--px-shadow-offset) 0 0 var(--px-color-warning);
+  --px-box-shadow-danger: var(--px-shadow-offset) var(--px-shadow-offset) 0 0 var(--px-color-danger);
+
+  /* === TRANSITIONS === */
+  --px-transition-duration: 0.15s;
+  --px-transition-duration-fast: 0.1s;
+  --px-transition-function: linear; /* No easing for pixel aesthetic */
+
+  /* === COMPONENT SIZES === */
+  --px-component-size-large: 44px;
+  --px-component-size: 36px;
+  --px-component-size-small: 28px;
+
+  /* === DISABLED STATES === */
+  --px-disabled-bg-color: var(--px-fill-color-light);
+  --px-disabled-text-color: var(--px-text-color-placeholder);
+  --px-disabled-border-color: var(--px-border-color-light);
+
+  /* === LEGACY Er VARIABLES (for backwards compatibility during migration) === */
+  --er-color-white: var(--px-color-white);
+  --er-color-black: var(--px-color-black);
+  --er-color-primary: var(--px-color-primary);
+  --er-color-success: var(--px-color-success);
+  --er-color-warning: var(--px-color-warning);
+  --er-color-danger: var(--px-color-danger);
+  --er-color-info: var(--px-color-info);
+  --er-bg-color: var(--px-bg-color);
+  --er-bg-color-page: var(--px-bg-color-page);
+  --er-text-color-primary: var(--px-text-color-primary);
+  --er-text-color-regular: var(--px-text-color-regular);
+  --er-text-color-secondary: var(--px-text-color-secondary);
+  --er-text-color-placeholder: var(--px-text-color-placeholder);
+  --er-text-color-disabled: var(--px-text-color-disabled);
+  --er-border-color: var(--px-border-color);
+  --er-border-color-light: var(--px-border-color-light);
+  --er-border-color-dark: var(--px-border-color-dark);
+  --er-border-width: var(--px-border-width);
+  --er-border-style: var(--px-border-style);
+  --er-border: var(--px-border);
+  --er-border-radius-base: var(--px-border-radius-base);
+  --er-font-size-base: var(--px-font-size-base);
+  --er-font-family: var(--px-font-family);
+  --er-transition-duration: var(--px-transition-duration);
+  --er-transition-duration-fast: var(--px-transition-duration-fast);
+}
+
+/* === DARK MODE === */
+.px-dark {
+  --px-bg-color: #111827;
+  --px-bg-color-page: #0f172a;
+  --px-bg-color-overlay: #1f2937;
+
+  --px-fill-color: #374151;
+  --px-fill-color-light: #4b5563;
+  --px-fill-color-lighter: #6b7280;
+  --px-fill-color-extra-light: #9ca3af;
+  --px-fill-color-dark: #1f2937;
+  --px-fill-color-darker: #111827;
+  --px-fill-color-blank: #111827;
+
+  --px-text-color-primary: #f9fafb;
+  --px-text-color-regular: #e5e7eb;
+  --px-text-color-secondary: #d1d5db;
+  --px-text-color-placeholder: #9ca3af;
+  --px-text-color-disabled: #6b7280;
+
+  --px-border-color: #374151;
+  --px-border-color-light: #4b5563;
+  --px-border-color-lighter: #6b7280;
+  --px-border-color-extra-light: #9ca3af;
+  --px-border-color-dark: #1f2937;
+  --px-border-color-darker: #111827;
+
+  --px-shadow-color: rgba(255, 255, 255, 0.15);
+  --px-box-shadow-base: var(--px-shadow-offset) var(--px-shadow-offset) 0 0 var(--px-shadow-color);
+}
+
+/* === GLOBAL STYLES === */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--px-font-family);
+  font-size: var(--px-font-size-base);
+  color: var(--px-text-color-primary);
+  background-color: var(--px-bg-color-page);
+}
+
+/* === PIXEL PAINT BACKGROUND === */
+.px-pixel-border {
+  background: paint(pixel-border);
+}
+
+.px-pixel-shadow {
+  background: paint(pixel-shadow);
 }

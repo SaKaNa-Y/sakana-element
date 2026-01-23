@@ -13,7 +13,7 @@ interface _TooltipProps extends TooltipProps {
 }
 
 defineOptions({
-  name: 'ErTooltip', //加前缀，避免和别的组件冲突，业界惯例
+  name: 'PxTooltip', //加前缀，避免和别的组件冲突，业界惯例
 });
 const props = withDefaults(defineProps<_TooltipProps>(), {
   //defineProps不仅可以用来接收父组件传递的数据，还可以用来定义和导入类型
@@ -202,9 +202,9 @@ defineExpose<TooltipInstance>({
 </script>
 
 <template>
-  <div class="er-tooltip" ref="containerNode" v-on="outerEvents">
+  <div class="px-tooltip" ref="containerNode" v-on="outerEvents">
     <div
-      class="er-tooltip__trigger"
+      class="px-tooltip__trigger"
       ref="_triggerNode"
       v-on="events"
       v-if="!virtualTriggering"
@@ -215,7 +215,7 @@ defineExpose<TooltipInstance>({
 
     <transition :name="transition" @after-leave="destroyPopperInstance">
       <div
-        class="er-tooltip__popper"
+        class="px-tooltip__popper"
         ref="popperNode"
         v-on="dropdownEvents"
         v-if="visible"

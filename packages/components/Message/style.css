@@ -1,79 +1,79 @@
-.er-message {
-  --er-message-bg-color: var(--er-color-info-light-9);
-  --er-message-border-color: var(--er-border-color-lighter);
-  --er-message-padding: 15px 19px;
-  --er-message-close-size: 16px;
-  --er-message-close-icon-color: var(--er-text-color-placeholder);
-  --er-message-close-hover-color: var(--er-text-color-secondary);
-  --er-message-icon-size: 16px;
-  --er-message-icon-margin: 8px;
+.px-message {
+  --px-message-bg-color: var(--px-color-info-light-9);
+  --px-message-border-color: var(--px-border-color-lighter);
+  --px-message-padding: 15px 19px;
+  --px-message-close-size: 16px;
+  --px-message-close-icon-color: var(--px-text-color-placeholder);
+  --px-message-close-hover-color: var(--px-text-color-secondary);
+  --px-message-icon-size: 16px;
+  --px-message-icon-margin: 8px;
 }
 
-.er-message {
+.px-message {
   width: fit-content;
   max-width: calc(100% - 32px);
   box-sizing: border-box;
-  border-radius: var(--er-border-radius-base);
-  border-width: var(--er-border-width);
-  border-style: var(--er-border-style);
-  border-color: var(--er-message-border-color);
+  border-radius: var(--px-border-radius-base);
+  border-width: var(--px-border-width);
+  border-style: var(--px-border-style);
+  border-color: var(--px-message-border-color);
   position: fixed;
   left: 50%;
   top: 20px;
   transform: translateX(-50%);
-  background-color: var(--er-message-bg-color);
-  padding: var(--er-message-padding);
+  background-color: var(--px-message-bg-color);
+  padding: var(--px-message-padding);
   display: flex;
   align-items: center;
-  transition: top var(--er-transition-duration), opacity var(--er-transition-duration),
-    transform var(--er-transition-duration);
-  .er-message__icon {
-    color: var(--er-message-text-color);
-    font-size: var(--er-message-icon-size);
-    width: var(--er-message-icon-size);
-    margin-right: var(--er-message-icon-margin);
+  transition: top var(--px-transition-duration), opacity var(--px-transition-duration),
+    transform var(--px-transition-duration);
+  .px-message__icon {
+    color: var(--px-message-text-color);
+    font-size: var(--px-message-icon-size);
+    width: var(--px-message-icon-size);
+    margin-right: var(--px-message-icon-margin);
   }
-  .er-message__content {
-    color: var(--er-message-text-color);
+  .px-message__content {
+    color: var(--px-message-text-color);
     overflow-wrap: break-word;
   }
-  &.is-close .er-message__content {
+  &.is-close .px-message__content {
     padding-right: 10px;
   }
   &.text-center {
     justify-content: center;
   }
-  .er-message__close {
+  .px-message__close {
     display: flex;
     align-items: center;
   }
-  .er-message__close .er-icon {
+  .px-message__close .px-icon {
     cursor: pointer;
   }
 }
 
 @each $val in info, success, warning, danger {
-  .er-message--$(val) {
-    --er-message-bg-color: var(--er-color-$(val)-light-9);
-    --er-message-border-color: var(--er-color-$(val)-light-8);
-    --er-message-text-color: var(--er-color-$(val));
-    .er-message__close {
-      --er-icon-color: var(--er-color-$(val));
+  .px-message--$(val) {
+    --px-message-bg-color: var(--px-color-$(val)-light-9);
+    --px-message-border-color: var(--px-color-$(val)-light-8);
+    --px-message-text-color: var(--px-color-$(val));
+    .px-message__close {
+      --px-icon-color: var(--px-color-$(val));
     }
   }
 }
 
-.er-message--error {
-  --er-message-bg-color: var(--er-color-danger-light-9);
-  --er-message-border-color: var(--er-color-danger-light-8);
-  --er-message-text-color: var(--er-color-danger);
-  .er-message__close {
-    --er-icon-color: var(--er-color-danger);
+.px-message--error {
+  --px-message-bg-color: var(--px-color-danger-light-9);
+  --px-message-border-color: var(--px-color-danger-light-8);
+  --px-message-text-color: var(--px-color-danger);
+  .px-message__close {
+    --px-icon-color: var(--px-color-danger);
   }
 }
 
-.er-message.fade-up-enter-from,
-.er-message.fade-up-leave-to {
+.px-message.fade-up-enter-from,
+.px-message.fade-up-leave-to {
   opacity: 0;
   transform: translate(-50%, -100%);
 }

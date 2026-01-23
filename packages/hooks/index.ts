@@ -7,6 +7,9 @@ import useOffset from './useOffset';
 import useZIndex from './useZIndex';
 import useId from './useId';
 
+export { useTheme, type Theme } from './useTheme';
+export { useSystemTheme } from './useSystemTheme';
+
 export {
   useClickOutside,
   useEventListener,

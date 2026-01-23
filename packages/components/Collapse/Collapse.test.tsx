@@ -36,14 +36,14 @@ describe('Collapse.vue', () => {
       ),
       {
         global: {
-          stubs: ['ErIcon'],
+          stubs: ['PxIcon'],
         },
         attachTo: document.body, // 最新版本 jsdom 更新缓存 bug
       }
     );
 
-    headers = wrapper.findAll('.er-collapse-item__header');
-    contents = wrapper.findAll('.er-collapse-item__wapper');
+    headers = wrapper.findAll('.px-collapse-item__header');
+    contents = wrapper.findAll('.px-collapse-item__wapper');
 
     firstHeader = headers[0];
     secondHeader = headers[1];
@@ -118,14 +118,14 @@ describe('Collapse.vue', () => {
       ),
       {
         global: {
-          stubs: ['ErIcon'],
+          stubs: ['PxIcon'],
         },
         attachTo: document.body,
       }
     );
 
-    headers = wrapper.findAll('.er-collapse-item__header');
-    contents = wrapper.findAll('.er-collapse-item__wapper');
+    headers = wrapper.findAll('.px-collapse-item__header');
+    contents = wrapper.findAll('.px-collapse-item__wapper');
 
     firstHeader = headers[0];
     secondHeader = headers[1];
@@ -157,7 +157,7 @@ describe('Collapse.vue', () => {
       ),
       {
         global: {
-          stubs: ['ErIcon'],
+          stubs: ['PxIcon'],
         },
       }
     );

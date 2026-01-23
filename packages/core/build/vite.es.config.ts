@@ -99,6 +99,17 @@ export default defineConfig({
         assetFileNames: (assetInfo) => {
           // 如果是 style.css 文件，则重命名为 index.css
           if (assetInfo.name === 'style.css') return 'index.css';
+
+          // Handle font files - place in theme/fonts directory
+          if (/\.(woff2?|ttf|eot)$/i.test(assetInfo.name as string)) {
+            return 'theme/fonts/[name].[ext]';
+          }
+
+          // Handle paintworklet JS files - place in theme/paintworklet directory
+          if (/paintworklet.*\.js$/i.test(assetInfo.name as string)) {
+            return 'theme/paintworklet/[name].[ext]';
+          }
+
           if (
             //如果是静态资源或符合css后缀的文件则返回到theme文件夹
             assetInfo.type === 'asset' &&

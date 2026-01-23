@@ -12,7 +12,7 @@ import { FORM_CTX_KEY } from './constants';
 import { reactive, toRefs, provide } from 'vue';
 import { each, filter, includes, size } from 'lodash-es';
 import type { ValidateError, ValidateFieldsError } from 'async-validator';
-defineOptions({ name: 'ErForm' });
+defineOptions({ name: 'PxForm' });
 const props = withDefaults(defineProps<FormProps>(), {
   showMessage: true,
   hideRequiredAsterisk: false,
@@ -108,7 +108,7 @@ defineExpose<FormInstance>({
 </script>
 
 <template>
-  <form class="er-form">
+  <form class="px-form">
     <slot></slot>
   </form>
 </template>

@@ -4,9 +4,9 @@ import { useZIndex } from '@sakana-element/hooks';
 import LoadingComp from './Loading.vue';
 import { defer, delay, isNil, isString } from 'lodash-es';
 
-const RELATIVE_CLASS = 'er-loading-parent--relative' as const;
-const HIDDEN_CLASS = 'er-loading-parent--hiden' as const;
-const LOADING_NUMB_KEY = 'er-loading-numb' as const;
+const RELATIVE_CLASS = 'px-loading-parent--relative' as const;
+const HIDDEN_CLASS = 'px-loading-parent--hiden' as const;
+const LOADING_NUMB_KEY = 'px-loading-numb' as const;
 
 //Map类型键是HTMLElement，值是LoadingInstance
 const instanceMap: Map<HTMLElement, LoadingInstance> = new Map();

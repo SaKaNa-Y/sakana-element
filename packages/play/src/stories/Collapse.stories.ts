@@ -1,21 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import { ErCollapse, ErCollapseItem } from 'sakana-element';
-import 'sakana-element/dist/theme/Collapse.css';
+import { PxCollapse, PxCollapseItem } from '../../../components/Collapse';
+import '../../../components/Collapse/style.css';
 
-type Story = StoryObj<typeof ErCollapse>;
+type Story = StoryObj<typeof PxCollapse>;
 
-const meta: Meta<typeof ErCollapse> = {
+const meta: Meta<typeof PxCollapse> = {
   title: 'Example/Collapse',
-  component: ErCollapse,
-  subcomponents: { ErCollapseItem },
+  component: PxCollapse,
+  subcomponents: { PxCollapseItem },
   tags: ['autodocs'],
 };
 
 export const Default: Story = {
   render: (args) => ({
     components: {
-      ErCollapse,
-      ErCollapseItem,
+      PxCollapse,
+      PxCollapseItem,
     },
     setup() {
       return {
@@ -23,17 +23,17 @@ export const Default: Story = {
       };
     },
     template: `
-    <er-collapse v-bind="args">
-      <er-collapse-item name="a" title="Title a">
+    <px-collapse v-bind="args">
+      <px-collapse-item name="a" title="Title a">
         <div>this is content a</div>
-      </er-collapse-item>
-      <er-collapse-item name="b" title="title b">
+      </px-collapse-item>
+      <px-collapse-item name="b" title="title b">
         <div>this is content b</div>
-      </er-collapse-item>
-      <er-collapse-item name="c" title="title c  disable" disabled>
+      </px-collapse-item>
+      <px-collapse-item name="c" title="title c  disable" disabled>
         <div>this is content c</div>
-      </er-collapse-item>
-    </er-collapse>
+      </px-collapse-item>
+    </px-collapse>
     `,
   }),
   args: {

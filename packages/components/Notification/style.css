@@ -1,29 +1,29 @@
-.er-notification {
-  --er-notification-width: 330px;
-  --er-notification-padding: 14px 26px 14px 13px;
-  --er-notification-radius: 8px;
-  --er-notification-shadow: var(--er-box-shadow-light);
-  --er-notification-border-color: var(--er-border-color-lighter);
-  --er-notification-icon-size: 24px;
-  --er-notification-close-font-size: var(--er-message-close-size, 16px);
-  --er-notification-content-font-size: var(--er-font-size-base);
-  --er-notification-content-color: var(--er-text-color-regular);
-  --er-notification-title-font-size: 16px;
-  --er-notification-title-color: var(--er-text-color-primary);
-  --er-notification-close-color: var(--er-text-color-secondary);
-  --er-notification-close-hover-color: var(--er-text-color-regular)
+.px-notification {
+  --px-notification-width: 330px;
+  --px-notification-padding: 14px 26px 14px 13px;
+  --px-notification-radius: 8px;
+  --px-notification-shadow: var(--px-box-shadow-light);
+  --px-notification-border-color: var(--px-border-color-lighter);
+  --px-notification-icon-size: 24px;
+  --px-notification-close-font-size: var(--px-message-close-size, 16px);
+  --px-notification-content-font-size: var(--px-font-size-base);
+  --px-notification-content-color: var(--px-text-color-regular);
+  --px-notification-title-font-size: 16px;
+  --px-notification-title-color: var(--px-text-color-primary);
+  --px-notification-close-color: var(--px-text-color-secondary);
+  --px-notification-close-hover-color: var(--px-text-color-regular)
 }
-.er-notification {
+.px-notification {
   display: flex;
-  width: var(--er-notification-width);
-  padding: var(--er-notification-padding);
-  border-radius: var(--er-notification-radius);
+  width: var(--px-notification-width);
+  padding: var(--px-notification-padding);
+  border-radius: var(--px-notification-radius);
   box-sizing: border-box;
-  border: 1px solid var(--er-notification-border-color);
+  border: 1px solid var(--px-notification-border-color);
   position: fixed;
-  background-color: var(--er-bg-color-overlay);
-  box-shadow: var(--er-notification-shadow);
-  transition: opacity var(--er-transition-duration),transform var(--er-transition-duration),right var(--er-transition-duration),top .4s,bottom var(--er-transition-duration);
+  background-color: var(--px-bg-color-overlay);
+  box-shadow: var(--px-notification-shadow);
+  transition: opacity var(--px-transition-duration),transform var(--px-transition-duration),right var(--px-transition-duration),top .4s,bottom var(--px-transition-duration);
   overflow-wrap: anywhere;
   overflow: hidden;
   z-index: 9999;
@@ -34,51 +34,51 @@
     left: 10px;
   }
   
-  .er-notification__text {
+  .px-notification__text {
     margin: 0 10px;
   }
-  .er-notification__icon {
-    height: var(--er-notification-icon-size);
-    width: var(--er-notification-icon-size);
-    font-size: var(--er-notification-icon-size);
-    color: var(--er-notification-icon-color);
+  .px-notification__icon {
+    height: var(--px-notification-icon-size);
+    width: var(--px-notification-icon-size);
+    font-size: var(--px-notification-icon-size);
+    color: var(--px-notification-icon-color);
   }
 
-  .er-notification__title {
+  .px-notification__title {
     font-weight: 700;
-    font-size: var(--er-notification-title-font-size);
-    line-height: var(--er-notification-icon-size);
-    color: var(--er-notification-title-color);
+    font-size: var(--px-notification-title-font-size);
+    line-height: var(--px-notification-icon-size);
+    color: var(--px-notification-title-color);
     margin: 0
   }
-  .er-notification__content {
-    font-size: var(--er-notification-content-font-size);
+  .px-notification__content {
+    font-size: var(--px-notification-content-font-size);
     line-height: 24px;
     margin: 6px 0 0;
-    color: var(--er-notification-content-color);
+    color: var(--px-notification-content-color);
     text-align: justify
   }
-  .er-notification__close {
+  .px-notification__close {
     position: absolute;
     top: 18px;
     right: 15px;
     cursor: pointer;
-    color: var(--er-notification-close-color);
-    font-size: var(--er-notification-close-font-size)
+    color: var(--px-notification-close-color);
+    font-size: var(--px-notification-close-font-size)
   }
 }
 @each $val in info,success,warning,danger { 
-  .er-notification--$(val) {
-    --er-notification-icon-color: var(--er-color-$(val));
+  .px-notification--$(val) {
+    --px-notification-icon-color: var(--px-color-$(val));
     color: var(--el-notification-icon-color);
   }
 }
-.er-notification--error {
-  --er-notification-icon-color: var(--er-color-danger);
+.px-notification--error {
+  --px-notification-icon-color: var(--px-color-danger);
   color: var(--el-notification-icon-color);
 }
 
-.er-notification-fade-enter-from {
+.px-notification-fade-enter-from {
   &.right {
     right: 0;
     transform: translate(100%);
@@ -88,6 +88,6 @@
     transform: translate(-100%);
   }
 }
-.er-notification-fade-leave-to {
+.px-notification-fade-leave-to {
   opacity: 0;
 }

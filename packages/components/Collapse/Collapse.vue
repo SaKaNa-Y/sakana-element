@@ -4,7 +4,7 @@ import { provide, ref, watch, watchEffect } from 'vue';
 import { debugWarn } from '@sakana-element/utils';
 import { COLLAPSE_CTX_KEY } from './constants';
 
-const COMP_NAME = 'ErCollapse' as const;
+const COMP_NAME = 'PxCollapse' as const;
 
 defineOptions({
   name: COMP_NAME,
@@ -60,7 +60,7 @@ provide(COLLAPSE_CTX_KEY, {
 </script>
 
 <template>
-  <div class="er-collapse">
+  <div class="px-collapse">
     <slot></slot>
   </div>
 </template>

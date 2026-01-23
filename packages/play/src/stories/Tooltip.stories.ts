@@ -1,14 +1,14 @@
 import type { StoryObj, Meta } from '@storybook/vue3';
 
 import { fn } from '@storybook/test';
-import { ErTooltip } from 'sakana-element';
-import 'sakana-element/dist/theme/Tooltip.css';
+import { PxTooltip } from '../../../components/Tooltip';
+import '../../../components/Tooltip/style.css';
 
-type Story = StoryObj<typeof ErTooltip>;
+type Story = StoryObj<typeof PxTooltip>;
 
-const meta: Meta<typeof ErTooltip> = {
+const meta: Meta<typeof PxTooltip> = {
   title: 'Example/Tooltip',
-  component: ErTooltip,
+  component: PxTooltip,
   tags: ['autodocs'],
   argTypes: {
     trigger: {
@@ -36,16 +36,16 @@ export const Default: Story = {
     trigger: 'hover',
   },
   render: (args) => ({
-    components: { ErTooltip },
+    components: { PxTooltip },
     setup() {
       return {
         args,
       };
     },
     template: `
-      <ErTooltip v-bind="args">
+      <PxTooltip v-bind="args">
           <div style="height:30px;width:200px;background:red;padding:auto">trigger</div>
-      </ErTooltip>
+      </PxTooltip>
     `,
   }),
 };

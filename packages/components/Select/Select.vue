@@ -46,13 +46,13 @@ import {
 
 import useKeyMap from './useKeyMap';
 
-import ErOption from './Option.vue';
-import ErTooltip from '../Tooltip/Tooltip.vue';
-import ErInput from '../Input/Input.vue';
-import ErIcon from '../Icon/Icon.vue';
+import PxOption from './Option.vue';
+import PxTooltip from '../Tooltip/Tooltip.vue';
+import PxInput from '../Input/Input.vue';
+import PxIcon from '../Icon/Icon.vue';
 import { debugWarn, RenderVnode } from '@sakana-element/utils';
 
-const COMPONENT_NAME = 'ErSelect';
+const COMPONENT_NAME = 'PxSelect';
 
 defineOptions({ name: COMPONENT_NAME });
 
@@ -83,7 +83,7 @@ const selectStates = reactive<SelectStates>({
 const isDisabled = computed(() => props.disabled);
 //eq 判断两个值是否相等
 const children = computed(() =>
-  filter(slots?.default?.(), (child) => eq(child.type, ErOption))
+  filter(slots?.default?.(), (child) => eq(child.type, PxOption))
 );
 const hasChildren = computed(() => size(children.value) > 0);
 const showClear = computed(
@@ -368,7 +368,7 @@ defineExpose<SelectInstance>({
 <template>
   <div
     ref="selectRef"
-    class="er-select"
+    class="px-select"
     :class="{
       'is-disabled': isDisabled,
     }"
@@ -376,7 +376,7 @@ defineExpose<SelectInstance>({
     @mouseenter="selectStates.mouseHover = true"
     @mouseleave="selectStates.mouseHover = false"
   >
-    <er-tooltip
+    <px-tooltip
       ref="tooltipRef"
       placement="bottom-start"
       :popper-options="POPPER_OPTIONS"
@@ -398,14 +398,14 @@ defineExpose<SelectInstance>({
             @keydown="handleKeyDown"
           >
             <template #suffix>
-              <er-icon
+              <px-icon
                 v-if="showClear"
                 icon="circle-xmark"
-                class="er-input__clear"
+                class="px-input__clear"
                 @click.stop="handleClear"
                 @mousedown.prevent="noop"
               />
-              <er-icon
+              <px-icon
                 v-else
                 class="header-angle"
                 icon="angle-down"
@@ -416,13 +416,13 @@ defineExpose<SelectInstance>({
         </div>
       </template>
       <template #content>
-        <div class="er-select__loading" v-if="selectStates.loading">
-          <er-icon icon="spinner" spin />
+        <div class="px-select__loading" v-if="selectStates.loading">
+          <px-icon icon="spinner" spin />
         </div>
-        <div class="er-select__nodata" v-else-if="filterable && isNoData">
+        <div class="px-select__nodata" v-else-if="filterable && isNoData">
           No data
         </div>
-        <ul class="er-select__menu">
+        <ul class="px-select__menu">
           <template v-if="!hasChildren">
             <er-option
               v-for="item in filteredOptions"
@@ -440,7 +440,7 @@ defineExpose<SelectInstance>({
           </template>
         </ul>
       </template>
-    </er-tooltip>
+    </px-tooltip>
   </div>
 </template>
 

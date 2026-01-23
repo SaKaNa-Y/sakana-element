@@ -43,9 +43,9 @@ Sakana-Element 提供了基于 ES Module 的开箱即用的 Tree Shaking 功能�
   <er-button>我是 Button</er-button>
 </template>
 <script>
-import { ErButton } from 'sakana-element';
+import { PxButton } from 'sakana-element';
 export default {
-  components: { ErButton },
+  components: { PxButton },
 };
 </script>
 ```

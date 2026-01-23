@@ -6,9 +6,9 @@ import { delay, bind } from 'lodash-es';
 import { useOffset } from '@sakana-element/hooks';
 import { addUnit } from '@sakana-element/utils';
 import { typeIconMap, RenderVnode } from '@sakana-element/utils';
-import ErIcon from '../Icon/Icon.vue';
+import PxIcon from '../Icon/Icon.vue';
 
-defineOptions({ name: 'ErNotification' });
+defineOptions({ name: 'PxNotification' });
 
 const props = withDefaults(defineProps<NotificationProps>(), {
   type: 'info',
@@ -77,15 +77,15 @@ defineExpose<NotificationCompInstance>({
 <!-- transition 过渡动画 vue3 新特性 内置组件 会自动添加过渡动画生成6个过渡类名 -->
 <template>
   <transition
-    :name="`er-notification-${transitionName}`"
+    :name="`px-notification-${transitionName}`"
     @after-leave="!visible && onDestory()"
     @enter="boxHeight = notifyRef!.getBoundingClientRect().height"
   >
     <div
       ref="notifyRef"
-      class="er-notification"
+      class="px-notification"
       :class="{
-        [`er-notification--${type}`]: type,
+        [`px-notification--${type}`]: type,
         [horizontalClass]: true,
         'show-close': showClose,
       }"
@@ -96,18 +96,18 @@ defineExpose<NotificationCompInstance>({
       @mouseenter="clearTimer"
       @mouseleave="startTimmer"
     >
-      <er-icon v-if="iconName" :icon="iconName" class="er-notification__icon" />
+      <px-icon v-if="iconName" :icon="iconName" class="px-notification__icon" />
 
-      <div class="er-notification__text">
-        <div class="er-notification__title">{{ title }}</div>
-        <div class="er-notification__content">
+      <div class="px-notification__text">
+        <div class="px-notification__title">{{ title }}</div>
+        <div class="px-notification__content">
           <slot>
             <render-vnode v-if="message" :vNode="message" />
           </slot>
         </div>
       </div>
-      <div class="er-notification__close" v-if="showClose">
-        <er-icon icon="xmark" @click.stop="close" />
+      <div class="px-notification__close" v-if="showClose">
+        <px-icon icon="xmark" @click.stop="close" />
       </div>
     </div>
   </transition>

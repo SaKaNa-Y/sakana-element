@@ -10,7 +10,6 @@ import type {
 } from './types';
 
 import Schema, { type RuleItem } from 'async-validator';
-import { FORM_CTX_KEY, FORM_ITEM_CTX_KEY } from './constants';
 import {
   inject,
   onMounted,
@@ -19,6 +18,7 @@ import {
   toRefs,
   computed,
   onUnmounted,
+  nextTick,
   type Ref,
   provide,
 } from 'vue';
@@ -33,10 +33,14 @@ import {
   keys,
   isArray,
   cloneDeep,
+  isNumber,
+  endsWith,
 } from 'lodash-es';
-import { nextTick } from 'process';
+import { useId } from "@sakana-element/hooks";
 
-defineOptions({ name: 'ErFormItem' });
+import { FORM_CTX_KEY, FORM_ITEM_CTX_KEY } from "./constants";
+
+defineOptions({ name: 'PxFormItem' });
 
 const props = withDefaults(defineProps<FormItemProps>(), {
   required: void 0,
@@ -45,14 +49,37 @@ const props = withDefaults(defineProps<FormItemProps>(), {
 const slots = defineSlots();
 const ctx = inject(FORM_CTX_KEY);
 
+const labelId = useId().value;
+
 const validateStatus: Ref<ValidateStatus> = ref('init');
 const errMsg = ref('');
+const inputIds = ref<string[]>([]);
+
 const getValByProp = (target: Record<string, any> | void) => {
   if (target && props.prop && !isNil(get(target, props.prop))) {
     return get(target, props.prop);
   }
   return null;
 };
+
+const hasLabel = computed(() => !!(props.label || slots.label));
+const labelFor = computed(
+  () => props.for || (inputIds.value.length ? inputIds.value[0] : '')
+);
+
+const currentLabel = computed(
+  () => `${props.label ?? ''}${ctx?.labelSuffix ?? ''}`
+);
+
+const normalizeLabelWidth = computed(() => {
+  const _normalizeStyle = (val: number | string) => {
+    if (isNumber(val)) return `${val}px`;
+    return endsWith(val, 'px') ? val : `${val}px`;
+  };
+  if (props.labelWidth) return _normalizeStyle(props.labelWidth);
+  if (ctx?.labelWidth) return _normalizeStyle(ctx?.labelWidth);
+  return '150px';
+});
 
 const isDisabled = computed(() => ctx?.disabled || props.disabled);
 const innerVal = computed(() => {
@@ -179,14 +206,22 @@ const clearValidate: FormItemInstance['clearValidate'] = function () {
   isResetting = false;
 };
 
+const addInputId: FormItemContext["addInputId"] = function (id) {
+  if (!includes(inputIds.value, id)) inputIds.value.push(id);
+};
+
+const removeInputId: FormItemContext["removeInputId"] = function (id) {
+  inputIds.value = filter(inputIds.value, (i) => i !== id);
+};
+
 const formItemCtx: FormItemContext = reactive({
   ...toRefs(props),
   disabled: isDisabled.value,
   validate,
   resetField,
   clearValidate,
-  addInputId: () => {},
-  removeInputId: () => {},
+  addInputId,
+  removeInputId,
 });
 
 //挂载时
@@ -214,10 +249,31 @@ defineExpose<FormItemInstance>({
 </script>
 
 <template>
-  <div class="er-form-item">
-    <div class="er-form-item__content">
-      <slot></slot>
-      <div class="er-form-item_error-msg" v-if="validateStatus === 'error'">
+  <div
+    class="px-form-item"
+    :class="{
+      'is-error': validateStatus === 'error',
+      'is-disabled': isDisabled,
+      'is-required': isRequired,
+      'asterisk-left': ctx?.requiredAsteriskPosition === 'left',
+      'asterisk-right': ctx?.requiredAsteriskPosition === 'right',
+    }"
+  >
+    <component
+      v-if="hasLabel"
+      class="px-form-item__label"
+      :class="`position-${ctx?.labelPosition ?? `right`}`"
+      :is="labelFor ? 'label' : 'div'"
+      :id="labelId"
+      :for="labelFor"
+    >
+      <slot name="label" :label="currentLabel">
+        {{ currentLabel }}
+      </slot>
+    </component>
+    <div class="px-form-item__content">
+      <slot :validate="validate"></slot>
+      <div class="px-form-item__error-msg" v-if="validateStatus === 'error'">
         <template v-if="ctx?.showMessage && showMessage">
           <slot name="error" :error="errMsg">{{ errMsg }}</slot>
         </template>
@@ -225,3 +281,11 @@ defineExpose<FormItemInstance>({
     </div>
   </div>
 </template>
+
+<style scoped>
+@import './style.css';
+
+.px-form-item {
+  --px-form-lebel-width: v-bind(normalizeLabelWidth) !important;
+}
+</style>

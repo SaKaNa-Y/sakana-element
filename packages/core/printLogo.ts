@@ -1,5 +1,5 @@
 export default function () {
-  if (PROD) {
+  if (import.meta.env.PROD) {
     const logo = `
 __________________________________________________________________________________________________________
 
@@ -23,7 +23,7 @@ font-weight: 600;
 `;
 
     console.info(`%c${logo}`, rainbowGradient);
-  } else if (DEV) {
+  } else if (import.meta.env.DEV) {
     console.log('[Sakana-Element]:dev mode...');
   }
 }

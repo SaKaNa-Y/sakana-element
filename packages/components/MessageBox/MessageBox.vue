@@ -5,14 +5,14 @@ import { useZIndex, useId } from '@sakana-element/hooks';
 import { typeIconMap } from '@sakana-element/utils';
 import { reactive, computed, ref, watch, nextTick, type Ref } from 'vue';
 
-import ErOverlay from '../Overlay/Overlay.vue';
-import ErIcon from '../Icon/Icon.vue';
-import ErButton from '../Button/Button.vue';
-import ErInput from '../Input/Input.vue';
+import PxOverlay from '../Overlay/Overlay.vue';
+import PxIcon from '../Icon/Icon.vue';
+import PxButton from '../Button/Button.vue';
+import PxInput from '../Input/Input.vue';
 import { isFunction, isNil } from 'lodash-es';
 
 defineOptions({
-  name: 'ErMessageBox',
+  name: 'PxMessageBox',
   inheritAttrs: false,
 });
 
@@ -96,13 +96,13 @@ function handleClose() {
     <er-overlay v-show="(visible as Ref).value" :z-index="state.zIndex" mask>
       <div
         role="dialog"
-        class="er-overlay-message-box"
+        class="px-overlay-message-box"
         @click="handleWrapperClick"
       >
         <div
           ref="rootRef"
           :class="[
-            'er-message-box',
+            'px-message-box',
             {
               'is-center': state.center,
             },
@@ -112,14 +112,14 @@ function handleClose() {
           <div
             v-if="!isNil(state.title)"
             ref="headerRef"
-            class="er-message-box__header"
+            class="px-message-box__header"
             :class="{ 'show-close': state.showClose }"
           >
-            <div class="er-message-box__title">
-              <er-icon
+            <div class="px-message-box__title">
+              <px-icon
                 v-if="iconComponent && state.center"
                 :class="{
-                  [`er-icon-${state.type}`]: state.type,
+                  [`px-icon-${state.type}`]: state.type,
                 }"
                 :icon="iconComponent"
               />
@@ -127,21 +127,21 @@ function handleClose() {
             </div>
             <button
               v-if="showClose"
-              class="er-message-box__header-btn"
+              class="px-message-box__header-btn"
               @click.stop="handleClose"
             >
-              <er-icon icon="xmark" />
+              <px-icon icon="xmark" />
             </button>
           </div>
-          <div class="er-message-box__content">
-            <er-icon
+          <div class="px-message-box__content">
+            <px-icon
               v-if="iconComponent && !state.center && hasMessage"
               :class="{
-                [`er-icon-${state.type}`]: state.type,
+                [`px-icon-${state.type}`]: state.type,
               }"
               :icon="iconComponent"
             />
-            <div v-if="hasMessage" class="er-message-box__message">
+            <div v-if="hasMessage" class="px-message-box__message">
               <slot>
                 <component
                   :is="state.showInput ? 'label' : 'p'"
@@ -152,7 +152,7 @@ function handleClose() {
               </slot>
             </div>
           </div>
-          <div v-show="state.showInput" class="er-message-box__input">
+          <div v-show="state.showInput" class="px-message-box__input">
             <er-input
               v-model="state.inputValue"
               ref="inputRef"
@@ -161,26 +161,26 @@ function handleClose() {
               @keyup.enter="handleInputEnter"
             />
           </div>
-          <div class="er-message-box__footer">
-            <er-button
+          <div class="px-message-box__footer">
+            <px-button
               v-if="state.showCancelButton"
-              class="er-message-box__footer-btn er-message-box__cancel-btn"
+              class="px-message-box__footer-btn er-message-box__cancel-btn"
               :type="state.cancelButtonType"
               :round="state.roundButton"
               :loading="state.cancelButtonLoading"
               @click="handleAction('cancel')"
               @keydown.prevent.enter="handleAction('cancel')"
-              >{{ state.cancelButtonText }}</er-button
+              >{{ state.cancelButtonText }}</px-button
             >
-            <er-button
+            <px-button
               v-show="state.showConfirmButton"
-              class="er-message-box__footer-btn er-message-box__confirm-btn"
+              class="px-message-box__footer-btn er-message-box__confirm-btn"
               :type="state.confirmButtonType ?? 'primary'"
               :round="state.roundButton"
               :loading="state.confirmButtonLoading"
               @click="handleAction('confirm')"
               @keydown.prevent.enter="handleAction('confirm')"
-              >{{ state.confirmButtonText }}</er-button
+              >{{ state.confirmButtonText }}</px-button
             >
           </div>
         </div>

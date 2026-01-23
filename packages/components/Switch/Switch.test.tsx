@@ -5,7 +5,7 @@ import Switch from './Switch.vue';
 describe('Switch.vue', () => {
   it('should render correctly', () => {
     const wrapper = mount(Switch); // 挂载组件
-    expect(wrapper.find('.er-switch')).toBeTruthy(); // 断言组件是否存在
+    expect(wrapper.find('.px-switch')).toBeTruthy(); // 断言组件是否存在
   });
 
   it('should handle click event and toggle the checked state', async () => {

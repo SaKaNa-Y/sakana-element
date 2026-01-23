@@ -2,7 +2,7 @@
 import { computed, ref, provide } from 'vue';
 import { isNil, omit } from 'lodash-es';
 import type { TooltipInstance } from '../Tooltip/types';
-import { type ButtonInstance, ErButton, ErButtonGroup } from '../Button/index';
+import { type ButtonInstance, PxButton, PxButtonGroup } from '../Button/index';
 import type {
   DropdownProps,
   DropdownItemProps,
@@ -15,10 +15,10 @@ import { useDisabledStyle } from '@sakana-element/hooks';
 import { DROPDOWN_CTX_KEY } from './constants';
 
 import DropdownItem from './DropdownItem.vue';
-import ErTooltip from '../Tooltip/Tooltip.vue';
+import PxTooltip from '../Tooltip/Tooltip.vue';
 
 defineOptions({
-  name: 'ErDropdown',
+  name: 'PxDropdown',
   inheritAttrs: false, //透传，不继承父组件的非prop属性
 });
 const props = withDefaults(defineProps<DropdownProps>(), {
@@ -53,29 +53,29 @@ defineExpose<DropdownInstance>({
 </script>
 
 <template>
-  <div class="er-dropdown" :class="{ 'is-disabled': props.disabled }">
-    <er-tooltip
+  <div class="px-dropdown" :class="{ 'is-disabled': props.disabled }">
+    <px-tooltip
       ref="tooltipRef"
       v-bind="tooltipProps"
       :virtual-triggering="splitButton"
-      :virtual-ref="triggerRef?.ref.value"
+      :virtual-ref="triggerRef?.ref?.value"
       @visible-change="$emit('visible-change', $event)"
     >
-      <er-button-group
+      <px-button-group
         v-if="splitButton"
         :type="type"
         :size="size"
         :disabled="disabled"
       >
-        <er-button @click="$emit('click', $event)">
+        <px-button @click="$emit('click', $event)">
           <slot name="default"></slot>
-        </er-button>
-        <er-button ref="triggerRef" icon="angle-down" />
-      </er-button-group>
+        </px-button>
+        <px-button ref="triggerRef" icon="angle-down" />
+      </px-button-group>
       <slot name="default" v-else></slot>
 
       <template #content>
-        <div class="er-dropdown__menu">
+        <div class="px-dropdown__menu">
           <slot name="dropdown">
             <template v-for="item in items" :key="item.command">
               <dropdown-item v-bind="item" />
@@ -83,14 +83,14 @@ defineExpose<DropdownInstance>({
           </slot>
         </div>
       </template>
-    </er-tooltip>
+    </px-tooltip>
   </div>
 </template>
 
 <style scoped>
 @import './style.css';
 
-:deep(.er-button-group) {
+:deep(.px-button-group) {
   & > :last-child {
     padding: 5px 7px;
   }

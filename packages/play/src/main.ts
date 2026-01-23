@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import SakanaElement from 'sakana-element';
-import 'sakana-element/dist/index.css';
+// Import from source for development
+import SakanaElement from '../../core/index';
+import '@sakana-element/theme/index.css';
 
 createApp(App).use(SakanaElement).mount('#app');

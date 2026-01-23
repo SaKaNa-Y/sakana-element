@@ -1,14 +1,14 @@
 import type { StoryObj, Meta, ArgTypes } from '@storybook/vue3';
 import { ref, watch } from 'vue';
 import { fn } from '@storybook/test';
-import { ErAlert, type AlertInstance } from 'sakana-element';
-import 'sakana-element/dist/theme/Alert.css';
+import { PxAlert, type AlertInstance } from '../../../components/Alert';
+import '../../../components/Alert/style.css';
 
-type Story = StoryObj<typeof ErAlert> & { argTypes?: ArgTypes };
+type Story = StoryObj<typeof PxAlert> & { argTypes?: ArgTypes };
 
-const meta: Meta<typeof ErAlert> = {
+const meta: Meta<typeof PxAlert> = {
   title: 'Example/Alert',
-  component: ErAlert,
+  component: PxAlert,
   tags: ['autodocs'],
   argTypes: {
     type: {
@@ -39,7 +39,7 @@ export const Default: Story & { args: { visible: boolean } } = {
     visible: true,
   },
   render: (args) => ({
-    components: { ErAlert },
+    components: { PxAlert },
     setup() {
       const alertRef = ref<AlertInstance>();
       watch(
@@ -55,7 +55,7 @@ export const Default: Story & { args: { visible: boolean } } = {
       return { args, alertRef };
     },
     template: `
-     <er-alert ref="alertRef" v-bind="args"></er-alert>
+     <px-alert ref="alertRef" v-bind="args"></px-alert>
     `,
   }),
 };

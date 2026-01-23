@@ -6,7 +6,7 @@ import { computed, inject } from 'vue';
 import { eq, every, get } from 'lodash-es';
 import { SELECT_CTX_KEY } from './constants';
 
-defineOptions({ name: 'ErOption' });
+defineOptions({ name: 'PxOption' });
 const props = withDefaults(defineProps<SelectOptionProps>(), {
   disabled: false,
 });
@@ -28,7 +28,7 @@ function handleClick() {
 
 <template>
   <li
-    class="er-select__menu-item"
+    class="px-select__menu-item"
     :class="{
       'is-disabled': disabled,
       'is-selected': selected,

@@ -1,7 +1,7 @@
 import { describe, it, expect, test, vi, beforeEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { each, get } from 'lodash-es';
-import { ErPopconfirm } from '.';
+import { PxPopconfirm } from '.';
 import { withInstall } from '@sakana-element/utils';
 import type { PopconfirmProps } from './types';
 
@@ -13,18 +13,18 @@ const onCancel = vi.fn();
 describe('Popconfirm/index.ts', () => {
   // 测试 withInstall 函数是否被正确应用
   it('should be exported with withInstall()', () => {
-    expect(ErPopconfirm.install).toBeDefined();
+    expect(PxPopconfirm.install).toBeDefined();
   });
 
   // 测试 Popconfirm 组件是否被正确导出
   it('should be exported Popconfirm component', () => {
-    expect(ErPopconfirm).toBe(PopConfirm);
+    expect(PxPopconfirm).toBe(PopConfirm);
   });
 
   // 可选：测试 withInstall 是否增强了 Popconfirm 组件的功能
   test('should enhance Popconfirm component', () => {
     const enhancedPopconfirm = withInstall(PopConfirm);
-    expect(enhancedPopconfirm).toBe(ErPopconfirm);
+    expect(enhancedPopconfirm).toBe(PxPopconfirm);
     // 这里可以添加更多测试，确保 withInstall 增强了组件的特定功能
   });
 
@@ -98,25 +98,25 @@ describe('Popconfirm.vue', () => {
     triggerNode.trigger('click');
     await vi.runAllTimers();
 
-    expect(wrapper.find('.er-popconfirm').exists()).toBeTruthy();
-    const confirmBtn = wrapper.find('.er-popconfirm__confirm');
+    expect(wrapper.find('.px-popconfirm').exists()).toBeTruthy();
+    const confirmBtn = wrapper.find('.px-popconfirm__confirm');
     expect(confirmBtn.exists()).toBeTruthy();
 
     confirmBtn.trigger('click');
     await vi.runAllTimers();
-    expect(wrapper.find('.er-popconfirm').exists()).toBeFalsy();
+    expect(wrapper.find('.px-popconfirm').exists()).toBeFalsy();
     expect(onConfirm).toBeCalled();
 
     triggerNode.trigger('click');
     await vi.runAllTimers();
-    expect(wrapper.find('.er-popconfirm').exists()).toBeTruthy();
+    expect(wrapper.find('.px-popconfirm').exists()).toBeTruthy();
 
-    const cancelBtn = wrapper.find('.er-popconfirm__cancel');
+    const cancelBtn = wrapper.find('.px-popconfirm__cancel');
     expect(cancelBtn.exists()).toBeTruthy();
 
     cancelBtn.trigger('click');
     await vi.runAllTimers();
-    expect(wrapper.find('.er-popconfirm').exists()).toBeFalsy();
+    expect(wrapper.find('.px-popconfirm').exists()).toBeFalsy();
     expect(onCancel).toBeCalled();
   });
 });

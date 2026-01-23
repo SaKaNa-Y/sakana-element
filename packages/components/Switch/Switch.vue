@@ -4,7 +4,7 @@ import { ref, computed, onMounted, watch } from 'vue';
 import { useId } from '@sakana-element/hooks';
 
 //inheritAttrs: false 表示组件的属性不会自动传入到子组件中,但是使用v-bind="$attrs"可以获取到
-defineOptions({ name: 'ErSwitch', inheritAttrs: false });
+defineOptions({ name: 'PxSwitch', inheritAttrs: false });
 const props = withDefaults(defineProps<SwitchProps>(), {
   activeValue: true,
   inactiveValue: false,
@@ -50,16 +50,16 @@ defineExpose<SwitchInstance>({
 
 <template>
   <div
-    class="er-switch"
+    class="px-switch"
     :class="{
-      [`er-switch--${size}`]: size,
+      [`px-switch--${size}`]: size,
       'is-disabled': isDisabled,
       'is-checked': checked,
     }"
     @click="handleChange"
   >
     <input
-      class="er-switch__input"
+      class="px-switch__input"
       type="checkbox"
       role="switch"
       ref="inputRef"
@@ -69,16 +69,16 @@ defineExpose<SwitchInstance>({
       :checked="checked"
       @keydown.enter="handleChange"
     />
-    <div class="er-switch__core">
-      <div class="er-switch__core-inner">
+    <div class="px-switch__core">
+      <div class="px-switch__core-inner">
         <span
           v-if="activeText || inactiveText"
-          class="er-switch__core-inner-text"
+          class="px-switch__core-inner-text"
         >
           {{ checked ? activeText : inactiveText }}
         </span>
       </div>
-      <div class="er-switch__core-action"></div>
+      <div class="px-switch__core-action"></div>
     </div>
   </div>
 </template>

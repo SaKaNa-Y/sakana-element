@@ -2,15 +2,15 @@ import type { Meta, StoryObj, ArgTypes } from '@storybook/vue3';
 import { fn, within, userEvent, expect, clearAllMocks } from '@storybook/test';
 import { set } from 'lodash-es';
 
-import { ErButton, ErButtonGroup } from 'sakana-element';
-import 'sakana-element/dist/theme/Button.css';
+import { PxButton, PxButtonGroup } from '../../../components/Button';
+import '../../../components/Button/style.css';
 
-type Story = StoryObj<typeof ErButton> & { argTypes?: ArgTypes };
+type Story = StoryObj<typeof PxButton> & { argTypes?: ArgTypes };
 //argTypes用于定义组件的参数类型和控制方式，可以生成参数文档
 
-const meta: Meta<typeof ErButton> = {
+const meta: Meta<typeof PxButton> = {
   title: 'Example/Button',
-  component: ErButton,
+  component: PxButton,
   tags: ['autodocs'],
   argTypes: {
     type: {
@@ -71,12 +71,12 @@ export const Default: Story & { args: { content: string } } = {
     content: 'Button',
   },
   render: (args) => ({
-    components: { ErButton },
+    components: { PxButton },
     setup() {
       return { args };
     },
     template: container(
-      `<er-button data-testid="story-test-btn" v-bind="args">{{args.content}}</er-button>`
+      `<px-button data-testid="story-test-btn" v-bind="args">{{args.content}}</px-button>`
     ),
   }),
 
@@ -147,13 +147,13 @@ export const Autofocus: Story & { args: { content: string } } = {
     autofocus: true,
   },
   render: (args) => ({
-    components: { ErButton },
+    components: { PxButton },
     setup() {
       return { args };
     },
     template: container(`
       <p>请点击浏览器的刷新页面来获取按钮聚焦</p>
-      <er-button data-testid="story-test-btn" v-bind="args">{{args.content}}</er-button>
+      <px-button data-testid="story-test-btn" v-bind="args">{{args.content}}</px-button>
     `),
   }),
   play: async ({ args }) => {
@@ -170,12 +170,12 @@ export const Circle: Story = {
     icon: 'search',
   },
   render: (args) => ({
-    components: { ErButton },
+    components: { PxButton },
     setup() {
       return { args };
     },
     template: container(`
-      <er-button circle v-bind="args"/>
+      <px-button circle v-bind="args"/>
     `),
   }),
   play: async ({ canvasElement, args, step }) => {
@@ -218,15 +218,15 @@ export const Group: Story & { args: { content1: string; content2: string } } = {
     content2: 'Button2',
   },
   render: (args) => ({
-    components: { ErButton, ErButtonGroup },
+    components: { PxButton, PxButtonGroup },
     setup() {
       return { args };
     },
     template: container(`
-      <er-button-group :type="args.groupType" :size="args.groupSize" :disabled="args.groupDisabled">
-        <er-button v-bind="args">{{args.content1}}</er-button>
-        <er-button v-bind="args">{{args.content2}}</er-button>
-      </er-button-group>
+      <px-button-group :type="args.groupType" :size="args.groupSize" :disabled="args.groupDisabled">
+        <px-button v-bind="args">{{args.content1}}</px-button>
+        <px-button v-bind="args">{{args.content2}}</px-button>
+      </px-button-group>
     `),
   }),
   play: async ({ canvasElement, args, step }) => {

@@ -6,7 +6,7 @@ import { useId } from '@sakana-element/hooks';
 import type { DropdownItemProps } from './types';
 
 defineOptions({
-  name: 'ErDropdownItem',
+  name: 'PxDropdownItem',
 });
 
 const props = withDefaults(defineProps<DropdownItemProps>(), {
@@ -29,8 +29,8 @@ function handleClick() {
   <li
     :id="`dropdown-item-${command ?? useId().value}`"
     :class="{
-      'er-dropdown__item': true,
-      ['er-dropdown__item--' + size]: size,
+      'px-dropdown__item': true,
+      ['px-dropdown__item--' + size]: size,
       'is-disabled': disabled,
       'is-divided': divided,
     }"

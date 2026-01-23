@@ -9,7 +9,7 @@ import Icon from '../Icon/Icon.vue';
 import { debugWarn } from '@sakana-element/utils';
 
 defineOptions({
-  name: 'ErInput',
+  name: 'PxInput',
   inheritAttrs: false,
 });
 
@@ -115,10 +115,10 @@ defineExpose<InputInstance>({
 
 <template>
   <div
-    class="er-input"
+    class="px-input"
     :class="{
-      [`er-input--${type}`]: type,
-      [`er-input--${size}`]: size,
+      [`px-input--${type}`]: type,
+      [`px-input--${size}`]: size,
       'is-disabled': isDisabled,
       'is-prepend': $slots.prepend,
       'is-append': $slots.append,
@@ -128,15 +128,15 @@ defineExpose<InputInstance>({
     }"
   >
     <template v-if="type !== 'textarea'">
-      <div v-if="$slots.prepend" class="er-input__prepend">
+      <div v-if="$slots.prepend" class="px-input__prepend">
         <slot name="prepend"></slot>
       </div>
-      <div class="er-input__wrapper" ref="wrapperRef">
-        <span v-if="$slots.prefix" class="er-input__prefix">
+      <div class="px-input__wrapper" ref="wrapperRef">
+        <span v-if="$slots.prefix" class="px-input__prefix">
           <slot name="prefix"></slot>
         </span>
         <input
-          class="er-input__inner"
+          class="px-input__inner"
           ref="inputRef"
           :id="useId().value"
           :type="showPassword ? (pwdVisible ? 'text' : 'password') : type"
@@ -155,37 +155,37 @@ defineExpose<InputInstance>({
         />
         <span
           v-if="$slots.suffix || showClear || showPwdArea"
-          class="er-input__suffix"
+          class="px-input__suffix"
         >
           <slot name="suffix"></slot>
           <Icon
             icon="circle-xmark"
             v-if="showClear"
-            class="er-input__clear"
+            class="px-input__clear"
             @click="clear"
             @mousedown.prevent="noop"
           />
           <Icon
             icon="eye"
-            class="er-input__password"
+            class="px-input__password"
             v-if="showPwdArea && pwdVisible"
             @click="togglePwdVisible"
           />
           <Icon
             icon="eye-slash"
-            class="er-input__password"
+            class="px-input__password"
             v-if="showPwdArea && !pwdVisible"
             @click="togglePwdVisible"
           />
         </span>
       </div>
-      <div v-if="$slots.append" class="er-input__append">
+      <div v-if="$slots.append" class="px-input__append">
         <slot name="append"></slot>
       </div>
     </template>
     <template v-else>
       <textarea
-        class="er-textarea__wrapper"
+        class="px-textarea__wrapper"
         ref="textareaRef"
         :id="useId().value"
         :disabled="isDisabled"

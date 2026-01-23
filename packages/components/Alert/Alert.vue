@@ -3,10 +3,10 @@ import { computed, ref } from 'vue';
 import type { AlertProps, AlertEmits, AlertInstance } from './types';
 import { typeIconMap } from '@sakana-element/utils';
 
-import ErIcon from '../Icon/Icon.vue';
+import PxIcon from '../Icon/Icon.vue';
 
 defineOptions({
-  name: 'ErAlert',
+  name: 'PxAlert',
 });
 
 //withDefaults 设置默认值
@@ -43,36 +43,36 @@ defineExpose<AlertInstance>({
 
 <template>
   <!-- 用于在元素进入或离开 DOM 时添加动画效果 -->
-  <transition name="er-alert-fade">
+  <transition name="px-alert-fade">
     <div
       v-show="visible"
-      class="er-alert"
+      class="px-alert"
       role="alert"
       :class="{
-        [`er-alert__${type}`]: type,
-        [`er-alert__${effect}`]: effect,
+        [`px-alert__${type}`]: type,
+        [`px-alert__${effect}`]: effect,
         'text-center': center,
       }"
     >
-      <er-icon
+      <px-icon
         v-if="showIcon"
-        class="er-alert__icon"
+        class="px-alert__icon"
         :class="{ 'big-icon': withDescription }"
         :icon="iconName"
       />
-      <div class="er-alert__content">
+      <div class="px-alert__content">
         <span
-          class="er-alert__title"
+          class="px-alert__title"
           :class="{ 'with-desc': withDescription }"
           :style="{ display: center && !showIcon ? 'flow' : 'inline' }"
         >
           <slot name="title">{{ title }}</slot>
         </span>
-        <p class="er-alert__description">
+        <p class="px-alert__description">
           <slot>{{ description }}</slot>
         </p>
-        <div class="er-alert__close" v-if="closable">
-          <er-icon @click.stop="close" icon="xmark" />
+        <div class="px-alert__close" v-if="closable">
+          <px-icon @click.stop="close" icon="xmark" />
         </div>
       </div>
     </div>

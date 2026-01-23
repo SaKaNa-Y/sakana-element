@@ -1,25 +1,25 @@
-.er-loading {
-  --er-loading-icon-color: var(--er-color-primary);
-  --er-loading-mask-margin: 0;
-  --er-loading-mask-size: 100%;
-  --er-loading-icon-size: 42px;
-  --er-loading-font-size: 14px;
-  --er-loading-z-index: 20000;
+.px-loading {
+  --px-loading-icon-color: var(--px-color-primary);
+  --px-loading-mask-margin: 0;
+  --px-loading-mask-size: 100%;
+  --px-loading-icon-size: 42px;
+  --px-loading-font-size: 14px;
+  --px-loading-z-index: 20000;
 }
-.er-loading {
+.px-loading {
   opacity: 1;
-  transition: opacity var(--er-transition-duration);
-  &.er-loading__mask {
+  transition: opacity var(--px-transition-duration);
+  &.px-loading__mask {
     position: absolute;
-    margin: var(--er-loading-mask-margin);
-    top: var(--er-loading-mask-margin);
-    right: var(--er-loading-mask-margin);
-    bottom: var(--er-loading-mask-margin);
-    left: var(--er-loading-mask-margin);
-    height: var(--er-loading-mask-size);
-    width: var(--er-loading-mask-size);
-    z-index: var(--er-loading-z-index);
-    background: var(--er-loading-bg-color);
+    margin: var(--px-loading-mask-margin);
+    top: var(--px-loading-mask-margin);
+    right: var(--px-loading-mask-margin);
+    bottom: var(--px-loading-mask-margin);
+    left: var(--px-loading-mask-margin);
+    height: var(--px-loading-mask-size);
+    width: var(--px-loading-mask-size);
+    z-index: var(--px-loading-z-index);
+    background: var(--px-loading-bg-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,15 +27,15 @@
       position: fixed;
     }
   }
-  .er-loading__spinner {
-    color: var(--er-loading-icon-color);
+  .px-loading__spinner {
+    color: var(--px-loading-icon-color);
     text-align: center;
-    .er-loading-text {
+    .px-loading-text {
       margin: 3px 0;
-      font-size: var(--er-loading-font-size);
+      font-size: var(--px-loading-font-size);
     }
     i {
-      font-size: var(--er-loading-icon-size);
+      font-size: var(--px-loading-icon-size);
     }
   }
 }
@@ -44,9 +44,9 @@
     opacity: 0;
 } */
 
-.er-loading-parent--relative {
+.px-loading-parent--relative {
   position: relative !important; /* !important 表示强制覆盖内联样式  relative 表示相对定位*/
 }
-.er-loading-parent--hiden {
+.px-loading-parent--hiden {
   overflow: hidden !important; /* !important 表示强制覆盖内联样式  hidden 表示隐藏*/
 }

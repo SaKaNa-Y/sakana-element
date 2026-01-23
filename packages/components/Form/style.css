@@ -1,0 +1,50 @@
+/* Form Component Styles */
+
+.px-form {
+  /* Form container styles */
+}
+
+.px-form-item {
+  margin-bottom: 18px;
+}
+
+.px-form-item__label {
+  display: inline-block;
+  text-align: right;
+  vertical-align: middle;
+  font-size: var(--px-font-size-base);
+  color: var(--px-text-color-regular);
+  line-height: 32px;
+  padding: 0 12px 0 0;
+  box-sizing: border-box;
+}
+
+.px-form-item__content {
+  line-height: 32px;
+  position: relative;
+  font-size: var(--px-font-size-base);
+}
+
+.px-form-item__error {
+  color: var(--px-color-danger);
+  font-size: var(--px-font-size-small);
+  line-height: 1;
+  padding-top: 4px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.px-form-item.is-error .px-input__wrapper {
+  border-color: var(--px-color-danger);
+}
+
+.px-form-item.is-success .px-input__wrapper {
+  border-color: var(--px-color-success);
+}
+
+.px-form-item.is-required .px-form-item__label::before {
+  content: '*';
+  color: var(--px-color-danger);
+  margin-right: 4px;
+}

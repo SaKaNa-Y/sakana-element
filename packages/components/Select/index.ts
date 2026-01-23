@@ -3,8 +3,8 @@ import Option from './Option.vue';
 
 import { withInstall } from '@sakana-element/utils';
 
-export const ErSelect = withInstall(Select);
-export const ErOption = withInstall(Option);
+export const PxSelect = withInstall(Select);
+export const PxOption = withInstall(Option);
 
 console.log('Select', Select, 'Option', Option);
 
