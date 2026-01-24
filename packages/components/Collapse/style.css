@@ -1,18 +1,32 @@
+/* Collapse Variables */
 .px-collapse {
-  --px-collapse-border-color: var(--px-border-color-light);
+  --px-collapse-border-color: var(--px-border-color);
   --px-collapse-header-height: 48px;
   --px-collapse-header-bg-color: var(--px-fill-color-blank);
   --px-collapse-header-text-color: var(--px-text-color-primary);
-  --px-collapse-header-font-size: 13px;
+  --px-collapse-header-font-size: var(--px-font-size-base);
   --px-collapse-content-bg-color: var(--px-fill-color-blank);
-  --px-collapse-content-font-size: 13px;
+  --px-collapse-content-font-size: var(--px-font-size-base);
   --px-collapse-content-text-color: var(--px-text-color-primary);
   --px-collapse-disabled-text-color: var(--px-disabled-text-color);
   --px-collapse-disabled-border-color: var(--px-border-color-lighter);
-  border-top: 1px solid var(--px-collapse-border-color);
-  border-bottom: 1px solid var(--px-collapse-border-color);
+  --px-collapse-shadow-color: var(--px-shadow-color);
+
+  /* Pixel-style border */
+  border: var(--px-border-width) solid var(--px-collapse-border-color);
+  border-radius: 0;
+  box-shadow: var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-collapse-shadow-color);
+  font-family: var(--px-font-family);
 }
 
+/* Collapse Item */
+.px-collapse-item {
+  &:not(:last-child) {
+    border-bottom: var(--px-border-width-thin) solid var(--px-collapse-border-color);
+  }
+}
+
+/* Collapse Header */
 .px-collapse-item__header {
   display: flex;
   align-items: center;
@@ -23,36 +37,62 @@
   color: var(--px-collapse-header-text-color);
   cursor: pointer;
   font-size: var(--px-collapse-header-font-size);
+  font-family: var(--px-font-family);
   font-weight: 500;
-  transition: border-bottom-color var(--px-transition-duration);
+  transition: none;
   outline: none;
-  border-bottom: 1px solid var(--px-collapse-border-color);
+  padding: 0 16px;
+  position: relative;
+
+  /* Hover effect */
+  &:hover:not(.is-disabled) {
+    background-color: var(--px-fill-color-light);
+  }
+
+  /* Disabled state */
   &.is-disabled {
     color: var(--px-collapse-disabled-text-color);
     cursor: not-allowed;
     background-image: none;
   }
+
+  /* Active state */
   &.is-active {
-    border-bottom-color: transparent;
+    background-color: var(--px-fill-color-light);
+
     .header-angle {
       transform: rotate(90deg);
     }
+
+    /* Pixel indicator */
+    &::before {
+      content: '>';
+      position: absolute;
+      left: 6px;
+      color: var(--px-color-primary);
+    }
   }
+
   .header-angle {
-    transition: transform var(--px-transition-duration);
+    transition: none;
   }
 }
+
+/* Collapse Content */
 .px-collapse-item__content {
   will-change: height;
   background-color: var(--px-collapse-content-bg-color);
   overflow: hidden;
   box-sizing: border-box;
   font-size: var(--px-collapse-content-font-size);
+  font-family: var(--px-font-family);
   color: var(--px-collapse-content-text-color);
-  border-bottom: 1px solid var(--px-collapse-border-color);
-  padding-bottom: 25px;
+  padding: 16px;
+  border-top: var(--px-border-width-thin) dashed var(--px-collapse-border-color);
 }
+
+/* Animation */
 .slide-enter-active,
 .slide-leave-active {
-  transition: height var(--px-transition-duration) ease-in-out;
+  transition: none;
 }

@@ -1,15 +1,18 @@
+/* MessageBox Variables */
 .px-message-box {
   --px-message-box-title-color: var(--px-text-color-primary);
   --px-message-box-width: 420px;
-  --px-message-box-border-radius: var(--px-border-radius-base);
   --px-message-box-font-size: var(--px-font-size-large);
   --px-message-box-content-font-size: var(--px-font-size-base);
   --px-message-box-content-color: var(--px-text-color-regular);
-  --px-message-box-padding-primary: 12px;
-  --px-message-box-font-line-height: var(--px-font-size-medium);
-  --px-message-box-close-size: var(--px-message-close-size, 16px);
+  --px-message-box-padding-primary: 16px;
+  --px-message-box-font-line-height: 1.5;
+  --px-message-box-close-size: var(--px-font-size-base);
+  --px-message-box-border-color: var(--px-border-color);
+  --px-message-box-shadow-color: var(--px-shadow-color);
 }
 
+/* Overlay */
 .px-overlay-message-box {
   text-align: center;
   position: fixed;
@@ -19,6 +22,7 @@
   left: 0;
   padding: 16px;
   overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
 
   &::after {
     content: '';
@@ -29,6 +33,7 @@
   }
 }
 
+/* Base MessageBox Styles - Pixel Dialog */
 .px-message-box {
   display: inline-block;
   position: relative;
@@ -37,14 +42,22 @@
   padding: var(--px-message-box-padding-primary);
   vertical-align: middle;
   background-color: var(--px-bg-color);
-  border-radius: var(--px-message-box-border-radius);
   font-size: var(--px-message-box-font-size);
+  font-family: var(--px-font-family);
   text-align: left;
   overflow: hidden;
   backface-visibility: hidden;
-
   box-sizing: border-box;
   overflow-wrap: break-word;
+
+  /* Pixel-style border */
+  border: var(--px-border-width) solid var(--px-message-box-border-color);
+  border-radius: 0;
+
+  /* Pixel shadow */
+  box-shadow:
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-message-box-shadow-color),
+    var(--px-box-shadow-inset-light);
 
   &:focus {
     outline: none !important;
@@ -77,42 +90,54 @@
 
   .px-message-box__header {
     padding-bottom: var(--px-message-box-padding-primary);
+    border-bottom: var(--px-border-width-thin) dashed var(--px-message-box-border-color);
 
     .px-message-box__title {
       color: var(--px-message-box-title-color);
       font-size: var(--px-message-box-font-size);
+      font-family: var(--px-font-family);
+      font-weight: 500;
       line-height: var(--px-message-box-font-line-height);
     }
 
     .px-message-box__header-btn {
       position: absolute;
-      top: 0;
-      right: 0;
-      padding: 0;
-      width: 40px;
-      height: 40px;
-      border: none;
+      top: 8px;
+      right: 8px;
+      padding: 4px;
+      width: 28px;
+      height: 28px;
+      border: var(--px-border-width-thin) solid var(--px-border-color);
       outline: none;
-      background: transparent;
+      background: var(--px-fill-color-blank);
       font-size: var(--px-message-box-close-size);
       cursor: pointer;
+      box-shadow: 2px 2px 0 0 var(--px-shadow-color);
+      transition: none;
 
       i {
-        color: var(--px-color-info);
+        color: var(--px-text-color-secondary);
         font-size: inherit;
       }
-      &:focus,
+
       &:hover {
+        background: var(--px-fill-color-light);
+        transform: translate(-1px, -1px);
+        box-shadow: 3px 3px 0 0 var(--px-shadow-color);
+
         i {
           color: var(--px-color-danger);
         }
       }
+
+      &:active {
+        transform: translate(1px, 1px);
+        box-shadow: 1px 1px 0 0 var(--px-shadow-color);
+      }
     }
 
     &.show-close {
-      padding-right: calc(
-        var(--px-message-box-padding-primary) + var(--px-message-box-close-size)
-      );
+      padding-right: calc(var(--px-message-box-padding-primary) + 32px);
     }
   }
 
@@ -121,15 +146,20 @@
     align-items: center;
     gap: 12px;
     font-size: var(--px-message-box-content-font-size);
+    font-family: var(--px-font-family);
     color: var(--px-message-box-content-color);
+    padding-top: var(--px-message-box-padding-primary);
+
     .px-message-box__message {
       margin: 0;
+
       & p {
         margin: 0;
         line-height: var(--px-message-box-font-line-height);
       }
     }
   }
+
   .px-message-box__input {
     padding-top: 12px;
   }
@@ -140,24 +170,26 @@
     justify-content: flex-end;
     align-items: center;
     padding-top: var(--px-message-box-padding-primary);
+    gap: 8px;
   }
 }
 
+/* Animation */
 .fade-in-linear-enter-active {
   .px-overlay-message-box {
-    animation: msgbox-fade-in var(--px-transition-duration);
+    animation: msgbox-fade-in 0.1s;
   }
 }
 
 .fade-in-linear-leave-active {
   .px-overlay-message-box {
-    animation: msgbox-fade-in var(--px-transition-duration) reverse;
+    animation: msgbox-fade-in 0.1s reverse;
   }
 }
 
 @keyframes msgbox-fade-in {
   0% {
-    transform: translate3d(0, -20px, 0);
+    transform: translate3d(0, -10px, 0);
     opacity: 0;
   }
 

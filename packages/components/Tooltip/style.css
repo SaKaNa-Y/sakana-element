@@ -1,15 +1,19 @@
+/* Tooltip Variables */
 .px-tooltip {
-  --px-popover-bg-color: var(--px-bg-color-overlay);
+  --px-popover-bg-color: var(--px-bg-color);
   --px-popover-font-size: var(--px-font-size-base);
-  --px-popover-border-color: var(--px-border-color-lighter);
-  --px-popover-padding: 12px;
-  --px-popover-border-radius: 4px;
+  --px-popover-border-color: var(--px-border-color-dark);
+  --px-popover-padding: 10px 14px;
+  --px-popover-shadow-color: var(--px-shadow-color-dark);
   display: inline-block;
 }
+
+/* Base Tooltip Styles - Pixel Game Style */
 .px-tooltip {
+  /* No smooth transitions for pixel feel */
   .fade-enter-active,
   .fade-leave-active {
-    transition: opacity var(--px-transition-duration);
+    transition: none;
   }
 
   .fade-enter-from,
@@ -17,65 +21,102 @@
     opacity: 0;
   }
 
+  /* Popper container - Pixel style box */
   .px-tooltip__popper {
     background: var(--px-popover-bg-color);
-    border-radius: var(--px-popover-border-radius);
-    border: 1px solid var(--px-popover-border-color);
     padding: var(--px-popover-padding);
-    color: var(--px-text-color-regular);
-    line-height: 1.4;
-    text-align: justify;
+    color: var(--px-text-color-primary);
+    line-height: 1.5;
     font-size: var(--px-popover-font-size);
-    box-shadow: var(--px-box-shadow-light);
+    font-family: var(--px-font-family);
     word-break: break-all;
     box-sizing: border-box;
     z-index: 1000;
+
+    /* Pixel-style border - thick and sharp */
+    border: 3px solid var(--px-popover-border-color);
+    border-radius: 0;
+
+    /* Classic pixel shadow */
+    box-shadow:
+      4px 4px 0 0 var(--px-popover-shadow-color),
+      inset -2px -2px 0 0 rgba(0, 0, 0, 0.05),
+      inset 2px 2px 0 0 rgba(255, 255, 255, 0.3);
+
+    /* Pixel arrow - Square shaped */
     #arrow,
     #arrow::before {
       position: absolute;
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       box-sizing: border-box;
       background: var(--px-popover-bg-color);
     }
+
     #arrow {
       visibility: hidden;
     }
+
     #arrow::before {
       visibility: visible;
       content: '';
       transform: rotate(45deg);
+      border: 3px solid var(--px-popover-border-color);
     }
+
+    /* Arrow positioning */
     &[data-popper-placement^='top'] > #arrow {
-      bottom: -5px;
+      bottom: -7px;
     }
 
     &[data-popper-placement^='bottom'] > #arrow {
-      top: -5px;
+      top: -7px;
     }
 
     &[data-popper-placement^='left'] > #arrow {
-      right: -5px;
+      right: -7px;
     }
 
     &[data-popper-placement^='right'] > #arrow {
-      left: -5px;
+      left: -7px;
     }
+
+    /* Arrow border sides based on position */
     &[data-popper-placement^='top'] > #arrow::before {
-      border-right: 1px solid var(--px-popover-border-color);
-      border-bottom: 1px solid var(--px-popover-border-color);
+      border-left: none;
+      border-top: none;
+      background: var(--px-popover-bg-color);
     }
+
     &[data-popper-placement^='bottom'] > #arrow::before {
-      border-left: 1px solid var(--px-popover-border-color);
-      border-top: 1px solid var(--px-popover-border-color);
+      border-right: none;
+      border-bottom: none;
+      background: var(--px-popover-bg-color);
     }
+
     &[data-popper-placement^='left'] > #arrow::before {
-      border-right: 1px solid var(--px-popover-border-color);
-      border-top: 1px solid var(--px-popover-border-color);
+      border-left: none;
+      border-bottom: none;
+      background: var(--px-popover-bg-color);
     }
+
     &[data-popper-placement^='right'] > #arrow::before {
-      border-left: 1px solid var(--px-popover-border-color);
-      border-bottom: 1px solid var(--px-popover-border-color);
+      border-right: none;
+      border-top: none;
+      background: var(--px-popover-bg-color);
     }
+  }
+}
+
+/* Dark tooltip variant */
+.px-tooltip--dark {
+  .px-tooltip__popper {
+    --px-popover-bg-color: var(--px-text-color-primary);
+    --px-popover-border-color: var(--px-text-color-primary);
+    color: var(--px-bg-color);
+    box-shadow:
+      4px 4px 0 0 rgba(0, 0, 0, 0.3),
+      inset -2px -2px 0 0 rgba(0, 0, 0, 0.2),
+      inset 2px 2px 0 0 rgba(255, 255, 255, 0.1);
   }
 }

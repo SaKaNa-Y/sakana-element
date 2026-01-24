@@ -1,14 +1,20 @@
+/* Loading Variables */
 .px-loading {
   --px-loading-icon-color: var(--px-color-primary);
   --px-loading-mask-margin: 0;
   --px-loading-mask-size: 100%;
-  --px-loading-icon-size: 42px;
-  --px-loading-font-size: 14px;
+  --px-loading-icon-size: 32px;
+  --px-loading-font-size: var(--px-font-size-base);
   --px-loading-z-index: 20000;
+  --px-loading-bg-color: rgba(255, 255, 255, 0.8);
 }
+
+/* Base Loading Styles - Pixel Game Loading */
 .px-loading {
   opacity: 1;
-  transition: opacity var(--px-transition-duration);
+  transition: none;
+  font-family: var(--px-font-family);
+
   &.px-loading__mask {
     position: absolute;
     margin: var(--px-loading-mask-margin);
@@ -23,30 +29,56 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
     &.is-fullscreen {
       position: fixed;
     }
   }
+
   .px-loading__spinner {
     color: var(--px-loading-icon-color);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
     .px-loading-text {
-      margin: 3px 0;
+      margin: 0;
       font-size: var(--px-loading-font-size);
+      font-family: var(--px-font-family);
+      color: var(--px-text-color-primary);
+      letter-spacing: 1px;
     }
+
     i {
       font-size: var(--px-loading-icon-size);
+      /* Pixel-style animation - stepping */
+      animation: px-loading-spin 1s steps(8) infinite;
     }
   }
 }
-/* .fade-in-linear-enter-from,
-.fade-in-linear-leave-to {
-    opacity: 0;
-} */
 
-.px-loading-parent--relative {
-  position: relative !important; /* !important 表示强制覆盖内联样式  relative 表示相对定位*/
+/* Pixel-style spinning animation */
+@keyframes px-loading-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
+
+/* Parent element states */
+.px-loading-parent--relative {
+  position: relative !important;
+}
+
 .px-loading-parent--hiden {
-  overflow: hidden !important; /* !important 表示强制覆盖内联样式  hidden 表示隐藏*/
+  overflow: hidden !important;
+}
+
+/* Dark mode loading */
+.px-dark .px-loading {
+  --px-loading-bg-color: rgba(30, 30, 46, 0.85);
 }

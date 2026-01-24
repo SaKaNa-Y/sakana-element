@@ -11,7 +11,7 @@
   ],
   "exports": {
     ".": {
-      "import": "./dist/es/index.js",
+      "import": "./index.ts",
       "require": "./dist/umd/index.umd.cjs",
       "types": "./dist/types/core/index.d.ts"
     },

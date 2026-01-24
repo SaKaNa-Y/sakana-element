@@ -1,92 +1,126 @@
+/* Button Group Variables */
 .px-button-group {
   --px-button-group-border-color: var(--px-border-color-lighter);
 }
+
+/* Button Base Variables */
 .px-button {
   --px-button-font-weight: var(--px-font-weight-primary);
   --px-button-border-color: var(--px-border-color);
   --px-button-bg-color: var(--px-fill-color-blank);
-  --px-button-text-color: var(--px-text-color-regular);
+  --px-button-text-color: var(--px-text-color-primary);
   --px-button-disabled-text-color: var(--px-disabled-text-color);
-  --px-button-disabled-bg-color: var(--px-fill-color-blank);
-  --px-button-disabled-border-color: var(--px-border-color-light);
+  --px-button-disabled-bg-color: var(--px-fill-color-light);
+  --px-button-disabled-border-color: var(--px-border-color-lighter);
   --px-button-hover-text-color: var(--px-color-primary);
   --px-button-hover-bg-color: var(--px-color-primary-light-9);
-  --px-button-hover-border-color: var(--px-color-primary-light-7);
-  --px-button-active-text-color: var(--px-button-hover-text-color);
-  --px-button-active-border-color: var(--px-color-primary);
-  --px-button-active-bg-color: var(--px-button-hover-bg-color);
+  --px-button-hover-border-color: var(--px-color-primary);
+  --px-button-active-text-color: var(--px-color-primary-dark);
+  --px-button-active-border-color: var(--px-color-primary-dark);
+  --px-button-active-bg-color: var(--px-color-primary-light-7);
   --px-button-outline-color: var(--px-color-primary-light-5);
-  --px-button-active-color: var(--px-text-color-primary);
+  --px-button-shadow-color: var(--px-shadow-color);
 }
 
+/* Base Button Styles - Pixel Game Aesthetic */
 .px-button {
   display: inline-flex;
   justify-content: center;
   align-items: center;
   line-height: 1;
-  height: 32px;
+  height: 36px;
   white-space: nowrap;
   cursor: pointer;
   color: var(--px-button-text-color);
   text-align: center;
   box-sizing: border-box;
   outline: none;
-  transition: none; /* No smooth transitions for pixel aesthetic */
   font-weight: var(--px-button-font-weight);
+  font-family: var(--px-font-family);
   user-select: none;
   vertical-align: middle;
   -webkit-appearance: none;
   background-color: var(--px-button-bg-color);
-  border: var(--px-border);
-  border-color: var(--px-button-border-color);
-  padding: 8px 15px;
+  padding: 8px 16px;
   font-size: var(--px-font-size-base);
-  border-radius: 0; /* No rounded corners */
   position: relative;
 
-  /* Pixel-style shadow */
-  box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.2);
+  /* Pixel-style border */
+  border: var(--px-border-width) solid var(--px-button-border-color);
+  border-radius: 0;
+
+  /* Pixel shadow with inset highlight */
+  box-shadow:
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-button-shadow-color),
+    var(--px-box-shadow-inset-light),
+    var(--px-box-shadow-inset-dark);
+
+  /* No smooth transitions */
+  transition: none;
 
   & + & {
     margin-left: 12px;
   }
-  &:hover,
-  &:focus {
+
+  /* Hover - Lift effect */
+  &:hover:not(.is-disabled):not(.is-loading) {
     color: var(--px-button-hover-text-color);
     border-color: var(--px-button-hover-border-color);
     background-color: var(--px-button-hover-bg-color);
-    outline: none;
-    /* Slight shadow lift on hover */
-    box-shadow: 3px 3px 0 0 rgba(0, 0, 0, 0.3);
     transform: translate(-1px, -1px);
+    box-shadow:
+      4px 4px 0 0 var(--px-button-shadow-color),
+      var(--px-box-shadow-inset-light);
   }
-  &:active {
+
+  /* Active - Press down effect */
+  &:active:not(.is-disabled):not(.is-loading) {
     color: var(--px-button-active-text-color);
     border-color: var(--px-button-active-border-color);
     background-color: var(--px-button-active-bg-color);
-    outline: none;
-    /* Pressed effect */
-    box-shadow: 1px 1px 0 0 rgba(0, 0, 0, 0.2);
     transform: translate(1px, 1px);
+    box-shadow:
+      1px 1px 0 0 var(--px-button-shadow-color),
+      inset 1px 1px 0 0 rgba(0, 0, 0, 0.1);
   }
-  /*plain*/
+
+  /* Focus outline */
+  &:focus-visible {
+    outline: 2px dashed var(--px-color-primary);
+    outline-offset: 2px;
+  }
+
+  /* Plain variant */
   &.is-plain {
-    --px-button-hover-text-color: var(--px-color-primary);
-    --px-button-hover-bg-color: var(--px-fill-color-blank);
+    --px-button-bg-color: transparent;
+    --px-button-hover-bg-color: var(--px-fill-color-light);
     --px-button-hover-border-color: var(--px-color-primary);
+    box-shadow: var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-button-shadow-color);
+
+    &:hover:not(.is-disabled) {
+      box-shadow: 4px 4px 0 0 var(--px-button-shadow-color);
+    }
+
+    &:active:not(.is-disabled) {
+      box-shadow: 1px 1px 0 0 var(--px-button-shadow-color);
+    }
   }
-  /*round - keep pixel-style (no rounded corners) */
+
+  /* Round */
   &.is-round {
-    border-radius: 0; /* Pixel aesthetic: no rounded corners */
+    border-radius: 0;
+    padding: 8px 20px;
   }
-  /*circle - square for pixel style */
+
+  /* Circle - Square icon button */
   &.is-circle {
-    border-radius: 0; /* Pixel aesthetic: square instead of circle */
+    border-radius: 0;
     padding: 8px;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
   }
-  /*disabled*/
+
+  /* Disabled state */
   &.is-loading,
   &.is-disabled,
   &.is-disabled:hover,
@@ -96,115 +130,160 @@
   &[disabled]:focus {
     color: var(--px-button-disabled-text-color);
     cursor: not-allowed;
-    background-image: none;
     background-color: var(--px-button-disabled-bg-color);
     border-color: var(--px-button-disabled-border-color);
-    box-shadow: none;
+    box-shadow: 1px 1px 0 0 rgba(0, 0, 0, 0.1);
     transform: none;
     opacity: 0.6;
   }
+
+  /* Icon sizing */
   [class*='px-icon'] {
     width: 1em;
     height: 1em;
   }
 }
+
+/* Type variants - Colored buttons */
 @each $val in primary, success, warning, info, danger {
   .px-button--$(val) {
     --px-button-text-color: var(--px-color-white);
     --px-button-bg-color: var(--px-color-$(val));
-    --px-button-border-color: var(--px-color-$(val));
-    --px-button-outline-color: var(--px-color-$(val)-light-5);
-    --px-button-active-color: var(--px-color-$(val)-dark-2);
+    --px-button-border-color: var(--px-color-$(val)-dark);
+    --px-button-shadow-color: var(--px-color-$(val)-dark);
     --px-button-hover-text-color: var(--px-color-white);
     --px-button-hover-bg-color: var(--px-color-$(val)-light-3);
-    --px-button-hover-border-color: var(--px-color-$(val)-light-3);
-    --px-button-active-bg-color: var(--px-color-$(val)-dark-2);
-    --px-button-active-border-color: var(--px-color-$(val)-dark-2);
+    --px-button-hover-border-color: var(--px-color-$(val));
+    --px-button-active-text-color: var(--px-color-white);
+    --px-button-active-bg-color: var(--px-color-$(val)-dark);
+    --px-button-active-border-color: var(--px-color-$(val)-dark);
     --px-button-disabled-text-color: var(--px-color-white);
     --px-button-disabled-bg-color: var(--px-color-$(val)-light-5);
     --px-button-disabled-border-color: var(--px-color-$(val)-light-5);
+
+    box-shadow:
+      var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-color-$(val)-dark),
+      inset -1px -1px 0 0 rgba(0, 0, 0, 0.1),
+      inset 1px 1px 0 0 rgba(255, 255, 255, 0.2);
+
+    &:hover:not(.is-disabled):not(.is-loading) {
+      box-shadow:
+        4px 4px 0 0 var(--px-color-$(val)-dark),
+        inset 1px 1px 0 0 rgba(255, 255, 255, 0.25);
+    }
+
+    &:active:not(.is-disabled):not(.is-loading) {
+      box-shadow:
+        1px 1px 0 0 var(--px-color-$(val)-dark),
+        inset 1px 1px 0 0 rgba(0, 0, 0, 0.15);
+    }
   }
+
+  /* Plain variant for type buttons */
   .px-button--$(val).is-plain {
     --px-button-text-color: var(--px-color-$(val));
     --px-button-bg-color: var(--px-color-$(val)-light-9);
-    --px-button-border-color: var(--px-color-$(val)-light-5);
+    --px-button-border-color: var(--px-color-$(val));
     --px-button-hover-text-color: var(--px-color-white);
     --px-button-hover-bg-color: var(--px-color-$(val));
     --px-button-hover-border-color: var(--px-color-$(val));
     --px-button-active-text-color: var(--px-color-white);
-
+    --px-button-active-bg-color: var(--px-color-$(val)-dark);
     --px-button-disabled-text-color: var(--px-color-$(val)-light-5);
     --px-button-disabled-bg-color: var(--px-color-$(val)-light-9);
-    --px-button-disabled-border-color: var(--px-color-$(val)-light-8);
+    --px-button-disabled-border-color: var(--px-color-$(val)-light-7);
+
+    box-shadow: var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-shadow-color);
+
+    &:hover:not(.is-disabled) {
+      box-shadow:
+        4px 4px 0 0 var(--px-color-$(val)-dark),
+        inset 1px 1px 0 0 rgba(255, 255, 255, 0.15);
+    }
+
+    &:active:not(.is-disabled) {
+      box-shadow:
+        1px 1px 0 0 var(--px-color-$(val)-dark),
+        inset 1px 1px 0 0 rgba(0, 0, 0, 0.15);
+    }
   }
 }
+
+/* Size variants */
 .px-button--large {
-  --px-button-size: 40px;
+  --px-button-size: 44px;
   height: var(--px-button-size);
-  padding: 12px 19px;
+  padding: 12px 24px;
   font-size: var(--px-font-size-large);
-  border-radius: 0; /* Pixel aesthetic */
-  /*circle - square for pixel style*/
+  border-width: var(--px-border-width-thick);
+
   &.is-circle {
-    border-radius: 0;
     padding: 12px;
-    width: 40px;
+    width: 44px;
   }
 }
+
 .px-button--small {
-  --px-button-size: 24px;
+  --px-button-size: 28px;
   height: var(--px-button-size);
-  padding: 5px 11px;
+  padding: 4px 12px;
   font-size: var(--px-font-size-small);
-  border-radius: 0; /* Pixel aesthetic */
-  /*circle - square for pixel style*/
-  &.is-circle {
-    border-radius: 0;
-    padding: 5px;
-    width: 24px;
+  border-width: var(--px-border-width-thin);
+  box-shadow:
+    2px 2px 0 0 var(--px-button-shadow-color),
+    var(--px-box-shadow-inset-light);
+
+  &:hover:not(.is-disabled):not(.is-loading) {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 0 var(--px-button-shadow-color);
   }
+
+  &:active:not(.is-disabled):not(.is-loading) {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0 0 var(--px-button-shadow-color);
+  }
+
+  &.is-circle {
+    padding: 4px;
+    width: 28px;
+  }
+
   [class*='px-icon'] {
     width: 12px;
     height: 12px;
   }
 }
 
+/* Button Group */
 .px-button-group {
-  display: inline-block;
+  display: inline-flex;
   vertical-align: middle;
+  border: var(--px-border-width) solid var(--px-border-color);
+  box-shadow: var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-shadow-color);
 
   &::after {
     clear: both;
   }
+
   & > :deep(.px-button) {
-    float: left;
     position: relative;
     margin-left: 0;
-    border-radius: 0; /* Always square for pixel aesthetic */
-    box-shadow: none; /* Remove individual shadows in group */
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
 
-    &:first-child {
-      border-right-color: var(--px-button-group-border-color);
+    &:not(:first-child) {
+      border-left: 1px solid var(--px-button-group-border-color);
     }
-    &:last-child {
-      border-left-color: var(--px-button-group-border-color);
-    }
-    &:not(:first-child):not(:last-child) {
-      border-left-color: var(--px-button-group-border-color);
-      border-right-color: var(--px-button-group-border-color);
-    }
-    &:not(:last-child) {
-      margin-right: -1px;
-    }
-    /* Hover effect for button groups */
-    &:hover {
+
+    &:hover:not(.is-disabled) {
+      transform: none;
       z-index: 1;
-      box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.3);
+      box-shadow: inset 0 0 0 100px rgba(255, 255, 255, 0.1);
     }
-    &:active {
-      box-shadow: 1px 1px 0 0 rgba(0, 0, 0, 0.2);
+
+    &:active:not(.is-disabled) {
+      box-shadow: inset 1px 1px 0 0 rgba(0, 0, 0, 0.15);
     }
   }
-  /* Group-wide pixel shadow */
-  box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.2);
 }

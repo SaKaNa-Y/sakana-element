@@ -1,58 +1,107 @@
+/* Dropdown Variables */
 .px-dropdown .px-dropdown__menu {
   --px-dropdown-menuItem-hover-fill: var(--px-color-primary-light-9);
   --px-dropdown-menuItem-hover-color: var(--px-color-primary);
-  --px-dropdown-menuItem-disabled-color: var(--px-border-color-lighter);
-  --px-dropdown-menuItem-divided-color: var(--px-border-color-lighter);
+  --px-dropdown-menuItem-disabled-color: var(--px-text-color-disabled);
+  --px-dropdown-menuItem-divided-color: var(--px-border-color-dark);
+  --px-dropdown-shadow-color: var(--px-shadow-color-dark);
 }
+
+/* Base Dropdown Styles - Pixel Game Menu */
 .px-dropdown {
   display: inline-block;
+  font-family: var(--px-font-family);
+
   .px-tooltip {
-    --px-popover-padding: 5px 0;
+    --px-popover-padding: 4px 0;
   }
-  &.is-disabled>*{
+
+  /* Disabled state */
+  &.is-disabled > * {
     color: var(--px-text-color-placeholder) !important;
     cursor: not-allowed !important;
   }
 }
+
+/* Dropdown Menu - Pixel style list */
 .px-dropdown__menu {
   list-style-type: none;
   margin: 0;
-  padding: 0;
+  padding: 4px 0;
+  background: var(--px-bg-color);
+
+  /* Menu items - Pixel RPG menu style */
   .px-dropdown__item {
     display: flex;
     align-items: center;
     white-space: nowrap;
     list-style: none;
-    line-height: 22px;
-    padding: 5px 16px;
+    line-height: 1.5;
+    padding: 8px 16px;
     margin: 0;
     font-size: var(--px-font-size-base);
-    color: var(--px-text-color-regular);
+    font-family: var(--px-font-family);
+    color: var(--px-text-color-primary);
     cursor: pointer;
     outline: none;
+    position: relative;
+    transition: none;
+
+    /* Hover effect - Pixel highlight */
     &:hover {
       background-color: var(--px-dropdown-menuItem-hover-fill);
       color: var(--px-dropdown-menuItem-hover-color);
+
+      /* Pixel cursor indicator */
+      &::before {
+        content: '>';
+        position: absolute;
+        left: 6px;
+        color: var(--px-dropdown-menuItem-hover-color);
+        font-weight: bold;
+      }
     }
+
+    /* Disabled state */
     &.is-disabled {
       color: var(--px-dropdown-menuItem-disabled-color);
       cursor: not-allowed;
       background-image: none;
+
+      &:hover {
+        background-color: transparent;
+
+        &::before {
+          content: none;
+        }
+      }
     }
   }
-  
+
+  /* Size variants */
   .px-dropdown__item--large {
-    padding: 7px 20px;
-    line-height: 22px;
-    font-size: 14px;
+    padding: 10px 20px;
+    line-height: 1.5;
+    font-size: var(--px-font-size-large);
+
+    &:hover::before {
+      left: 8px;
+    }
   }
+
   .px-dropdown__item--small {
-    padding: 2px 12px;
-    line-height: 20px;
-    font-size: 12px;
+    padding: 4px 12px;
+    line-height: 1.4;
+    font-size: var(--px-font-size-small);
+
+    &:hover::before {
+      left: 4px;
+    }
   }
+
+  /* Divider - Pixel style dashed line */
   .divided-placeholder {
-    margin: 6px 0;
-    border-top: 1px solid var(--px-dropdown-menuItem-divided-color);
+    margin: 6px 8px;
+    border-top: 2px dashed var(--px-dropdown-menuItem-divided-color);
   }
 }

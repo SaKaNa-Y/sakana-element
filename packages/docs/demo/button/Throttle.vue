@@ -6,9 +6,9 @@ function handleBtnClick() {
 
 <template>
   <p>
-    <er-button @click="handleBtnClick"> with throttle</er-button>
-    <er-button :use-throttle="false" @click="handleBtnClick"
-      >without throttle</er-button
+    <px-button @click="handleBtnClick"> with throttle</px-button>
+    <px-button :use-throttle="false" @click="handleBtnClick"
+      >without throttle</px-button
     >
   </p>
 </template>

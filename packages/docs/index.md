@@ -1,24 +1,37 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
 layout: home
-
 hero:
-  name: 'Sakana-Element'
-  text: '高仿 ElementPlus 组件库'
-  tagline: My great project tagline
+  name: Sakana Element
+  text: Pixel-style Vue 3 Component Library
+  tagline: Retro game aesthetics, modern development experience
   actions:
     - theme: brand
-      text: 开始使用
-      link: /get-started
+      text: Get Started
+      link: /en/get-started
+    - theme: alt
+      text: Components
+      link: /en/components/button
+    - theme: alt
+      text: 中文文档
+      link: /zh/
 
 features:
-  - icon: 📚
-    title: 功能覆盖和兼容性
-    details: 组件库能够广泛覆盖 Element Plus 的功能，并且与 Element Plus 的 API 兼容。可以作为 Element Plus 的替代品，提供相同的功能和使用体验，方便用户迁移和使用。
+  - icon: 🎮
+    title: Pixel Art Design
+    details: Retro game aesthetics with hard-edge pixel borders, offset shadows, recreating the visual experience of 8-bit/16-bit gaming era
+  - icon: 🌓
+    title: Dark Mode Support
+    details: Built-in dark/light theme toggle with system preference detection, using Catppuccin color scheme
+  - icon: 🧩
+    title: Rich Components
+    details: Provides Button, Input, Select, Alert, Message and other commonly used components to meet daily development needs
   - icon: 📦
-    title: 易用性和简化开发流程
-    details: 组件库提供简洁明了的 API 和组件结构，使开发人员能够快速上手并高效构建界面，减少开发时间和工作量。部分组件兼容多种开发范式。
-  - icon: 🌹
-    title: 文档和示例丰富
-    details: 在线文档包含详细的组件文档和示例，以展示你的组件库的功能和使用方法。提供清晰的示例代码、演示和解释，帮助用户理解每个组件的用途、属性和事件，并能够快速集成到他们的项目中。
+    title: Tree Shaking
+    details: Supports on-demand import, only bundles the components you use, reducing project size
+  - icon: 🔧
+    title: TypeScript Support
+    details: Written in TypeScript with complete type definitions, enjoy intelligent code completion
+  - icon: 📖
+    title: Detailed Documentation
+    details: Provides bilingual documentation with detailed usage examples and API references for each component
 ---

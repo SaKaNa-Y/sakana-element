@@ -1,79 +1,135 @@
+/* Message Variables */
 .px-message {
-  --px-message-bg-color: var(--px-color-info-light-9);
-  --px-message-border-color: var(--px-border-color-lighter);
-  --px-message-padding: 15px 19px;
+  --px-message-bg-color: var(--px-fill-color-blank);
+  --px-message-border-color: var(--px-border-color-dark);
+  --px-message-text-color: var(--px-text-color-primary);
+  --px-message-shadow-color: var(--px-shadow-color-dark);
+  --px-message-padding: 12px 16px;
   --px-message-close-size: 16px;
-  --px-message-close-icon-color: var(--px-text-color-placeholder);
-  --px-message-close-hover-color: var(--px-text-color-secondary);
+  --px-message-close-icon-color: var(--px-text-color-secondary);
+  --px-message-close-hover-color: var(--px-text-color-primary);
   --px-message-icon-size: 16px;
-  --px-message-icon-margin: 8px;
+  --px-message-icon-margin: 10px;
 }
 
+/* Base Message Styles - Pixel Game Notification */
 .px-message {
   width: fit-content;
   max-width: calc(100% - 32px);
   box-sizing: border-box;
-  border-radius: var(--px-border-radius-base);
-  border-width: var(--px-border-width);
-  border-style: var(--px-border-style);
-  border-color: var(--px-message-border-color);
   position: fixed;
   left: 50%;
   top: 20px;
   transform: translateX(-50%);
-  background-color: var(--px-message-bg-color);
   padding: var(--px-message-padding);
   display: flex;
   align-items: center;
-  transition: top var(--px-transition-duration), opacity var(--px-transition-duration),
-    transform var(--px-transition-duration);
+  font-family: var(--px-font-family);
+  background-color: var(--px-message-bg-color);
+
+  /* Pixel-style border - thick and sharp */
+  border: 3px solid var(--px-message-border-color);
+  border-radius: 0;
+
+  /* Classic pixel shadow */
+  box-shadow:
+    4px 4px 0 0 var(--px-message-shadow-color),
+    inset -2px -2px 0 0 rgba(0, 0, 0, 0.05),
+    inset 2px 2px 0 0 rgba(255, 255, 255, 0.3);
+
+  /* No smooth transitions for pixel feel */
+  transition: none;
+
+  /* Icon styling */
   .px-message__icon {
     color: var(--px-message-text-color);
     font-size: var(--px-message-icon-size);
     width: var(--px-message-icon-size);
     margin-right: var(--px-message-icon-margin);
+    flex-shrink: 0;
   }
+
+  /* Content area */
   .px-message__content {
     color: var(--px-message-text-color);
     overflow-wrap: break-word;
+    font-size: var(--px-font-size-base);
+    line-height: 1.5;
   }
+
+  /* With close button */
   &.is-close .px-message__content {
-    padding-right: 10px;
+    padding-right: 12px;
   }
+
+  /* Center alignment */
   &.text-center {
     justify-content: center;
   }
+
+  /* Close button */
   .px-message__close {
     display: flex;
     align-items: center;
-  }
-  .px-message__close .px-icon {
-    cursor: pointer;
+
+    .px-icon {
+      cursor: pointer;
+      color: var(--px-message-close-icon-color);
+      font-size: var(--px-message-close-size);
+
+      &:hover {
+        color: var(--px-message-close-hover-color);
+        transform: scale(1.1);
+      }
+    }
   }
 }
 
+/* Type variants with pixel styling */
 @each $val in info, success, warning, danger {
   .px-message--$(val) {
     --px-message-bg-color: var(--px-color-$(val)-light-9);
-    --px-message-border-color: var(--px-color-$(val)-light-8);
-    --px-message-text-color: var(--px-color-$(val));
+    --px-message-border-color: var(--px-color-$(val));
+    --px-message-text-color: var(--px-color-$(val)-dark);
+    --px-message-shadow-color: var(--px-color-$(val)-dark);
+
+    /* Colored pixel shadow */
+    box-shadow:
+      4px 4px 0 0 var(--px-color-$(val)-dark),
+      inset -2px -2px 0 0 rgba(0, 0, 0, 0.05),
+      inset 2px 2px 0 0 rgba(255, 255, 255, 0.4);
+
     .px-message__close {
       --px-icon-color: var(--px-color-$(val));
     }
   }
 }
 
+/* Error variant (alias for danger) */
 .px-message--error {
   --px-message-bg-color: var(--px-color-danger-light-9);
-  --px-message-border-color: var(--px-color-danger-light-8);
-  --px-message-text-color: var(--px-color-danger);
+  --px-message-border-color: var(--px-color-danger);
+  --px-message-text-color: var(--px-color-danger-dark);
+  --px-message-shadow-color: var(--px-color-danger-dark);
+
+  box-shadow:
+    4px 4px 0 0 var(--px-color-danger-dark),
+    inset -2px -2px 0 0 rgba(0, 0, 0, 0.05),
+    inset 2px 2px 0 0 rgba(255, 255, 255, 0.4);
+
   .px-message__close {
     --px-icon-color: var(--px-color-danger);
   }
 }
 
+/* Animation - Pixel style instant appear/disappear */
 .px-message.fade-up-enter-from,
 .px-message.fade-up-leave-to {
   opacity: 0;
   transform: translate(-50%, -100%);
+}
+
+.px-message.fade-up-enter-active,
+.px-message.fade-up-leave-active {
+  transition: opacity 0.1s, transform 0.1s;
 }

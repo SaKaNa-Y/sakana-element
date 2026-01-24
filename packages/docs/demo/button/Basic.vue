@@ -1,37 +1,37 @@
 <template>
   <p>
-    <er-button>Default</er-button>
-    <er-button type="primary">Primary</er-button>
-    <er-button type="success">Success</er-button>
-    <er-button type="info">Info</er-button>
-    <er-button type="warning">Warning</er-button>
-    <er-button type="danger">Danger</er-button>
+    <px-button>Default</px-button>
+    <px-button type="primary">Primary</px-button>
+    <px-button type="success">Success</px-button>
+    <px-button type="info">Info</px-button>
+    <px-button type="warning">Warning</px-button>
+    <px-button type="danger">Danger</px-button>
   </p>
 
   <p>
-    <er-button plain>Plain</er-button>
-    <er-button type="primary" plain>Primary</er-button>
-    <er-button type="success" plain>Success</er-button>
-    <er-button type="info" plain>Info</er-button>
-    <er-button type="warning" plain>Warning</er-button>
-    <er-button type="danger" plain>Danger</er-button>
+    <px-button plain>Plain</px-button>
+    <px-button type="primary" plain>Primary</px-button>
+    <px-button type="success" plain>Success</px-button>
+    <px-button type="info" plain>Info</px-button>
+    <px-button type="warning" plain>Warning</px-button>
+    <px-button type="danger" plain>Danger</px-button>
   </p>
 
   <p>
-    <er-button round>Round</er-button>
-    <er-button type="primary" round>Primary</er-button>
-    <er-button type="success" round>Success</er-button>
-    <er-button type="info" round>Info</er-button>
-    <er-button type="warning" round>Warning</er-button>
-    <er-button type="danger" round>Danger</er-button>
+    <px-button round>Round</px-button>
+    <px-button type="primary" round>Primary</px-button>
+    <px-button type="success" round>Success</px-button>
+    <px-button type="info" round>Info</px-button>
+    <px-button type="warning" round>Warning</px-button>
+    <px-button type="danger" round>Danger</px-button>
   </p>
 
   <p>
-    <er-button icon="search" circle />
-    <er-button type="primary" icon="edit" circle />
-    <er-button type="success" icon="check" circle />
-    <er-button type="info" icon="message" circle />
-    <er-button type="warning" icon="star" circle />
-    <er-button type="danger" icon="trash" circle />
+    <px-button icon="search" circle />
+    <px-button type="primary" icon="edit" circle />
+    <px-button type="success" icon="check" circle />
+    <px-button type="info" icon="message" circle />
+    <px-button type="warning" icon="star" circle />
+    <px-button type="danger" icon="trash" circle />
   </p>
 </template>

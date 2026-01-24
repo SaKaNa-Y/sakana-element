@@ -1,113 +1,145 @@
+/* Switch Variables */
 .px-switch {
   --px-switch-on-color: var(--px-color-primary);
-  --px-switch-off-color: var(--px-border-color);
-  --px-switch-on-border-color: var(--px-color-primary);
+  --px-switch-off-color: var(--px-fill-color-darker);
+  --px-switch-on-border-color: var(--px-color-primary-dark);
   --px-switch-off-border-color: var(--px-border-color);
+  --px-switch-shadow-color: var(--px-shadow-color);
 }
 
+/* Base Switch Styles - Pixel Toggle */
 .px-switch {
   display: inline-flex;
   align-items: center;
-  font-size: 14px;
+  font-size: var(--px-font-size-base);
+  font-family: var(--px-font-family);
   line-height: 20px;
   height: 32px;
+
   .px-switch__input {
     position: absolute;
     width: 0;
     height: 0;
     opacity: 0;
     margin: 0;
-    &:focus-visible {
-      & ~ .px-switch__core {
-        outline: 2px solid var(--px-switch-on-color);
-        outline-offset: 1px;
-      }
+
+    &:focus-visible ~ .px-switch__core {
+      outline: 2px dashed var(--px-switch-on-color);
+      outline-offset: 2px;
     }
   }
+
+  /* Disabled state */
   &.is-disabled {
-    opacity: 0.6;
+    opacity: 0.5;
+
     .px-switch__core {
       cursor: not-allowed;
     }
   }
+
+  /* Checked state */
   &.is-checked {
     .px-switch__core {
       border-color: var(--px-switch-on-border-color);
       background-color: var(--px-switch-on-color);
+      box-shadow:
+        var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-switch-on-border-color),
+        var(--px-box-shadow-inset-dark);
+
       .px-switch__core-action {
-        left: calc(100% - 17px);
+        left: calc(100% - 18px);
+        background-color: var(--px-color-white);
+        box-shadow: var(--px-box-shadow-inset-light);
       }
+
       .px-switch__core-inner {
-        padding: 0 18px 0 4px;
+        padding: 0 20px 0 4px;
       }
     }
   }
 }
 
+/* Size variants */
 .px-switch--large {
-  font-size: 14px;
+  font-size: var(--px-font-size-base);
   line-height: 24px;
   height: 40px;
+
   .px-switch__core {
-    min-width: 50px;
-    height: 24px;
-    border-radius: 12px;
+    min-width: 56px;
+    height: 28px;
+
     .px-switch__core-action {
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
     }
   }
-  &.is-checked {
-    .px-switch__core .px-switch__core-action {
-      left: calc(100% - 21px);
-      color: var(--px-switch-on-color);
-    }
+
+  &.is-checked .px-switch__core .px-switch__core-action {
+    left: calc(100% - 24px);
   }
 }
+
 .px-switch--small {
-  font-size: 12px;
+  font-size: var(--px-font-size-small);
   line-height: 16px;
   height: 24px;
+
   .px-switch__core {
-    min-width: 30px;
-    height: 16px;
-    border-radius: 8px;
+    min-width: 36px;
+    height: 18px;
+    border-width: var(--px-border-width-thin);
+    box-shadow: 2px 2px 0 0 var(--px-switch-shadow-color);
+
     .px-switch__core-action {
       width: 12px;
       height: 12px;
     }
   }
-  &.is-checked {
-    .px-switch__core .px-switch-core-action {
-      left: calc(100% - 13px);
-      color: var(--px-switch-on-color);
-    }
+
+  &.is-checked .px-switch__core .px-switch__core-action {
+    left: calc(100% - 14px);
   }
 }
 
+/* Core element - The actual toggle */
 .px-switch__core {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   position: relative;
-  height: 20px;
-  min-width: 40px;
-  border: 1px solid var(--px-switch-off-border-color);
-  outline: none;
-  border-radius: 10px;
+  height: 22px;
+  min-width: 44px;
   box-sizing: border-box;
+  outline: none;
+
+  /* Pixel-style border */
+  border: var(--px-border-width) solid var(--px-switch-off-border-color);
+  border-radius: 0;
   background: var(--px-switch-off-color);
-  transition: border-color var(--px-transition-duration),
-    background-color var(--px-transition-duration);
+
+  /* Pixel shadow */
+  box-shadow:
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-switch-shadow-color),
+    var(--px-box-shadow-inset-light);
+
+  /* No smooth transitions */
+  transition: none;
+
+  /* The toggle handle */
   .px-switch__core-action {
     position: absolute;
-    border-radius: var(--px-border-radius-circle);
-    left: 1px;
+    left: 2px;
     width: 16px;
     height: 16px;
     background-color: var(--px-color-white);
-    transition: all var(--px-transition-duration);
+    border-radius: 0;
+    transition: none;
+    box-shadow: var(--px-box-shadow-inset-light);
   }
+
+  /* Inner text container */
   .px-switch__core-inner {
     width: 100%;
     height: 16px;
@@ -115,14 +147,17 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    padding: 0 4px 0 18px;
+    padding: 0 4px 0 20px;
+
     .px-switch__core-inner-text {
-      font-size: 12px;
+      font-size: var(--px-font-size-extra-small);
+      font-family: var(--px-font-family);
       color: var(--px-color-white);
       user-select: none;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      text-transform: uppercase;
     }
   }
 }

@@ -1,75 +1,116 @@
+/* Select Variables */
 .px-select {
-  --px-select-item-hover-bg-color: var(--px-fill-color-light);
+  --px-select-item-hover-bg-color: var(--px-fill-color-dark);
   --px-select-item-font-size: var(--px-font-size-base);
-  --px-select-item-font-color: var(--px-text-color-regular);
+  --px-select-item-font-color: var(--px-text-color-primary);
   --px-select-item-selected-font-color: var(--px-color-primary);
-  --px-select-item-disabled-font-color: var(--px-text-color-placeholder);
+  --px-select-item-disabled-font-color: var(--px-text-color-disabled);
   --px-select-input-focus-border-color: var(--px-color-primary);
+  --px-select-border-color: var(--px-border-color);
+  --px-select-shadow-color: var(--px-shadow-color);
 }
 
+/* Base Select Styles - Pixel Dropdown */
 .px-select {
   display: inline-block;
   vertical-align: middle;
   line-height: 32px;
+  font-family: var(--px-font-family);
+
+  /* Tooltip popper styling */
   :deep(.px-tooltip__popper) {
     padding: 0;
+    border: var(--px-border-width) solid var(--px-select-border-color);
+    border-radius: 0;
+    box-shadow:
+      var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-select-shadow-color),
+      var(--px-box-shadow-inset-light);
+    background-color: var(--px-bg-color);
   }
 
+  /* Input with dropdown arrow */
   :deep(.px-input) {
     .header-angle {
-      transition: transform var(--px-transition-duration);
+      transition: none;
+
       &.is-active {
         transform: rotate(180deg);
       }
     }
   }
 
+  /* No data / Loading states */
   .px-select__nodata,
   .px-select__loading {
-    padding: 10px 0;
+    padding: 12px 16px;
     margin: 0;
     text-align: center;
     color: var(--px-text-color-secondary);
-    font-size: var(--px-select-font-size);
+    font-size: var(--px-select-item-font-size);
+    font-family: var(--px-font-family);
   }
+
+  /* Menu container */
   .px-select__menu {
     list-style: none;
-    margin: 6px 0;
-    padding: 0;
+    margin: 0;
+    padding: 4px 0;
     box-sizing: border-box;
   }
+
+  /* Menu items - Pixel list style */
   .px-select__menu-item {
     margin: 0;
     font-size: var(--px-select-item-font-size);
-    padding: 0 32px 0 20px;
+    font-family: var(--px-font-family);
+    padding: 0 16px;
     position: relative;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     color: var(--px-select-item-font-color);
-    height: 34px;
-    line-height: 34px;
+    height: 36px;
+    line-height: 36px;
     box-sizing: border-box;
     cursor: pointer;
+    transition: none;
+
+    /* Hover effect */
     &:hover {
       background-color: var(--px-select-item-hover-bg-color);
     }
+
+    /* Selected state with pixel indicator */
     &.is-selected {
       color: var(--px-select-item-selected-font-color);
-      font-weight: 700;
+      font-weight: 500;
+      background-color: var(--px-color-primary-light-9);
+
+      &::before {
+        content: '>';
+        position: absolute;
+        left: 6px;
+        color: var(--px-select-item-selected-font-color);
+      }
     }
+
+    /* Highlighted (keyboard navigation) */
     &.is-highlighted {
       background-color: var(--px-select-item-hover-bg-color);
     }
+
+    /* Disabled state */
     &.is-disabled {
       color: var(--px-select-item-disabled-font-color);
       cursor: not-allowed;
+
       &:hover {
         background-color: transparent;
       }
     }
   }
 
+  /* Input pointer cursor */
   :deep(.px-input__inner) {
     cursor: pointer;
   }

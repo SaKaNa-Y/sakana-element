@@ -4,7 +4,8 @@ import DefaultTheme from 'vitepress/theme';
 import SakanaElement from 'sakana-element';
 
 import 'vitepress-preview-component/style.css';
-import 'sakana-element/dist/index.css';
+import '@sakana-element/theme/index.css';
+import './custom.css';
 
 export default {
   ...DefaultTheme,

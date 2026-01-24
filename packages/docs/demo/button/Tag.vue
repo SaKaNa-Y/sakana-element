@@ -1,7 +1,7 @@
 <template>
-  <er-button>button</er-button>
-  <er-button tag="div" role="button" tabindex="0">div</er-button>
-  <er-button
+  <px-button>button</px-button>
+  <px-button tag="div" role="button" tabindex="0">div</px-button>
+  <px-button
     type="primary"
     tag="a"
     href="https://github.com/EricWXY/eric-ui"
@@ -9,5 +9,5 @@
     rel="noopener noreferrer"
   >
     a
-  </er-button>
+  </px-button>
 </template>
