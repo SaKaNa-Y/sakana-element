@@ -32,7 +32,7 @@ const tooltipRef = ref<TooltipInstance>();
 const triggerRef = ref<ButtonInstance>();
 
 const tooltipProps = computed(
-  () => omit(props, ['items', 'hideAfterClick', 'size', 'type', 'splitButton']) //排除这些属性
+  () => omit(props, ['items', 'hideOnClick', 'size', 'type', 'splitButton']) //排除这些属性
 );
 
 function handleItemClick(e: DropdownItemProps) {
@@ -40,7 +40,7 @@ function handleItemClick(e: DropdownItemProps) {
   !isNil(e.command) && emits('command', e.command);
 }
 
-!TEST && useDisabledStyle(); //测试环境不使用TEST是全局变量，在env.d.ts中定义
+(typeof TEST === 'undefined' || !TEST) && useDisabledStyle();
 provide<DropdownContext>(DROPDOWN_CTX_KEY, {
   handleItemClick,
   size: computed(() => props.size),
@@ -87,12 +87,10 @@ defineExpose<DropdownInstance>({
   </div>
 </template>
 
-<style scoped>
+<style>
 @import './style.css';
 
-:deep(.px-button-group) {
-  & > :last-child {
-    padding: 5px 7px;
-  }
+.px-dropdown .px-button-group > :last-child {
+  padding: 5px 7px;
 }
 </style>

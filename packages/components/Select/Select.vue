@@ -385,7 +385,7 @@ defineExpose<SelectInstance>({
     >
       <template #default>
         <div ref="inputWrapperRef">
-          <er-input
+          <px-input
             ref="inputRef"
             v-model="selectStates.inputValue"
             :id="inputId"
@@ -412,7 +412,7 @@ defineExpose<SelectInstance>({
                 :class="{ 'is-active': isDropdownVisible }"
               />
             </template>
-          </er-input>
+          </px-input>
         </div>
       </template>
       <template #content>
@@ -424,7 +424,7 @@ defineExpose<SelectInstance>({
         </div>
         <ul class="px-select__menu">
           <template v-if="!hasChildren">
-            <er-option
+            <px-option
               v-for="item in filteredOptions"
               :key="item.value"
               v-bind="item"

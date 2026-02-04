@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="row">
     <px-button type="primary" icon="edit" />
     <px-button type="primary" icon="share" />
     <px-button type="primary" icon="trash" />
@@ -9,3 +9,11 @@
     </px-button>
   </div>
 </template>
+
+<style scoped>
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+</style>

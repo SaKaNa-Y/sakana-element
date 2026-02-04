@@ -129,37 +129,11 @@
   --px-disabled-bg-color: var(--px-fill-color-light);
   --px-disabled-text-color: var(--px-text-color-placeholder);
   --px-disabled-border-color: var(--px-border-color-lighter);
-
-  /* === LEGACY Er VARIABLES (backwards compatibility) === */
-  --er-color-white: var(--px-color-white);
-  --er-color-black: var(--px-color-black);
-  --er-color-primary: var(--px-color-primary);
-  --er-color-success: var(--px-color-success);
-  --er-color-warning: var(--px-color-warning);
-  --er-color-danger: var(--px-color-danger);
-  --er-color-info: var(--px-color-info);
-  --er-bg-color: var(--px-bg-color);
-  --er-bg-color-page: var(--px-bg-color-page);
-  --er-text-color-primary: var(--px-text-color-primary);
-  --er-text-color-regular: var(--px-text-color-regular);
-  --er-text-color-secondary: var(--px-text-color-secondary);
-  --er-text-color-placeholder: var(--px-text-color-placeholder);
-  --er-text-color-disabled: var(--px-text-color-disabled);
-  --er-border-color: var(--px-border-color);
-  --er-border-color-light: var(--px-border-color-light);
-  --er-border-color-dark: var(--px-border-color-dark);
-  --er-border-width: var(--px-border-width);
-  --er-border-style: var(--px-border-style);
-  --er-border: var(--px-border);
-  --er-border-radius-base: var(--px-border-radius-base);
-  --er-font-size-base: var(--px-font-size-base);
-  --er-font-family: var(--px-font-family);
-  --er-transition-duration: var(--px-transition-duration);
-  --er-transition-duration-fast: var(--px-transition-duration-fast);
 }
 
 /* === DARK MODE - Mocha Catppuccin inspired === */
-.px-dark {
+.px-dark,
+.dark {
   --px-color-black: #11111b;
   --px-color-pure-black: #000000;
 
@@ -195,6 +169,46 @@
   /* Dark shadows */
   --px-shadow-color: #11111b;
   --px-shadow-color-dark: #000000;
+
+  /* Dark disabled */
+  --px-disabled-bg-color: var(--px-fill-color-light);
+  --px-disabled-text-color: var(--px-text-color-placeholder);
+  --px-disabled-border-color: var(--px-border-color-lighter);
+
+  /* Dark primary shades */
+  --px-color-primary-light-3: #5c6bc0;
+  --px-color-primary-light-5: #4a5699;
+  --px-color-primary-light-7: #3a4573;
+  --px-color-primary-light-8: #2e365c;
+  --px-color-primary-light-9: #232845;
+
+  /* Dark success shades */
+  --px-color-success-light-3: #2d7a53;
+  --px-color-success-light-5: #245f42;
+  --px-color-success-light-7: #1b4531;
+  --px-color-success-light-8: #153827;
+  --px-color-success-light-9: #0f2b1e;
+
+  /* Dark warning shades */
+  --px-color-warning-light-3: #c8906d;
+  --px-color-warning-light-5: #9a6f54;
+  --px-color-warning-light-7: #6c4e3b;
+  --px-color-warning-light-8: #563e2f;
+  --px-color-warning-light-9: #3f2e23;
+
+  /* Dark danger shades */
+  --px-color-danger-light-3: #c26e87;
+  --px-color-danger-light-5: #965567;
+  --px-color-danger-light-7: #6a3c49;
+  --px-color-danger-light-8: #54303a;
+  --px-color-danger-light-9: #3e242c;
+
+  /* Dark info shades */
+  --px-color-info-light-3: #6e90c8;
+  --px-color-info-light-5: #546f99;
+  --px-color-info-light-7: #3b4e6c;
+  --px-color-info-light-8: #2f3e56;
+  --px-color-info-light-9: #232e40;
 }
 
 /* === GLOBAL STYLES === */

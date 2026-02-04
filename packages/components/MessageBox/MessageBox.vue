@@ -93,7 +93,7 @@ function handleClose() {
 
 <template>
   <transition name="fade-in-linear" @after-leave="destroy">
-    <er-overlay v-show="(visible as Ref).value" :z-index="state.zIndex" mask>
+    <px-overlay v-show="(visible as Ref).value" :z-index="state.zIndex" mask>
       <div
         role="dialog"
         class="px-overlay-message-box"
@@ -153,7 +153,7 @@ function handleClose() {
             </div>
           </div>
           <div v-show="state.showInput" class="px-message-box__input">
-            <er-input
+            <px-input
               v-model="state.inputValue"
               ref="inputRef"
               :placeholder="state.inputPlaceholder"
@@ -164,7 +164,7 @@ function handleClose() {
           <div class="px-message-box__footer">
             <px-button
               v-if="state.showCancelButton"
-              class="px-message-box__footer-btn er-message-box__cancel-btn"
+              class="px-message-box__footer-btn px-message-box__cancel-btn"
               :type="state.cancelButtonType"
               :round="state.roundButton"
               :loading="state.cancelButtonLoading"
@@ -174,7 +174,7 @@ function handleClose() {
             >
             <px-button
               v-show="state.showConfirmButton"
-              class="px-message-box__footer-btn er-message-box__confirm-btn"
+              class="px-message-box__footer-btn px-message-box__confirm-btn"
               :type="state.confirmButtonType ?? 'primary'"
               :round="state.roundButton"
               :loading="state.confirmButtonLoading"
@@ -185,7 +185,7 @@ function handleClose() {
           </div>
         </div>
       </div>
-    </er-overlay>
+    </px-overlay>
   </transition>
 </template>
 

@@ -3,12 +3,13 @@
 </template>
 
 <script setup lang="ts">
-import { vLoading } from 'sakana-element';
+import { PxLoadingService } from 'sakana-element';
 
 const openLoading = () => {
-  const loading = vLoading.service({
+  const loading = PxLoadingService({
     lock: true,
     text: 'Loading...',
+    fullscreen: true,
     background: 'rgba(0, 0, 0, 0.7)'
   });
   setTimeout(() => {

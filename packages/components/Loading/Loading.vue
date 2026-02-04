@@ -22,7 +22,7 @@ const iconName = computed(() => {
   <transition name="fade-in-linear" @after-leave="onAfterLeave">
     <div
       v-show="(props.visible as Ref).value"
-      class="px-loading er-loading__mask"
+      class="px-loading px-loading__mask"
       :class="{ 'is-fullscreen': fullscreen }"
     >
       <div class="px-loading__spinner">

@@ -42,6 +42,6 @@ function handleClick() {
   </li>
 </template>
 
-<style scoped>
+<style>
 @import './style.css';
 </style>
