@@ -40,23 +40,49 @@
   user-select: none;
   vertical-align: middle;
   -webkit-appearance: none;
-  background-color: var(--px-button-bg-color);
+  background: transparent;
   padding: 8px 16px;
   font-size: var(--px-font-size-base);
   position: relative;
 
-  /* Pixel-style border */
-  border: var(--px-border-width) solid var(--px-button-border-color);
-  border-radius: 0;
+  /* Remove traditional border — pixel border via pseudo-elements */
+  border: none;
 
-  /* Pixel shadow with inset highlight */
-  box-shadow:
-    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-button-shadow-color),
-    var(--px-box-shadow-inset-light),
-    var(--px-box-shadow-inset-dark);
+  /* Pixel shadow via drop-shadow (respects clip-path shape) */
+  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-button-shadow-color));
 
   /* No smooth transitions */
   transition: none;
+
+  /* Border layer — filled with border color, clipped to pixel shape */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-button-border-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    z-index: -1;
+  }
+
+  /* Fill layer — inset by border width, filled with bg color */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-button-bg-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    z-index: -1;
+  }
 
   & + & {
     margin-left: 12px;
@@ -65,23 +91,29 @@
   /* Hover - Lift effect */
   &:hover:not(.is-disabled):not(.is-loading) {
     color: var(--px-button-hover-text-color);
-    border-color: var(--px-button-hover-border-color);
-    background-color: var(--px-button-hover-bg-color);
     transform: translate(-1px, -1px);
-    box-shadow:
-      4px 4px 0 0 var(--px-button-shadow-color),
-      var(--px-box-shadow-inset-light);
+    filter: drop-shadow(4px 4px 0px var(--px-button-shadow-color));
+
+    &::before {
+      background: var(--px-button-hover-border-color);
+    }
+    &::after {
+      background: var(--px-button-hover-bg-color);
+    }
   }
 
   /* Active - Press down effect */
   &:active:not(.is-disabled):not(.is-loading) {
     color: var(--px-button-active-text-color);
-    border-color: var(--px-button-active-border-color);
-    background-color: var(--px-button-active-bg-color);
     transform: translate(1px, 1px);
-    box-shadow:
-      1px 1px 0 0 var(--px-button-shadow-color),
-      inset 1px 1px 0 0 rgba(0, 0, 0, 0.1);
+    filter: drop-shadow(1px 1px 0px var(--px-button-shadow-color));
+
+    &::before {
+      background: var(--px-button-active-border-color);
+    }
+    &::after {
+      background: var(--px-button-active-bg-color);
+    }
   }
 
   /* Focus outline */
@@ -92,32 +124,39 @@
 
   /* Plain variant */
   &.is-plain {
-    --px-button-bg-color: transparent;
+    --px-button-bg-color: var(--px-fill-color-blank);
     --px-button-hover-bg-color: var(--px-fill-color-light);
     --px-button-hover-border-color: var(--px-color-primary);
-    box-shadow: var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-button-shadow-color);
-
-    &:hover:not(.is-disabled) {
-      box-shadow: 4px 4px 0 0 var(--px-button-shadow-color);
-    }
-
-    &:active:not(.is-disabled) {
-      box-shadow: 1px 1px 0 0 var(--px-button-shadow-color);
-    }
   }
 
-  /* Round - Pixel-style rounded with stepped corners */
+  /* Round - Pixel-style rounded with 3-step staircase corners */
   &.is-round {
-    border-radius: 4px;
     padding: 8px 20px;
+
+    &::before, &::after {
+      clip-path: polygon(
+        0 8px, 2px 8px, 2px 4px, 4px 4px, 4px 2px, 8px 2px, 8px 0,
+        calc(100% - 8px) 0, calc(100% - 8px) 2px, calc(100% - 4px) 2px, calc(100% - 4px) 4px, calc(100% - 2px) 4px, calc(100% - 2px) 8px, 100% 8px,
+        100% calc(100% - 8px), calc(100% - 2px) calc(100% - 8px), calc(100% - 2px) calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) calc(100% - 2px), calc(100% - 8px) calc(100% - 2px), calc(100% - 8px) 100%,
+        8px 100%, 8px calc(100% - 2px), 4px calc(100% - 2px), 4px calc(100% - 4px), 2px calc(100% - 4px), 2px calc(100% - 8px), 0 calc(100% - 8px)
+      );
+    }
   }
 
-  /* Circle - Square icon button */
+  /* Circle - Pixel circle approximation with 4-step staircase */
   &.is-circle {
-    border-radius: 0;
     padding: 8px;
     width: 36px;
     height: 36px;
+
+    &::before, &::after {
+      clip-path: polygon(
+        0 10px, 2px 10px, 2px 6px, 4px 6px, 4px 4px, 6px 4px, 6px 2px, 10px 2px, 10px 0,
+        calc(100% - 10px) 0, calc(100% - 10px) 2px, calc(100% - 6px) 2px, calc(100% - 6px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 6px, calc(100% - 2px) 6px, calc(100% - 2px) 10px, 100% 10px,
+        100% calc(100% - 10px), calc(100% - 2px) calc(100% - 10px), calc(100% - 2px) calc(100% - 6px), calc(100% - 4px) calc(100% - 6px), calc(100% - 4px) calc(100% - 4px), calc(100% - 6px) calc(100% - 4px), calc(100% - 6px) calc(100% - 2px), calc(100% - 10px) calc(100% - 2px), calc(100% - 10px) 100%,
+        10px 100%, 10px calc(100% - 2px), 6px calc(100% - 2px), 6px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 6px), 2px calc(100% - 6px), 2px calc(100% - 10px), 0 calc(100% - 10px)
+      );
+    }
   }
 
   /* Disabled state */
@@ -130,11 +169,16 @@
   &[disabled]:focus {
     color: var(--px-button-disabled-text-color);
     cursor: not-allowed;
-    background-color: var(--px-button-disabled-bg-color);
-    border-color: var(--px-button-disabled-border-color);
-    box-shadow: 1px 1px 0 0 rgba(0, 0, 0, 0.1);
+    filter: drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.1));
     transform: none;
     opacity: 0.6;
+
+    &::before {
+      background: var(--px-button-disabled-border-color);
+    }
+    &::after {
+      background: var(--px-button-disabled-bg-color);
+    }
   }
 
   /* Icon sizing */
@@ -160,23 +204,6 @@
     --px-button-disabled-text-color: var(--px-color-white);
     --px-button-disabled-bg-color: var(--px-color-$(val)-light-5);
     --px-button-disabled-border-color: var(--px-color-$(val)-light-5);
-
-    box-shadow:
-      var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-color-$(val)-dark),
-      inset -1px -1px 0 0 rgba(0, 0, 0, 0.1),
-      inset 1px 1px 0 0 rgba(255, 255, 255, 0.2);
-
-    &:hover:not(.is-disabled):not(.is-loading) {
-      box-shadow:
-        4px 4px 0 0 var(--px-color-$(val)-dark),
-        inset 1px 1px 0 0 rgba(255, 255, 255, 0.25);
-    }
-
-    &:active:not(.is-disabled):not(.is-loading) {
-      box-shadow:
-        1px 1px 0 0 var(--px-color-$(val)-dark),
-        inset 1px 1px 0 0 rgba(0, 0, 0, 0.15);
-    }
   }
 
   /* Plain variant for type buttons */
@@ -184,6 +211,7 @@
     --px-button-text-color: var(--px-color-$(val));
     --px-button-bg-color: var(--px-color-$(val)-light-9);
     --px-button-border-color: var(--px-color-$(val));
+    --px-button-shadow-color: var(--px-shadow-color);
     --px-button-hover-text-color: var(--px-color-white);
     --px-button-hover-bg-color: var(--px-color-$(val));
     --px-button-hover-border-color: var(--px-color-$(val));
@@ -193,18 +221,8 @@
     --px-button-disabled-bg-color: var(--px-color-$(val)-light-9);
     --px-button-disabled-border-color: var(--px-color-$(val)-light-7);
 
-    box-shadow: var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-shadow-color);
-
-    &:hover:not(.is-disabled) {
-      box-shadow:
-        4px 4px 0 0 var(--px-color-$(val)-dark),
-        inset 1px 1px 0 0 rgba(255, 255, 255, 0.15);
-    }
-
-    &:active:not(.is-disabled) {
-      box-shadow:
-        1px 1px 0 0 var(--px-color-$(val)-dark),
-        inset 1px 1px 0 0 rgba(0, 0, 0, 0.15);
+    &:hover:not(.is-disabled):not(.is-loading) {
+      --px-button-shadow-color: var(--px-color-$(val)-dark);
     }
   }
 }
@@ -215,7 +233,6 @@
   height: var(--px-button-size);
   padding: 12px 24px;
   font-size: var(--px-font-size-large);
-  border-width: var(--px-border-width-thick);
 
   &.is-circle {
     padding: 12px;
@@ -228,19 +245,16 @@
   height: var(--px-button-size);
   padding: 4px 12px;
   font-size: var(--px-font-size-small);
-  border-width: var(--px-border-width-thin);
-  box-shadow:
-    2px 2px 0 0 var(--px-button-shadow-color),
-    var(--px-box-shadow-inset-light);
+  filter: drop-shadow(2px 2px 0px var(--px-button-shadow-color));
 
   &:hover:not(.is-disabled):not(.is-loading) {
     transform: translate(-1px, -1px);
-    box-shadow: 3px 3px 0 0 var(--px-button-shadow-color);
+    filter: drop-shadow(3px 3px 0px var(--px-button-shadow-color));
   }
 
   &:active:not(.is-disabled):not(.is-loading) {
     transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0 0 var(--px-button-shadow-color);
+    filter: drop-shadow(1px 1px 0px var(--px-button-shadow-color));
   }
 
   &.is-circle {
@@ -258,32 +272,58 @@
 .px-button-group {
   display: inline-flex;
   vertical-align: middle;
-  border: var(--px-border-width) solid var(--px-border-color);
-  box-shadow: var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-shadow-color);
+  /* Unified shadow for the whole group — traces all buttons' pixel shapes */
+  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-shadow-color));
 
-  &::after {
-    clear: both;
-  }
-
+  /* Buttons keep their pseudo-element borders, group provides unified shadow */
   & > :deep(.px-button) {
-    position: relative;
+    filter: none;
     margin-left: 0;
-    border-radius: 0;
-    border: none;
-    box-shadow: none;
 
     &:not(:first-child) {
-      border-left: 1px solid var(--px-button-group-border-color);
+      margin-left: -2px;
     }
 
-    &:hover:not(.is-disabled) {
+    &:hover:not(.is-disabled):not(.is-loading) {
       transform: none;
+      filter: none;
       z-index: 1;
-      box-shadow: inset 0 0 0 100px rgba(255, 255, 255, 0.1);
     }
 
-    &:active:not(.is-disabled) {
-      box-shadow: inset 1px 1px 0 0 rgba(0, 0, 0, 0.15);
+    &:active:not(.is-disabled):not(.is-loading) {
+      transform: none;
+      filter: none;
+    }
+  }
+
+  /* First button (multi): notched left, straight right */
+  & > :deep(.px-button:first-child:not(:last-child)) {
+    &::before, &::after {
+      clip-path: polygon(
+        0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+        100% 0,
+        100% 100%,
+        4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+      );
+    }
+  }
+
+  /* Last button (multi): straight left, notched right */
+  & > :deep(.px-button:last-child:not(:first-child)) {
+    &::before, &::after {
+      clip-path: polygon(
+        0 0,
+        calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+        100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+        0 100%
+      );
+    }
+  }
+
+  /* Middle buttons: straight rectangle, no notches */
+  & > :deep(.px-button:not(:first-child):not(:last-child)) {
+    &::before, &::after {
+      clip-path: none;
     }
   }
 }
