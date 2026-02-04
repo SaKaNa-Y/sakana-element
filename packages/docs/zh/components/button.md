@@ -50,6 +50,14 @@ demo-preview=../../demo/button/Loading.vue
 demo-preview=../../demo/button/Size.vue
 :::
 
+## 自定义颜色
+
+使用 `color` 属性来设置按钮的自定义颜色。文字颜色、悬停状态、激活状态和禁用状态会根据提供的颜色自动生成。
+
+::: preview
+demo-preview=../../demo/button/Color.vue
+:::
+
 ## 自定义标签
 
 使用 `tag` 属性来自定义按钮的 HTML 标签。
@@ -74,6 +82,7 @@ demo-preview=../../demo/button/Throttle.vue
 | --- | --- | --- | --- |
 | size | 按钮尺寸 | `'large' \| 'default' \| 'small'` | `'default'` |
 | type | 按钮类型 | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | — |
+| color | 自定义按钮颜色（十六进制） | `string` | — |
 | plain | 是否为朴素按钮 | `boolean` | `false` |
 | round | 是否为圆角按钮 | `boolean` | `false` |
 | circle | 是否为圆形按钮 | `boolean` | `false` |

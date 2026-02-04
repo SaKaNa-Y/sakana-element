@@ -50,6 +50,14 @@ Use `size` property to set the button size.
 demo-preview=../../demo/button/Size.vue
 :::
 
+## Custom Color
+
+Use `color` property to set a custom button color. The text color, hover state, active state, and disabled state are auto-generated from the provided color.
+
+::: preview
+demo-preview=../../demo/button/Color.vue
+:::
+
 ## Custom Tag
 
 Use `tag` property to customize the button's HTML tag.
@@ -74,6 +82,7 @@ demo-preview=../../demo/button/Throttle.vue
 | --- | --- | --- | --- |
 | size | Button size | `'large' \| 'default' \| 'small'` | `'default'` |
 | type | Button type | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | — |
+| color | Custom button color (hex) | `string` | — |
 | plain | Plain button | `boolean` | `false` |
 | round | Round button | `boolean` | `false` |
 | circle | Circle button | `boolean` | `false` |
