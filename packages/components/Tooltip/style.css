@@ -4,7 +4,7 @@
   --px-popover-font-size: var(--px-font-size-base);
   --px-popover-border-color: var(--px-border-color-dark);
   --px-popover-padding: 10px 14px;
-  --px-popover-shadow-color: var(--px-shadow-color-dark);
+  --px-popover-shadow-color: var(--px-shadow-color);
   display: inline-block;
 }
 
@@ -23,7 +23,7 @@
 
   /* Popper container - Pixel style box */
   .px-tooltip__popper {
-    background: var(--px-popover-bg-color);
+    background: transparent;
     padding: var(--px-popover-padding);
     color: var(--px-text-color-primary);
     line-height: 1.5;
@@ -32,78 +32,47 @@
     word-break: break-all;
     box-sizing: border-box;
     z-index: 1000;
+    position: relative;
 
-    /* Pixel-style border - thick and sharp */
-    border: 3px solid var(--px-popover-border-color);
-    border-radius: 0;
+    /* Remove traditional border */
+    border: none;
 
-    /* Classic pixel shadow */
-    box-shadow:
-      4px 4px 0 0 var(--px-popover-shadow-color),
-      inset -2px -2px 0 0 rgba(0, 0, 0, 0.05),
-      inset 2px 2px 0 0 rgba(255, 255, 255, 0.3);
+    /* Pixel shadow via drop-shadow (respects clip-path shape) */
+    filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-popover-shadow-color));
 
-    /* Pixel arrow - Square shaped */
-    #arrow,
-    #arrow::before {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      box-sizing: border-box;
-      background: var(--px-popover-bg-color);
-    }
-
-    #arrow {
-      visibility: hidden;
-    }
-
-    #arrow::before {
-      visibility: visible;
+    /* Border layer — filled with border color, clipped to pixel shape */
+    &::before {
       content: '';
-      transform: rotate(45deg);
-      border: 3px solid var(--px-popover-border-color);
+      position: absolute;
+      inset: 0;
+      background: var(--px-popover-border-color);
+      clip-path: polygon(
+        0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+        calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+        100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+        4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+      );
+      z-index: -1;
     }
 
-    /* Arrow positioning */
-    &[data-popper-placement^='top'] > #arrow {
-      bottom: -7px;
-    }
-
-    &[data-popper-placement^='bottom'] > #arrow {
-      top: -7px;
-    }
-
-    &[data-popper-placement^='left'] > #arrow {
-      right: -7px;
-    }
-
-    &[data-popper-placement^='right'] > #arrow {
-      left: -7px;
-    }
-
-    /* Arrow border sides based on position */
-    &[data-popper-placement^='top'] > #arrow::before {
-      border-left: none;
-      border-top: none;
+    /* Fill layer — inset by border width, filled with bg color */
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
       background: var(--px-popover-bg-color);
+      clip-path: polygon(
+        0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+        calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+        100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+        4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+      );
+      z-index: -1;
     }
 
-    &[data-popper-placement^='bottom'] > #arrow::before {
-      border-right: none;
-      border-bottom: none;
-      background: var(--px-popover-bg-color);
-    }
-
-    &[data-popper-placement^='left'] > #arrow::before {
-      border-left: none;
-      border-bottom: none;
-      background: var(--px-popover-bg-color);
-    }
-
-    &[data-popper-placement^='right'] > #arrow::before {
-      border-right: none;
-      border-top: none;
-      background: var(--px-popover-bg-color);
+    /* Hide arrow for pixel style - pixel boxes don't need arrows */
+    #arrow {
+      display: none;
     }
   }
 }
@@ -113,10 +82,7 @@
   .px-tooltip__popper {
     --px-popover-bg-color: var(--px-text-color-primary);
     --px-popover-border-color: var(--px-text-color-primary);
+    --px-popover-shadow-color: rgba(0, 0, 0, 0.4);
     color: var(--px-bg-color);
-    box-shadow:
-      4px 4px 0 0 rgba(0, 0, 0, 0.3),
-      inset -2px -2px 0 0 rgba(0, 0, 0, 0.2),
-      inset 2px 2px 0 0 rgba(255, 255, 255, 0.1);
   }
 }

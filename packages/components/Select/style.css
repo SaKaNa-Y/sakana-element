@@ -1,13 +1,15 @@
 /* Select Variables */
 .px-select {
-  --px-select-item-hover-bg-color: var(--px-fill-color-dark);
+  --px-select-item-hover-bg-color: var(--px-fill-color-light);
   --px-select-item-font-size: var(--px-font-size-base);
   --px-select-item-font-color: var(--px-text-color-primary);
   --px-select-item-selected-font-color: var(--px-color-primary);
+  --px-select-item-selected-bg-color: var(--px-color-primary-light-9);
   --px-select-item-disabled-font-color: var(--px-text-color-disabled);
   --px-select-input-focus-border-color: var(--px-color-primary);
   --px-select-border-color: var(--px-border-color);
   --px-select-shadow-color: var(--px-shadow-color);
+  --px-select-dropdown-bg-color: var(--px-fill-color-blank);
 }
 
 /* Base Select Styles - Pixel Dropdown */
@@ -17,15 +19,14 @@
   line-height: 32px;
   font-family: var(--px-font-family);
 
-  /* Tooltip popper styling */
+  /* Tooltip popper styling - pixel style inherited from Tooltip */
   :deep(.px-tooltip__popper) {
     padding: 0;
-    border: var(--px-border-width) solid var(--px-select-border-color);
-    border-radius: 0;
-    box-shadow:
-      var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-select-shadow-color),
-      var(--px-box-shadow-inset-light);
-    background-color: var(--px-bg-color);
+
+    /* Override tooltip background to match select dropdown */
+    &::after {
+      background: var(--px-select-dropdown-bg-color);
+    }
   }
 
   /* Input with dropdown arrow */
@@ -63,7 +64,7 @@
     margin: 0;
     font-size: var(--px-select-item-font-size);
     font-family: var(--px-font-family);
-    padding: 0 16px;
+    padding: 0 16px 0 24px;
     position: relative;
     white-space: nowrap;
     overflow: hidden;
@@ -75,28 +76,66 @@
     cursor: pointer;
     transition: none;
 
+    /* Pixel selector indicator - small square */
+    &::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      background: transparent;
+      border: 2px solid transparent;
+      z-index: 2;
+    }
+
+    /* Background layer for hover/selected states */
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      left: 2px;
+      right: 2px;
+      background: transparent;
+      z-index: -1;
+    }
+
     /* Hover effect */
     &:hover {
-      background-color: var(--px-select-item-hover-bg-color);
+      &::after {
+        background-color: var(--px-select-item-hover-bg-color);
+      }
+
+      &::before {
+        border-color: var(--px-color-primary);
+      }
     }
 
     /* Selected state with pixel indicator */
     &.is-selected {
       color: var(--px-select-item-selected-font-color);
       font-weight: 500;
-      background-color: var(--px-color-primary-light-9);
+
+      &::after {
+        background-color: var(--px-select-item-selected-bg-color);
+      }
 
       &::before {
-        content: '>';
-        position: absolute;
-        left: 6px;
-        color: var(--px-select-item-selected-font-color);
+        background: var(--px-color-primary);
+        border-color: var(--px-color-primary);
       }
     }
 
     /* Highlighted (keyboard navigation) */
     &.is-highlighted {
-      background-color: var(--px-select-item-hover-bg-color);
+      &::after {
+        background-color: var(--px-select-item-hover-bg-color);
+      }
+
+      &::before {
+        border-color: var(--px-color-primary);
+      }
     }
 
     /* Disabled state */
@@ -105,8 +144,55 @@
       cursor: not-allowed;
 
       &:hover {
-        background-color: transparent;
+        &::after {
+          background-color: transparent;
+        }
+
+        &::before {
+          border-color: transparent;
+          background: transparent;
+        }
       }
+    }
+  }
+
+  /* First item needs pixel corners on top */
+  .px-select__menu-item:first-child {
+    &::after {
+      top: 2px;
+      clip-path: polygon(
+        0 2px, 2px 2px, 2px 0, 4px 0,
+        calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, 100% 2px,
+        100% 100%,
+        0 100%
+      );
+    }
+  }
+
+  /* Last item needs pixel corners on bottom */
+  .px-select__menu-item:last-child {
+    &::after {
+      bottom: 2px;
+      clip-path: polygon(
+        0 0,
+        100% 0,
+        100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%, calc(100% - 4px) 100%,
+        4px 100%, 4px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+      );
+    }
+  }
+
+  /* If only one item, needs both top and bottom pixel corners */
+  .px-select__menu-item:first-child:last-child {
+    &::after {
+      top: 2px;
+      bottom: 2px;
+      clip-path: polygon(
+        0 2px, 2px 2px, 2px 0, 4px 0,
+        calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, 100% 2px,
+        100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%, calc(100% - 4px) 100%,
+        4px 100%, 4px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+      );
     }
   }
 

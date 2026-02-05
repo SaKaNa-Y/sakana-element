@@ -1,5 +1,5 @@
 import { each, isElement } from 'lodash-es';
-import { onMounted, onUnmounted, watch, toRef } from 'vue';
+import { onMounted, onUnmounted, watch } from 'vue';
 import type { ComputedRef, Ref, WatchStopHandle } from 'vue';
 import type { TooltipProps } from './types';
 
@@ -10,22 +10,15 @@ export function useEvenstToTiggerNode(
   closeMethod: () => void
 ) {
   let watchEventsStopHandle: WatchStopHandle | void;
-  let watchTriggerNodeStopHandle: WatchStopHandle | void;
   let watchVirtualRefStopHandle: WatchStopHandle | void;
 
-  const _eventHandleMap = new Map(); //Map存储键值对
+  const _eventHandleMap = new Map();
 
   const _bindEventToVirtualTiggerNode = () => {
     const el = triggerNode.value;
-    console.log('[bindEvent] triggerNode.value:', el);
-    console.log('[bindEvent] events.value:', events.value);
-    if (!isElement(el)) {
-      console.log('[bindEvent] el is not element, skip bindEvent');
-      return;
-    }
+    if (!isElement(el)) return;
 
     each(events.value, (fn, event) => {
-      console.log('[bindEvent] bindEvent:', event);
       _eventHandleMap.set(event, fn);
       el.addEventListener(event as keyof HTMLElementEventMap, fn);
     });
@@ -44,23 +37,15 @@ export function useEvenstToTiggerNode(
   };
 
   onMounted(() => {
-    console.log('[onMounted] virtualTriggering:', props.virtualTriggering);
-    console.log('[onMounted] virtualRef:', props.virtualRef);
-
-    // 直接监听 props.virtualRef 的变化
     watchVirtualRefStopHandle = watch(
       () => props.virtualRef,
       (newRef, oldRef) => {
-        console.log('[watch virtualRef] newRef:', newRef, 'oldRef:', oldRef);
-        console.log('[watch virtualRef] virtualTriggering:', props.virtualTriggering);
         if (!props.virtualTriggering) return;
 
-        // 解绑旧元素的事件
         if (isElement(oldRef)) {
           _unbindEventToVirtualTiggerNode(oldRef as HTMLElement);
         }
 
-        // 绑定新元素的事件
         if (isElement(newRef)) {
           _bindEventToVirtualTiggerNode();
         }
@@ -81,7 +66,6 @@ export function useEvenstToTiggerNode(
   });
 
   onUnmounted(() => {
-    watchTriggerNodeStopHandle?.();
     watchEventsStopHandle?.();
     watchVirtualRefStopHandle?.();
   });

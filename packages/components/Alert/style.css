@@ -12,7 +12,7 @@
   --px-alert-icon-margin: 10px;
   --px-alert-big-icon-size: 24px;
   --px-alert-big-icon-margin: 12px;
-  --px-alert-shadow-color: var(--px-shadow-color-dark);
+  --px-alert-shadow-color: var(--px-shadow-color);
 }
 
 /* Base Alert Styles - Pixel Game Notification */
@@ -21,23 +21,52 @@
   margin: 0;
   box-sizing: border-box;
   position: relative;
-  background-color: var(--px-alert-bg-color);
-  overflow: hidden;
+  background: transparent;
+  overflow: visible;
   opacity: 1;
   display: flex;
   align-items: center;
   margin-top: var(--px-alert-top-margin);
   font-family: var(--px-font-family);
 
-  /* Pixel-style border */
-  border: 3px solid var(--px-alert-border-color);
-  border-radius: 0;
+  /* Remove traditional border — pixel border via pseudo-elements */
+  border: none;
 
-  /* Pixel shadow */
-  box-shadow: 4px 4px 0 0 var(--px-alert-shadow-color);
+  /* Pixel shadow via drop-shadow (respects clip-path shape) */
+  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-alert-shadow-color));
 
-  /* No transitions for pixel feel */
+  /* No smooth transitions for pixel feel */
   transition: none;
+
+  /* Border layer — filled with border color, clipped to pixel shape */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-alert-border-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    z-index: -1;
+  }
+
+  /* Fill layer — inset by border width, filled with bg color */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-alert-bg-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    z-index: -1;
+  }
 
   /* Icon styling */
   .px-alert__icon {
@@ -79,7 +108,7 @@
       opacity: 0.9;
     }
 
-    /* Close button */
+    /* Close button - pixel style */
     .px-alert__close {
       font-size: var(--px-font-size-large);
       opacity: 1;
@@ -88,9 +117,14 @@
       right: 12px;
       cursor: pointer;
       padding: 2px;
+      transition: none;
 
       &:hover {
-        transform: scale(1.1);
+        transform: translate(-1px, -1px);
+      }
+
+      &:active {
+        transform: translate(1px, 1px);
       }
 
       :deep(.px-icon) {
@@ -128,11 +162,16 @@
   }
 }
 
-/* Animation */
+/* Animation - instant for pixel feel */
 .px-alert-fade-enter-from,
 .px-alert-fade-leave-to {
   opacity: 0;
   transform: translateY(-8px);
+}
+
+.px-alert-fade-enter-active,
+.px-alert-fade-leave-active {
+  transition: opacity 0.15s, transform 0.15s;
 }
 
 /* Type variants - Light theme */
@@ -150,9 +189,9 @@
     --px-alert-border-color: var(--px-color-$(val)-dark);
     --px-alert-shadow-color: var(--px-color-$(val)-dark);
 
-    /* Inset highlight for dark theme */
-    box-shadow:
-      4px 4px 0 0 var(--px-alert-shadow-color),
-      inset 2px 2px 0 0 rgba(255, 255, 255, 0.15);
+    /* Pixel highlight effect for dark theme */
+    &::after {
+      box-shadow: inset 2px 2px 0 0 rgba(255, 255, 255, 0.15);
+    }
   }
 }

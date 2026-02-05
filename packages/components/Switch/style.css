@@ -5,6 +5,7 @@
   --px-switch-on-border-color: var(--px-color-primary-dark);
   --px-switch-off-border-color: var(--px-border-color);
   --px-switch-shadow-color: var(--px-shadow-color);
+  --px-switch-handle-color: var(--px-color-white);
 }
 
 /* Base Switch Styles - Pixel Toggle */
@@ -41,20 +42,21 @@
   /* Checked state */
   &.is-checked {
     .px-switch__core {
-      border-color: var(--px-switch-on-border-color);
-      background-color: var(--px-switch-on-color);
-      box-shadow:
-        var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-switch-on-border-color),
-        var(--px-box-shadow-inset-dark);
+      &::before {
+        background: var(--px-switch-on-border-color);
+      }
+      &::after {
+        background: var(--px-switch-on-color);
+      }
+
+      filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-switch-on-border-color));
 
       .px-switch__core-action {
-        left: calc(100% - 18px);
-        background-color: var(--px-color-white);
-        box-shadow: var(--px-box-shadow-inset-light);
+        left: calc(100% - 20px);
       }
 
       .px-switch__core-inner {
-        padding: 0 20px 0 4px;
+        padding: 0 22px 0 6px;
       }
     }
   }
@@ -67,17 +69,17 @@
   height: 40px;
 
   .px-switch__core {
-    min-width: 56px;
-    height: 28px;
+    min-width: 60px;
+    height: 32px;
 
     .px-switch__core-action {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
     }
   }
 
   &.is-checked .px-switch__core .px-switch__core-action {
-    left: calc(100% - 24px);
+    left: calc(100% - 28px);
   }
 }
 
@@ -87,56 +89,111 @@
   height: 24px;
 
   .px-switch__core {
-    min-width: 36px;
-    height: 18px;
-    border-width: var(--px-border-width-thin);
-    box-shadow: 2px 2px 0 0 var(--px-switch-shadow-color);
+    min-width: 40px;
+    height: 20px;
+    filter: drop-shadow(2px 2px 0px var(--px-switch-shadow-color));
 
     .px-switch__core-action {
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
     }
   }
 
-  &.is-checked .px-switch__core .px-switch__core-action {
-    left: calc(100% - 14px);
+  &.is-checked .px-switch__core {
+    filter: drop-shadow(2px 2px 0px var(--px-switch-on-border-color));
+
+    .px-switch__core-action {
+      left: calc(100% - 16px);
+    }
   }
 }
 
-/* Core element - The actual toggle */
+/* Core element - The actual toggle with pixel style */
 .px-switch__core {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   position: relative;
-  height: 22px;
-  min-width: 44px;
+  height: 26px;
+  min-width: 50px;
   box-sizing: border-box;
   outline: none;
+  background: transparent;
+  border: none;
 
-  /* Pixel-style border */
-  border: var(--px-border-width) solid var(--px-switch-off-border-color);
-  border-radius: 0;
-  background: var(--px-switch-off-color);
-
-  /* Pixel shadow */
-  box-shadow:
-    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-switch-shadow-color),
-    var(--px-box-shadow-inset-light);
+  /* Pixel shadow via drop-shadow */
+  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-switch-shadow-color));
 
   /* No smooth transitions */
   transition: none;
 
-  /* The toggle handle */
+  /* Border layer — pixel shape */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-switch-off-border-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    z-index: 0;
+  }
+
+  /* Fill layer — pixel shape */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-switch-off-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    z-index: 0;
+  }
+
+  /* The toggle handle - pixel square */
   .px-switch__core-action {
     position: absolute;
-    left: 2px;
-    width: 16px;
-    height: 16px;
-    background-color: var(--px-color-white);
-    border-radius: 0;
+    left: 4px;
+    width: 18px;
+    height: 18px;
+    background: transparent;
     transition: none;
-    box-shadow: var(--px-box-shadow-inset-light);
+    z-index: 2;
+
+    /* Handle border layer */
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--px-border-color);
+      clip-path: polygon(
+        0 2px, 2px 2px, 2px 0,
+        calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+        100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+        2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+      );
+    }
+
+    /* Handle fill layer */
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: var(--px-switch-handle-color);
+      clip-path: polygon(
+        0 2px, 2px 2px, 2px 0,
+        calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+        100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+        2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+      );
+    }
   }
 
   /* Inner text container */
@@ -147,7 +204,9 @@
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    padding: 0 4px 0 20px;
+    padding: 0 6px 0 22px;
+    z-index: 1;
+    position: relative;
 
     .px-switch__core-inner-text {
       font-size: var(--px-font-size-extra-small);
@@ -158,6 +217,7 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       text-transform: uppercase;
+      letter-spacing: 1px;
     }
   }
 }

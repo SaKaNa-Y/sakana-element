@@ -13,7 +13,7 @@
 
 /* Base Input Styles */
 .px-input {
-  --px-input-height: var(--px-component-size);
+  --px-input-height: 36px;
   position: relative;
   font-size: var(--px-font-size-base);
   font-family: var(--px-font-family);
@@ -39,10 +39,15 @@
     cursor: not-allowed;
 
     .px-input__wrapper {
-      background-color: var(--px-disabled-bg-color);
-      border-color: var(--px-disabled-border-color);
-      box-shadow: 1px 1px 0 0 rgba(0, 0, 0, 0.05);
       opacity: 0.6;
+      cursor: not-allowed;
+
+      &::before {
+        background: var(--px-disabled-border-color);
+      }
+      &::after {
+        background: var(--px-disabled-bg-color);
+      }
     }
 
     .px-input__inner {
@@ -61,147 +66,39 @@
 
   /* Prepend/Append border adjustments */
   &.is-prepend > .px-input__wrapper {
-    border-left: none;
+    &::before, &::after {
+      clip-path: polygon(
+        0 0,
+        calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+        100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+        0 100%
+      );
+    }
   }
 
   &.is-append > .px-input__wrapper {
-    border-right: none;
+    &::before, &::after {
+      clip-path: polygon(
+        0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+        100% 0,
+        100% 100%,
+        4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+      );
+    }
+  }
+
+  &.is-prepend.is-append > .px-input__wrapper {
+    &::before, &::after {
+      clip-path: none;
+    }
   }
 
   /* Focus state */
   &.is-focus .px-input__wrapper {
-    border-color: var(--px-input-focus-border-color);
-    box-shadow:
-      var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-color-primary-dark);
-  }
-}
-
-/* Size variants */
-.px-input--large {
-  --px-input-height: var(--px-component-size-large);
-  font-size: var(--px-font-size-large);
-
-  .px-input__wrapper {
-    padding: 2px 16px;
-    border-width: var(--px-border-width-thick);
-  }
-
-  .px-input__inner {
-    --px-input-inner-height: calc(var(--px-input-height) - 8px);
-  }
-}
-
-.px-input--small {
-  --px-input-height: var(--px-component-size-small);
-  font-size: var(--px-font-size-small);
-
-  .px-input__wrapper {
-    padding: 1px 8px;
-    border-width: var(--px-border-width-thin);
-    box-shadow: 2px 2px 0 0 var(--px-input-shadow-color);
-  }
-
-  .px-input__inner {
-    --px-input-inner-height: calc(var(--px-input-height) - 4px);
-  }
-}
-
-/* Prefix and Suffix */
-.px-input__prefix,
-.px-input__suffix {
-  display: inline-flex;
-  white-space: nowrap;
-  flex-shrink: 0;
-  flex-wrap: nowrap;
-  height: 100%;
-  text-align: center;
-  color: var(--px-input-icon-color);
-  transition: none;
-}
-
-.px-input__prefix {
-  > :first-child {
-    margin-left: 0 !important;
-  }
-  > :last-child {
-    margin-right: 8px !important;
-  }
-}
-
-.px-input__suffix {
-  > :first-child {
-    margin-left: 8px !important;
-  }
-  > :last-child {
-    margin-right: 0 !important;
-  }
-}
-
-/* Prepend and Append - Pixel style */
-.px-input__prepend,
-.px-input__append {
-  background-color: var(--px-fill-color-dark);
-  color: var(--px-text-color-secondary);
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100%;
-  padding: 0 16px;
-  white-space: nowrap;
-  border: var(--px-border-width) solid var(--px-input-border-color);
-  font-family: var(--px-font-family);
-}
-
-.px-input__prepend {
-  border-right: none;
-}
-
-.px-input__append {
-  border-left: none;
-}
-
-/* Textarea styles */
-.px-input--textarea {
-  position: relative;
-  display: inline-block;
-  width: 100%;
-  vertical-align: bottom;
-  font-size: var(--px-font-size-base);
-}
-
-.px-textarea__wrapper {
-  position: relative;
-  display: block;
-  resize: vertical;
-  padding: 8px 12px;
-  line-height: 1.5;
-  box-sizing: border-box;
-  width: 100%;
-  font-size: inherit;
-  font-family: var(--px-font-family);
-  color: var(--px-input-text-color);
-  background-color: var(--px-input-bg-color);
-  border: var(--px-border-width) solid var(--px-input-border-color);
-  border-radius: 0;
-  box-shadow:
-    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-input-shadow-color),
-    var(--px-box-shadow-inset-light);
-  transition: none;
-  -webkit-font-smoothing: none;
-
-  &:hover {
-    border-color: var(--px-input-hover-border-color);
-  }
-
-  &:focus {
-    outline: none;
-    border-color: var(--px-input-focus-border-color);
-    box-shadow: var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-color-primary-dark);
-  }
-
-  &::placeholder {
-    color: var(--px-input-placeholder-color);
+    &::before {
+      background: var(--px-input-focus-border-color);
+    }
+    filter: drop-shadow(4px 4px 0px var(--px-color-primary-dark));
   }
 }
 
@@ -212,26 +109,61 @@
   align-items: center;
   justify-content: center;
   padding: 2px 12px;
-  background-color: var(--px-input-bg-color);
-  border: var(--px-border-width) solid var(--px-input-border-color);
-  border-radius: 0;
-  box-shadow:
-    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-input-shadow-color),
-    var(--px-box-shadow-inset-light);
+  background: transparent;
+  border: none;
+  position: relative;
   transition: none;
+  height: var(--px-input-height);
+  box-sizing: border-box;
+
+  /* Pixel shadow via drop-shadow */
+  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-input-shadow-color));
+
+  /* Border layer — filled with border color, clipped to pixel shape */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-input-border-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    z-index: -1;
+  }
+
+  /* Fill layer — inset by border width, filled with bg color */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-input-bg-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    z-index: -1;
+  }
 
   &:hover {
-    border-color: var(--px-input-hover-border-color);
+    &::before {
+      background: var(--px-input-hover-border-color);
+    }
   }
 
   &.is-focus {
-    border-color: var(--px-input-focus-border-color);
-    box-shadow: var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-color-primary-dark);
+    &::before {
+      background: var(--px-input-focus-border-color);
+    }
   }
 
   /* Inner input element */
   .px-input__inner {
-    --px-input-inner-height: calc(var(--px-input-height) - 6px);
+    --px-input-inner-height: calc(var(--px-input-height) - 8px);
     width: 100%;
     flex-grow: 1;
     -webkit-appearance: none;
@@ -273,5 +205,198 @@
     &:hover {
       color: var(--px-input-clear-hover-color);
     }
+  }
+}
+
+/* Size variants */
+.px-input--large {
+  --px-input-height: 44px;
+  font-size: var(--px-font-size-large);
+
+  .px-input__wrapper {
+    padding: 2px 16px;
+  }
+
+  .px-input__inner {
+    --px-input-inner-height: calc(var(--px-input-height) - 10px);
+  }
+}
+
+.px-input--small {
+  --px-input-height: 28px;
+  font-size: var(--px-font-size-small);
+
+  .px-input__wrapper {
+    padding: 1px 8px;
+    filter: drop-shadow(2px 2px 0px var(--px-input-shadow-color));
+  }
+
+  .px-input__inner {
+    --px-input-inner-height: calc(var(--px-input-height) - 6px);
+  }
+}
+
+/* Prefix and Suffix */
+.px-input__prefix,
+.px-input__suffix {
+  display: inline-flex;
+  white-space: nowrap;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
+  height: 100%;
+  text-align: center;
+  color: var(--px-input-icon-color);
+  transition: none;
+}
+
+.px-input__prefix {
+  > :first-child {
+    margin-left: 0 !important;
+  }
+  > :last-child {
+    margin-right: 8px !important;
+  }
+}
+
+.px-input__suffix {
+  > :first-child {
+    margin-left: 8px !important;
+  }
+  > :last-child {
+    margin-right: 0 !important;
+  }
+}
+
+/* Prepend and Append - Pixel style */
+.px-input__prepend,
+.px-input__append {
+  background: transparent;
+  color: var(--px-text-color-secondary);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  height: var(--px-input-height);
+  padding: 0 16px;
+  white-space: nowrap;
+  border: none;
+  font-family: var(--px-font-family);
+  box-sizing: border-box;
+
+  /* Pixel shadow via drop-shadow */
+  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-input-shadow-color));
+
+  /* Border layer */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-input-border-color);
+    z-index: -1;
+  }
+
+  /* Fill layer */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-fill-color-dark);
+    z-index: -1;
+  }
+}
+
+.px-input__prepend {
+  /* Notched left, straight right */
+  &::before, &::after {
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      100% 0,
+      100% 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+  }
+}
+
+.px-input__append {
+  /* Straight left, notched right */
+  &::before, &::after {
+    clip-path: polygon(
+      0 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      0 100%
+    );
+  }
+}
+
+/* Textarea styles */
+.px-input--textarea {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  vertical-align: bottom;
+  font-size: var(--px-font-size-base);
+}
+
+.px-textarea__wrapper {
+  position: relative;
+  display: block;
+  resize: vertical;
+  padding: 8px 12px;
+  line-height: 1.5;
+  box-sizing: border-box;
+  width: 100%;
+  font-size: inherit;
+  font-family: var(--px-font-family);
+  color: var(--px-input-text-color);
+  background-color: var(--px-input-bg-color);
+  background: transparent;
+  border: none;
+  -webkit-font-smoothing: none;
+
+  /* Pixel shadow via drop-shadow */
+  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-input-shadow-color));
+
+  /* We need a wrapper for the pixel border since textarea can resize */
+  outline: none;
+
+  &:hover {
+    & + .px-textarea__border::before {
+      background: var(--px-input-hover-border-color);
+    }
+  }
+
+  &:focus {
+    & + .px-textarea__border::before {
+      background: var(--px-input-focus-border-color);
+    }
+    filter: drop-shadow(4px 4px 0px var(--px-color-primary-dark));
+  }
+
+  &::placeholder {
+    color: var(--px-input-placeholder-color);
+  }
+}
+
+/* For textarea, we need a special approach since it can resize */
+.px-textarea__wrapper {
+  border: 2px solid var(--px-input-border-color);
+  background: var(--px-input-bg-color);
+
+  /* Simplified pixel corners using clip-path on the textarea itself */
+  clip-path: polygon(
+    0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+    calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+    100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+    4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+  );
+
+  &:hover {
+    border-color: var(--px-input-hover-border-color);
+  }
+
+  &:focus {
+    border-color: var(--px-input-focus-border-color);
   }
 }

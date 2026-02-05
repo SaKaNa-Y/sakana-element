@@ -11,18 +11,60 @@
   --px-collapse-disabled-text-color: var(--px-disabled-text-color);
   --px-collapse-disabled-border-color: var(--px-border-color-lighter);
   --px-collapse-shadow-color: var(--px-shadow-color);
+  --px-collapse-active-bg-color: var(--px-color-primary-light-9);
 
-  /* Pixel-style border */
-  border: var(--px-border-width) solid var(--px-collapse-border-color);
-  border-radius: 0;
-  box-shadow: var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-collapse-shadow-color);
+  /* Pixel-style container */
+  position: relative;
+  background: transparent;
+  border: none;
   font-family: var(--px-font-family);
+
+  /* Pixel shadow via drop-shadow */
+  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-collapse-shadow-color));
+
+  /* Border layer — pixel shape */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-collapse-border-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    z-index: 0;
+  }
+
+  /* Fill layer — pixel shape */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-collapse-header-bg-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    z-index: 0;
+  }
 }
 
 /* Collapse Item */
 .px-collapse-item {
+  position: relative;
+  z-index: 1;
+
   &:not(:last-child) {
-    border-bottom: var(--px-border-width-thin) solid var(--px-collapse-border-color);
+    border-bottom: 2px solid var(--px-collapse-border-color);
+  }
+
+  /* Disabled state */
+  &.is-disabled {
+    opacity: 0.6;
   }
 }
 
@@ -33,7 +75,7 @@
   justify-content: space-between;
   height: var(--px-collapse-header-height);
   line-height: var(--px-collapse-header-height);
-  background-color: var(--px-collapse-header-bg-color);
+  background-color: transparent;
   color: var(--px-collapse-header-text-color);
   cursor: pointer;
   font-size: var(--px-collapse-header-font-size);
@@ -41,12 +83,41 @@
   font-weight: 500;
   transition: none;
   outline: none;
-  padding: 0 16px;
+  padding: 0 16px 0 24px;
   position: relative;
+
+  /* Pixel selector indicator - small square */
+  &::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: transparent;
+    border: 2px solid transparent;
+    z-index: 2;
+  }
+
+  /* Background layer with pixel corners for first item */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    z-index: -1;
+  }
 
   /* Hover effect */
   &:hover:not(.is-disabled) {
-    background-color: var(--px-fill-color-light);
+    &::after {
+      background-color: var(--px-fill-color-light);
+    }
+
+    &::before {
+      border-color: var(--px-color-primary);
+    }
   }
 
   /* Disabled state */
@@ -58,24 +129,114 @@
 
   /* Active state */
   &.is-active {
-    background-color: var(--px-fill-color-light);
+    &::after {
+      background-color: var(--px-collapse-active-bg-color);
+    }
 
+    /* Pixel indicator - filled square */
+    &::before {
+      background: var(--px-color-primary);
+      border-color: var(--px-color-primary);
+    }
+
+    /* Arrow rotates down */
     .header-angle {
       transform: rotate(90deg);
     }
-
-    /* Pixel indicator */
-    &::before {
-      content: '>';
-      position: absolute;
-      left: 6px;
-      color: var(--px-color-primary);
-    }
   }
 
+  /* Title section */
+  .px-collapse-item__title {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Arrow icon */
   .header-angle {
     transition: none;
+    color: var(--px-text-color-secondary);
   }
+}
+
+/* First item header needs pixel corners on top */
+.px-collapse-item:first-child .px-collapse-item__header {
+  &::after {
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 2px, 100% 2px,
+      100% 100%,
+      0 100%
+    );
+  }
+}
+
+/* Middle items need left/right inset */
+.px-collapse-item:not(:first-child):not(:last-child) .px-collapse-item__header {
+  &::after {
+    left: 2px;
+    right: 2px;
+  }
+}
+
+/* Last item needs pixel corners on bottom */
+.px-collapse-item:last-child .px-collapse-item__header {
+  &::after {
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) calc(100%), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100%), 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+  }
+}
+
+/* Last item content also needs pixel corners on bottom */
+.px-collapse-item:last-child .px-collapse-item__content {
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    background: var(--px-collapse-content-bg-color);
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%, calc(100% - 4px) 100%,
+      4px 100%, 4px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+    z-index: -1;
+  }
+}
+
+/* If only one item, needs both top and bottom pixel corners */
+.px-collapse-item:first-child:last-child .px-collapse-item__header {
+  &::after {
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, 100% 2px,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%, calc(100% - 4px) 100%,
+      4px 100%, 4px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+  }
+}
+
+/* Collapse Content Wrapper */
+.px-collapse-item__wapper {
+  overflow: hidden;
 }
 
 /* Collapse Content */
@@ -87,11 +248,28 @@
   font-size: var(--px-collapse-content-font-size);
   font-family: var(--px-font-family);
   color: var(--px-collapse-content-text-color);
-  padding: 16px;
-  border-top: var(--px-border-width-thin) dashed var(--px-collapse-border-color);
+  padding: 16px 24px;
+  position: relative;
+
+  /* Pixel-style dashed border at top using repeating squares */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 4px;
+    right: 4px;
+    height: 2px;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--px-collapse-border-color) 0px,
+      var(--px-collapse-border-color) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+  }
 }
 
-/* Animation */
+/* Animation - instant for pixel feel */
 .slide-enter-active,
 .slide-leave-active {
   transition: none;

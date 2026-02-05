@@ -3,7 +3,7 @@
   --px-message-bg-color: var(--px-fill-color-blank);
   --px-message-border-color: var(--px-border-color-dark);
   --px-message-text-color: var(--px-text-color-primary);
-  --px-message-shadow-color: var(--px-shadow-color-dark);
+  --px-message-shadow-color: var(--px-shadow-color);
   --px-message-padding: 12px 16px;
   --px-message-close-size: 16px;
   --px-message-close-icon-color: var(--px-text-color-secondary);
@@ -25,20 +25,46 @@
   display: flex;
   align-items: center;
   font-family: var(--px-font-family);
-  background-color: var(--px-message-bg-color);
 
-  /* Pixel-style border - thick and sharp */
-  border: 3px solid var(--px-message-border-color);
-  border-radius: 0;
+  /* Remove traditional styling */
+  background: transparent;
+  border: none;
 
-  /* Classic pixel shadow */
-  box-shadow:
-    4px 4px 0 0 var(--px-message-shadow-color),
-    inset -2px -2px 0 0 rgba(0, 0, 0, 0.05),
-    inset 2px 2px 0 0 rgba(255, 255, 255, 0.3);
+  /* Pixel shadow via drop-shadow (respects clip-path shape) */
+  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-message-shadow-color));
 
   /* No smooth transitions for pixel feel */
   transition: none;
+
+  /* Border layer — filled with border color, clipped to pixel shape */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-message-border-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    z-index: -1;
+  }
+
+  /* Fill layer — inset by border width, filled with bg color */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-message-bg-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    z-index: -1;
+  }
 
   /* Icon styling */
   .px-message__icon {
@@ -67,7 +93,7 @@
     justify-content: center;
   }
 
-  /* Close button */
+  /* Close button - pixel style */
   .px-message__close {
     display: flex;
     align-items: center;
@@ -76,10 +102,15 @@
       cursor: pointer;
       color: var(--px-message-close-icon-color);
       font-size: var(--px-message-close-size);
+      transition: none;
 
       &:hover {
         color: var(--px-message-close-hover-color);
-        transform: scale(1.1);
+        transform: translate(-1px, -1px);
+      }
+
+      &:active {
+        transform: translate(1px, 1px);
       }
     }
   }
@@ -93,14 +124,12 @@
     --px-message-text-color: var(--px-color-$(val)-dark);
     --px-message-shadow-color: var(--px-color-$(val)-dark);
 
-    /* Colored pixel shadow */
-    box-shadow:
-      4px 4px 0 0 var(--px-color-$(val)-dark),
-      inset -2px -2px 0 0 rgba(0, 0, 0, 0.05),
-      inset 2px 2px 0 0 rgba(255, 255, 255, 0.4);
+    .px-message__close .px-icon {
+      color: var(--px-color-$(val));
 
-    .px-message__close {
-      --px-icon-color: var(--px-color-$(val));
+      &:hover {
+        color: var(--px-color-$(val)-dark);
+      }
     }
   }
 }
@@ -112,13 +141,12 @@
   --px-message-text-color: var(--px-color-danger-dark);
   --px-message-shadow-color: var(--px-color-danger-dark);
 
-  box-shadow:
-    4px 4px 0 0 var(--px-color-danger-dark),
-    inset -2px -2px 0 0 rgba(0, 0, 0, 0.05),
-    inset 2px 2px 0 0 rgba(255, 255, 255, 0.4);
+  .px-message__close .px-icon {
+    color: var(--px-color-danger);
 
-  .px-message__close {
-    --px-icon-color: var(--px-color-danger);
+    &:hover {
+      color: var(--px-color-danger-dark);
+    }
   }
 }
 
