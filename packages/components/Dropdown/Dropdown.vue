@@ -10,7 +10,7 @@ import type {
   DropdownInstance,
   DropdownContext,
 } from './types';
-import { useDisabledStyle } from '@sakana-element/hooks';
+import { useDisabledStyle, useClickOutside } from '@sakana-element/hooks';
 
 import { DROPDOWN_CTX_KEY } from './constants';
 
@@ -29,7 +29,7 @@ const emits = defineEmits<DropdownEmits>();
 const slots = defineSlots(); //控制所有插槽
 
 const tooltipRef = ref<TooltipInstance>();
-const triggerRef = ref<ButtonInstance>();
+const dropdownRef = ref<HTMLElement>();
 
 const tooltipProps = computed(
   () => omit(props, ['items', 'hideOnClick', 'size', 'type', 'splitButton']) //排除这些属性
@@ -39,6 +39,18 @@ function handleItemClick(e: DropdownItemProps) {
   props.hideOnClick && tooltipRef.value?.hide();
   !isNil(e.command) && emits('command', e.command);
 }
+
+// 处理分割按钮的下拉箭头点击 - 切换显示/隐藏
+function handleTriggerClick() {
+  tooltipRef.value?.toggle();
+}
+
+// 点击外部时关闭下拉菜单（仅在 splitButton 模式下）
+useClickOutside(dropdownRef, () => {
+  if (props.splitButton) {
+    tooltipRef.value?.hide();
+  }
+});
 
 (typeof TEST === 'undefined' || !TEST) && useDisabledStyle();
 provide<DropdownContext>(DROPDOWN_CTX_KEY, {
@@ -53,12 +65,11 @@ defineExpose<DropdownInstance>({
 </script>
 
 <template>
-  <div class="px-dropdown" :class="{ 'is-disabled': props.disabled }">
+  <div ref="dropdownRef" class="px-dropdown" :class="{ 'is-disabled': props.disabled }">
     <px-tooltip
       ref="tooltipRef"
       v-bind="tooltipProps"
-      :virtual-triggering="splitButton"
-      :virtual-ref="triggerRef?.ref?.value"
+      :manual="splitButton"
       @visible-change="$emit('visible-change', $event)"
     >
       <px-button-group
@@ -70,7 +81,7 @@ defineExpose<DropdownInstance>({
         <px-button @click="$emit('click', $event)">
           <slot name="default"></slot>
         </px-button>
-        <px-button ref="triggerRef" icon="angle-down" />
+        <px-button icon="chevron-down" @click="handleTriggerClick" />
       </px-button-group>
       <slot name="default" v-else></slot>
 

@@ -400,7 +400,7 @@ defineExpose<SelectInstance>({
             <template #suffix>
               <px-icon
                 v-if="showClear"
-                icon="circle-xmark"
+                icon="close-box"
                 class="px-input__clear"
                 @click.stop="handleClear"
                 @mousedown.prevent="noop"
@@ -408,7 +408,7 @@ defineExpose<SelectInstance>({
               <px-icon
                 v-else
                 class="header-angle"
-                icon="angle-down"
+                icon="chevron-down"
                 :class="{ 'is-active': isDropdownVisible }"
               />
             </template>
@@ -417,7 +417,7 @@ defineExpose<SelectInstance>({
       </template>
       <template #content>
         <div class="px-select__loading" v-if="selectStates.loading">
-          <px-icon icon="spinner" spin />
+          <px-icon icon="loader" spin />
         </div>
         <div class="px-select__nodata" v-else-if="filterable && isNoData">
           No data

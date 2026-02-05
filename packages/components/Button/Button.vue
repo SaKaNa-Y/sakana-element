@@ -146,7 +146,7 @@ defineExpose<ButtonInstance>({
       <slot name="loading">
         <px-icon
           class="loading-icon"
-          :icon="loadingIcon ?? 'spinner'"
+          :icon="loadingIcon ?? 'loader'"
           :style="iconStyle"
           size="1x"
           spin

@@ -72,7 +72,7 @@ defineExpose<AlertInstance>({
           <slot>{{ description }}</slot>
         </p>
         <div class="px-alert__close" v-if="closable">
-          <px-icon @click.stop="close" icon="xmark" />
+          <px-icon @click.stop="close" icon="close" />
         </div>
       </div>
     </div>

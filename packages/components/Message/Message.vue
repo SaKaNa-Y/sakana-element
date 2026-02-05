@@ -98,7 +98,7 @@ defineExpose<MessageCompInstance>({
         </slot>
       </div>
       <div class="px-message__close" v-if="showClose">
-        <px-icon icon="xmark" @click.stop="close" />
+        <px-icon icon="close" @click.stop="close" />
       </div>
     </div>
   </Transition>

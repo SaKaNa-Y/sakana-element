@@ -159,7 +159,7 @@ defineExpose<InputInstance>({
         >
           <slot name="suffix"></slot>
           <Icon
-            icon="circle-xmark"
+            icon="close-box"
             v-if="showClear"
             class="px-input__clear"
             @click="clear"
@@ -172,7 +172,7 @@ defineExpose<InputInstance>({
             @click="togglePwdVisible"
           />
           <Icon
-            icon="eye-slash"
+            icon="eye-closed"
             class="px-input__password"
             v-if="showPwdArea && !pwdVisible"
             @click="togglePwdVisible"

@@ -38,7 +38,7 @@ const _triggerNode = ref<HTMLElement>();
 
 const triggerNode = computed(() => {
   if (props.virtualTriggering) {
-    return (props.virtualRef as HTMLElement) ?? _triggerNode.value;
+    return props.virtualRef as HTMLElement | undefined;
   }
   return _triggerNode.value as HTMLElement;
 });
@@ -132,6 +132,9 @@ const hide: TooltipInstance['hide'] = function () {
   openDebounce?.cancel();
   setVisible(false);
 };
+const toggle: TooltipInstance['toggle'] = function () {
+  visible.value ? hide() : show();
+};
 
 watch(
   visible,
@@ -198,6 +201,7 @@ onUnmounted(() => {
 defineExpose<TooltipInstance>({
   show,
   hide,
+  toggle,
 });
 </script>
 

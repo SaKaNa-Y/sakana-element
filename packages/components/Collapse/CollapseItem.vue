@@ -39,7 +39,7 @@ function handleClick() {
           {{ title }}
         </slot>
       </span>
-      <px-icon icon="angle-right" class="header-angle" />
+      <px-icon icon="chevron-right" class="header-angle" />
     </div>
     <transition name="slide" v-on="transitionEvents">
       <div class="px-collapse-item__wapper" v-show="isActive">

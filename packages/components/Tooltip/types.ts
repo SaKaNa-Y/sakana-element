@@ -23,4 +23,5 @@ export interface TooltipInstance {
   //定义直接暴露给用户的方法
   show(): void;
   hide(): void;
+  toggle(): void;
 }

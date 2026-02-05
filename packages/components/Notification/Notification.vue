@@ -107,7 +107,7 @@ defineExpose<NotificationCompInstance>({
         </div>
       </div>
       <div class="px-notification__close" v-if="showClose">
-        <px-icon icon="xmark" @click.stop="close" />
+        <px-icon icon="close" @click.stop="close" />
       </div>
     </div>
   </transition>

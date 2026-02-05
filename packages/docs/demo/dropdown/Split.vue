@@ -1,5 +1,5 @@
 <template>
-  <px-dropdown :items="items" split-button type="primary" @click="handleClick" @command="handleCommand">
+  <px-dropdown :items="items" split-button type="primary" trigger="click" @click="handleClick" @command="handleCommand">
     Actions
   </px-dropdown>
 </template>

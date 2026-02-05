@@ -130,7 +130,7 @@ function handleClose() {
               class="px-message-box__header-btn"
               @click.stop="handleClose"
             >
-              <px-icon icon="xmark" />
+              <px-icon icon="close" />
             </button>
           </div>
           <div class="px-message-box__content">
