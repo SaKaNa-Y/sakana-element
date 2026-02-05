@@ -3,7 +3,7 @@
     title="This will permanently delete the file. Continue?"
     confirm-button-text="Yes"
     cancel-button-text="No"
-    icon="triangle-exclamation"
+    icon="warning-box"
     icon-color="#f56c6c"
     @confirm="onConfirm"
   >

@@ -1,13 +1,13 @@
 import { defineComponent } from 'vue';
 import { isFunction } from 'lodash-es';
 
-// 映射图标，用于根据类型获取对应的图标
+// 映射图标，用于根据类型获取对应的图标 (使用 pixelarticons 名称)
 export const typeIconMap = new Map([
-  ['info', 'circle-info'],
-  ['success', 'check-circle'],
-  ['warning', 'circle-exclamation'],
-  ['danger', 'circle-xmark'],
-  ['error', 'circle-xmark'],
+  ['info', 'info-box'],
+  ['success', 'check'],
+  ['warning', 'warning-box'],
+  ['danger', 'close-box'],
+  ['error', 'close-box'],
 ]);
 
 //定义一个组件，用于渲染vnode
@@ -29,3 +29,5 @@ export * from './install';
 export * from './error';
 export * from './style';
 export * from './test';
+export * from './icon-registry';
+export * from './icon-map';

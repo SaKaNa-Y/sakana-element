@@ -11,7 +11,7 @@
     <div class="row">
       <px-button-group type="warning" size="small">
         <px-button type="primary" icon="edit" round />
-        <px-button type="primary" icon="share" />
+        <px-button type="primary" icon="link" />
         <px-button type="primary" icon="trash" round />
       </px-button-group>
     </div>

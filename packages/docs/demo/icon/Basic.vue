@@ -3,9 +3,9 @@
     <px-icon icon="home" />
     <px-icon icon="user" />
     <px-icon icon="search" />
-    <px-icon icon="star" />
+    <px-icon icon="bookmark" />
     <px-icon icon="heart" />
-    <px-icon icon="gear" />
+    <px-icon icon="sliders" />
   </div>
 </template>
 

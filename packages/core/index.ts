@@ -1,13 +1,13 @@
 import makeInstaller from './makeInstaller';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
 import components from './components';
 import printLogo from './printLogo';
+import { registerDefaultPixelIcons } from '@sakana-element/components';
 import '@sakana-element/theme/index.css';
 
 printLogo();
 
-library.add(fas);
+// Register pixel icons for PxIcon component
+registerDefaultPixelIcons();
 
 // Register CSS Houdini Paint Worklets for pixel-style borders
 if (typeof CSS !== 'undefined' && 'paintWorklet' in CSS) {

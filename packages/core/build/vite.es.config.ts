@@ -88,12 +88,9 @@ export default defineConfig({
       //rollup配置,rollup是vite的打包工具
       external: [
         'vue',
-        '@fortawesome/fontawesome-svg-core',
-        '@fortawesome/free-solid-svg-icons',
-        '@fortawesome/vue-fontawesome',
         '@popperjs/core',
         'async-validator',
-      ], //外部依赖,为了让用户安装时需要安装图标等依赖，导致包会变小
+      ], //外部依赖
       output: {
         //输出配置
         assetFileNames: (assetInfo) => {

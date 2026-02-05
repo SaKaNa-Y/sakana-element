@@ -28,9 +28,9 @@
       <px-button color="#626aef" icon="edit" circle />
       <px-button color="#ff6b9d" icon="heart" circle />
       <px-button color="#36cfc9" icon="check" circle />
-      <px-button color="#fac858" icon="star" circle />
+      <px-button color="#fac858" icon="bookmark" circle />
       <px-button color="#ee6666" icon="trash" circle />
-      <px-button color="#3ba272" icon="share" circle />
+      <px-button color="#3ba272" icon="link" circle />
     </div>
   </div>
 </template>

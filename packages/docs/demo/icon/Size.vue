@@ -1,11 +1,11 @@
 <template>
   <div class="demo-icon">
-    <px-icon icon="star" size="xs" />
-    <px-icon icon="star" size="sm" />
-    <px-icon icon="star" size="lg" />
-    <px-icon icon="star" size="xl" />
-    <px-icon icon="star" size="2xl" />
-    <px-icon icon="star" size="3x" />
+    <px-icon icon="bookmark" size="xs" />
+    <px-icon icon="bookmark" size="sm" />
+    <px-icon icon="bookmark" size="lg" />
+    <px-icon icon="bookmark" size="xl" />
+    <px-icon icon="bookmark" size="2xl" />
+    <px-icon icon="bookmark" size="3x" />
   </div>
 </template>
 

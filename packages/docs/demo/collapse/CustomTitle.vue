@@ -9,7 +9,7 @@ const activeNames = ref(['1'])
     <px-collapse-item name="1">
       <template #title>
         <span style="color: var(--px-color-danger)"> Consistency </span>
-        <px-icon icon="question-circle" />
+        <px-icon icon="info-box" />
       </template>
       <div>
         Consistent with real life: in line with the process and logic of real

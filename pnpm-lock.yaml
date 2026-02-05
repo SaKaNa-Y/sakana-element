@@ -42,15 +42,6 @@ importers:
         specifier: ^3.4.19
         version: 3.5.13(typescript@5.8.2)
     devDependencies:
-      '@fortawesome/fontawesome-svg-core':
-        specifier: ^6.5.1
-        version: 6.7.2
-      '@fortawesome/free-solid-svg-icons':
-        specifier: ^6.5.1
-        version: 6.7.2
-      '@fortawesome/vue-fontawesome':
-        specifier: ^3.0.6
-        version: 3.0.8(@fortawesome/fontawesome-svg-core@6.7.2)(vue@3.5.13(typescript@5.8.2))
       '@lerna-lite/cli':
         specifier: ^3.12.3
         version: 3.12.3(@lerna-lite/publish@3.12.3(@types/node@20.17.28)(typescript@5.8.2))(@lerna-lite/version@3.12.3(@lerna-lite/publish@3.12.3(@types/node@20.17.28)(typescript@5.8.2))(@types/node@20.17.28)(typescript@5.8.2))(@types/node@20.17.28)(typescript@5.8.2)
@@ -99,6 +90,9 @@ importers:
       npm-run-all:
         specifier: ^4.1.5
         version: 4.1.5
+      pixelarticons:
+        specifier: 1.8.0
+        version: 1.8.0
       postcss-color-mix:
         specifier: ^1.1.0
         version: 1.1.0
@@ -158,15 +152,6 @@ importers:
 
   packages/core:
     dependencies:
-      '@fortawesome/fontawesome-svg-core':
-        specifier: ^6.5.1
-        version: 6.7.2
-      '@fortawesome/free-solid-svg-icons':
-        specifier: ^6.5.1
-        version: 6.7.2
-      '@fortawesome/vue-fontawesome':
-        specifier: ^3.0.6
-        version: 3.0.8(@fortawesome/fontawesome-svg-core@6.7.2)(vue@3.5.13(typescript@5.8.2))
       '@popperjs/core':
         specifier: ^2.11.8
         version: 2.11.8
@@ -192,9 +177,15 @@ importers:
 
   packages/docs:
     devDependencies:
+      '@sakana-element/theme':
+        specifier: workspace:*
+        version: link:../theme
       '@vitepress-demo-preview/plugin':
         specifier: ^1.4.0
         version: 1.4.0(markdown-it-container@3.0.0)(vitepress@1.0.0-rc.44(@algolia/client-search@5.23.0)(@types/node@20.17.28)(@types/react@19.0.12)(async-validator@4.2.5)(postcss@8.5.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.86.3)(search-insights@2.17.3)(terser@5.39.0)(typescript@5.8.2))(vue@3.5.13(typescript@5.8.2))
+      sakana-element:
+        specifier: workspace:*
+        version: link:../core
       vitepress:
         specifier: 1.0.0-rc.44
         version: 1.0.0-rc.44(@algolia/client-search@5.23.0)(@types/node@20.17.28)(@types/react@19.0.12)(async-validator@4.2.5)(postcss@8.5.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.86.3)(search-insights@2.17.3)(terser@5.39.0)(typescript@5.8.2)
@@ -847,24 +838,6 @@ packages:
 
   '@flypeng/tool@5.7.0':
     resolution: {integrity: sha512-KVed3iCY9neAqZYdB2LQvo/U0uf3r5/gMI/2vu8DEfROAXsl5RGjFtLqXf67hgjTIlp17r7rmhdZIhq+Q2ZTNw==}
-
-  '@fortawesome/fontawesome-common-types@6.7.2':
-    resolution: {integrity: sha512-Zs+YeHUC5fkt7Mg1l6XTniei3k4bwG/yo3iFUtZWd/pMx9g3fdvkSK9E0FOC+++phXOka78uJcYb8JaFkW52Xg==}
-    engines: {node: '>=6'}
-
-  '@fortawesome/fontawesome-svg-core@6.7.2':
-    resolution: {integrity: sha512-yxtOBWDrdi5DD5o1pmVdq3WMCvnobT0LU6R8RyyVXPvFRd2o79/0NCuQoCjNTeZz9EzA9xS3JxNWfv54RIHFEA==}
-    engines: {node: '>=6'}
-
-  '@fortawesome/free-solid-svg-icons@6.7.2':
-    resolution: {integrity: sha512-GsBrnOzU8uj0LECDfD5zomZJIjrPhIlWU82AHwa2s40FKH+kcxQaBvBo3Z4TxyZHIyX8XTDxsyA33/Vx9eFuQA==}
-    engines: {node: '>=6'}
-
-  '@fortawesome/vue-fontawesome@3.0.8':
-    resolution: {integrity: sha512-yyHHAj4G8pQIDfaIsMvQpwKMboIZtcHTUvPqXjOHyldh1O1vZfH4W03VDPv5RvI9P6DLTzJQlmVgj9wCf7c2Fw==}
-    peerDependencies:
-      '@fortawesome/fontawesome-svg-core': ~1 || ~6
-      vue: '>= 3.0.0 < 4'
 
   '@hutson/parse-repository-url@5.0.0':
     resolution: {integrity: sha512-e5+YUKENATs1JgYHMzTr2MW/NDcXGfYFAuOQU8gJgF/kEh4EqKgfGrfLI67bMD4tbhZVlkigz/9YYwWcbOFthg==}
@@ -4309,6 +4282,9 @@ packages:
     resolution: {integrity: sha512-KocF8ve28eFjjuBKKGvzOBGzG8ew2OqOOSxTTZhirkzH7h3BI1vyzqlR0qbfcDBve1Yzo3FVlWUAtCRrbVN8Fw==}
     engines: {node: '>=14.16'}
 
+  pixelarticons@1.8.0:
+    resolution: {integrity: sha512-BJ/F5JQROW3t2ktTeBvaGndKhlRCaMpDauT26AzHsY6HX1FOs09aY4LMUH7f61lSI+1+QfNf98IvC4aeiCYfvA==}
+
   pkg-dir@4.2.0:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}
     engines: {node: '>=8'}
@@ -5431,11 +5407,11 @@ packages:
       typescript:
         optional: true
 
-  vue-component-type-helpers@2.2.10:
-    resolution: {integrity: sha512-iDUO7uQK+Sab2tYuiP9D1oLujCWlhHELHMgV/cB13cuGbG4qwkLHvtfWb6FzvxrIOPDnU0oHsz2MlQjhYDeaHA==}
-
   vue-component-type-helpers@2.2.8:
     resolution: {integrity: sha512-4bjIsC284coDO9om4HPA62M7wfsTvcmZyzdfR0aUlFXqq4tXxM1APyXpNVxPC8QazKw9OhmZNHBVDA6ODaZsrA==}
+
+  vue-component-type-helpers@3.2.4:
+    resolution: {integrity: sha512-05lR16HeZDcDpB23ku5b5f1fBOoHqFnMiKRr2CiEvbG5Ux4Yi0McmQBOET0dR0nxDXosxyVqv67q6CzS3AK8rw==}
 
   vue-demi@0.14.10:
     resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
@@ -6222,21 +6198,6 @@ snapshots:
     dependencies:
       dayjs: 1.11.13
       lodash: 4.17.21
-
-  '@fortawesome/fontawesome-common-types@6.7.2': {}
-
-  '@fortawesome/fontawesome-svg-core@6.7.2':
-    dependencies:
-      '@fortawesome/fontawesome-common-types': 6.7.2
-
-  '@fortawesome/free-solid-svg-icons@6.7.2':
-    dependencies:
-      '@fortawesome/fontawesome-common-types': 6.7.2
-
-  '@fortawesome/vue-fontawesome@3.0.8(@fortawesome/fontawesome-svg-core@6.7.2)(vue@3.5.13(typescript@5.8.2))':
-    dependencies:
-      '@fortawesome/fontawesome-svg-core': 6.7.2
-      vue: 3.5.13(typescript@5.8.2)
 
   '@hutson/parse-repository-url@5.0.0': {}
 
@@ -7341,7 +7302,7 @@ snapshots:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.5.13(typescript@5.8.2)
-      vue-component-type-helpers: 2.2.10
+      vue-component-type-helpers: 3.2.4
 
   '@testing-library/dom@10.4.0':
     dependencies:
@@ -10141,6 +10102,8 @@ snapshots:
 
   pify@6.1.0: {}
 
+  pixelarticons@1.8.0: {}
+
   pkg-dir@4.2.0:
     dependencies:
       find-up: 4.1.0
@@ -11459,9 +11422,9 @@ snapshots:
     optionalDependencies:
       typescript: 5.8.2
 
-  vue-component-type-helpers@2.2.10: {}
-
   vue-component-type-helpers@2.2.8: {}
+
+  vue-component-type-helpers@3.2.4: {}
 
   vue-demi@0.14.10(vue@3.5.13(typescript@5.8.2)):
     dependencies:

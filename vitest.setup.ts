@@ -1,6 +1,5 @@
-//引入图标库
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
+import { registerPixelIcons } from '@sakana-element/utils';
+import { defaultPixelIcons } from './packages/components/Icon/icons';
 
-//注册图标库
-library.add(fas);
+// Register pixel icons for tests
+registerPixelIcons(defaultPixelIcons);

@@ -1,16 +1,131 @@
+/* PxIcon - Pixel Art Icon Component Styles */
+
 .px-icon {
   --px-icon-color: inherit;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  fill: currentColor;
   color: var(--px-icon-color);
-  font-size: inherit;
+  vertical-align: middle;
+  line-height: 1;
 }
 
+/* SVG container - ensures proper sizing */
+.px-icon__pixel {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.px-icon__pixel svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* Fallback for missing icons */
+.px-icon__fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: 0.75em;
+  opacity: 0.5;
+}
+
+/* Type colors */
 @each $val in primary, info, success, warning, danger {
   .px-icon--$(val) {
     --px-icon-color: var(--px-color-$(val));
   }
+}
+
+/* Size classes (24px grid multiples for crisp pixel rendering) */
+.px-icon--xs { width: 12px; height: 12px; }
+.px-icon--sm { width: 18px; height: 18px; }
+.px-icon--md { width: 24px; height: 24px; }
+.px-icon--lg { width: 36px; height: 36px; }
+.px-icon--xl { width: 48px; height: 48px; }
+.px-icon--2xl { width: 72px; height: 72px; }
+/* FA compat aliases */
+.px-icon--1x { width: 24px; height: 24px; }
+.px-icon--2x { width: 48px; height: 48px; }
+.px-icon--3x { width: 72px; height: 72px; }
+
+/* Rotation transforms */
+.px-icon--rotate-90 { transform: rotate(90deg); }
+.px-icon--rotate-180 { transform: rotate(180deg); }
+.px-icon--rotate-270 { transform: rotate(270deg); }
+
+/* Flip transforms */
+.px-icon--flip-h { transform: scaleX(-1); }
+.px-icon--flip-v { transform: scaleY(-1); }
+.px-icon--flip-h.px-icon--flip-v { transform: scale(-1, -1); }
+
+/* ========================================
+   Pixel-Art Stepped Animations
+   Using steps() for discrete frame jumps
+   ======================================== */
+
+/* Spin - 8-step rotation (45° increments) */
+@keyframes px-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.px-icon--spin {
+  animation: px-spin 1s steps(8) infinite;
+}
+
+/* Pulse - rotate with scale pulse (8 steps) */
+@keyframes px-pulse {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.1); }
+}
+.px-icon--pulse {
+  animation: px-pulse 1s steps(8) infinite;
+}
+
+/* Bounce - vertical hop (5 steps) */
+@keyframes px-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-25%); }
+}
+.px-icon--bounce {
+  animation: px-bounce 0.6s steps(5) infinite;
+}
+
+/* Shake - horizontal shake (4 steps) */
+@keyframes px-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-15%); }
+  75% { transform: translateX(15%); }
+}
+.px-icon--shake {
+  animation: px-shake 0.4s steps(4) infinite;
+}
+
+/* Beat - scale throb (3 steps) */
+@keyframes px-beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.25); }
+}
+.px-icon--beat {
+  animation: px-beat 0.6s steps(3) infinite;
+}
+
+/* Fade - opacity flicker (4 steps) */
+@keyframes px-fade {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.px-icon--fade {
+  animation: px-fade 1s steps(4) infinite;
+}
+
+/* Ensure image-rendering for crisp pixels */
+.px-icon__pixel svg {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }

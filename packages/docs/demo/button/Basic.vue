@@ -29,7 +29,7 @@
       <px-button type="primary" icon="edit" circle />
       <px-button type="success" icon="check" circle />
       <px-button type="info" icon="message" circle />
-      <px-button type="warning" icon="star" circle />
+      <px-button type="warning" icon="alert" circle />
       <px-button type="danger" icon="trash" circle />
     </div>
   </div>

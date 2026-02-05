@@ -1,7 +1,7 @@
 <template>
   <px-dropdown :items="items" @command="handleCommand">
     <px-button>
-      Dropdown Menu <px-icon icon="caret-down" style="margin-left: 4px" />
+      Dropdown Menu <px-icon icon="chevron-down" style="margin-left: 4px" />
     </px-button>
   </px-dropdown>
 </template>
