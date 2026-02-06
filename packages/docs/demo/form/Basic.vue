@@ -28,7 +28,6 @@ const form = reactive({
 
 const onSubmit = () => {
   PxMessage.success('Submit!');
-  console.log(form);
 };
 
 const onReset = () => {

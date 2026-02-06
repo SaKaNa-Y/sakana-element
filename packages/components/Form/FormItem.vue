@@ -81,6 +81,22 @@ const normalizeLabelWidth = computed(() => {
   return '150px';
 });
 
+const labelPosition = computed(() => ctx?.labelPosition ?? 'right');
+const isTop = computed(() => labelPosition.value === 'top');
+
+const labelStyle = computed(() => {
+  if (isTop.value) {
+    return {
+      width: '100%',
+      textAlign: 'left' as const,
+      padding: '0 0 8px 0',
+    };
+  }
+  return {
+    textAlign: labelPosition.value === 'left' ? ('left' as const) : ('right' as const),
+  };
+});
+
 const isDisabled = computed(() => ctx?.disabled || props.disabled);
 const innerVal = computed(() => {
   const model = ctx?.model;
@@ -124,6 +140,11 @@ const itemRules = computed(() => {
   }
 
   return rules;
+});
+
+const isRequired = computed(() => {
+  if (!isNil(props.required)) return props.required;
+  return size(filter(itemRules.value, (rule) => rule.required)) > 0;
 });
 
 let initialVal: any = null;
@@ -258,11 +279,12 @@ defineExpose<FormItemInstance>({
       'asterisk-left': ctx?.requiredAsteriskPosition === 'left',
       'asterisk-right': ctx?.requiredAsteriskPosition === 'right',
     }"
+    :style="isTop ? { flexDirection: 'column' } : {}"
   >
     <component
       v-if="hasLabel"
       class="px-form-item__label"
-      :class="`position-${ctx?.labelPosition ?? `right`}`"
+      :style="labelStyle"
       :is="labelFor ? 'label' : 'div'"
       :id="labelId"
       :for="labelFor"
@@ -271,7 +293,8 @@ defineExpose<FormItemInstance>({
         {{ currentLabel }}
       </slot>
     </component>
-    <div class="px-form-item__content">
+    <div class="px-form-item__content" :style="isTop ? { width: '100%' } : {}"
+    >
       <slot :validate="validate"></slot>
       <div class="px-form-item__error-msg" v-if="validateStatus === 'error'">
         <template v-if="ctx?.showMessage && showMessage">

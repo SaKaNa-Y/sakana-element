@@ -203,7 +203,6 @@ function controlInputVal(visible: boolean) {
 
 function toggleVisible() {
   if (isDisabled.value) return;
-  console.log('toggleVisible');
   controlVisible(!isDropdownVisible.value);
 }
 

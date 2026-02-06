@@ -146,7 +146,6 @@ watch(
         popperNode.value,
         popperOptions.value
       );
-      console.log(popperInstance);
     }
   },
   { flush: 'post' }
@@ -194,7 +193,6 @@ useEventsToTiggerNode(props, triggerNode, events, () => {
 });
 
 onUnmounted(() => {
-  console.log('unmount', popperInstance);
   destroyPopperInstance();
 });
 

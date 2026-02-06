@@ -5,24 +5,31 @@
 }
 
 .px-form-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   margin-bottom: 18px;
 }
 
 .px-form-item__label {
   display: inline-block;
-  text-align: right;
   vertical-align: middle;
   font-size: var(--px-font-size-base);
   color: var(--px-text-color-regular);
   line-height: 32px;
   padding: 0 12px 0 0;
   box-sizing: border-box;
+  width: var(--px-form-lebel-width, 150px);
+  flex-shrink: 0;
+  text-align: right;
 }
 
 .px-form-item__content {
   line-height: 32px;
   position: relative;
   font-size: var(--px-font-size-base);
+  flex: 1;
+  min-width: 0;
 }
 
 .px-form-item__error {

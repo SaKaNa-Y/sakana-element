@@ -1,4 +1,7 @@
-<script setup></script>
+<script setup>
+function handleClose() {
+}
+</script>
 <template>
   <div class="basic block">
     <px-alert title="Unclosable alert" type="success" :closable="false" />

@@ -1,6 +1,5 @@
 <script setup>
 function handleBtnClick() {
-  console.log("btn click");
 }
 </script>
 

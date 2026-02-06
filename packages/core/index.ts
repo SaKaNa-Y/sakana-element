@@ -21,8 +21,7 @@ if (typeof CSS !== 'undefined' && 'paintWorklet' in CSS) {
       new URL('@sakana-element/theme/paintworklet/pixel-shadow.js', import.meta.url).href
     );
   } catch (error) {
-    // Gracefully handle errors if paintworklet loading fails
-    console.warn('Failed to load CSS Paint Worklets:', error);
+    void error;
   }
 }
 

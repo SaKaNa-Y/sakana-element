@@ -22,8 +22,7 @@ font-family: monospace;
 font-weight: 600;
 `;
 
-    console.info(`%c${logo}`, rainbowGradient);
-  } else if (import.meta.env.DEV) {
-    console.log('[Sakana-Element]:dev mode...');
+    void logo;
+    void rainbowGradient;
   }
 }

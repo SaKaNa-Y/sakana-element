@@ -48,7 +48,7 @@ export default defineConfig({
       compress: {
         sequences: isProd, // 在生产环境下启用序列优化，将多个语句合并成一条语句
         arguments: isProd, // 在生产环境下启用参数优化，将多个参数合并成一个参数
-        drop_console: isProd && ['log'], // 在生产环境下删除console.log
+        drop_console: isProd, // 在生产环境下删除所有console语句
         drop_debugger: isProd, // 在生产环境下删除debugger
         passes: isProd ? 4 : 1, // 压缩次数，生产环境4次，开发环境1次
         global_defs: {

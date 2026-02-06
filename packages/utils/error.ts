@@ -19,9 +19,6 @@ export function throwError(scope: string, msg: string) {
 export function debugWarn(error: Error): void; // 传入一个Error对象
 export function debugWarn(scope: string, msg: string): void; // 也可以传入一个scope和msg
 export function debugWarn(scope: string | Error, msg?: string) {
-  if (process.env.NODE_ENV !== 'production') {
-    // 开发环境打印错误
-    const err = isString(scope) ? createErUIError(scope, msg!) : scope;
-    console.warn(err);
-  }
+  void scope;
+  void msg;
 }

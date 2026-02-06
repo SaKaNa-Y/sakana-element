@@ -14,7 +14,7 @@ const emits = defineEmits<CollapseEmits>();
 const activeNames = ref(props.modelValue);
 
 if (props.accordion && activeNames.value.length > 1) {
-  console.warn('accordion mode should only have one active item');
+  activeNames.value = [activeNames.value[0]];
 }
 
 function handleItemClick(item: CollapseItemName) {

@@ -4,8 +4,7 @@ import { ref } from 'vue';
 
 const activeNames = ref(['1']);
 
-function handleChange(val: CollapseItemName[]) {
-  console.log(val);
+function handleChange(_val: CollapseItemName[]) {
 }
 </script>
 

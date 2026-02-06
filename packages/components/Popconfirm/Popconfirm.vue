@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { addUnit } from '@sakana-element/utils';
-import { useLocale } from '@sakana-element/hooks';
 import type { TooltipInstance } from '../Tooltip';
 import type { PopconfirmProps, PopconfirmEmits } from './types';
 
@@ -25,8 +24,6 @@ const props = withDefaults(defineProps<PopconfirmProps>(), {
 const emits = defineEmits<PopconfirmEmits>();
 const tooltipRef = ref<TooltipInstance>();
 const style = computed(() => ({ width: addUnit(props.width) }));
-
-const locale = useLocale();
 
 function hidePopper() {
   tooltipRef.value?.hide();
@@ -60,7 +57,7 @@ function cancel(e: MouseEvent) {
           :type="cancelButtonType"
           @click="cancel"
         >
-          {{ cancelButtonText || locale.t('popconfirm.cancelButtonText') }}
+          {{ cancelButtonText || 'Cancel' }}
         </px-button>
         <px-button
           class="px-popconfirm__confirm"
@@ -68,7 +65,7 @@ function cancel(e: MouseEvent) {
           :type="confirmButtonType"
           @click="confirm"
         >
-          {{ confirmButtonText || locale.t('popconfirm.confirmButtonText') }}
+          {{ confirmButtonText || 'Confirm' }}
         </px-button>
       </div>
     </template>

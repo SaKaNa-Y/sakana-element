@@ -7,10 +7,14 @@
     </div>
     <px-form :model="form" :label-position="labelPosition" label-width="80px">
       <px-form-item label="Name">
-        <px-input v-model="form.name" />
+        <px-input v-model="form.name" placeholder="Enter name" />
       </px-form-item>
       <px-form-item label="Email">
-        <px-input v-model="form.email" />
+        <px-input v-model="form.email" placeholder="Enter email" />
+      </px-form-item>
+      <px-form-item>
+        <px-button type="primary" @click="onSubmit">Submit</px-button>
+        <px-button @click="onCancel">Cancel</px-button>
       </px-form-item>
     </px-form>
   </div>
@@ -25,6 +29,14 @@ const form = reactive({
   name: '',
   email: ''
 });
+
+function onSubmit() {
+}
+
+function onCancel() {
+  form.name = '';
+  form.email = '';
+}
 </script>
 
 <style scoped>
