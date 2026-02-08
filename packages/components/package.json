@@ -5,8 +5,8 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test pnpm --filter @sakana-element/hooks build && vitest --run --coverage",
-    "test:watch": "cross-env NODE_ENV=test pnpm --filter @sakana-element/hooks build && vitest --coverage"
+    "test": "vitest --run --coverage",
+    "test:watch": "vitest --coverage"
   },
   "keywords": [],
   "author": "",

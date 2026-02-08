@@ -18,11 +18,11 @@ describe('utils/index', () => {
     expect(typeIconMap).toBeDefined()
     each(
       [
-        ['info', 'circle-info'],
-        ['success', 'check-circle'],
-        ['warning', 'circle-exclamation'],
-        ['danger', 'circle-xmark'],
-        ['error', 'circle-xmark']
+        ['info', 'info-box'],
+        ['success', 'check'],
+        ['warning', 'warning-box'],
+        ['danger', 'close-box'],
+        ['error', 'close-box']
       ],
       ([type, icon]) => {
         expect(typeIconMap.get(type)).toBe(icon)

@@ -83,6 +83,7 @@ export default defineConfig({
       name: 'SakanaElement', //库名
       fileName: 'index', //文件名
       formats: ['es'], //格式
+      cssFileName: 'style', //保持CSS文件名为style.css，兼容Vite 6
     },
     rollupOptions: {
       //rollup配置,rollup是vite的打包工具

@@ -1,6 +1,5 @@
 // vitest.config.ts
-/// <reference types="vitest" />
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import { resolve } from 'path';
@@ -21,9 +20,8 @@ export default defineConfig({
       '**/dist/**',
       '**/true/coverage/**',
       '**/coverage/**',
+      '**/packages/components/**',
     ],
-    setupFiles: [resolve(__dirname, './vitest.setup.ts')], //执行测试前执行的文件
+    setupFiles: [resolve(__dirname, './vitest.setup.ts')],
   },
 });
-
-// "test": "vitest --coverage"

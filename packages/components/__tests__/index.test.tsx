@@ -8,6 +8,18 @@ import {
   PxCollapseItem,
   PxIcon,
   PxTooltip,
+  PxPopconfirm,
+  PxDropdown,
+  PxDropdownItem,
+  PxConfigProvider,
+  PxInput,
+  PxSwitch,
+  PxSelect,
+  PxOption,
+  PxForm,
+  PxFormItem,
+  PxLoading,
+  PxMessageBox,
 } from '..';
 import { get, map } from 'lodash-es';
 
@@ -19,7 +31,17 @@ const comps = [
   PxCollapseItem,
   PxIcon,
   PxTooltip,
-] as Plugin[]; //通过插件机制，可以一次性注册所有组件
+  PxPopconfirm,
+  PxDropdown,
+  PxDropdownItem,
+  PxConfigProvider,
+  PxInput,
+  PxSwitch,
+  PxSelect,
+  PxOption,
+  PxForm,
+  PxFormItem,
+] as Plugin[];
 
 describe('components/index', () => {
   it.each(map(comps, (c) => [get(c, 'name') ?? '', c]))(
@@ -29,4 +51,14 @@ describe('components/index', () => {
       expect(component.install).toBeDefined();
     }
   );
+
+  it('PxLoading should be exported with install', () => {
+    expect(PxLoading).toBeDefined();
+    expect(PxLoading.install).toBeDefined();
+  });
+
+  it('PxMessageBox should be exported', () => {
+    expect(PxMessageBox).toBeDefined();
+    expect(PxMessageBox.install).toBeDefined();
+  });
 });

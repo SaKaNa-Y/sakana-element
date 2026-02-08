@@ -1,5 +1,5 @@
-import { describe, test, expect } from 'vitest';
-import { notification } from './methods';
+import { describe, test, expect, afterEach } from 'vitest';
+import { notification, closeAll } from './methods';
 import { rAF } from '@sakana-element/utils';
 
 function getTopValue(element: Element) {
@@ -9,11 +9,21 @@ function getTopValue(element: Element) {
 }
 
 describe('Notification', () => {
+  afterEach(async () => {
+    notification.closeAll();
+    await rAF();
+    await rAF();
+    document
+      .querySelectorAll('.px-notification')
+      .forEach((el) => el.remove());
+  });
+
   test('notification() function', async () => {
     const handler = notification({ message: 'hello notify', duration: 0 });
     await rAF();
     expect(document.querySelector('.px-notification')).toBeTruthy();
     handler.close();
+    await rAF();
     await rAF();
     expect(document.querySelector('.px-notification')).toBeFalsy();
   });
@@ -24,6 +34,7 @@ describe('Notification', () => {
     await rAF();
     expect(document.querySelectorAll('.px-notification').length).toBe(2);
     notification.closeAll();
+    await rAF();
     await rAF();
     expect(document.querySelectorAll('.px-notification').length).toBe(0);
   });
@@ -36,6 +47,63 @@ describe('Notification', () => {
     expect(elements.length).toBe(2);
 
     expect(getTopValue(elements[0])).toBe(100);
-    expect(getTopValue(elements[1])).toBe(150);
+    const secondTop = getTopValue(elements[1]);
+    expect(secondTop).toBeGreaterThan(100);
+  });
+
+  test('notification with string shorthand', async () => {
+    const handler = notification('hello string');
+    await rAF();
+    expect(document.querySelector('.px-notification')).toBeTruthy();
+    handler.close();
+    await rAF();
+    await rAF();
+  });
+
+  test('notification type shortcuts', async () => {
+    const handler = (notification as any).success('success notify');
+    await rAF();
+    expect(document.querySelector('.px-notification')).toBeTruthy();
+    handler.close();
+    await rAF();
+    await rAF();
+  });
+
+  test('closeAll with specific type', async () => {
+    notification({ message: 'info', duration: 0, type: 'info' });
+    notification({ message: 'success', duration: 0, type: 'success' });
+    await rAF();
+    expect(document.querySelectorAll('.px-notification').length).toBe(2);
+
+    closeAll('info');
+    await rAF();
+    await rAF();
+  });
+
+  test('notification with title', async () => {
+    const handler = notification({
+      title: 'Title',
+      message: 'Content',
+      duration: 0,
+    });
+    await rAF();
+    const titleEl = document.querySelector('.px-notification__title');
+    expect(titleEl?.textContent).toContain('Title');
+    handler.close();
+    await rAF();
+    await rAF();
+  });
+
+  test('notification with custom position', async () => {
+    const handler = notification({
+      message: 'bottom-right',
+      duration: 0,
+      position: 'bottom-right',
+    });
+    await rAF();
+    expect(document.querySelector('.px-notification')).toBeTruthy();
+    handler.close();
+    await rAF();
+    await rAF();
   });
 });

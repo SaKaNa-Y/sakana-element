@@ -105,7 +105,7 @@ describe('Button.vue', () => {
 
     expect(wrapper.find('.loading-icon').exists()).toBe(true);
     expect(iconElement.exists()).toBeTruthy();
-    expect(iconElement.attributes('icon')).toBe('spinner');
+    expect(iconElement.attributes('icon')).toBe('loader');
     await wrapper.trigger('click');
     expect(wrapper.emitted('click')).toBeUndefined();
   });
@@ -137,7 +137,7 @@ describe('Button.vue', () => {
     // icon
     const iconElement = wrapper.findComponent(Icon);
     expect(iconElement.exists()).toBeTruthy();
-    expect(iconElement.attributes('icon')).toBe('spinner');
+    expect(iconElement.attributes('icon')).toBe('loader');
   });
 
   test('icon button', () => {
@@ -156,6 +156,73 @@ describe('Button.vue', () => {
     const iconElement = wrapper.findComponent(Icon);
     expect(iconElement.exists()).toBeTruthy();
     expect(iconElement.attributes('icon')).toBe('arrow-up');
+  });
+  // Props: color (custom color styles)
+  it('should apply custom color style variables when color prop is set', () => {
+    const wrapper = mount(Button, {
+      props: { color: '#626aef' },
+    });
+    const style = wrapper.attributes('style');
+    expect(style).toContain('--px-button-bg-color');
+    expect(style).toContain('--px-button-text-color');
+    expect(style).toContain('--px-button-border-color');
+    expect(style).toContain('--px-button-hover-bg-color');
+    expect(style).toContain('--px-button-active-bg-color');
+    expect(style).toContain('--px-button-disabled-bg-color');
+  });
+
+  it('should apply plain color style variables when color and plain props are set', () => {
+    const wrapper = mount(Button, {
+      props: { color: '#626aef', plain: true },
+    });
+    const style = wrapper.attributes('style');
+    expect(style).toContain('--px-button-text-color');
+    expect(style).toContain('--px-button-bg-color');
+    expect(style).toContain('--px-button-hover-text-color');
+    expect(style).toContain('--px-button-hover-bg-color');
+    expect(style).toContain('--px-button-disabled-text-color');
+  });
+
+  it('should use white text for dark background color', () => {
+    const wrapper = mount(Button, {
+      props: { color: '#000000' },
+    });
+    const style = wrapper.attributes('style');
+    expect(style).toContain('#ffffff');
+  });
+
+  it('should use dark text for light background color', () => {
+    const wrapper = mount(Button, {
+      props: { color: '#ffffff' },
+    });
+    const style = wrapper.attributes('style');
+    expect(style).toContain('#1e1e2e');
+  });
+
+  it('should not apply custom color styles when color prop is not set', () => {
+    const wrapper = mount(Button);
+    const style = wrapper.attributes('style') ?? '';
+    expect(style).not.toContain('--px-button-bg-color');
+  });
+
+  // Props: autofocus
+  it('should set autofocus attribute', () => {
+    const wrapper = mount(Button, {
+      props: { autofocus: true },
+    });
+    expect(wrapper.attributes('autofocus')).toBeDefined();
+  });
+
+  // Props: loadingIcon
+  it('should use custom loading icon when loadingIcon prop is set', () => {
+    const wrapper = mount(Button, {
+      props: { loading: true, loadingIcon: 'check' },
+      global: {
+        stubs: ['PxIcon'],
+      },
+    });
+    const iconElement = wrapper.findComponent(Icon);
+    expect(iconElement.attributes('icon')).toBe('check');
   });
 });
 

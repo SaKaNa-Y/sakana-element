@@ -118,4 +118,112 @@ describe('Dropdown.vue', () => {
     expect(wrapper.find('.px-dropdown__menu').exists()).toBeFalsy();
     expect(onClick).toBeCalled();
   });
+
+  it('should render items from items prop', async () => {
+    const items: DropdownItemProps[] = [
+      { label: 'Item 1', command: 'a' },
+      { label: 'Item 2', command: 'b' },
+    ];
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        items,
+      },
+      slots: {
+        default: () => <button id="trigger">Click me</button>,
+      },
+    });
+
+    const triggerArea = wrapper.find('#trigger');
+    triggerArea.trigger('click');
+    await vi.runAllTimers();
+
+    expect(wrapper.find('.px-dropdown__menu').exists()).toBeTruthy();
+  });
+
+  it('should expose open and close methods', () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+      },
+      slots: {
+        default: () => <div>Trigger</div>,
+      },
+    });
+
+    const vm = wrapper.vm as any;
+    expect(vm.open).toBeDefined();
+    expect(vm.close).toBeDefined();
+  });
+
+  it('should render disabled state', () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        disabled: true,
+      },
+      slots: {
+        default: () => <div>Trigger</div>,
+      },
+    });
+
+    expect(wrapper.find('.px-dropdown').classes()).toContain('is-disabled');
+  });
+
+  it('should emit visible-change event', async () => {
+    const onVisibleChange = vi.fn();
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        'onVisible-change': onVisibleChange,
+      },
+      slots: {
+        default: () => <button id="trigger">Trigger</button>,
+        dropdown: () => <DropdownItem label="Item" command="a" />,
+      },
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+  });
+
+  it('should hide on click when hideOnClick is true', async () => {
+    const onCommand = vi.fn();
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        hideOnClick: true,
+        onCommand,
+      },
+      slots: {
+        default: () => <button id="trigger">Trigger</button>,
+        dropdown: () => <DropdownItem label="Item" command="a" />,
+      },
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+
+    const item = wrapper.find('.px-dropdown__item');
+    if (item.exists()) {
+      await item.trigger('click');
+    }
+  });
+
+  it('should render split button with arrow toggle', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        splitButton: true,
+        type: 'primary',
+        size: 'small',
+        items: [{ label: 'Item 1', command: 'a' }],
+      },
+      slots: {
+        default: () => <span>Action</span>,
+      },
+    });
+
+    expect(wrapper.find('.px-button-group').exists()).toBeTruthy();
+  });
 });

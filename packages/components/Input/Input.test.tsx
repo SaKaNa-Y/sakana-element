@@ -1,6 +1,8 @@
 import { describe, expect, test } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { nextTick } from 'vue';
 import Input from './Input.vue';
+import { PxInput } from './index';
 
 describe('Input.vue', () => {
   test('render', () => {
@@ -139,12 +141,102 @@ describe('Input.vue', () => {
 
     const eyeIcon = wrapper.find('.px-input__password');
     expect(eyeIcon.exists()).toBeTruthy();
-    expect(eyeIcon.attributes('icon')).toBe('eye-slash');
+    expect(eyeIcon.attributes('icon')).toBe('eye-closed');
 
     // 点击 切换
     await eyeIcon.trigger('click');
     expect(input.element.type).toBe('text');
     // 缓存 Icon
     expect(wrapper.find('.px-input__password').attributes('icon')).toBe('eye');
+  });
+
+  test('disabled state', () => {
+    const wrapper = mount(Input, {
+      props: {
+        modelValue: 'test',
+        type: 'text',
+        disabled: true,
+      },
+    });
+
+    expect(wrapper.classes()).toContain('is-disabled');
+    expect(wrapper.get('input').element.disabled).toBe(true);
+  });
+
+  test('readonly state', () => {
+    const wrapper = mount(Input, {
+      props: {
+        modelValue: 'test',
+        type: 'text',
+        readonly: true,
+      },
+    });
+
+    expect(wrapper.get('input').element.readOnly).toBe(true);
+  });
+
+  test('suffix slot', () => {
+    const wrapper = mount(Input, {
+      props: {
+        modelValue: 'test',
+        type: 'text',
+      },
+      slots: {
+        suffix: 'suffix content',
+        append: 'append content',
+      },
+    });
+
+    expect(wrapper.find('.px-input__suffix').exists()).toBeTruthy();
+    expect(wrapper.find('.px-input__append').exists()).toBeTruthy();
+  });
+
+  test('should expose focus, blur, select, clear methods', async () => {
+    const wrapper = mount(Input, {
+      props: {
+        modelValue: 'test',
+        type: 'text',
+      },
+    });
+
+    const vm = wrapper.vm as any;
+    expect(vm.focus).toBeDefined();
+    expect(vm.blur).toBeDefined();
+    expect(vm.select).toBeDefined();
+    expect(vm.clear).toBeDefined();
+  });
+
+  test('should handle autofocus', () => {
+    const wrapper = mount(Input, {
+      props: {
+        modelValue: '',
+        type: 'text',
+        autofocus: true,
+      },
+    });
+
+    expect(wrapper.get('input').element.autofocus).toBe(true);
+  });
+
+  test('should handle placeholder', () => {
+    const wrapper = mount(Input, {
+      props: {
+        modelValue: '',
+        type: 'text',
+        placeholder: 'Enter text',
+      },
+    });
+
+    expect(wrapper.get('input').element.placeholder).toBe('Enter text');
+  });
+});
+
+describe('Input/index', () => {
+  test('should be exported with withInstall()', () => {
+    expect(PxInput.install).toBeDefined();
+  });
+
+  test('component should be exported', () => {
+    expect(PxInput).toBe(Input);
   });
 });

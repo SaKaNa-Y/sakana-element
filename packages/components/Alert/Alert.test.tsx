@@ -29,7 +29,7 @@ describe('Alert.vue', () => {
     // close icon
     const iconElement = wrapper.findComponent(Icon); //查找组件
     expect(iconElement.exists()).toBeTruthy(); //断言组件是否存在
-    expect(iconElement.attributes('icon')).toBe('xmark'); //断言组件的icon属性是否为xmark
+    expect(iconElement.attributes('icon')).toBe('close'); //断言组件的icon属性是否为close
 
     const wrapper2 = mount(() => (
       <Alert title={title} description={desc}></Alert>
@@ -41,12 +41,12 @@ describe('Alert.vue', () => {
 
   //测试图标
   it.each([
-    ['info', 'circle-info'],
-    ['success', 'check-circle'],
-    ['warning', 'circle-exclamation'],
-    ['danger', 'circle-xmark'],
-    ['error', 'circle-xmark'],
-    ['non-compliance', 'circle-info'], // 不符合 type 定义的
+    ['info', 'info-box'],
+    ['success', 'check'],
+    ['warning', 'warning-box'],
+    ['danger', 'close-box'],
+    ['error', 'close-box'],
+    ['non-compliance', 'circle-info'], // 不符合 type 定义的，使用默认 fallback
   ])('should has the correct icon when props type is %s', (type, iconName) => {
     const wrapper = mount(Alert, {
       props: {

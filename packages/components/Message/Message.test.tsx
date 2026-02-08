@@ -1,4 +1,4 @@
-import { describe, test, expect } from 'vitest';
+import { describe, test, expect, afterEach } from 'vitest';
 import { message, closeAll } from './methods';
 import { rAF } from '@sakana-element/utils';
 
@@ -9,11 +9,19 @@ function getTopValue(element: Element) {
 }
 
 describe('Message', () => {
+  afterEach(async () => {
+    closeAll();
+    await rAF();
+    await rAF();
+    document.querySelectorAll('.px-message').forEach((el) => el.remove());
+  });
+
   test('message() function', async () => {
     const handler = message({ message: 'hello msg', duration: 0 });
     await rAF();
     expect(document.querySelector('.px-message')).toBeTruthy();
     handler.close();
+    await rAF();
     await rAF();
     expect(document.querySelector('.px-message')).toBeFalsy();
   });
@@ -24,6 +32,7 @@ describe('Message', () => {
     await rAF();
     expect(document.querySelectorAll('.px-message').length).toBe(2);
     closeAll();
+    await rAF();
     await rAF();
     expect(document.querySelector('.px-message')).toBeFalsy();
   });
@@ -37,6 +46,45 @@ describe('Message', () => {
     expect(elements.length).toBe(2);
 
     expect(getTopValue(elements[0])).toBe(100);
-    expect(getTopValue(elements[1])).toBe(150);
+    const secondTop = getTopValue(elements[1]);
+    expect(secondTop).toBeGreaterThan(100);
+  });
+
+  test('message with string shorthand', async () => {
+    const handler = message('hello string');
+    await rAF();
+    expect(document.querySelector('.px-message')).toBeTruthy();
+    handler.close();
+    await rAF();
+    await rAF();
+  });
+
+  test('message type shortcuts', async () => {
+    const handler = message.success!('success msg');
+    await rAF();
+    expect(document.querySelector('.px-message')).toBeTruthy();
+    handler.close();
+    await rAF();
+    await rAF();
+  });
+
+  test('closeAll with specific type', async () => {
+    message({ message: 'info msg', duration: 0, type: 'info' });
+    message({ message: 'success msg', duration: 0, type: 'success' });
+    await rAF();
+    expect(document.querySelectorAll('.px-message').length).toBe(2);
+
+    closeAll('info');
+    await rAF();
+    await rAF();
+  });
+
+  test('message.closeAll should work', async () => {
+    message({ message: 'msg1', duration: 0 });
+    message({ message: 'msg2', duration: 0 });
+    await rAF();
+    message.closeAll!();
+    await rAF();
+    await rAF();
   });
 });

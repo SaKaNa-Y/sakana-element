@@ -13,10 +13,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "sakana-element": "workspace:*",
     "@sakana-element/theme": "workspace:*",
     "@vitepress-demo-preview/plugin": "^1.4.0",
-    "vitepress-preview-component": "workspace:*",
-    "vitepress": "1.0.0-rc.44"
+    "sakana-element": "workspace:*",
+    "vitepress": "1.6.4",
+    "vitepress-preview-component": "workspace:*"
   }
 }
