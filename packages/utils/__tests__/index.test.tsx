@@ -1,5 +1,22 @@
 import { describe, it, expect } from 'vitest'
-import { debugWarn, throwError, withInstall, typeIconMap } from '..'
+import {
+  debugWarn,
+  throwError,
+  withInstall,
+  withInstallFunction,
+  typeIconMap,
+  addUnit,
+  rAF,
+  RenderVnode,
+  registerPixelIcon,
+  registerPixelIcons,
+  getPixelIcon,
+  hasPixelIcon,
+  getRegisteredIconNames,
+  clearPixelIconRegistry,
+  resolveIconName,
+  getIconNameMap,
+} from '..'
 import { each } from 'lodash-es'
 
 describe('utils/index', () => {
@@ -28,5 +45,41 @@ describe('utils/index', () => {
         expect(typeIconMap.get(type)).toBe(icon)
       }
     )
+  })
+  it('withInstallFunction should be exported', () => {
+    expect(withInstallFunction).toBeDefined()
+  })
+  it('addUnit should be exported', () => {
+    expect(addUnit).toBeDefined()
+  })
+  it('rAF should be exported', () => {
+    expect(rAF).toBeDefined()
+  })
+  it('RenderVnode should be exported', () => {
+    expect(RenderVnode).toBeDefined()
+  })
+  it('registerPixelIcon should be exported', () => {
+    expect(registerPixelIcon).toBeDefined()
+  })
+  it('registerPixelIcons should be exported', () => {
+    expect(registerPixelIcons).toBeDefined()
+  })
+  it('getPixelIcon should be exported', () => {
+    expect(getPixelIcon).toBeDefined()
+  })
+  it('hasPixelIcon should be exported', () => {
+    expect(hasPixelIcon).toBeDefined()
+  })
+  it('getRegisteredIconNames should be exported', () => {
+    expect(getRegisteredIconNames).toBeDefined()
+  })
+  it('clearPixelIconRegistry should be exported', () => {
+    expect(clearPixelIconRegistry).toBeDefined()
+  })
+  it('resolveIconName should be exported', () => {
+    expect(resolveIconName).toBeDefined()
+  })
+  it('getIconNameMap should be exported', () => {
+    expect(getIconNameMap).toBeDefined()
   })
 })

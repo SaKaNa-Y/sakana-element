@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { defineComponent, createApp } from 'vue'
 
-import { withInstall } from '../install'
+import { withInstall, withInstallFunction } from '../install'
 
 const AppComp = defineComponent({
   setup() {
@@ -39,5 +39,23 @@ describe('install', () => {
     expect(compB.install).toBeDefined()
     expect(app._context.components['CompA']).toBeTruthy()
     expect(app._context.components['CompB']).toBeFalsy()
+  })
+})
+
+describe('withInstallFunction', () => {
+  it('should add an install method to the function', () => {
+    const myFn = () => 'hello'
+    const wrapped = withInstallFunction(myFn, '$myFn')
+    expect(wrapped.install).toBeDefined()
+  })
+
+  it('install should register function on app.config.globalProperties', () => {
+    const myFn = () => 'hello'
+    const wrapped = withInstallFunction(myFn, '$myFn')
+
+    const app = createApp(AppComp)
+    app.use(wrapped)
+
+    expect(app.config.globalProperties.$myFn).toBe(myFn)
   })
 })
