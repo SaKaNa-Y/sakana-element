@@ -1,5 +1,5 @@
 //@popperjs/core用于处理元素位置计算，Placement是定义出现位置，Options是Popper.js的配置选项
-import type { Placement, Options } from '@popperjs/core';
+import type { Options, Placement } from '@popperjs/core';
 
 export interface TooltipProps {
   content?: string;

@@ -4,6 +4,4 @@ export interface OverlayProps {
   overlayClass?: string | string[] | Record<string, boolean>;
 }
 
-export interface OverlayEmits {
-  (e: 'click', value: MouseEvent): void;
-}
+export type OverlayEmits = (e: 'click', value: MouseEvent) => void;

@@ -9,7 +9,7 @@ const showNotification = () => {
   PxNotification({
     title: 'Notice',
     message: 'This notification will not auto close',
-    duration: 0
+    duration: 0,
   });
 };
 </script>

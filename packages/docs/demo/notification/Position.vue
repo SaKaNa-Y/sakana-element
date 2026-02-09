@@ -14,28 +14,28 @@ const showTopRight = () => {
   PxNotification({
     title: 'Top Right',
     message: 'This is a notification',
-    position: 'top-right'
+    position: 'top-right',
   });
 };
 const showTopLeft = () => {
   PxNotification({
     title: 'Top Left',
     message: 'This is a notification',
-    position: 'top-left'
+    position: 'top-left',
   });
 };
 const showBottomRight = () => {
   PxNotification({
     title: 'Bottom Right',
     message: 'This is a notification',
-    position: 'bottom-right'
+    position: 'bottom-right',
   });
 };
 const showBottomLeft = () => {
   PxNotification({
     title: 'Bottom Left',
     message: 'This is a notification',
-    position: 'bottom-left'
+    position: 'bottom-left',
   });
 };
 </script>

@@ -1,3 +1,5 @@
+// Import order matters: DefaultTheme must load before SakanaElement
+// so that VitePress's default CSS is overridden by SakanaElement's zpix font.
 import type { App } from 'vue';
 import { ElementPlusContainer } from 'vitepress-preview-component';
 import DefaultTheme from 'vitepress/theme';

@@ -30,7 +30,7 @@ export interface InputEmits {
 
 //暴露给用户的方法
 export interface InputInstance {
-  ref: Ref<HTMLInputElement | HTMLTextAreaElement | void>;
+  ref: Ref<HTMLInputElement | HTMLTextAreaElement | undefined>;
   focus(): Promise<void>;
   blur(): void;
   select(): void;

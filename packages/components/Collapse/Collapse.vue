@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { CollapseProps, CollapseEmits, CollapseItemName } from './types';
-import { provide, ref, watch, watchEffect } from 'vue';
 import { debugWarn } from '@sakana-element/utils';
+import { provide, ref, watch, watchEffect } from 'vue';
 import { COLLAPSE_CTX_KEY } from './constants';
+import type { CollapseEmits, CollapseItemName, CollapseProps } from './types';
 
 const COMP_NAME = 'PxCollapse' as const;
 
@@ -50,7 +50,7 @@ watchEffect(() => {
 watch(
   //外来的要用函数包，自家的直接用就行
   () => props.modelValue, //监听modelValue的变化，这么写是监听响应式数据的变化
-  (newNames) => updateActiveNames(newNames)
+  (newNames) => updateActiveNames(newNames),
 );
 
 provide(COLLAPSE_CTX_KEY, {

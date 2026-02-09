@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { LoadingOptions } from './types';
-import { computed, type Ref } from 'vue';
 import { isString } from 'lodash-es';
+import { computed, type Ref } from 'vue';
 import PxIcon from '../Icon/Icon.vue';
+import type { LoadingOptions } from './types';
 
 defineOptions({
   name: 'PxLoading',

@@ -1,5 +1,5 @@
+import { registerPixelIcons, withInstall } from '@sakana-element/utils';
 import Icon from './Icon.vue';
-import { withInstall, registerPixelIcons } from '@sakana-element/utils';
 import { defaultPixelIcons } from './icons';
 
 export const PxIcon = withInstall(Icon);

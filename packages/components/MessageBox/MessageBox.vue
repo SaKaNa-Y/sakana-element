@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import type { MessageBoxProps, MessageBoxAction } from './types';
-import type { InputInstance } from '../Input/types';
-import { useZIndex, useId } from '@sakana-element/hooks';
+import { useId, useZIndex } from '@sakana-element/hooks';
 import { typeIconMap } from '@sakana-element/utils';
-import { reactive, computed, ref, watch, nextTick, type Ref } from 'vue';
-
-import PxOverlay from '../Overlay/Overlay.vue';
-import PxIcon from '../Icon/Icon.vue';
-import PxButton from '../Button/Button.vue';
-import PxInput from '../Input/Input.vue';
 import { isFunction, isNil } from 'lodash-es';
+import { computed, nextTick, type Ref, reactive, ref, watch } from 'vue';
+import PxButton from '../Button/Button.vue';
+import PxIcon from '../Icon/Icon.vue';
+import PxInput from '../Input/Input.vue';
+import type { InputInstance } from '../Input/types';
+import PxOverlay from '../Overlay/Overlay.vue';
+import type { MessageBoxAction, MessageBoxProps } from './types';
 
 defineOptions({
   name: 'PxMessageBox',
@@ -44,9 +43,7 @@ const state = reactive({
 });
 
 const hasMessage = computed(() => !!state.message);
-const iconComponent = computed(
-  () => state.icon ?? typeIconMap.get(state.type ?? '')
-);
+const iconComponent = computed(() => state.icon ?? typeIconMap.get(state.type ?? ''));
 
 watch(
   //监听深层响应式数据
@@ -61,9 +58,9 @@ watch(
     // 在 Vue 的虚拟 DOM 更新机制中，DOM 的更新是异步的，
     // 所以当我们需要获取到最新的 DOM 元素时，需要使用 nextTick 来等待 DOM 更新完成。
     nextTick(() => {
-      inputRef.value && inputRef.value.focus();
+      inputRef.value?.focus();
     });
-  }
+  },
 );
 
 // 点击遮罩层

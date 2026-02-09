@@ -5,8 +5,7 @@ export default {
       confirm: '확인',
       clear: '초기화',
       defaultLabel: '색상 선택기',
-      description:
-        '현재 색상은 {color}입니다. Enter 키를 눌러 새 색상을 선택합니다.',
+      description: '현재 색상은 {color}입니다. Enter 키를 눌러 새 색상을 선택합니다.',
     },
     datepicker: {
       now: '지금',
@@ -16,8 +15,7 @@ export default {
       confirm: '확인',
       dateTablePrompt: '화살표 키를 사용하고 Enter를 눌러 날짜를 선택하십시오.',
       monthTablePrompt: '화살표 키를 사용하고 Enter를 눌러 월을 선택합니다.',
-      yearTablePrompt:
-        '화살표 키를 사용하고 Enter 키를 눌러 연도를 선택합니다.',
+      yearTablePrompt: '화살표 키를 사용하고 Enter 키를 눌러 연도를 선택합니다.',
       selectDate: '날짜 선택',
       selectTime: '시간 선택',
       startDate: '시작 날짜',
@@ -162,4 +160,4 @@ export default {
       indicator: 'Carousel switch to index {index}', // to be translated
     },
   },
-}
+};

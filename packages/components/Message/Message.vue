@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import type { MessageProps, MessageCompInstance } from './types';
-import { computed, onMounted, ref, watch } from 'vue';
-import { getLastBottomOffset } from './methods';
-import { bind, delay } from 'lodash-es';
 import { useEventListener, useOffset } from '@sakana-element/hooks';
-import { addUnit } from '@sakana-element/utils';
-import { typeIconMap, RenderVnode } from '@sakana-element/utils';
+import { addUnit, RenderVnode, typeIconMap } from '@sakana-element/utils';
+import { bind, delay } from 'lodash-es';
+import { computed, onMounted, ref, watch } from 'vue';
 import PxIcon from '../Icon/Icon.vue';
+import { getLastBottomOffset } from './methods';
+import type { MessageCompInstance, MessageProps } from './types';
 
 defineOptions({ name: 'PxMessage' });
 

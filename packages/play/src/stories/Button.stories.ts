@@ -1,5 +1,5 @@
-import type { Meta, StoryObj, ArgTypes } from '@storybook/vue3';
-import { fn, within, userEvent, expect, clearAllMocks } from '@storybook/test';
+import { clearAllMocks, expect, fn, userEvent, within } from '@storybook/test';
+import type { ArgTypes, Meta, StoryObj } from '@storybook/vue3';
 import { set } from 'lodash-es';
 
 import { PxButton, PxButtonGroup } from '../../../components/Button';
@@ -76,7 +76,7 @@ export const Default: Story & { args: { content: string } } = {
       return { args };
     },
     template: container(
-      `<px-button data-testid="story-test-btn" v-bind="args">{{args.content}}</px-button>`
+      `<px-button data-testid="story-test-btn" v-bind="args">{{args.content}}</px-button>`,
     ),
   }),
 
@@ -87,15 +87,12 @@ export const Default: Story & { args: { content: string } } = {
     const btn = canvas.getByTestId('story-test-btn');
 
     // 测试场景1：节流模式开启时的点击行为
-    await step(
-      'When useThrottle is set to true, the onClick should be called once',
-      async () => {
-        set(args, 'useThrottle', true);
-        await userEvent.tripleClick(btn);
-        expect(args.onClick).toHaveBeenCalledOnce();
-        clearAllMocks();
-      }
-    );
+    await step('When useThrottle is set to true, the onClick should be called once', async () => {
+      set(args, 'useThrottle', true);
+      await userEvent.tripleClick(btn);
+      expect(args.onClick).toHaveBeenCalledOnce();
+      clearAllMocks();
+    });
 
     // 测试场景2：节流模式关闭时的点击行为
     await step(
@@ -105,33 +102,27 @@ export const Default: Story & { args: { content: string } } = {
         await userEvent.tripleClick(btn);
         expect(args.onClick).toHaveBeenCalledTimes(3);
         clearAllMocks();
-      }
+      },
     );
 
     // 测试场景3：按钮禁用时的点击行为
-    await step(
-      'When disabled is set to true, the onClick should not be called',
-      async () => {
-        set(args, 'disabled', true);
-        await userEvent.click(btn);
-        expect(args.onClick).toHaveBeenCalledTimes(0);
-        set(args, 'disabled', false);
-        clearAllMocks();
-      }
-    );
+    await step('When disabled is set to true, the onClick should not be called', async () => {
+      set(args, 'disabled', true);
+      await userEvent.click(btn);
+      expect(args.onClick).toHaveBeenCalledTimes(0);
+      set(args, 'disabled', false);
+      clearAllMocks();
+    });
 
     // 测试用例：测试加载状态下按钮的点击行为
-    await step(
-      'When loading is set to true, the onClick should not be called',
-      async () => {
-        set(args, 'loading', true);
-        await userEvent.click(btn);
+    await step('When loading is set to true, the onClick should not be called', async () => {
+      set(args, 'loading', true);
+      await userEvent.click(btn);
 
-        expect(args.onClick).toHaveBeenCalledTimes(0);
-        set(args, 'loading', false);
-        clearAllMocks();
-      }
-    );
+      expect(args.onClick).toHaveBeenCalledTimes(0);
+      set(args, 'loading', false);
+      clearAllMocks();
+    });
   },
 };
 

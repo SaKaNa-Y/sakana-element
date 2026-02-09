@@ -1,15 +1,13 @@
 import { rAF } from '@sakana-element/utils';
-import { describe, test, expect, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { describe, expect, test, vi } from 'vitest';
 import { nextTick } from 'vue';
 import { SELECT_CTX_KEY } from './constants';
-import { PxSelect, PxOption } from './index';
-import { withInstall } from '@sakana-element/utils';
-
-import type { SelectOptionProps } from './types';
+import { PxOption, PxSelect } from './index';
+import Option from './Option.vue';
 
 import Select from './Select.vue';
-import Option from './Option.vue';
+import type { SelectOptionProps } from './types';
 
 const options = [
   { value: '1', label: 'option 1' },
@@ -240,9 +238,7 @@ describe('Select', () => {
   });
 
   test('should handle filterMethod prop', async () => {
-    const filterMethod = vi.fn((query: string) =>
-      options.filter((o) => o.label.includes(query))
-    );
+    const filterMethod = vi.fn((query: string) => options.filter((o) => o.label.includes(query)));
     const wrapper = mount(Select, {
       props: {
         modelValue: '',

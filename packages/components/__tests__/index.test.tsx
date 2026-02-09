@@ -1,27 +1,27 @@
+import { get, map } from 'lodash-es';
+import { describe, expect, it } from 'vitest';
 import type { Plugin } from 'vue';
-import { describe, it, expect } from 'vitest';
 import {
   PxAlert,
   PxButton,
   PxButtonGroup,
   PxCollapse,
   PxCollapseItem,
-  PxIcon,
-  PxTooltip,
-  PxPopconfirm,
+  PxConfigProvider,
   PxDropdown,
   PxDropdownItem,
-  PxConfigProvider,
-  PxInput,
-  PxSwitch,
-  PxSelect,
-  PxOption,
   PxForm,
   PxFormItem,
+  PxIcon,
+  PxInput,
   PxLoading,
   PxMessageBox,
+  PxOption,
+  PxPopconfirm,
+  PxSelect,
+  PxSwitch,
+  PxTooltip,
 } from '..';
-import { get, map } from 'lodash-es';
 
 const comps = [
   PxAlert,
@@ -44,13 +44,10 @@ const comps = [
 ] as Plugin[];
 
 describe('components/index', () => {
-  it.each(map(comps, (c) => [get(c, 'name') ?? '', c]))(
-    '%s should be exported',
-    (_, component) => {
-      expect(component).toBeDefined();
-      expect(component.install).toBeDefined();
-    }
-  );
+  it.each(map(comps, (c) => [get(c, 'name') ?? '', c]))('%s should be exported', (_, component) => {
+    expect(component).toBeDefined();
+    expect(component.install).toBeDefined();
+  });
 
   it('PxLoading should be exported with install', () => {
     expect(PxLoading).toBeDefined();

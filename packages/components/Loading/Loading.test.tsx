@@ -1,10 +1,10 @@
 import { rAF } from '@sakana-element/utils';
-import { describe, it, expect, afterEach } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { createApp, defineComponent, ref, nextTick } from 'vue';
-import { Loading } from './service';
+import { afterEach, describe, expect, it } from 'vitest';
+import { createApp, defineComponent, nextTick, ref } from 'vue';
 import { vLoading } from './directive';
 import { PxLoading } from './index';
+import { Loading } from './service';
 
 describe('Loading', () => {
   afterEach(async () => {
@@ -45,9 +45,7 @@ describe('Loading', () => {
   it('should support custom text', async () => {
     const instance = Loading({ text: 'Loading...' });
     await rAF();
-    expect(document.querySelector('.px-loading')?.textContent).toContain(
-      'Loading...'
-    );
+    expect(document.querySelector('.px-loading')?.textContent).toContain('Loading...');
     instance.close();
   });
 
@@ -159,7 +157,11 @@ describe('Loading directive', () => {
     const Comp = defineComponent({
       directives: { loading: vLoading },
       setup() {
-        return () => <div v-loading={true} style="width:100px;height:100px">Content</div>;
+        return () => (
+          <div v-loading={true} style="width:100px;height:100px">
+            Content
+          </div>
+        );
       },
     });
     const wrapper = mount(Comp, { attachTo: document.body });
@@ -190,7 +192,11 @@ describe('Loading directive', () => {
     const Comp = defineComponent({
       directives: { loading: vLoading },
       setup() {
-        return () => <div v-loading={loading.value} style="width:100px;height:100px">Content</div>;
+        return () => (
+          <div v-loading={loading.value} style="width:100px;height:100px">
+            Content
+          </div>
+        );
       },
     });
     const wrapper = mount(Comp, { attachTo: document.body });

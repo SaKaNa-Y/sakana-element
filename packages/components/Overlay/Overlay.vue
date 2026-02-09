@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { OverlayProps, OverlayEmits } from './types';
+import type { OverlayEmits, OverlayProps } from './types';
 
 defineOptions({ name: 'PxOverlay' });
 withDefaults(defineProps<OverlayProps>(), {

@@ -1,12 +1,7 @@
-import type { VNode, Ref, ComponentInternalInstance } from 'vue';
+import type { ComponentInternalInstance, Ref, VNode } from 'vue';
 
 //样式类型
-export const notificationTypes = [
-  'info',
-  'success',
-  'warning',
-  'danger',
-] as const;
+export const notificationTypes = ['info', 'success', 'warning', 'danger'] as const;
 //表示属于notificationTypes的类型中的一个,number是索引
 export type NotificationType = (typeof notificationTypes)[number];
 
@@ -49,10 +44,7 @@ export interface NotificationCompInstance {
   bottomOffset: Ref<number>;
 }
 
-export type CreateNotificationProps = Omit<
-  NotificationProps,
-  'onDestory' | 'id' | 'zIndex'
->;
+export type CreateNotificationProps = Omit<NotificationProps, 'onDestory' | 'id' | 'zIndex'>;
 
 export interface NotificationHandler {
   close(): void;
@@ -66,9 +58,7 @@ export type NotificationFn = {
   closeAll(type?: NotificationType): void;
 };
 
-export type NotificationTypeFn = (
-  props: NotificationParams
-) => NotificationHandler;
+export type NotificationTypeFn = (props: NotificationParams) => NotificationHandler;
 
 export interface Notification extends NotificationFn {
   success: NotificationTypeFn;

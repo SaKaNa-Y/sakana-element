@@ -1,11 +1,11 @@
-import { describe, it, expect } from 'vitest';
+import { withInstall } from '@sakana-element/utils';
 import { mount } from '@vue/test-utils';
-import { createApp, defineComponent, h, inject, ref, nextTick } from 'vue';
+import { describe, expect, it } from 'vitest';
+import { createApp, defineComponent, h, inject } from 'vue';
 import ConfigProvider from './ConfigProvider.vue';
-import { PxConfigProvider } from './index';
 import { configProviderContextKey } from './constants';
 import { provideGlobalConfig, useGlobalConfig } from './hooks';
-import { withInstall } from '@sakana-element/utils';
+import { PxConfigProvider } from './index';
 
 describe('ConfigProvider.vue', () => {
   it('should render slot content', () => {
@@ -87,7 +87,7 @@ describe('ConfigProvider.vue', () => {
             { locale: innerLocale },
             {
               default: () => h(InnerChild),
-            }
+            },
           ),
       },
     });
@@ -165,11 +165,7 @@ describe('ConfigProvider hooks', () => {
 
   it('provideGlobalConfig with global flag should set global config', () => {
     const app = createApp({ render: () => null });
-    const result = provideGlobalConfig(
-      { locale: { name: 'zh-cn', el: {} } },
-      app,
-      true
-    );
+    const result = provideGlobalConfig({ locale: { name: 'zh-cn', el: {} } }, app, true);
     expect(result).toBeTruthy();
   });
 
@@ -193,7 +189,7 @@ describe('ConfigProvider hooks', () => {
         locale: { name: 'en', el: {} },
         extendsI18nMsg: { en: { custom: 'value' } },
       },
-      app
+      app,
     );
     expect(result).toBeTruthy();
   });

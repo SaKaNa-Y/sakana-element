@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
+import { describe, expect, it } from 'vitest';
 import Overlay from './Overlay.vue';
 
 describe('Overlay.vue', () => {
@@ -25,9 +25,7 @@ describe('Overlay.vue', () => {
     const wrapper = mount(Overlay, {
       props: { zIndex: 3000 },
     });
-    expect(wrapper.find('.px-overlay').attributes('style')).toContain(
-      'z-index: 3000'
-    );
+    expect(wrapper.find('.px-overlay').attributes('style')).toContain('z-index: 3000');
   });
 
   it('should apply overlay class', () => {

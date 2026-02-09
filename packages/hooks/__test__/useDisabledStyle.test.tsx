@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { defineComponent, nextTick } from 'vue';
 import { mount } from '@vue/test-utils';
+import { describe, expect, it } from 'vitest';
+import { defineComponent, nextTick } from 'vue';
 import { useDisabledStyle } from '../useDisabledStyle';
 
 const TestWrapper = defineComponent({

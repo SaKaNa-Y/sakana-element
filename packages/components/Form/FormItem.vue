@@ -1,44 +1,43 @@
 <script setup lang="ts">
-import type {
-  FormItemContext,
-  FormItemProps,
-  FormValidateFailuer,
-  FormValidateCallback,
-  ValidateStatus,
-  FormItemInstance,
-  FormItemRule,
-} from './types';
+import { useId } from '@sakana-element/hooks';
 
 import Schema, { type RuleItem } from 'async-validator';
 import {
-  inject,
-  onMounted,
-  ref,
-  reactive,
-  toRefs,
-  computed,
-  onUnmounted,
-  nextTick,
-  type Ref,
-  provide,
-} from 'vue';
-import {
-  isNil,
-  get,
-  isString,
-  size,
-  filter,
-  map,
-  includes,
-  keys,
-  isArray,
   cloneDeep,
-  isNumber,
   endsWith,
+  filter,
+  get,
+  includes,
+  isArray,
+  isNil,
+  isNumber,
+  isString,
+  keys,
+  map,
+  size,
 } from 'lodash-es';
-import { useId } from "@sakana-element/hooks";
-
-import { FORM_CTX_KEY, FORM_ITEM_CTX_KEY } from "./constants";
+import {
+  computed,
+  inject,
+  nextTick,
+  onMounted,
+  onUnmounted,
+  provide,
+  type Ref,
+  reactive,
+  ref,
+  toRefs,
+} from 'vue';
+import { FORM_CTX_KEY, FORM_ITEM_CTX_KEY } from './constants';
+import type {
+  FormItemContext,
+  FormItemInstance,
+  FormItemProps,
+  FormItemRule,
+  FormValidateCallback,
+  FormValidateFailuer,
+  ValidateStatus,
+} from './types';
 
 defineOptions({ name: 'PxFormItem' });
 
@@ -55,7 +54,7 @@ const validateStatus: Ref<ValidateStatus> = ref('init');
 const errMsg = ref('');
 const inputIds = ref<string[]>([]);
 
-const getValByProp = (target: Record<string, any> | void) => {
+const getValByProp = (target: Record<string, any> | undefined) => {
   if (target && props.prop && !isNil(get(target, props.prop))) {
     return get(target, props.prop);
   }
@@ -63,13 +62,9 @@ const getValByProp = (target: Record<string, any> | void) => {
 };
 
 const hasLabel = computed(() => !!(props.label || slots.label));
-const labelFor = computed(
-  () => props.for || (inputIds.value.length ? inputIds.value[0] : '')
-);
+const labelFor = computed(() => props.for || (inputIds.value.length ? inputIds.value[0] : ''));
 
-const currentLabel = computed(
-  () => `${props.label ?? ''}${ctx?.labelSuffix ?? ''}`
-);
+const currentLabel = computed(() => `${props.label ?? ''}${ctx?.labelSuffix ?? ''}`);
 
 const normalizeLabelWidth = computed(() => {
   const _normalizeStyle = (val: number | string) => {
@@ -125,7 +120,7 @@ const itemRules = computed(() => {
   if (!isNil(required)) {
     const requiredRules = filter(
       map(rules, (rule, i) => [rule, i]),
-      (item: [FormItemRule, number]) => includes(keys(item[0]), 'required')
+      (item: [FormItemRule, number]) => includes(keys(item[0]), 'required'),
     );
 
     if (size(requiredRules)) {
@@ -176,16 +171,16 @@ async function doValidate(rules: RuleItem[]) {
     .catch((err: FormValidateFailuer) => {
       const { errors } = err;
       validateStatus.value = 'error';
-      errMsg.value = errors && size(errors) > 0 ? errors[0].message ?? '' : '';
+      errMsg.value = errors && size(errors) > 0 ? (errors[0].message ?? '') : '';
       ctx?.emits('validate', props, false, errMsg.value);
       return Promise.reject(err);
     });
 }
 
-const validate: FormItemInstance['validate'] = async function (
+const validate: FormItemInstance['validate'] = async (
   trigger: string,
-  callback?: FormValidateCallback
-) {
+  callback?: FormValidateCallback,
+) => {
   if (isResetting || !props.prop || isDisabled.value) return false;
 
   if (!validateStatus.value) {
@@ -212,7 +207,7 @@ const validate: FormItemInstance['validate'] = async function (
     });
 };
 
-const resetField: FormItemInstance['resetField'] = function () {
+const resetField: FormItemInstance['resetField'] = () => {
   const model = ctx?.model;
   if (model && propString.value && !isNil(get(model, propString.value))) {
     isResetting = true;
@@ -221,17 +216,17 @@ const resetField: FormItemInstance['resetField'] = function () {
   nextTick(() => clearValidate());
 };
 
-const clearValidate: FormItemInstance['clearValidate'] = function () {
+const clearValidate: FormItemInstance['clearValidate'] = () => {
   validateStatus.value = 'init';
   errMsg.value = '';
   isResetting = false;
 };
 
-const addInputId: FormItemContext["addInputId"] = function (id) {
+const addInputId: FormItemContext['addInputId'] = (id) => {
   if (!includes(inputIds.value, id)) inputIds.value.push(id);
 };
 
-const removeInputId: FormItemContext["removeInputId"] = function (id) {
+const removeInputId: FormItemContext['removeInputId'] = (id) => {
   inputIds.value = filter(inputIds.value, (i) => i !== id);
 };
 

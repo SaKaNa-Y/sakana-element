@@ -11,18 +11,14 @@
 
 class PixelBorderPainter {
   static get inputProperties() {
-    return [
-      '--px-border-color',
-      '--px-border-width',
-      '--px-border-pixel-size'
-    ];
+    return ['--px-border-color', '--px-border-width', '--px-border-pixel-size'];
   }
 
   paint(ctx, size, properties) {
     // Get custom property values
     const borderColor = properties.get('--px-border-color').toString().trim() || '#000000';
-    const borderWidth = parseInt(properties.get('--px-border-width').toString()) || 2;
-    const pixelSize = parseInt(properties.get('--px-border-pixel-size').toString()) || 2;
+    const borderWidth = parseInt(properties.get('--px-border-width').toString(), 10) || 2;
+    const pixelSize = parseInt(properties.get('--px-border-pixel-size').toString(), 10) || 2;
 
     const width = size.width;
     const height = size.height;

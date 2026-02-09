@@ -9,7 +9,7 @@ const showMessage = () => {
   PxMessage({
     message: 'This is a closable message',
     showClose: true,
-    duration: 0
+    duration: 0,
   });
 };
 </script>

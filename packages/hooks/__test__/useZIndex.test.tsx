@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { defineComponent } from 'vue';
 import { mount } from '@vue/test-utils';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { defineComponent } from 'vue';
 
 let useZIndex: typeof import('../useZIndex')['default'];
 
@@ -19,7 +19,7 @@ describe('hooks/useZIndex', () => {
           result = useZIndex();
           return () => <div />;
         },
-      })
+      }),
     );
     expect(result!.initialValue.value).toBe(2000);
   });
@@ -32,7 +32,7 @@ describe('hooks/useZIndex', () => {
           result = useZIndex(3000);
           return () => <div />;
         },
-      })
+      }),
     );
     expect(result!.initialValue.value).toBe(3000);
   });
@@ -45,7 +45,7 @@ describe('hooks/useZIndex', () => {
           result = useZIndex(2000);
           return () => <div />;
         },
-      })
+      }),
     );
     // zIndex starts at 0, so currentZIndex = 0 + 2000
     expect(result!.currentZIndex.value).toBe(2000);
@@ -59,7 +59,7 @@ describe('hooks/useZIndex', () => {
           result = useZIndex(2000);
           return () => <div />;
         },
-      })
+      }),
     );
     const first = result!.nextZIndex();
     expect(first).toBe(2001);
@@ -77,7 +77,7 @@ describe('hooks/useZIndex', () => {
           resultB = useZIndex(1000);
           return () => <div />;
         },
-      })
+      }),
     );
     resultA!.nextZIndex(); // shared zIndex becomes 1
     // A: 1 + 2000 = 2001, B: 1 + 1000 = 1001

@@ -1,23 +1,20 @@
 <script setup lang="ts">
-import type { SelectOptionProps } from './types';
-
 import { RenderVnode } from '@sakana-element/utils';
-import { computed, inject } from 'vue';
 import { eq, every, get } from 'lodash-es';
+import { computed, inject } from 'vue';
 import { SELECT_CTX_KEY } from './constants';
+import type { SelectOptionProps } from './types';
 
 defineOptions({ name: 'PxOption' });
 const props = withDefaults(defineProps<SelectOptionProps>(), {
   disabled: false,
 });
 const ctx = inject(SELECT_CTX_KEY);
-const selected = computed(
-  () => ctx?.selectStates.selectedOption?.value === props.value
-);
+const selected = computed(() => ctx?.selectStates.selectedOption?.value === props.value);
 const isHighlighted = computed(() =>
   every(['label', 'value'], (key) =>
-    eq(get(ctx, ['highlightedLine', 'value', key]), get(props, key))
-  )
+    eq(get(ctx, ['highlightedLine', 'value', key]), get(props, key)),
+  ),
 );
 
 function handleClick() {

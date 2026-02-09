@@ -13,7 +13,7 @@ const items = [
   { label: 'Action 1', command: 'a' },
   { label: 'Action 2', command: 'b' },
   { label: 'Action 3', command: 'c' },
-  { label: 'Action 4', command: 'd', divided: true }
+  { label: 'Action 4', command: 'd', divided: true },
 ];
 
 const handleCommand = (command: string) => {

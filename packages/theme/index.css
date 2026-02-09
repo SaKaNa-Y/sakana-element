@@ -1,9 +1,9 @@
-@import './reset.css';
-@import './fonts/zpix.css';
+@import "./reset.css";
+@import "./fonts/zpix.css";
 
 :root {
   /* === TYPOGRAPHY === */
-  --px-font-family: 'zpix', 'Courier New', 'Consolas', monospace;
+  --px-font-family: "zpix", "Courier New", "Consolas", monospace;
   --px-font-size-base: 14px;
   --px-font-size-large: 16px;
   --px-font-size-medium: 15px;

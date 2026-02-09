@@ -8,7 +8,7 @@ import { PxNotification } from 'sakana-element';
 const showNotification = () => {
   PxNotification({
     title: 'Title',
-    message: 'This is a notification message'
+    message: 'This is a notification message',
   });
 };
 </script>

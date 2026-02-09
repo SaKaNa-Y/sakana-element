@@ -1,7 +1,7 @@
-import { resolve } from 'path';
-import { defineConfig } from 'vite';
-import { last, split, first, includes } from 'lodash-es';
+import { resolve } from 'node:path';
 import { hooksPlugin as hooks } from '@sakana-element/vite-plugins';
+import { first, includes, last, split } from 'lodash-es';
+import { defineConfig } from 'vite';
 
 import dts from 'vite-plugin-dts';
 
@@ -27,8 +27,7 @@ export default defineConfig({
       external: ['vue', 'lodash-es', 'vue3-i18n'],
       output: {
         manualChunks(id) {
-          if (includes(id, '/packages/hooks/use'))
-            return first(split(last(split(id, '/')), '.'));
+          if (includes(id, '/packages/hooks/use')) return first(split(last(split(id, '/')), '.'));
         },
       },
     },

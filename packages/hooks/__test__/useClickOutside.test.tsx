@@ -1,6 +1,6 @@
-import { describe, expect, it, vi } from 'vitest';
-import { ref, defineComponent } from 'vue';
 import { mount } from '@vue/test-utils';
+import { describe, expect, it, vi } from 'vitest';
+import { defineComponent, ref } from 'vue';
 
 import useClickOutside from '../useClickOutside';
 
@@ -21,7 +21,7 @@ describe('hooks/useClickOutside', () => {
             </div>
           );
         },
-      })
+      }),
     );
 
     await btnRef.value?.click();

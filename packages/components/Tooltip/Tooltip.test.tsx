@@ -1,6 +1,6 @@
-import { describe, test, it, expect, vi, beforeEach } from 'vitest';
 import { withInstall } from '@sakana-element/utils';
 import { mount } from '@vue/test-utils';
+import { beforeEach, describe, expect, it, test, vi } from 'vitest';
 import { PxTooltip } from '.';
 
 import Tooltip from './Tooltip.vue';
@@ -47,18 +47,14 @@ describe('Tooltip.vue', () => {
       () => (
         <div>
           <div id="outside"></div>
-          <Tooltip
-            content="hello tooltip"
-            trigger="click"
-            {...{ onVisibleChange }}
-          >
+          <Tooltip content="hello tooltip" trigger="click" {...{ onVisibleChange }}>
             <button id="trigger">trigger</button>
           </Tooltip>
         </div>
       ),
       {
         attachTo: document.body, //挂载到body上
-      }
+      },
     );
     const triggerArea = wrapper.find('#trigger');
     expect(triggerArea.exists()).toBeTruthy();
@@ -158,7 +154,7 @@ describe('Tooltip.vue', () => {
   test('tooltip with virtual trigger node', async () => {
     // ... 省略其他设置
     const virtualRef = document.createElement('div');
-    let wrapper = mount(Tooltip, {
+    const wrapper = mount(Tooltip, {
       props: { virtualTriggering: true },
     });
     wrapper.setProps({ virtualRef });
@@ -228,18 +224,14 @@ describe('Tooltip.vue', () => {
       () => (
         <div>
           <div id="outside"></div>
-          <Tooltip
-            content="hello tooltip"
-            trigger="hover"
-            {...{ onVisibleChange }}
-          >
+          <Tooltip content="hello tooltip" trigger="hover" {...{ onVisibleChange }}>
             <button id="trigger">trigger</button>
           </Tooltip>
         </div>
       ),
       {
         attachTo: document.body,
-      }
+      },
     );
     const triggerArea = wrapper.find('#trigger');
     expect(triggerArea.exists()).toBeTruthy();

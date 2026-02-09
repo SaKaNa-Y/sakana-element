@@ -1,10 +1,8 @@
-import type { VNode, ComputedRef } from 'vue';
+import type { ComputedRef, VNode } from 'vue';
 
 export type RenderLabelFunc = (option: SelectOptionProps) => VNode | string;
 export type CustomFilterFunc = (value: string) => SelectOptionProps[];
-export type CustomFilterRemoteFunc = (
-  value: string
-) => Promise<SelectOptionProps[] | void>;
+export type CustomFilterRemoteFunc = (value: string) => Promise<SelectOptionProps[] | undefined>;
 
 export interface SelectOptionProps {
   value: string;
@@ -28,7 +26,7 @@ export interface SelectProps {
 
 export interface SelectStates {
   inputValue: string;
-  selectedOption: SelectOptionProps | void | null;
+  selectedOption: SelectOptionProps | undefined | null;
   mouseHover: boolean;
   loading: boolean;
   highlightedIndex: number;
@@ -47,7 +45,7 @@ export interface SelectEmits {
 export interface SelectContext {
   selectStates: SelectStates;
   renderLabel?: RenderLabelFunc;
-  highlightedLine?: ComputedRef<SelectOptionProps | void>;
+  highlightedLine?: ComputedRef<SelectOptionProps | undefined>;
   handleSelect(item: SelectOptionProps): void;
 }
 

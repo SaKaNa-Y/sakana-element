@@ -1,4 +1,7 @@
-import { shallowReactive, isVNode, render, h } from 'vue';
+import { useId, useZIndex } from '@sakana-element/hooks';
+import { each, findIndex, get, isString, set } from 'lodash-es';
+import { h, isVNode, render, shallowReactive } from 'vue';
+import NotificationConstructor from './Notification.vue';
 import type {
   CreateNotificationProps,
   NotificationFn,
@@ -8,17 +11,13 @@ import type {
   NotificationProps,
   NotificationType,
 } from './types';
-import { notificationTypes, notificationPosition } from './types';
-import { useId, useZIndex } from '@sakana-element/hooks';
-import { isString, findIndex, set, each, get } from 'lodash-es';
-import NotificationConstructor from './Notification.vue';
+import { notificationPosition, notificationTypes } from './types';
 
 // instances是NotificationInstance的数组类型,shallowReactive是浅响应式,shallowReactive会监听数组的变化,但是不会监听数组中的对象的变化
 // ref是响应式,任何变化都响应，shallowRef是浅响应式整体变化才响应
 // const instances: NotificationInstance[] = shallowReactive([]);
 //instancesMap是NotificationInstance的数组类型里面的值只能是position的值
-const instancesMap: Map<NotificationProps['position'], NotificationInstance[]> =
-  new Map();
+const instancesMap: Map<NotificationProps['position'], NotificationInstance[]> = new Map();
 
 //遍历notificationPosition,将position作为key,shallowReactive([])作为value,存入instancesMap
 each(notificationPosition, (position) => {
@@ -34,21 +33,15 @@ export const notificationDefaults = {
   showClose: true,
 } as const;
 
-const normalizedOptions = (
-  opts: NotificationParams
-): CreateNotificationProps => {
-  const result =
-    !opts || isVNode(opts) || isString(opts) ? { message: opts } : opts;
+const normalizedOptions = (opts: NotificationParams): CreateNotificationProps => {
+  const result = !opts || isVNode(opts) || isString(opts) ? { message: opts } : opts;
   return { ...notificationDefaults, ...result } as CreateNotificationProps;
 };
 
-const getInstancesByPosition = (
-  position: NotificationProps['position']
-): NotificationInstance[] => instancesMap.get(position)!;
+const getInstancesByPosition = (position: NotificationProps['position']): NotificationInstance[] =>
+  instancesMap.get(position)!;
 
-const createNotification = (
-  props: CreateNotificationProps
-): NotificationInstance => {
+const createNotification = (props: CreateNotificationProps): NotificationInstance => {
   const id = useId().value;
   const container = document.createElement('div');
   const instances = getInstancesByPosition(props.position || 'top-right');
@@ -88,9 +81,7 @@ const createNotification = (
   return instance;
 };
 
-export const notification: NotificationFn & Partial<Notification> = function (
-  options = {}
-) {
+export const notification: NotificationFn & Partial<Notification> = (options = {}) => {
   const normalized = normalizedOptions(options);
   const instance = createNotification(normalized);
 

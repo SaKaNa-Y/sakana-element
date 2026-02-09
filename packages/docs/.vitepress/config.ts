@@ -1,8 +1,5 @@
+import { componentPreview, containerPreview } from '@vitepress-demo-preview/plugin';
 import { defineConfig } from 'vitepress';
-import {
-  containerPreview,
-  componentPreview,
-} from '@vitepress-demo-preview/plugin';
 
 // Shared sidebar configuration
 const getGuideItems = (lang: 'zh' | 'en') => [
@@ -118,9 +115,7 @@ export default defineConfig({
   description: 'A Pixel-style Vue 3 Component Library',
   base: '/sakana-element/',
   appearance: true, // Enable dark mode
-  head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/sakana-element/logo.svg' }],
-  ],
+  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/sakana-element/logo.svg' }]],
   locales: {
     zh: {
       label: '简体中文',
@@ -196,9 +191,7 @@ export default defineConfig({
         },
       },
     },
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/yu859/sakana-element' },
-    ],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/yu859/sakana-element' }],
   },
   markdown: {
     config: (md) => {

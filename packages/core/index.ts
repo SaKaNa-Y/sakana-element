@@ -1,7 +1,7 @@
-import makeInstaller from './makeInstaller';
-import components from './components';
-import printLogo from './printLogo';
 import { registerDefaultPixelIcons } from '@sakana-element/components';
+import components from './components';
+import makeInstaller from './makeInstaller';
+import printLogo from './printLogo';
 import '@sakana-element/theme/index.css';
 
 printLogo();
@@ -15,10 +15,10 @@ if (typeof CSS !== 'undefined' && 'paintWorklet' in CSS) {
     // Note: The paintworklet files should be served from the theme directory
     // In production, adjust the path based on your deployment setup
     CSS.paintWorklet.addModule(
-      new URL('@sakana-element/theme/paintworklet/pixel-border.js', import.meta.url).href
+      new URL('@sakana-element/theme/paintworklet/pixel-border.js', import.meta.url).href,
     );
     CSS.paintWorklet.addModule(
-      new URL('@sakana-element/theme/paintworklet/pixel-shadow.js', import.meta.url).href
+      new URL('@sakana-element/theme/paintworklet/pixel-shadow.js', import.meta.url).href,
     );
   } catch (error) {
     void error;

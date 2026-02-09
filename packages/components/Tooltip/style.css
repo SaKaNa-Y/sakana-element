@@ -38,34 +38,68 @@
     border: none;
 
     /* Pixel shadow via drop-shadow (respects clip-path shape) */
-    filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-popover-shadow-color));
+    filter: drop-shadow(
+      var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-popover-shadow-color)
+    );
 
     /* Border layer — filled with border color, clipped to pixel shape */
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       inset: 0;
       background: var(--px-popover-border-color);
       clip-path: polygon(
-        0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
-        calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
-        100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
-        4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+        0 4px,
+        2px 4px,
+        2px 2px,
+        4px 2px,
+        4px 0,
+        calc(100% - 4px) 0,
+        calc(100% - 4px) 2px,
+        calc(100% - 2px) 2px,
+        calc(100% - 2px) 4px,
+        100% 4px,
+        100% calc(100% - 4px),
+        calc(100% - 2px) calc(100% - 4px),
+        calc(100% - 2px) calc(100% - 2px),
+        calc(100% - 4px) calc(100% - 2px),
+        calc(100% - 4px) 100%,
+        4px 100%,
+        4px calc(100% - 2px),
+        2px calc(100% - 2px),
+        2px calc(100% - 4px),
+        0 calc(100% - 4px)
       );
       z-index: -1;
     }
 
     /* Fill layer — inset by border width, filled with bg color */
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       inset: 2px;
       background: var(--px-popover-bg-color);
       clip-path: polygon(
-        0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
-        calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
-        100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
-        4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+        0 4px,
+        2px 4px,
+        2px 2px,
+        4px 2px,
+        4px 0,
+        calc(100% - 4px) 0,
+        calc(100% - 4px) 2px,
+        calc(100% - 2px) 2px,
+        calc(100% - 2px) 4px,
+        100% 4px,
+        100% calc(100% - 4px),
+        calc(100% - 2px) calc(100% - 4px),
+        calc(100% - 2px) calc(100% - 2px),
+        calc(100% - 4px) calc(100% - 2px),
+        calc(100% - 4px) 100%,
+        4px 100%,
+        4px calc(100% - 2px),
+        2px calc(100% - 2px),
+        2px calc(100% - 4px),
+        0 calc(100% - 4px)
       );
       z-index: -1;
     }

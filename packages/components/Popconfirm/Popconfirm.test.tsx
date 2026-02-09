@@ -1,11 +1,10 @@
-import { describe, it, expect, test, vi, beforeEach } from 'vitest';
+import { withInstall } from '@sakana-element/utils';
 import { mount } from '@vue/test-utils';
 import { each, get } from 'lodash-es';
+import { beforeEach, describe, expect, it, test, vi } from 'vitest';
 import { PxPopconfirm } from '.';
-import { withInstall } from '@sakana-element/utils';
-import type { PopconfirmProps } from './types';
-
 import PopConfirm from './Popconfirm.vue';
+import type { PopconfirmProps } from './types';
 
 const onConfirm = vi.fn();
 const onCancel = vi.fn();
@@ -81,12 +80,7 @@ describe('Popconfirm.vue', () => {
     const wrapper = mount(() => (
       <div>
         <div id="outside"></div>
-        <PopConfirm
-          title="Test Title"
-          hideIcon={true}
-          onConfirm={onConfirm}
-          onCancel={onCancel}
-        >
+        <PopConfirm title="Test Title" hideIcon={true} onConfirm={onConfirm} onCancel={onCancel}>
           <button id="trigger">trigger</button>
         </PopConfirm>
       </div>

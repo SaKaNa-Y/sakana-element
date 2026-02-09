@@ -1,6 +1,5 @@
-import type { StoryObj, Meta } from '@storybook/vue3';
-
 import { fn } from '@storybook/test';
+import type { Meta, StoryObj } from '@storybook/vue3';
 import { PxTooltip } from '../../../components/Tooltip';
 import '../../../components/Tooltip/style.css';
 

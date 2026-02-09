@@ -1,11 +1,10 @@
-import { describe, it, expect } from 'vitest';
-import { mount } from '@vue/test-utils';
-import { nextTick, ref } from 'vue';
 import { rAF } from '@sakana-element/utils';
+import { mount } from '@vue/test-utils';
+import { describe, expect, it } from 'vitest';
+import { nextTick, ref } from 'vue';
 import Form from './Form.vue';
 import FormItem from './FormItem.vue';
 import { PxForm, PxFormItem } from './index';
-import { withInstall } from '@sakana-element/utils';
 
 describe('Form.vue', () => {
   it('should render form element', () => {
@@ -61,9 +60,7 @@ describe('Form.vue', () => {
 
     // Should show error message
     expect(wrapper.find('.px-form-item__error-msg').exists()).toBeTruthy();
-    expect(wrapper.find('.px-form-item__error-msg').text()).toBe(
-      'Name is required'
-    );
+    expect(wrapper.find('.px-form-item__error-msg').text()).toBe('Name is required');
   });
 
   it('should pass validation when fields are valid', async () => {
@@ -245,9 +242,7 @@ describe('FormItem.vue', () => {
 
   it('should validate with array trigger', async () => {
     const model = ref({ name: '' });
-    const itemRules = [
-      { required: true, message: 'Required', trigger: ['blur', 'change'] },
-    ];
+    const itemRules = [{ required: true, message: 'Required', trigger: ['blur', 'change'] }];
 
     const wrapper = mount(() => (
       <Form model={model.value}>

@@ -1,7 +1,6 @@
-import MessageBox from './methods';
 import { set } from 'lodash-es';
-
 import type { App } from 'vue';
+import MessageBox from './methods';
 
 export const PxMessageBox = MessageBox;
 

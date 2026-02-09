@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { defineComponent } from 'vue';
 import { mount } from '@vue/test-utils';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { defineComponent } from 'vue';
 
 let useId: typeof import('../useId')['default'];
 
@@ -19,7 +19,7 @@ describe('hooks/useId', () => {
           id = useId();
           return () => <div />;
         },
-      })
+      }),
     );
     expect(id!.value).toMatch(/^er-\d+-\d+$/);
   });
@@ -32,7 +32,7 @@ describe('hooks/useId', () => {
           id = useId('custom');
           return () => <div />;
         },
-      })
+      }),
     );
     expect(id!.value).toMatch(/^custom-\d+-\d+$/);
   });
@@ -47,14 +47,14 @@ describe('hooks/useId', () => {
           idB = useId();
           return () => <div />;
         },
-      })
+      }),
     );
     // Each useId() call increments the counter, producing distinct IDs
     expect(idA!.value).not.toBe(idB!.value);
 
     // Both share the same prefix but have different counters
-    const counterA = parseInt(idA!.value.split('-').pop()!);
-    const counterB = parseInt(idB!.value.split('-').pop()!);
+    const counterA = parseInt(idA!.value.split('-').pop()!, 10);
+    const counterB = parseInt(idB!.value.split('-').pop()!, 10);
     expect(counterB).toBeGreaterThan(counterA);
   });
 });

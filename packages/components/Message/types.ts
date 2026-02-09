@@ -1,13 +1,7 @@
-import type { VNode, ComponentInternalInstance, Ref } from 'vue';
+import type { ComponentInternalInstance, Ref, VNode } from 'vue';
 //ComponentInternalInstance类型包含了组件实例的所有内部属性和方法，VNode类型代表了虚拟节点
 
-export const messageTypes = [
-  'info',
-  'success',
-  'warning',
-  'danger',
-  'error',
-] as const;
+export const messageTypes = ['info', 'success', 'warning', 'danger', 'error'] as const;
 export type MessageType = (typeof messageTypes)[number]; //MessageType是messageTypes数组中的一个元素
 
 export interface MessageHandler {
@@ -59,7 +53,4 @@ export interface MessageCompInstance {
 }
 
 //CreateMessageProps是MessageProps类型，去掉onDestory、id、zIndex属性
-export type CreateMessageProps = Omit<
-  MessageProps,
-  'onDestory' | 'id' | 'zIndex'
->;
+export type CreateMessageProps = Omit<MessageProps, 'onDestory' | 'id' | 'zIndex'>;

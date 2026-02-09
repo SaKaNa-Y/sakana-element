@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { computed, ref, provide } from 'vue';
+import { useClickOutside, useDisabledStyle } from '@sakana-element/hooks';
 import { isNil, omit } from 'lodash-es';
-import type { TooltipInstance } from '../Tooltip/types';
+import { computed, provide, ref } from 'vue';
 import { type ButtonInstance, PxButton, PxButtonGroup } from '../Button/index';
-import type {
-  DropdownProps,
-  DropdownItemProps,
-  DropdownEmits,
-  DropdownInstance,
-  DropdownContext,
-} from './types';
-import { useDisabledStyle, useClickOutside } from '@sakana-element/hooks';
+import PxTooltip from '../Tooltip/Tooltip.vue';
+import type { TooltipInstance } from '../Tooltip/types';
 
 import { DROPDOWN_CTX_KEY } from './constants';
 
 import DropdownItem from './DropdownItem.vue';
-import PxTooltip from '../Tooltip/Tooltip.vue';
+import type {
+  DropdownContext,
+  DropdownEmits,
+  DropdownInstance,
+  DropdownItemProps,
+  DropdownProps,
+} from './types';
 
 defineOptions({
   name: 'PxDropdown',
@@ -32,7 +32,7 @@ const tooltipRef = ref<TooltipInstance>();
 const dropdownRef = ref<HTMLElement>();
 
 const tooltipProps = computed(
-  () => omit(props, ['items', 'hideOnClick', 'size', 'type', 'splitButton']) //排除这些属性
+  () => omit(props, ['items', 'hideOnClick', 'size', 'type', 'splitButton']), //排除这些属性
 );
 
 function handleItemClick(e: DropdownItemProps) {

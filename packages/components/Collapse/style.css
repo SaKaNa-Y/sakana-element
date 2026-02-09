@@ -20,34 +20,68 @@
   font-family: var(--px-font-family);
 
   /* Pixel shadow via drop-shadow */
-  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-collapse-shadow-color));
+  filter: drop-shadow(
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-collapse-shadow-color)
+  );
 
   /* Border layer — pixel shape */
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: var(--px-collapse-border-color);
     clip-path: polygon(
-      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
-      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
-      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
-      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+      0 4px,
+      2px 4px,
+      2px 2px,
+      4px 2px,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px calc(100% - 4px),
+      0 calc(100% - 4px)
     );
     z-index: 0;
   }
 
   /* Fill layer — pixel shape */
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 2px;
     background: var(--px-collapse-header-bg-color);
     clip-path: polygon(
-      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
-      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
-      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
-      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+      0 4px,
+      2px 4px,
+      2px 2px,
+      4px 2px,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px calc(100% - 4px),
+      0 calc(100% - 4px)
     );
     z-index: 0;
   }
@@ -88,7 +122,7 @@
 
   /* Pixel selector indicator - small square */
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 10px;
     top: 50%;
@@ -102,7 +136,7 @@
 
   /* Background layer with pixel corners for first item */
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: transparent;
@@ -167,8 +201,15 @@
     left: 2px;
     right: 2px;
     clip-path: polygon(
-      0 2px, 2px 2px, 2px 0, 4px 0,
-      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 2px, 100% 2px,
+      0 2px,
+      2px 2px,
+      2px 0,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 2px,
+      100% 2px,
       100% 100%,
       0 100%
     );
@@ -192,8 +233,14 @@
     clip-path: polygon(
       0 0,
       100% 0,
-      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) calc(100%), calc(100% - 4px) 100%,
-      4px 100%, 4px calc(100%), 2px calc(100% - 2px), 0 calc(100% - 2px)
+      100% calc(100% - 2px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 2px) calc(100%),
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px calc(100%),
+      2px calc(100% - 2px),
+      0 calc(100% - 2px)
     );
   }
 }
@@ -201,7 +248,7 @@
 /* Last item content also needs pixel corners on bottom */
 .px-collapse-item:last-child .px-collapse-item__content {
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     bottom: 2px;
@@ -211,8 +258,14 @@
     clip-path: polygon(
       0 0,
       100% 0,
-      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%, calc(100% - 4px) 100%,
-      4px 100%, 4px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+      100% calc(100% - 2px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 2px) 100%,
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px 100%,
+      2px calc(100% - 2px),
+      0 calc(100% - 2px)
     );
     z-index: -1;
   }
@@ -226,10 +279,22 @@
     left: 2px;
     right: 2px;
     clip-path: polygon(
-      0 2px, 2px 2px, 2px 0, 4px 0,
-      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, 100% 2px,
-      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%, calc(100% - 4px) 100%,
-      4px 100%, 4px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+      0 2px,
+      2px 2px,
+      2px 0,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      100% 2px,
+      100% calc(100% - 2px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 2px) 100%,
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px 100%,
+      2px calc(100% - 2px),
+      0 calc(100% - 2px)
     );
   }
 }
@@ -253,7 +318,7 @@
 
   /* Pixel-style dashed border at top using repeating squares */
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 4px;

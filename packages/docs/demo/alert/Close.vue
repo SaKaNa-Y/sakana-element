@@ -1,6 +1,5 @@
 <script setup>
-function handleClose() {
-}
+function handleClose() {}
 </script>
 <template>
   <div class="basic block">

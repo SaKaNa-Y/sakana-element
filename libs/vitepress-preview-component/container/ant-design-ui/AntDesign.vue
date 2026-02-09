@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { ref, onMounted, watch, computed } from "vue";
-import CodeOpen from "../../icons/code-open.vue";
-import CodeClose from "../../icons/code-close.vue";
-import CodeCopy from "../../icons/code-copy.vue";
-import { useNameSpace } from "../../hooks/use-namespaces";
-import { useCodeFold } from "../../hooks/use-codefold";
-import { useCodeCopy } from "../../hooks/use-codecopy";
-import { MessageNoticeService } from "../../messages/index";
+import { computed, onMounted, ref, watch } from 'vue';
+import { useCodeCopy } from '../../hooks/use-codecopy';
+import { useCodeFold } from '../../hooks/use-codefold';
+import { useNameSpace } from '../../hooks/use-namespaces';
+import CodeClose from '../../icons/code-close.vue';
+import CodeCopy from '../../icons/code-copy.vue';
+import CodeOpen from '../../icons/code-open.vue';
+import { MessageNoticeService } from '../../messages/index';
 
 interface DemoBlockProps {
   code: string;
@@ -16,8 +16,8 @@ interface DemoBlockProps {
 }
 
 const props = withDefaults(defineProps<DemoBlockProps>(), {
-  title: "默认标题",
-  description: "描述内容",
+  title: '默认标题',
+  description: '描述内容',
 });
 
 const ns = useNameSpace();
@@ -38,7 +38,7 @@ const sourceCodeContainerHeight = computed(() => {
   return 0;
 });
 const setContainerHeight = (value: number) => {
-  if (isCodeFold.value) sourceCodeArea.value.style.height = "0px";
+  if (isCodeFold.value) sourceCodeArea.value.style.height = '0px';
   else sourceCodeArea.value.style.height = `${value}px`;
 };
 onMounted(() => {

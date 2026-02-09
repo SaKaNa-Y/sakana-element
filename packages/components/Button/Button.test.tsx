@@ -1,9 +1,8 @@
-import { describe, it, expect, vi, test } from 'vitest';
 import { mount } from '@vue/test-utils';
-
+import { describe, expect, it, test, vi } from 'vitest';
+import Icon from '../Icon/Icon.vue';
 import Button from './Button.vue';
 import ButtonGroup from './ButtonGroup.vue';
-import Icon from '../Icon/Icon.vue';
 
 describe('Button.vue', () => {
   // Props: type
@@ -35,18 +34,15 @@ describe('Button.vue', () => {
     ['circle', 'is-circle'],
     ['disabled', 'is-disabled'],
     ['loading', 'is-loading'],
-  ])(
-    'should has the correct class when prop %s is set to true',
-    (prop, className) => {
-      const wrapper = mount(Button, {
-        props: { [prop]: true },
-        global: {
-          stubs: ['PxIcon'],
-        },
-      });
-      expect(wrapper.classes()).toContain(className);
-    }
-  );
+  ])('should has the correct class when prop %s is set to true', (prop, className) => {
+    const wrapper = mount(Button, {
+      props: { [prop]: true },
+      global: {
+        stubs: ['PxIcon'],
+      },
+    });
+    expect(wrapper.classes()).toContain(className);
+  });
 
   it('should has the correct native type attribute when native-type prop is set', () => {
     const wrapper = mount(Button, {

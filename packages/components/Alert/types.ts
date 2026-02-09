@@ -10,9 +10,7 @@ export interface AlertProps {
   showIcon?: boolean;
 }
 
-export interface AlertEmits {
-  (e: 'close'): void;
-}
+export type AlertEmits = (e: 'close') => void;
 
 export interface AlertInstance {
   open(): void;

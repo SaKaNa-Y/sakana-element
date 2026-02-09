@@ -1,5 +1,5 @@
-import Message from './methods';
 import { withInstallFunction } from '@sakana-element/utils';
+import Message from './methods';
 
 export const PxMessage = withInstallFunction(Message, '$message');
 

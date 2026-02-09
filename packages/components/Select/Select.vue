@@ -1,56 +1,40 @@
 <script setup lang="ts">
-import type {
-  SelectProps,
-  SelectEmits,
-  SelectContext,
-  SelectInstance,
-  SelectStates,
-  SelectOptionProps,
-} from './types';
-import type { TooltipInstance } from '../Tooltip/types';
-import type { InputInstance } from '../Input/types';
-
+import { useClickOutside, useFocusController, useId } from '@sakana-element/hooks';
+import { debugWarn, RenderVnode } from '@sakana-element/utils';
 import {
-  computed,
-  ref,
-  reactive,
-  provide,
-  watch,
-  nextTick,
-  type VNode,
-  h,
-  onMounted,
-} from 'vue';
-import {
-  useId,
-  useFocusController,
-  useClickOutside,
-} from '@sakana-element/hooks';
-import { POPPER_OPTIONS, SELECT_CTX_KEY } from './constants';
-import {
+  assign,
+  debounce,
   each,
   eq,
   filter,
   find,
   get,
-  size,
-  noop,
-  isFunction,
-  map,
-  assign,
-  isNil,
-  isBoolean,
-  debounce,
   includes,
+  isBoolean,
+  isFunction,
+  isNil,
+  map,
+  noop,
+  size,
 } from 'lodash-es';
 
-import useKeyMap from './useKeyMap';
-
-import PxOption from './Option.vue';
-import PxTooltip from '../Tooltip/Tooltip.vue';
-import PxInput from '../Input/Input.vue';
+import { computed, h, nextTick, onMounted, provide, reactive, ref, type VNode, watch } from 'vue';
 import PxIcon from '../Icon/Icon.vue';
-import { debugWarn, RenderVnode } from '@sakana-element/utils';
+import PxInput from '../Input/Input.vue';
+import type { InputInstance } from '../Input/types';
+import PxTooltip from '../Tooltip/Tooltip.vue';
+import type { TooltipInstance } from '../Tooltip/types';
+import { POPPER_OPTIONS, SELECT_CTX_KEY } from './constants';
+import PxOption from './Option.vue';
+import type {
+  SelectContext,
+  SelectEmits,
+  SelectInstance,
+  SelectOptionProps,
+  SelectProps,
+  SelectStates,
+} from './types';
+import useKeyMap from './useKeyMap';
 
 const COMPONENT_NAME = 'PxSelect';
 
@@ -82,17 +66,14 @@ const selectStates = reactive<SelectStates>({
 
 const isDisabled = computed(() => props.disabled);
 //eq 判断两个值是否相等
-const children = computed(() =>
-  filter(slots?.default?.(), (child) => eq(child.type, PxOption))
-);
+const children = computed(() => filter(slots?.default?.(), (child) => eq(child.type, PxOption)));
 const hasChildren = computed(() => size(children.value) > 0);
 const showClear = computed(
-  () =>
-    props.clearable && selectStates.mouseHover && selectStates.inputValue !== ''
+  () => props.clearable && selectStates.mouseHover && selectStates.inputValue !== '',
 );
 
 const highlightedLine = computed(() => {
-  let result: SelectOptionProps | void;
+  let result: SelectOptionProps | undefined;
   if (hasChildren.value) {
     const node = [...filteredChilds.value][selectStates.highlightedIndex]?.[0];
     result = filteredChilds.value.get(node);
@@ -127,20 +108,18 @@ const isNoData = computed(() => {
 const hasData = computed(
   () =>
     (hasChildren.value && filteredChilds.value.size > 0) ||
-    (!hasChildren.value && size(filteredOptions.value) > 0)
+    (!hasChildren.value && size(filteredOptions.value) > 0),
 );
 
 //option的最大长度
 const lastIndex = computed(() =>
-  hasChildren.value
-    ? filteredChilds.value.size - 1
-    : size(filteredOptions.value) - 1
+  hasChildren.value ? filteredChilds.value.size - 1 : size(filteredOptions.value) - 1,
 );
 
 const filterPlaceholder = computed(() =>
   props.filterable && selectStates.selectedOption && isDropdownVisible.value
     ? selectStates.selectedOption.label
-    : props.placeholder
+    : props.placeholder,
 );
 const timeout = computed(() => (props.remote ? 300 : 100));
 
@@ -166,11 +145,11 @@ const keyMap = useKeyMap({
 
 useClickOutside(selectRef, (e) => handleClickOutside(e));
 
-const focus: SelectInstance['focus'] = function () {
+const focus: SelectInstance['focus'] = () => {
   inputRef.value?.focus();
 };
 
-const blur: SelectInstance['blur'] = function () {
+const blur: SelectInstance['blur'] = () => {
   handleClickOutside();
 };
 
@@ -263,17 +242,13 @@ async function genFilterChilds(search: string) {
   if (props.filterMethod && isFunction(props.filterMethod)) {
     const opts = map(props.filterMethod(search), 'value');
     setFilteredChilds(
-      filter(childrenOptions.value, (item) =>
-        includes(opts, get(item, ['props', 'value']))
-      )
+      filter(childrenOptions.value, (item) => includes(opts, get(item, ['props', 'value']))),
     );
     return;
   }
 
   setFilteredChilds(
-    filter(childrenOptions.value, (item) =>
-      includes(get(item, ['props', 'label']), search)
-    )
+    filter(childrenOptions.value, (item) => includes(get(item, ['props', 'label']), search)),
   );
 }
 
@@ -289,9 +264,7 @@ async function genFilterOptions(search: string) {
     filteredOptions.value = props.filterMethod(search);
     return;
   }
-  filteredOptions.value = filter(props.options, (opt) =>
-    includes(opt.label, search)
-  );
+  filteredOptions.value = filter(props.options, (opt) => includes(opt.label, search));
 }
 
 async function callRemoteMethod(method: Function, search: string) {
@@ -330,13 +303,13 @@ watch(
   () => props.options,
   (newVal) => {
     filteredOptions.value = newVal ?? [];
-  }
+  },
 );
 
 watch(
   () => childrenOptions.value,
   (newVal) => setFilteredChilds(newVal),
-  { immediate: true }
+  { immediate: true },
 );
 
 watch(
@@ -344,7 +317,7 @@ watch(
   () => {
     // 表单校验 逻辑 change
     setSelected();
-  }
+  },
 );
 
 onMounted(() => {

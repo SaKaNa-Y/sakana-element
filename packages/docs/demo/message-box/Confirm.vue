@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { PxMessageBox, PxMessage } from 'sakana-element';
+import { PxMessage, PxMessageBox } from 'sakana-element';
 
 const showConfirm = async () => {
   try {

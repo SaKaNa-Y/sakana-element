@@ -8,7 +8,7 @@ import { PxMessage } from 'sakana-element';
 const showMessage = () => {
   PxMessage({
     message: 'Centered text message',
-    center: true
+    center: true,
   });
 };
 </script>

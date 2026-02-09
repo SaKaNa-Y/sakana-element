@@ -11,18 +11,14 @@
 
 class PixelShadowPainter {
   static get inputProperties() {
-    return [
-      '--px-shadow-color',
-      '--px-shadow-offset',
-      '--px-border-pixel-size'
-    ];
+    return ['--px-shadow-color', '--px-shadow-offset', '--px-border-pixel-size'];
   }
 
   paint(ctx, size, properties) {
     // Get custom property values
     const shadowColor = properties.get('--px-shadow-color').toString().trim() || 'rgba(0,0,0,0.3)';
-    const shadowOffset = parseInt(properties.get('--px-shadow-offset').toString()) || 4;
-    const pixelSize = parseInt(properties.get('--px-border-pixel-size').toString()) || 2;
+    const shadowOffset = parseInt(properties.get('--px-shadow-offset').toString(), 10) || 4;
+    const pixelSize = parseInt(properties.get('--px-border-pixel-size').toString(), 10) || 2;
 
     const width = size.width;
     const height = size.height;
@@ -35,7 +31,7 @@ class PixelShadowPainter {
         // Create stepped shadow effect
         const distance = x - width;
         if (distance < shadowOffset) {
-          ctx.globalAlpha = 1 - (distance / shadowOffset);
+          ctx.globalAlpha = 1 - distance / shadowOffset;
           ctx.fillRect(x, y, pixelSize, pixelSize);
         }
       }
@@ -47,7 +43,7 @@ class PixelShadowPainter {
       for (let y = height; y < height + shadowOffset; y += pixelSize) {
         const distance = y - height;
         if (distance < shadowOffset) {
-          ctx.globalAlpha = 1 - (distance / shadowOffset);
+          ctx.globalAlpha = 1 - distance / shadowOffset;
           ctx.fillRect(x, y, pixelSize, pixelSize);
         }
       }

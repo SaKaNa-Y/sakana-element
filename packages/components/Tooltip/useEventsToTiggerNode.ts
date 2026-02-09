@@ -1,16 +1,16 @@
 import { each, isElement } from 'lodash-es';
-import { onMounted, onUnmounted, watch } from 'vue';
 import type { ComputedRef, Ref, WatchStopHandle } from 'vue';
+import { onMounted, onUnmounted, watch } from 'vue';
 import type { TooltipProps } from './types';
 
 export function useEvenstToTiggerNode(
-  props: TooltipProps & { virtualTriggering?: boolean; virtualRef?: HTMLElement | void },
+  props: TooltipProps & { virtualTriggering?: boolean; virtualRef?: HTMLElement | undefined },
   triggerNode: ComputedRef<HTMLElement | undefined>,
   events: Ref<Record<string, EventListener>>,
-  closeMethod: () => void
+  closeMethod: () => void,
 ) {
-  let watchEventsStopHandle: WatchStopHandle | void;
-  let watchVirtualRefStopHandle: WatchStopHandle | void;
+  let watchEventsStopHandle: WatchStopHandle | undefined;
+  let watchVirtualRefStopHandle: WatchStopHandle | undefined;
 
   const _eventHandleMap = new Map();
 
@@ -31,8 +31,7 @@ export function useEvenstToTiggerNode(
     each(
       ['mouseenter', 'click', 'contextmenu'],
       (key) =>
-        _eventHandleMap.has(key) &&
-        targetEl.removeEventListener(key, _eventHandleMap.get(key))
+        _eventHandleMap.has(key) && targetEl.removeEventListener(key, _eventHandleMap.get(key)),
     );
   };
 
@@ -50,7 +49,7 @@ export function useEvenstToTiggerNode(
           _bindEventToVirtualTiggerNode();
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     watchEventsStopHandle = watch(
@@ -61,7 +60,7 @@ export function useEvenstToTiggerNode(
         _bindEventToVirtualTiggerNode();
         closeMethod();
       },
-      { deep: true }
+      { deep: true },
     );
   });
 

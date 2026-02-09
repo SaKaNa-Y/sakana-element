@@ -1,4 +1,4 @@
-import { type Ref, computed } from 'vue';
+import { computed, type Ref } from 'vue';
 
 //UseOffsetOptions适用于多参数，定义一个对象结构的接口
 interface UseOffsetOptions {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { ButtonGroupProps } from './types';
 import { provide, reactive, toRef } from 'vue';
 import { BUTTON_GROUP_CTX_KEY } from './contants';
+import type { ButtonGroupProps } from './types';
 
 defineOptions({
   name: 'PxButtonGroup',
@@ -16,7 +16,7 @@ provide(
     size: toRef(props, 'size'),
     type: toRef(props, 'type'),
     disabled: toRef(props, 'disabled'),
-  })
+  }),
 );
 </script>
 

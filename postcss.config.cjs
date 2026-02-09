@@ -6,8 +6,8 @@ module.exports = {
     require('postcss-each-variables'),
     require('postcss-each')({
       plugins: {
-        beforeEach: [require('postcss-for'), require('postcss-color-mix')]
-      }
-    })
-  ]
-}
+        beforeEach: [require('postcss-for'), require('postcss-color-mix')],
+      },
+    }),
+  ],
+};

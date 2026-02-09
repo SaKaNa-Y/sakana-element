@@ -1,5 +1,5 @@
-import { each, isFunction, cloneDeep, assign } from 'lodash-es';
-import { watchEffect, useSlots, getCurrentInstance, type VNode } from 'vue'; //watchEffect自动追踪响应式依赖并执行副作用，useSlots访问组件的插槽，getCurrentInstance获取当前组件实例，type VNode表示虚拟节点
+import { assign, cloneDeep, each, isFunction } from 'lodash-es';
+import { getCurrentInstance, useSlots, type VNode, watchEffect } from 'vue'; //watchEffect自动追踪响应式依赖并执行副作用，useSlots访问组件的插槽，getCurrentInstance获取当前组件实例，type VNode表示虚拟节点
 
 const _dfs = (nodes: VNode[], cb: (node: VNode) => void) =>
   //nodes是虚拟节点数组，cb是回调函数，node是当前节点，node.children是子节点

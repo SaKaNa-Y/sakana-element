@@ -13,25 +13,25 @@ import { PxNotification } from 'sakana-element';
 const showSuccess = () => {
   PxNotification.success({
     title: 'Success',
-    message: 'Operation completed successfully'
+    message: 'Operation completed successfully',
   });
 };
 const showWarning = () => {
   PxNotification.warning({
     title: 'Warning',
-    message: 'This is a warning message'
+    message: 'This is a warning message',
   });
 };
 const showInfo = () => {
   PxNotification.info({
     title: 'Info',
-    message: 'This is an info message'
+    message: 'This is an info message',
   });
 };
 const showDanger = () => {
   PxNotification.danger({
     title: 'Danger',
-    message: 'This is a danger message'
+    message: 'This is a danger message',
   });
 };
 </script>

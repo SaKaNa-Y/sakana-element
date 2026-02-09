@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, computed, watch, useAttrs, shallowRef, nextTick } from 'vue';
 import { useFocusController, useId } from '@sakana-element/hooks';
-import { useFormItem } from '../Form';
+import { debugWarn } from '@sakana-element/utils';
 import { each, noop } from 'lodash-es';
-import type { InputProps, InputEmits, InputInstance } from './types';
+import { computed, nextTick, ref, shallowRef, useAttrs, watch } from 'vue';
+import { useFormItem } from '../Form';
 
 import Icon from '../Icon/Icon.vue';
-import { debugWarn } from '@sakana-element/utils';
+import type { InputEmits, InputInstance, InputProps } from './types';
 
 defineOptions({
   name: 'PxInput',
@@ -36,49 +36,38 @@ const isDisabled = computed(() => props.disabled); //是否禁用
 
 //可清除为true，且有值，且不禁止，且聚焦，!!表示非空
 const showClear = computed(
-  () =>
-    props.clearable &&
-    !!innerValue.value &&
-    !isDisabled.value &&
-    isFocused.value
+  () => props.clearable && !!innerValue.value && !isDisabled.value && isFocused.value,
 );
 
 //密码显示为true，且showPassword为true，且不禁止，且有值
 const showPwdArea = computed(
-  () =>
-    props.type === 'password' &&
-    props.showPassword &&
-    !isDisabled.value &&
-    !!innerValue.value
+  () => props.type === 'password' && props.showPassword && !isDisabled.value && !!innerValue.value,
 );
 
-const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(
-  _ref,
-  {
-    afterBlur() {
-      // form 校验
-      formItem?.validate('blur').catch((err) => debugWarn(err));
-    },
-  }
-);
+const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(_ref, {
+  afterBlur() {
+    // form 校验
+    formItem?.validate('blur').catch((err) => debugWarn(err));
+  },
+});
 
-const clear: InputInstance['clear'] = function () {
+const clear: InputInstance['clear'] = () => {
   innerValue.value = '';
   each(['input', 'change', 'update:modelValue'], (e) => emits(e as any, ''));
   emits('clear');
   // 清空表单校验
   formItem?.clearValidate();
 };
-const focus: InputInstance['focus'] = async function () {
+const focus: InputInstance['focus'] = async () => {
   await nextTick();
   _ref.value?.focus();
 };
 
-const blur: InputInstance['blur'] = function () {
+const blur: InputInstance['blur'] = () => {
   _ref.value?.blur();
 };
 
-const select: InputInstance['select'] = function () {
+const select: InputInstance['select'] = () => {
   _ref.value?.select();
 };
 
@@ -101,7 +90,7 @@ watch(
     innerValue.value = newVal;
     // 表单校验触发
     formItem?.validate('change').catch((err) => debugWarn(err));
-  }
+  },
 );
 
 defineExpose<InputInstance>({

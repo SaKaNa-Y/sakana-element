@@ -6,8 +6,8 @@
  */
 
 @font-face {
-  font-family: 'zpix';
-  src: url('./zpix.ttf') format('truetype');
+  font-family: "zpix";
+  src: url("./zpix.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -16,6 +16,6 @@
 /* Fallback for browsers that don't support custom fonts */
 @supports not (font-variation-settings: normal) {
   .px-pixel-font-fallback {
-    font-family: 'Courier New', 'Consolas', monospace;
+    font-family: "Courier New", "Consolas", monospace;
   }
 }

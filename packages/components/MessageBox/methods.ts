@@ -1,31 +1,22 @@
-import type {
-  MessageBoxAction,
-  MessageBoxOptions,
-  MessageBoxData,
-  MessageBoxCallback,
-  MessageBoxProps,
-  IErMessageBox,
-} from './types';
-import type { ComponentPublicInstance, VNode, VNodeProps, Ref } from 'vue';
-import { createVNode, isVNode, ref, render, nextTick } from 'vue';
-import {
-  isString,
-  isFunction,
-  each,
-  set,
-  isObject,
-  isUndefined,
-  assign,
-} from 'lodash-es';
-
+import { assign, each, isFunction, isObject, isString, isUndefined, set } from 'lodash-es';
+import type { ComponentPublicInstance, Ref, VNode, VNodeProps } from 'vue';
+import { createVNode, isVNode, nextTick, ref, render } from 'vue';
 import MessageBoxConstructor from './MessageBox.vue';
+import type {
+  IErMessageBox,
+  MessageBoxAction,
+  MessageBoxCallback,
+  MessageBoxData,
+  MessageBoxOptions,
+  MessageBoxProps,
+} from './types';
 
 //ComponentPublicInstance是vue3的类型，表示组件实例
 const messageInstanceMap = new Map<
   ComponentPublicInstance<{ doClose: () => void }>,
   {
     options: MessageBoxOptions;
-    callback: MessageBoxCallback | void;
+    callback: MessageBoxCallback | undefined;
     resolve: (res: any) => void;
     reject: (res: any) => void;
   }
@@ -35,8 +26,7 @@ function initInstance(props: MessageBoxProps, container: HTMLElement) {
   const visible = ref(false);
   const isVNodeMsg = isFunction(props?.message) || isVNode(props?.message);
 
-  const genDefaultSlot = (msg: VNode | (() => VNode)) =>
-    isFunction(msg) ? msg : () => msg;
+  const genDefaultSlot = (msg: VNode | (() => VNode)) => (isFunction(msg) ? msg : () => msg);
 
   const vnode = createVNode(
     MessageBoxConstructor,
@@ -44,7 +34,7 @@ function initInstance(props: MessageBoxProps, container: HTMLElement) {
       ...props,
       visible,
     } as VNodeProps,
-    isVNodeMsg ? { default: genDefaultSlot(props.message as VNode) } : void 0
+    isVNodeMsg ? { default: genDefaultSlot(props.message as VNode) } : void 0,
   );
 
   render(vnode, container);
@@ -63,9 +53,7 @@ function createMessage(options: MessageBoxOptions) {
     // 执行按钮点击事件
     doAction: (action: MessageBoxAction, inputVal: string) => {
       const currentMsg = messageInstanceMap.get(vm);
-      let resolve:
-        | MessageBoxAction
-        | { value: string; action: MessageBoxAction };
+      let resolve: MessageBoxAction | { value: string; action: MessageBoxAction };
 
       nextTick(() => vm.doClose());
       if (options.showInput) {
@@ -102,7 +90,7 @@ function createMessage(options: MessageBoxOptions) {
 
 async function MessageBox(options: MessageBoxOptions): Promise<MessageBoxData>;
 function MessageBox(options: MessageBoxOptions | string | VNode): Promise<any> {
-  let callback: MessageBoxCallback | void;
+  let callback: MessageBoxCallback | undefined;
   if (isString(options) || isVNode(options)) {
     options = {
       message: options,
@@ -126,15 +114,13 @@ const MESSAGE_BOX_DEFAULT_OPTS: Record<
   prompt: { showCancelButton: true, showInput: true },
 };
 
-each(MESSAGE_BOX_VARIANTS, (type) =>
-  set(MessageBox, type, messageBoxFactory(type))
-);
+each(MESSAGE_BOX_VARIANTS, (type) => set(MessageBox, type, messageBoxFactory(type)));
 
 function messageBoxFactory(boxType: (typeof MESSAGE_BOX_VARIANTS)[number]) {
   return (
     message: string | VNode,
     title: string | MessageBoxOptions,
-    options: MessageBoxOptions
+    options: MessageBoxOptions,
   ) => {
     let titleOrOpts = '';
     if (isObject(title)) {
@@ -155,8 +141,8 @@ function messageBoxFactory(boxType: (typeof MESSAGE_BOX_VARIANTS)[number]) {
           boxType,
           ...MESSAGE_BOX_DEFAULT_OPTS[boxType],
         },
-        options
-      )
+        options,
+      ),
     );
   };
 }

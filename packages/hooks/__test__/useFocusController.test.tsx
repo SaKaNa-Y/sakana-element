@@ -1,13 +1,15 @@
-import { describe, it, expect, vi } from 'vitest';
-import { defineComponent, ref } from 'vue';
 import { mount } from '@vue/test-utils';
+import { describe, expect, it, vi } from 'vitest';
+import { defineComponent, ref } from 'vue';
 import { useFocusController } from '../useFocusController';
 
-function createWrapper(options: {
-  afterFocus?: () => void;
-  beforeBlur?: (e: FocusEvent) => boolean | void;
-  afterBlur?: () => void;
-} = {}) {
+function createWrapper(
+  options: {
+    afterFocus?: () => void;
+    beforeBlur?: (e: FocusEvent) => boolean | undefined;
+    afterBlur?: () => void;
+  } = {},
+) {
   let result: ReturnType<typeof useFocusController>;
   const inputRef = ref<HTMLInputElement>();
 

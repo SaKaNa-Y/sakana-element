@@ -1,11 +1,11 @@
 import { type Ref, type VNode } from 'vue';
-import { type MessageType } from '../Message/types';
 import { type ButtonType } from '../Button/types';
+import { type MessageType } from '../Message/types';
 
 export type MessageBoxAction = 'confirm' | 'cancel' | 'close';
 export type MessageBoxType = '' | 'prompt' | 'alert' | 'confirm';
 export type MessageBoxCallback = (
-  action: MessageBoxAction | { value: string; action: MessageBoxAction }
+  action: MessageBoxAction | { value: string; action: MessageBoxAction },
 ) => void;
 
 export type MessageBoxInputData = {
@@ -45,11 +45,7 @@ export interface MessageBoxOptions {
   inputType?: 'text' | 'textarea' | 'password' | 'number';
 
   buttonSize?: 'default' | 'small' | 'large';
-  beforeClose?: (
-    action: MessageBoxAction,
-    instance: MessageBoxOptions,
-    done: () => void
-  ) => void;
+  beforeClose?: (action: MessageBoxAction, instance: MessageBoxOptions, done: () => void) => void;
 }
 
 export interface MessageBoxProps extends MessageBoxOptions {
@@ -62,12 +58,9 @@ export interface MessageBoxProps extends MessageBoxOptions {
 export type MessageBoxShortcutMethod = ((
   message: MessageBoxOptions['message'],
   title: MessageBoxOptions['title'],
-  options?: MessageBoxOptions
+  options?: MessageBoxOptions,
 ) => Promise<MessageBoxData>) &
-  ((
-    message: MessageBoxOptions['message'],
-    options?: MessageBoxOptions
-  ) => Promise<MessageBoxData>);
+  ((message: MessageBoxOptions['message'], options?: MessageBoxOptions) => Promise<MessageBoxData>);
 
 export interface IErMessageBox {
   (options: MessageBoxOptions | string | VNode): Promise<any>;

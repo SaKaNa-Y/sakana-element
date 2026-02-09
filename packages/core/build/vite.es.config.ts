@@ -1,15 +1,15 @@
 //es打包需要打包工具
 //当使用 import 语法时，会自动选择 ES 模块格式
-import { defineConfig } from 'vite'; //vite的defineConfig
-import { resolve } from 'path'; //路径解析
-import { readdir, readdirSync } from 'fs';
-import { filter, map, delay, defer } from 'lodash-es';
 
-import vue from '@vitejs/plugin-vue'; //vue插件，不引入jsx是因为jsx只在测试中使用
-import dts from 'vite-plugin-dts'; //dts插件，当用户安装并使用你的组件库时，TypeScript 能够自动找到这些声明文件，提供代码补全和类型检查功能。
-import shell from 'shelljs'; //导入shelljs，用于删除文件
-import { hooksPlugin as hooks } from '@sakana-element/vite-plugins'; //导入hooksPlugin
+import { readdir, readdirSync } from 'node:fs';
+import { resolve } from 'node:path'; //路径解析
 import terser from '@rollup/plugin-terser'; //压缩插件
+import { hooksPlugin as hooks } from '@sakana-element/vite-plugins'; //导入hooksPlugin
+import vue from '@vitejs/plugin-vue'; //vue插件，不引入jsx是因为jsx只在测试中使用
+import { defer, delay, filter, map } from 'lodash-es';
+import shell from 'shelljs'; //导入shelljs，用于删除文件
+import { defineConfig } from 'vite'; //vite的defineConfig
+import dts from 'vite-plugin-dts'; //dts插件，当用户安装并使用你的组件库时，TypeScript 能够自动找到这些声明文件，提供代码补全和类型检查功能。
 
 const TRY_MOVE_STYLES_DELAY = 800 as const; //常量
 
@@ -22,7 +22,7 @@ function getDirectoriesSync(basePath: string) {
 
   return map(
     filter(entries, (entry) => entry.isDirectory()),
-    (entry) => entry.name
+    (entry) => entry.name,
   );
 }
 
@@ -87,11 +87,7 @@ export default defineConfig({
     },
     rollupOptions: {
       //rollup配置,rollup是vite的打包工具
-      external: [
-        'vue',
-        '@popperjs/core',
-        'async-validator',
-      ], //外部依赖
+      external: ['vue', '@popperjs/core', 'async-validator'], //外部依赖
       output: {
         //输出配置
         assetFileNames: (assetInfo) => {
@@ -125,10 +121,7 @@ export default defineConfig({
           if (id.includes('/packages/hooks')) {
             return 'hooks';
           }
-          if (
-            id.includes('/packages/utils') ||
-            id.includes('plugin-vue:export-helper')
-          ) {
+          if (id.includes('/packages/utils') || id.includes('plugin-vue:export-helper')) {
             return 'utils';
           }
           for (const dirName of getDirectoriesSync('../components/')) {

@@ -5,8 +5,7 @@ export default {
       confirm: 'OK',
       clear: 'Clear',
       defaultLabel: 'color picker',
-      description:
-        'current color is {color}. press enter to select a new color.',
+      description: 'current color is {color}. press enter to select a new color.',
     },
     datepicker: {
       now: 'Now',
@@ -14,8 +13,7 @@ export default {
       cancel: 'Cancel',
       clear: 'Clear',
       confirm: 'OK',
-      dateTablePrompt:
-        'Use the arrow keys and enter to select the day of the month',
+      dateTablePrompt: 'Use the arrow keys and enter to select the day of the month',
       monthTablePrompt: 'Use the arrow keys and enter to select the month',
       yearTablePrompt: 'Use the arrow keys and enter to select the year',
       selectedDate: 'Selected date',
@@ -172,4 +170,4 @@ export default {
       indicator: 'Carousel switch to index {index}',
     },
   },
-}
+};

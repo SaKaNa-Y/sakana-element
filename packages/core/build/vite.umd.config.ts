@@ -1,15 +1,15 @@
 //umd可以在多种环境下使用
 //当使用 require 语法时，会自动选择 UMD 格式
-import { defineConfig } from 'vite'; //vite的defineConfig
-import { readFile } from 'fs'; //同步读取文件
-import { resolve } from 'path'; //路径解析
-import { defer, delay } from 'lodash-es'; //延迟函数
-import { compression } from 'vite-plugin-compression2'; //压缩插件,压缩成gzip
 
-import shell from 'shelljs'; //导入shelljs，用于删除文件
-import vue from '@vitejs/plugin-vue'; //vue插件，不引入jsx是因为jsx只在测试中使用
-import { hooksPlugin as hooks } from '@sakana-element/vite-plugins'; //导入hooksPlugin
+import { readFile } from 'node:fs'; //同步读取文件
+import { resolve } from 'node:path'; //路径解析
 import terser from '@rollup/plugin-terser'; //压缩插件
+import { hooksPlugin as hooks } from '@sakana-element/vite-plugins'; //导入hooksPlugin
+import vue from '@vitejs/plugin-vue'; //vue插件，不引入jsx是因为jsx只在测试中使用
+import { defer, delay } from 'lodash-es'; //延迟函数
+import shell from 'shelljs'; //导入shelljs，用于删除文件
+import { defineConfig } from 'vite'; //vite的defineConfig
+import { compression } from 'vite-plugin-compression2'; //压缩插件,压缩成gzip
 
 const TRY_MOVE_STYLES_DELAY = 800 as const; //常量
 

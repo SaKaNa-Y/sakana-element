@@ -1,8 +1,7 @@
-import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { nextTick } from 'vue';
-import Switch from './Switch.vue';
+import { describe, expect, it } from 'vitest';
 import { PxSwitch } from './index';
+import Switch from './Switch.vue';
 
 describe('Switch.vue', () => {
   it('should render correctly', () => {
@@ -21,11 +20,11 @@ describe('Switch.vue', () => {
 
     await wrapper.trigger('click');
     expect(wrapper.emitted()['update:modelValue'][0]).toEqual([true]);
-    expect(wrapper.emitted()['change'][0]).toEqual([true]);
+    expect(wrapper.emitted().change[0]).toEqual([true]);
 
     await wrapper.trigger('click');
     expect(wrapper.emitted()['update:modelValue'][1]).toEqual([false]);
-    expect(wrapper.emitted()['change'][1]).toEqual([false]);
+    expect(wrapper.emitted().change[1]).toEqual([false]);
   });
 
   it('should not toggle when disabled', async () => {

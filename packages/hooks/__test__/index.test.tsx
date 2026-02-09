@@ -1,15 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import {
   useClickOutside,
-  useEventListener,
   useDisabledStyle,
+  useEventListener,
   useFocusController,
+  useId,
   useLocale,
   useOffset,
-  useZIndex,
-  useId,
-  useTheme,
   useSystemTheme,
+  useTheme,
+  useZIndex,
 } from '../index';
 
 describe('hooks/index', () => {

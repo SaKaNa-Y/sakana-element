@@ -1,7 +1,7 @@
 import type { Directive, DirectiveBinding, MaybeRef } from 'vue';
+import { Loading, type LoadingInstance } from './service';
 //Directive 自定义指令的类型, DirectiveBinding 指令绑定对象的类型，包含 value、oldValue、modifiers 等属性,MaybeRef表示可能是响应式引用（ref）或普通值的类型
 import type { LoadingOptions } from './types';
-import { Loading, type LoadingInstance } from './service';
 
 //INSTANCE_KEY 是一个 Symbol 类型的常量，用于在元素上存储 loading 实例和选项。
 const INSTANCE_KEY = Symbol('loading');
@@ -13,14 +13,10 @@ export interface ElementLoading extends HTMLElement {
   };
 }
 
-function createInstance(
-  el: ElementLoading,
-  binding: DirectiveBinding<boolean>
-) {
+function createInstance(el: ElementLoading, binding: DirectiveBinding<boolean>) {
   const getProp = <K extends keyof LoadingOptions>(name: K) =>
     el.getAttribute(`px-loading-${name}`) as MaybeRef<string>;
-  const getModifier = <K extends keyof LoadingOptions>(name: K) =>
-    binding.modifiers[name];
+  const getModifier = <K extends keyof LoadingOptions>(name: K) => binding.modifiers[name];
 
   const fullscreen = getModifier('fullscreen');
   const options: LoadingOptions = {

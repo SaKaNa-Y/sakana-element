@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
 import { addUnit } from '@sakana-element/utils';
-import type { TooltipInstance } from '../Tooltip';
-import type { PopconfirmProps, PopconfirmEmits } from './types';
-
-import PxTooltip from '../Tooltip/Tooltip.vue';
+import { computed, ref } from 'vue';
 import PxButton from '../Button/Button.vue';
 import PxIcon from '../Icon/Icon.vue';
+import type { TooltipInstance } from '../Tooltip';
+import PxTooltip from '../Tooltip/Tooltip.vue';
+import type { PopconfirmEmits, PopconfirmProps } from './types';
 
 defineOptions({
   name: 'PxPopconfirm',

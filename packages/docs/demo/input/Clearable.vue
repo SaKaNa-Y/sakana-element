@@ -5,9 +5,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
-const input = ref('Hello World')
+const input = ref('Hello World');
 </script>
 
 <style scoped>

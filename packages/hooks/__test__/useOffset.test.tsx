@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { defineComponent, ref } from 'vue';
 import { mount } from '@vue/test-utils';
+import { describe, expect, it } from 'vitest';
+import { defineComponent, ref } from 'vue';
 import useOffset from '../useOffset';
 
 describe('hooks/useOffset', () => {
@@ -16,7 +16,7 @@ describe('hooks/useOffset', () => {
           });
           return () => <div />;
         },
-      })
+      }),
     );
     expect(result!.topOffset.value).toBe(20);
   });
@@ -33,7 +33,7 @@ describe('hooks/useOffset', () => {
           });
           return () => <div />;
         },
-      })
+      }),
     );
     expect(result!.bottomOffset.value).toBe(70); // 20 + 50
   });
@@ -51,7 +51,7 @@ describe('hooks/useOffset', () => {
           });
           return () => <div />;
         },
-      })
+      }),
     );
     expect(result!.bottomOffset.value).toBe(60); // 10 + 50
     boxHeight.value = 100;
@@ -71,7 +71,7 @@ describe('hooks/useOffset', () => {
           });
           return () => <div />;
         },
-      })
+      }),
     );
     expect(result!.topOffset.value).toBe(20); // 20 + 0
     lastBottom.value = 30;
@@ -97,7 +97,7 @@ describe('hooks/useOffset', () => {
           });
           return () => <div />;
         },
-      })
+      }),
     );
     // first: topOffset=20, bottomOffset=60
     expect(first!.topOffset.value).toBe(20);

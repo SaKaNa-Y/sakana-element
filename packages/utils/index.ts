@@ -1,5 +1,5 @@
-import { defineComponent } from 'vue';
 import { isFunction } from 'lodash-es';
+import { defineComponent } from 'vue';
 
 // 映射图标，用于根据类型获取对应的图标 (使用 pixelarticons 名称)
 export const typeIconMap = new Map([
@@ -25,9 +25,9 @@ export const RenderVnode = defineComponent({
   },
 });
 
-export * from './install';
 export * from './error';
+export * from './icon-map';
+export * from './icon-registry';
+export * from './install';
 export * from './style';
 export * from './test';
-export * from './icon-registry';
-export * from './icon-map';

@@ -1,10 +1,10 @@
-import { describe, it, expect, vi } from 'vitest'; // 测试框架
-import type { AlertType } from './types'; // 类型
-import { mount } from '@vue/test-utils'; // 测试工具，用于挂载组件
-import Alert from './Alert.vue'; // 测试组件
-import Icon from '../Icon/Icon.vue'; // 测试组件
-import { PxAlert } from './index';
 import { withInstall } from '@sakana-element/utils';
+import { mount } from '@vue/test-utils'; // 测试工具，用于挂载组件
+import { describe, expect, it, vi } from 'vitest'; // 测试框架
+import Icon from '../Icon/Icon.vue'; // 测试组件
+import Alert from './Alert.vue'; // 测试组件
+import { PxAlert } from './index';
+import type { AlertType } from './types'; // 类型
 
 describe('Alert.vue', () => {
   //describe创建一个测试组，第一个参数是测试组的名称，第二个参数是测试组的内容
@@ -31,9 +31,7 @@ describe('Alert.vue', () => {
     expect(iconElement.exists()).toBeTruthy(); //断言组件是否存在
     expect(iconElement.attributes('icon')).toBe('close'); //断言组件的icon属性是否为close
 
-    const wrapper2 = mount(() => (
-      <Alert title={title} description={desc}></Alert>
-    ));
+    const wrapper2 = mount(() => <Alert title={title} description={desc}></Alert>);
 
     expect(wrapper2.text()).toContain(title);
     expect(wrapper2.text()).toContain(desc);

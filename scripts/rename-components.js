@@ -271,7 +271,6 @@ async function main() {
       console.log('   3. Build: pnpm build');
       console.log('   4. Commit the changes\n');
     }
-
   } catch (error) {
     console.error('\n❌ Error during renaming:', error);
     process.exit(1);

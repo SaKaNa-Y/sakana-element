@@ -24,7 +24,7 @@
   vertical-align: middle;
 
   /* Disable native password toggle */
-  input[type='password'] {
+  input[type="password"] {
     -webkit-appearance: none;
     &::-ms-reveal {
       display: none;
@@ -66,29 +66,48 @@
 
   /* Prepend/Append border adjustments */
   &.is-prepend > .px-input__wrapper {
-    &::before, &::after {
+    &::before,
+    &::after {
       clip-path: polygon(
         0 0,
-        calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
-        100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+        calc(100% - 4px) 0,
+        calc(100% - 4px) 2px,
+        calc(100% - 2px) 2px,
+        calc(100% - 2px) 4px,
+        100% 4px,
+        100% calc(100% - 4px),
+        calc(100% - 2px) calc(100% - 4px),
+        calc(100% - 2px) calc(100% - 2px),
+        calc(100% - 4px) calc(100% - 2px),
+        calc(100% - 4px) 100%,
         0 100%
       );
     }
   }
 
   &.is-append > .px-input__wrapper {
-    &::before, &::after {
+    &::before,
+    &::after {
       clip-path: polygon(
-        0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+        0 4px,
+        2px 4px,
+        2px 2px,
+        4px 2px,
+        4px 0,
         100% 0,
         100% 100%,
-        4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+        4px 100%,
+        4px calc(100% - 2px),
+        2px calc(100% - 2px),
+        2px calc(100% - 4px),
+        0 calc(100% - 4px)
       );
     }
   }
 
   &.is-prepend.is-append > .px-input__wrapper {
-    &::before, &::after {
+    &::before,
+    &::after {
       clip-path: none;
     }
   }
@@ -117,34 +136,68 @@
   box-sizing: border-box;
 
   /* Pixel shadow via drop-shadow */
-  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-input-shadow-color));
+  filter: drop-shadow(
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-input-shadow-color)
+  );
 
   /* Border layer — filled with border color, clipped to pixel shape */
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: var(--px-input-border-color);
     clip-path: polygon(
-      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
-      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
-      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
-      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+      0 4px,
+      2px 4px,
+      2px 2px,
+      4px 2px,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px calc(100% - 4px),
+      0 calc(100% - 4px)
     );
     z-index: -1;
   }
 
   /* Fill layer — inset by border width, filled with bg color */
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 2px;
     background: var(--px-input-bg-color);
     clip-path: polygon(
-      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
-      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
-      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
-      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+      0 4px,
+      2px 4px,
+      2px 2px,
+      4px 2px,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px calc(100% - 4px),
+      0 calc(100% - 4px)
     );
     z-index: -1;
   }
@@ -285,11 +338,13 @@
   box-sizing: border-box;
 
   /* Pixel shadow via drop-shadow */
-  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-input-shadow-color));
+  filter: drop-shadow(
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-input-shadow-color)
+  );
 
   /* Border layer */
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: var(--px-input-border-color);
@@ -298,7 +353,7 @@
 
   /* Fill layer */
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 2px;
     background: var(--px-fill-color-dark);
@@ -308,23 +363,41 @@
 
 .px-input__prepend {
   /* Notched left, straight right */
-  &::before, &::after {
+  &::before,
+  &::after {
     clip-path: polygon(
-      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      0 4px,
+      2px 4px,
+      2px 2px,
+      4px 2px,
+      4px 0,
       100% 0,
       100% 100%,
-      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+      4px 100%,
+      4px calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px calc(100% - 4px),
+      0 calc(100% - 4px)
     );
   }
 }
 
 .px-input__append {
   /* Straight left, notched right */
-  &::before, &::after {
+  &::before,
+  &::after {
     clip-path: polygon(
       0 0,
-      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
-      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 4px) 100%,
       0 100%
     );
   }
@@ -356,7 +429,9 @@
   -webkit-font-smoothing: none;
 
   /* Pixel shadow via drop-shadow */
-  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-input-shadow-color));
+  filter: drop-shadow(
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-input-shadow-color)
+  );
 
   /* We need a wrapper for the pixel border since textarea can resize */
   outline: none;
@@ -386,10 +461,26 @@
 
   /* Simplified pixel corners using clip-path on the textarea itself */
   clip-path: polygon(
-    0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
-    calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
-    100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
-    4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    0 4px,
+    2px 4px,
+    2px 2px,
+    4px 2px,
+    4px 0,
+    calc(100% - 4px) 0,
+    calc(100% - 4px) 2px,
+    calc(100% - 2px) 2px,
+    calc(100% - 2px) 4px,
+    100% 4px,
+    100% calc(100% - 4px),
+    calc(100% - 2px) calc(100% - 4px),
+    calc(100% - 2px) calc(100% - 2px),
+    calc(100% - 4px) calc(100% - 2px),
+    calc(100% - 4px) 100%,
+    4px 100%,
+    4px calc(100% - 2px),
+    2px calc(100% - 2px),
+    2px calc(100% - 4px),
+    0 calc(100% - 4px)
   );
 
   &:hover {

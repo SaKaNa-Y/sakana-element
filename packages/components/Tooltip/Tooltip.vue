@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { computed, onUnmounted, ref, watch, watchEffect, type Ref } from 'vue';
 import { createPopper, type Instance } from '@popperjs/core';
-import { bind, debounce, type DebouncedFunc } from 'lodash-es';
-import type { TooltipProps, TooltipEmits, TooltipInstance } from './types';
 import { useClickOutside } from '@sakana-element/hooks';
+import { bind, type DebouncedFunc, debounce } from 'lodash-es';
+import { computed, onUnmounted, type Ref, ref, watch, watchEffect } from 'vue';
+import type { TooltipEmits, TooltipInstance, TooltipProps } from './types';
 
 import useEventsToTiggerNode from './useEventsToTiggerNode';
 
 interface _TooltipProps extends TooltipProps {
-  virtualRef?: HTMLElement | void; //虚拟触发节点
+  virtualRef?: HTMLElement | undefined; //虚拟触发节点
   virtualTriggering?: boolean; //是否虚拟触发
 }
 
@@ -56,12 +56,8 @@ const popperOptions = computed(() => ({
   ...props.popperOptions,
 }));
 
-const openDelay = computed(() =>
-  props.trigger === 'hover' ? props.showTimeout : 0
-);
-const closeDelay = computed(() =>
-  props.trigger === 'hover' ? props.hideTimeout : 0
-);
+const openDelay = computed(() => (props.trigger === 'hover' ? props.showTimeout : 0));
+const closeDelay = computed(() => (props.trigger === 'hover' ? props.hideTimeout : 0));
 
 let openDebounce: DebouncedFunc<() => void> | void;
 let closeDebounce: DebouncedFunc<() => void> | void;
@@ -93,17 +89,17 @@ function setVisible(val: boolean) {
 function attachEvents() {
   if (props.disabled || props.manual) return;
   if (props.trigger === 'hover') {
-    events.value['mouseenter'] = openFinal;
-    outerEvents.value['mouseleave'] = closeFinal;
-    dropdownEvents.value['mouseenter'] = openFinal;
+    events.value.mouseenter = openFinal;
+    outerEvents.value.mouseleave = closeFinal;
+    dropdownEvents.value.mouseenter = openFinal;
     return;
   }
   if (props.trigger === 'click') {
-    events.value['click'] = togglePopper;
+    events.value.click = togglePopper;
     return;
   }
   if (props.trigger === 'contextmenu') {
-    events.value['contextmenu'] = (e) => {
+    events.value.contextmenu = (e) => {
       e.preventDefault();
       openFinal();
     };
@@ -128,11 +124,11 @@ function resetEvents() {
 }
 
 const show: TooltipInstance['show'] = openFinal;
-const hide: TooltipInstance['hide'] = function () {
+const hide: TooltipInstance['hide'] = () => {
   openDebounce?.cancel();
   setVisible(false);
 };
-const toggle: TooltipInstance['toggle'] = function () {
+const toggle: TooltipInstance['toggle'] = () => {
   visible.value ? hide() : show();
 };
 
@@ -141,14 +137,10 @@ watch(
   (val) => {
     if (!val) return;
     if (triggerNode.value && popperNode.value) {
-      popperInstance = createPopper(
-        triggerNode.value,
-        popperNode.value,
-        popperOptions.value
-      );
+      popperInstance = createPopper(triggerNode.value, popperNode.value, popperOptions.value);
     }
   },
-  { flush: 'post' }
+  { flush: 'post' },
 );
 
 watch(
@@ -159,7 +151,7 @@ watch(
       return;
     }
     attachEvents();
-  }
+  },
 );
 
 watch(
@@ -169,7 +161,7 @@ watch(
     visible.value = false;
     emits('visible-change', false);
     resetEvents();
-  }
+  },
 );
 
 watchEffect(() => {

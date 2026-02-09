@@ -1,6 +1,6 @@
-import type { VNode, ComputedRef } from 'vue'; //VNode 是 Vue 的虚拟节点类型允许使用h函数,ComputedRef 是 Vue 的计算属性类型，表示是计算属性而且可以定义类型
+import type { ComputedRef, VNode } from 'vue'; //VNode 是 Vue 的虚拟节点类型允许使用h函数,ComputedRef 是 Vue 的计算属性类型，表示是计算属性而且可以定义类型
+import type { ButtonSize, ButtonType } from '../Button/types';
 import type { TooltipProps } from '../Tooltip/types';
-import type { ButtonType, ButtonSize } from '../Button/types';
 
 export type DropdownCommand = string | number;
 
@@ -34,5 +34,5 @@ export interface DropdownInstance {
 
 export interface DropdownContext {
   handleItemClick(item: DropdownItemProps): void;
-  size: ComputedRef<ButtonSize | void>;
+  size: ComputedRef<ButtonSize | undefined>;
 }

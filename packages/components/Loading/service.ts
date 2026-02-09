@@ -1,8 +1,8 @@
-import type { LoadingOptions, LoadingOptionsResolved } from './types';
-import { ref, createApp, reactive, nextTick } from 'vue';
 import { useZIndex } from '@sakana-element/hooks';
-import LoadingComp from './Loading.vue';
 import { defer, delay, isNil, isString } from 'lodash-es';
+import { createApp, nextTick, reactive, ref } from 'vue';
+import LoadingComp from './Loading.vue';
+import type { LoadingOptions, LoadingOptionsResolved } from './types';
 
 const RELATIVE_CLASS = 'px-loading-parent--relative' as const;
 const HIDDEN_CLASS = 'px-loading-parent--hiden' as const;
@@ -126,13 +126,13 @@ function removeLoadingNumb(target: HTMLElement = document.body) {
 function addLoadingNumb(target: HTMLElement = document.body) {
   const numb = getLoadingNumb(target) ?? '0';
   //setAttribute 设置html指定元素的属性值，parseint 将字符串转换为整数
-  target.setAttribute(LOADING_NUMB_KEY, `${Number.parseInt(numb) + 1}`);
+  target.setAttribute(LOADING_NUMB_KEY, `${Number.parseInt(numb, 10) + 1}`);
 }
 
 function subtLoadingNumb(target: HTMLElement = document.body) {
   const numb = getLoadingNumb(target);
   if (numb) {
-    const newNumb = Number.parseInt(numb) - 1;
+    const newNumb = Number.parseInt(numb, 10) - 1;
     if (newNumb === 0) {
       //numb等于0时 removeLoadingNumb 移除html指定元素的属性值
       removeLoadingNumb(target);
@@ -144,10 +144,7 @@ function subtLoadingNumb(target: HTMLElement = document.body) {
 }
 
 //添加class
-function addClass(
-  options: LoadingOptions,
-  parent: HTMLElement = document.body
-) {
+function addClass(options: LoadingOptions, parent: HTMLElement = document.body) {
   //如果滚动条被锁定，则添加HIDDEN_CLASS
   if (options.lock) {
     addHiddenClass(parent);

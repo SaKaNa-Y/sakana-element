@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import type { AlertProps, AlertEmits, AlertInstance } from './types';
 import { typeIconMap } from '@sakana-element/utils';
-
+import { computed, ref } from 'vue';
 import PxIcon from '../Icon/Icon.vue';
+import type { AlertEmits, AlertInstance, AlertProps } from './types';
 
 defineOptions({
   name: 'PxAlert',

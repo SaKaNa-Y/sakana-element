@@ -1,17 +1,17 @@
 <script setup lang="ts">
+import type { ValidateError, ValidateFieldsError } from 'async-validator';
+import { each, filter, includes, size } from 'lodash-es';
+import { provide, reactive, toRefs } from 'vue';
+import { FORM_CTX_KEY } from './constants';
 import type {
-  FormProps,
-  FormEmits,
-  FormItemContext,
   FormContext,
+  FormEmits,
   FormInstance,
+  FormItemContext,
+  FormProps,
   FormValidateCallback,
 } from './types';
 
-import { FORM_CTX_KEY } from './constants';
-import { reactive, toRefs, provide } from 'vue';
-import { each, filter, includes, size } from 'lodash-es';
-import type { ValidateError, ValidateFieldsError } from 'async-validator';
 defineOptions({ name: 'PxForm' });
 const props = withDefaults(defineProps<FormProps>(), {
   showMessage: true,
@@ -40,28 +40,23 @@ async function doValidateField(fields: FormItemContext[] = []) {
 }
 
 //添加表单项
-const addField: FormContext['addField'] = function (field) {
+const addField: FormContext['addField'] = (field) => {
   //如果表单项没有prop，则不添加
   if (!field.prop) return;
   fields.push(field);
 };
 
 //移除表单项
-const removeField: FormContext['removeField'] = function (field) {
+const removeField: FormContext['removeField'] = (field) => {
   if (!field.prop) return;
   fields.splice(fields.indexOf(field), 1);
 };
 
 //验证表单
-const validate: FormInstance['validate'] = async function (callback) {
-  return validateField([], callback);
-};
+const validate: FormInstance['validate'] = async (callback) => validateField([], callback);
 
 //验证表单项
-const validateField: FormInstance['validateField'] = async function (
-  keys,
-  callback
-) {
+const validateField: FormInstance['validateField'] = async (keys, callback) => {
   try {
     const result = await doValidateField(filterFields(fields, keys ?? []));
     if (result === true) {
@@ -76,18 +71,16 @@ const validateField: FormInstance['validateField'] = async function (
   }
 };
 
-const resetFields: FormInstance['resetFields'] = function (keys) {
+const resetFields: FormInstance['resetFields'] = (keys) => {
   each(filterFields(fields, keys ?? []), (field) => field.resetField());
 };
 
-const clearValidate: FormInstance['clearValidate'] = function (keys) {
+const clearValidate: FormInstance['clearValidate'] = (keys) => {
   each(filterFields(fields, keys ?? []), (field) => field.clearValidate());
 };
 
 function filterFields(fields: FormItemContext[], keys: string[]) {
-  return size(keys)
-    ? filter(fields, (field) => includes(keys, field.prop))
-    : fields;
+  return size(keys) ? filter(fields, (field) => includes(keys, field.prop)) : fields;
 }
 
 const formCtx: FormContext = reactive({

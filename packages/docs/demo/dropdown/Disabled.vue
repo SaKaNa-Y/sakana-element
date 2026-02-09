@@ -13,7 +13,7 @@ const items = [
   { label: 'Action 1', command: 'a' },
   { label: 'Action 2 (disabled)', command: 'b', disabled: true },
   { label: 'Action 3', command: 'c' },
-  { label: 'Action 4 (disabled)', command: 'd', disabled: true }
+  { label: 'Action 4 (disabled)', command: 'd', disabled: true },
 ];
 
 const handleCommand = (command: string) => {

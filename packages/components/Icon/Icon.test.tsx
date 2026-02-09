@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest';
+import { withInstall } from '@sakana-element/utils';
 import { mount } from '@vue/test-utils';
+import { describe, expect, it } from 'vitest';
 import Icon from './Icon.vue';
 import { PxIcon, registerDefaultPixelIcons } from './index';
-import { withInstall } from '@sakana-element/utils';
 
 describe('Icon.vue', () => {
   it('should render with default props', () => {

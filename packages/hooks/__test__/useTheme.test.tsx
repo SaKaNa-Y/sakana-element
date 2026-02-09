@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 type ChangeHandler = (e: { matches: boolean }) => void;
 
@@ -28,7 +28,10 @@ describe('hooks/useTheme', () => {
     document.documentElement.classList.remove('px-dark');
     localStorage.clear();
     mockMql = createMockMediaQuery(false);
-    vi.stubGlobal('matchMedia', vi.fn(() => mockMql));
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => mockMql),
+    );
     const mod = await import('../useTheme');
     useTheme = mod.useTheme;
   });

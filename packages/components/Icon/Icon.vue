@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { IconProps } from './types';
-import { iconSizeMap } from './types';
 import { getPixelIcon, resolveIconName } from '@sakana-element/utils';
 import { computed } from 'vue';
+import type { IconProps } from './types';
+import { iconSizeMap } from './types';
 
 defineOptions({
   name: 'PxIcon',

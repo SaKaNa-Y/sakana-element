@@ -2,8 +2,7 @@ import type { InjectionKey } from 'vue'; //InjectionKey 表示一个唯一的键
 import type { SelectContext } from './types';
 
 //InjectionKey<SelectContext>表示SELECT_CTX_KEY属于InjectionKey类型，且值为SelectContext类型
-export const SELECT_CTX_KEY: InjectionKey<SelectContext> =
-  Symbol('selectContext');
+export const SELECT_CTX_KEY: InjectionKey<SelectContext> = Symbol('selectContext');
 
 export const POPPER_OPTIONS: any = {
   modifiers: [

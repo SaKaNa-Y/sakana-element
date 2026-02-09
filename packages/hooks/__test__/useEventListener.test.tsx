@@ -1,6 +1,6 @@
-import { describe, expect, it, vi } from 'vitest';
-import { ref, defineComponent } from 'vue';
 import { mount } from '@vue/test-utils';
+import { describe, expect, it, vi } from 'vitest';
+import { defineComponent, ref } from 'vue';
 
 import useEventListener from '../useEventListener';
 
@@ -14,7 +14,7 @@ describe('hooks/useEventListener', () => {
           useEventListener(target, 'click', handler);
           return () => <div id="container"></div>;
         },
-      })
+      }),
     );
     wrapper.get('#container').element.appendChild(target);
 
@@ -27,7 +27,7 @@ describe('hooks/useEventListener', () => {
   });
 
   it('should add and remove event listener when target is Ref<HTMLElement>', async () => {
-    const target = ref<HTMLElement | void>();
+    const target = ref<HTMLElement | undefined>();
     const handler = vi.fn(); // 创建一个模拟的函数
 
     mount(
@@ -36,7 +36,7 @@ describe('hooks/useEventListener', () => {
           useEventListener(target, 'click', handler);
           return () => <button id="container" ref={target}></button>;
         },
-      })
+      }),
     );
 
     await document.getElementById('container')?.click();

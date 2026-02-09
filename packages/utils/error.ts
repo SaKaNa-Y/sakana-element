@@ -1,5 +1,3 @@
-import { isString } from 'lodash-es';
-
 class ErUIError extends Error {
   constructor(msg: string) {
     super(msg);

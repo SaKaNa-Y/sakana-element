@@ -1,15 +1,12 @@
-import { beforeAll, describe, expect, test, vi } from 'vitest';
 import { DOMWrapper, mount, type VueWrapper } from '@vue/test-utils';
-import transitionEvents from './transitionEvents';
-
+import { beforeAll, describe, expect, test, vi } from 'vitest';
 import Collapse from './Collapse.vue';
 import CollapseItem from './CollapseItem.vue';
+import transitionEvents from './transitionEvents';
 
 const onChange = vi.fn();
 
-let wrapper: VueWrapper,
-  headers: DOMWrapper<Element>[],
-  contents: DOMWrapper<Element>[];
+let wrapper: VueWrapper, headers: DOMWrapper<Element>[], contents: DOMWrapper<Element>[];
 
 let firstHeader: DOMWrapper<Element>,
   secondHeader: DOMWrapper<Element>,
@@ -39,7 +36,7 @@ describe('Collapse.vue', () => {
           stubs: ['PxIcon'],
         },
         attachTo: document.body, // 最新版本 jsdom 更新缓存 bug
-      }
+      },
     );
 
     headers = wrapper.findAll('.px-collapse-item__header');
@@ -121,7 +118,7 @@ describe('Collapse.vue', () => {
           stubs: ['PxIcon'],
         },
         attachTo: document.body,
-      }
+      },
     );
 
     headers = wrapper.findAll('.px-collapse-item__header');
@@ -159,7 +156,7 @@ describe('Collapse.vue', () => {
         global: {
           stubs: ['PxIcon'],
         },
-      }
+      },
     );
   });
   expect(() => wrapper.vm.$nextTick()).toThrow();
@@ -174,9 +171,7 @@ describe('Collapse/transitionEvents.ts', () => {
   });
   test('enter', () => {
     transitionEvents.enter(wrapper.element);
-    expect(wrapper.element.style.height).toBe(
-      `${wrapper.element.scrollHeight}px`
-    );
+    expect(wrapper.element.style.height).toBe(`${wrapper.element.scrollHeight}px`);
   });
   test('afterEnter', () => {
     transitionEvents.afterEnter(wrapper.element);
@@ -185,9 +180,7 @@ describe('Collapse/transitionEvents.ts', () => {
   });
   test('beforeLeave', () => {
     transitionEvents.beforeLeave(wrapper.element);
-    expect(wrapper.element.style.height).toBe(
-      `${wrapper.element.scrollHeight}px`
-    );
+    expect(wrapper.element.style.height).toBe(`${wrapper.element.scrollHeight}px`);
     expect(wrapper.element.style.overflow).toBe('hidden');
   });
   test('leave', () => {

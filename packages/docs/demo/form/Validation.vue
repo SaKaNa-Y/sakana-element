@@ -14,25 +14,25 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
 import { PxMessage } from 'sakana-element';
+import { reactive, ref } from 'vue';
 
 const formRef = ref();
 
 const form = reactive({
   name: '',
-  email: ''
+  email: '',
 });
 
 const rules = {
   name: [
     { required: true, message: 'Please input name', trigger: 'blur' },
-    { min: 2, max: 20, message: 'Length should be 2 to 20', trigger: 'blur' }
+    { min: 2, max: 20, message: 'Length should be 2 to 20', trigger: 'blur' },
   ],
   email: [
     { required: true, message: 'Please input email', trigger: 'blur' },
-    { type: 'email', message: 'Please input a valid email', trigger: 'blur' }
-  ]
+    { type: 'email', message: 'Please input a valid email', trigger: 'blur' },
+  ],
 };
 
 const onSubmit = async () => {

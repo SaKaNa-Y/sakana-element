@@ -1,18 +1,18 @@
-import { isVNode, render, h, shallowReactive } from 'vue'; //h是创建虚拟节点，render是渲染函数，shallowReactive是浅响应式
+import { useId, useZIndex } from '@sakana-element/hooks';
+import { each, findIndex, get, isString, set } from 'lodash-es';
+import { h, isVNode, render, shallowReactive } from 'vue'; //h是创建虚拟节点，render是渲染函数，shallowReactive是浅响应式
+import MessageConstructor from './Message.vue';
 import type {
   CreateMessageProps,
-  MessageInstance,
-  MessageFn,
   Message,
+  MessageFn,
+  MessageHandler,
+  MessageInstance,
   MessageParams,
   MessageProps,
-  MessageHandler,
   MessageType,
 } from './types';
 import { messageTypes } from './types';
-import { useId, useZIndex } from '@sakana-element/hooks';
-import { isString, findIndex, set, each, get } from 'lodash-es';
-import MessageConstructor from './Message.vue';
 
 //ref是对基本和复杂类型不管什么变化都响应，shallowRef是全部变化才响应，reactive是对复杂类型不管什么变化都响应，shallowReactive是只有最外层复杂类型变化才响应
 //ref可以基本和复杂类型响应式，reactive是复杂深响应式，shallowReactive是复杂浅响应式

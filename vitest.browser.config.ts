@@ -1,9 +1,10 @@
 // vitest.browser.config.ts - Browser mode config for component tests
-import { defineConfig } from 'vitest/config';
-import { playwright } from '@vitest/browser-playwright';
+
+import { resolve } from 'node:path';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import { resolve } from 'path';
+import { playwright } from '@vitest/browser-playwright';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [vue(), vueJsx()],

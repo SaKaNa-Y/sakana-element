@@ -54,7 +54,7 @@
 
       /* Pixel cursor indicator */
       &::before {
-        content: '>';
+        content: ">";
         position: absolute;
         left: 6px;
         color: var(--px-dropdown-menuItem-hover-color);

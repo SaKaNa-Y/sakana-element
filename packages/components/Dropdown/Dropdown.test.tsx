@@ -1,11 +1,10 @@
-import { describe, expect, it, test, vi, beforeEach } from 'vitest';
 import { withInstall } from '@sakana-element/utils';
 import { mount } from '@vue/test-utils';
+import { beforeEach, describe, expect, it, test, vi } from 'vitest';
 import { PxDropdown, PxDropdownItem } from '.';
-import type { DropdownItemProps } from './types';
-
 import Dropdown from './Dropdown.vue';
 import DropdownItem from './DropdownItem.vue';
+import type { DropdownItemProps } from './types';
 
 describe('Dropdown/index.ts', () => {
   // 测试 withInstall 函数是否被正确应用
@@ -93,10 +92,7 @@ describe('Dropdown.vue', () => {
   });
 
   it('should toggle visibility when split btn is clicked', async () => {
-    const items: DropdownItemProps[] = [
-      { label: 'Item 1' },
-      { label: 'Item 2', command: 'item2' },
-    ];
+    const items: DropdownItemProps[] = [{ label: 'Item 1' }, { label: 'Item 2', command: 'item2' }];
     const onClick = vi.fn();
     const wrapper = mount(Dropdown, {
       props: {

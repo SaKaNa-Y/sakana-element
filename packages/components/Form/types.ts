@@ -1,8 +1,4 @@
-import type {
-  RuleItem,
-  ValidateError,
-  ValidateFieldsError,
-} from 'async-validator';
+import type { RuleItem, ValidateError, ValidateFieldsError } from 'async-validator';
 import type { Ref } from 'vue';
 
 export interface FormItemRule extends RuleItem {
@@ -11,10 +7,7 @@ export interface FormItemRule extends RuleItem {
 export type FormRules = Record<string, FormItemRule[]>;
 
 export type FormValidateResult = Promise<boolean>;
-export type FormValidateCallback = (
-  isValid: boolean,
-  invalidFields?: ValidateFieldsError
-) => void;
+export type FormValidateCallback = (isValid: boolean, invalidFields?: ValidateFieldsError) => void;
 
 export type ValidateStatus = 'success' | 'error' | 'init' | 'validating';
 
@@ -35,14 +28,12 @@ export interface FormProps {
   requiredAsteriskPosition?: 'left' | 'right';
 }
 
-export interface FormEmits {
-  (
-    event: 'validate',
-    prop: FormItemProps,
-    isValid: boolean,
-    message: string
-  ): void;
-}
+export type FormEmits = (
+  event: 'validate',
+  prop: FormItemProps,
+  isValid: boolean,
+  message: string,
+) => void;
 
 export interface FormItemProps {
   prop?: string | string[];
@@ -58,10 +49,7 @@ export interface FormItemProps {
 
 export interface FormInstance {
   validate(callback?: FormValidateCallback): FormValidateResult;
-  validateField(
-    keys?: string[],
-    callback?: FormValidateCallback
-  ): FormValidateResult;
+  validateField(keys?: string[], callback?: FormValidateCallback): FormValidateResult;
   resetFields(keys?: string[]): void;
   clearValidate(keys?: string[]): void;
 }
@@ -69,10 +57,7 @@ export interface FormInstance {
 export interface FormItemInstance {
   validateStatus: Ref<ValidateStatus>;
   validateMessage: Ref<string>;
-  validate(
-    trigger: string,
-    callback?: FormValidateCallback
-  ): FormValidateResult;
+  validate(trigger: string, callback?: FormValidateCallback): FormValidateResult;
   resetField(): void;
   clearValidate(): void;
 }
@@ -84,10 +69,7 @@ export interface FormContext extends FormProps {
 }
 
 export interface FormItemContext extends FormItemProps {
-  validate(
-    trigger: string,
-    callback?: FormValidateCallback
-  ): FormValidateResult;
+  validate(trigger: string, callback?: FormValidateCallback): FormValidateResult;
   resetField(): void;
   clearValidate(): void;
   addInputId(id: string): void;

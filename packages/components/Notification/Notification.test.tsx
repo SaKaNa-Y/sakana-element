@@ -1,6 +1,6 @@
-import { describe, test, expect, afterEach } from 'vitest';
-import { notification, closeAll } from './methods';
 import { rAF } from '@sakana-element/utils';
+import { afterEach, describe, expect, test } from 'vitest';
+import { closeAll, notification } from './methods';
 
 function getTopValue(element: Element) {
   const styles = window.getComputedStyle(element);
@@ -13,9 +13,7 @@ describe('Notification', () => {
     notification.closeAll();
     await rAF();
     await rAF();
-    document
-      .querySelectorAll('.px-notification')
-      .forEach((el) => el.remove());
+    document.querySelectorAll('.px-notification').forEach((el) => el.remove());
   });
 
   test('notification() function', async () => {

@@ -1,6 +1,5 @@
-import { describe, expect, test } from 'vitest';
 import { mount } from '@vue/test-utils';
-import { nextTick } from 'vue';
+import { describe, expect, test } from 'vitest';
 import Input from './Input.vue';
 import { PxInput } from './index';
 

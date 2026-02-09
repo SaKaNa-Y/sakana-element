@@ -6,10 +6,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 
-const value1 = ref(false)
-const value2 = ref(true)
+const value1 = ref(false);
+const value2 = ref(true);
 </script>
 
 <style scoped>

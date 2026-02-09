@@ -1,7 +1,7 @@
-import type { StoryObj, Meta, ArgTypes } from '@storybook/vue3';
-import { ref, watch } from 'vue';
 import { fn } from '@storybook/test';
-import { PxAlert, type AlertInstance } from '../../../components/Alert';
+import type { ArgTypes, Meta, StoryObj } from '@storybook/vue3';
+import { ref, watch } from 'vue';
+import { type AlertInstance, PxAlert } from '../../../components/Alert';
 import '../../../components/Alert/style.css';
 
 type Story = StoryObj<typeof PxAlert> & { argTypes?: ArgTypes };
@@ -50,7 +50,7 @@ export const Default: Story & { args: { visible: boolean } } = {
           } else {
             alertRef.value?.close();
           }
-        }
+        },
       );
       return { args, alertRef };
     },

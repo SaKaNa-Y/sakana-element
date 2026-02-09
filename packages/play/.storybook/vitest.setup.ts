@@ -1,5 +1,5 @@
-import { beforeAll } from 'vitest';
 import { setProjectAnnotations } from '@storybook/vue3';
+import { beforeAll } from 'vitest';
 import * as projectAnnotations from './preview';
 
 // This is an important step to apply the right configuration when testing your stories.

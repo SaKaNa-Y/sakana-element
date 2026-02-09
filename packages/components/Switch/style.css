@@ -49,7 +49,9 @@
         background: var(--px-switch-on-color);
       }
 
-      filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-switch-on-border-color));
+      filter: drop-shadow(
+        var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-switch-on-border-color)
+      );
 
       .px-switch__core-action {
         left: calc(100% - 20px);
@@ -122,37 +124,71 @@
   border: none;
 
   /* Pixel shadow via drop-shadow */
-  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-switch-shadow-color));
+  filter: drop-shadow(
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-switch-shadow-color)
+  );
 
   /* No smooth transitions */
   transition: none;
 
   /* Border layer — pixel shape */
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: var(--px-switch-off-border-color);
     clip-path: polygon(
-      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
-      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
-      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
-      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+      0 4px,
+      2px 4px,
+      2px 2px,
+      4px 2px,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px calc(100% - 4px),
+      0 calc(100% - 4px)
     );
     z-index: 0;
   }
 
   /* Fill layer — pixel shape */
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     inset: 2px;
     background: var(--px-switch-off-color);
     clip-path: polygon(
-      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
-      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
-      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
-      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+      0 4px,
+      2px 4px,
+      2px 2px,
+      4px 2px,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px calc(100% - 4px),
+      0 calc(100% - 4px)
     );
     z-index: 0;
   }
@@ -169,29 +205,45 @@
 
     /* Handle border layer */
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       inset: 0;
       background: var(--px-border-color);
       clip-path: polygon(
-        0 2px, 2px 2px, 2px 0,
-        calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
-        100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
-        2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+        0 2px,
+        2px 2px,
+        2px 0,
+        calc(100% - 2px) 0,
+        calc(100% - 2px) 2px,
+        100% 2px,
+        100% calc(100% - 2px),
+        calc(100% - 2px) calc(100% - 2px),
+        calc(100% - 2px) 100%,
+        2px 100%,
+        2px calc(100% - 2px),
+        0 calc(100% - 2px)
       );
     }
 
     /* Handle fill layer */
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       inset: 2px;
       background: var(--px-switch-handle-color);
       clip-path: polygon(
-        0 2px, 2px 2px, 2px 0,
-        calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
-        100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
-        2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+        0 2px,
+        2px 2px,
+        2px 0,
+        calc(100% - 2px) 0,
+        calc(100% - 2px) 2px,
+        100% 2px,
+        100% calc(100% - 2px),
+        calc(100% - 2px) calc(100% - 2px),
+        calc(100% - 2px) 100%,
+        2px 100%,
+        2px calc(100% - 2px),
+        0 calc(100% - 2px)
       );
     }
   }

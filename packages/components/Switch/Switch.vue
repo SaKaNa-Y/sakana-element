@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { SwitchProps, SwitchEmits, SwitchInstance } from './types';
-import { ref, computed, onMounted, watch } from 'vue';
 import { useId } from '@sakana-element/hooks';
+import { computed, onMounted, ref, watch } from 'vue';
+import type { SwitchEmits, SwitchInstance, SwitchProps } from './types';
 
 //inheritAttrs: false 表示组件的属性不会自动传入到子组件中,但是使用v-bind="$attrs"可以获取到
 defineOptions({ name: 'PxSwitch', inheritAttrs: false });
@@ -18,7 +18,7 @@ const inputRef = ref<HTMLInputElement>();
 const inputId = useId().value;
 const checked = computed(() => innerValue.value === props.activeValue);
 
-const focus: SwitchInstance['focus'] = function () {
+const focus: SwitchInstance['focus'] = () => {
   inputRef.value?.focus();
 };
 function handleChange() {

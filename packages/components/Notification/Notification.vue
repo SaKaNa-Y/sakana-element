@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import type { NotificationProps, NotificationCompInstance } from './types';
-import { computed, onMounted, ref } from 'vue';
-import { getLastBottomOffset } from './methods';
-import { delay, bind } from 'lodash-es';
 import { useOffset } from '@sakana-element/hooks';
-import { addUnit } from '@sakana-element/utils';
-import { typeIconMap, RenderVnode } from '@sakana-element/utils';
+import { addUnit, RenderVnode, typeIconMap } from '@sakana-element/utils';
+import { bind, delay } from 'lodash-es';
+import { computed, onMounted, ref } from 'vue';
 import PxIcon from '../Icon/Icon.vue';
+import { getLastBottomOffset } from './methods';
+import type { NotificationCompInstance, NotificationProps } from './types';
 
 defineOptions({ name: 'PxNotification' });
 
@@ -35,13 +34,13 @@ const iconName = computed(() => typeIconMap.get(props.type) ?? 'circle-info');
 //如果position以right结尾，则水平方向为right，否则为left
 const horizontalClass = computed(() =>
   //endsWith 判断字符串是否以指定字符串结尾
-  props.position.endsWith('right') ? 'right' : 'left'
+  props.position.endsWith('right') ? 'right' : 'left',
 );
 
 //如果position以top开头，则垂直方向为top，否则为bottom
 const verticalProperty = computed(() =>
   //startsWith 判断字符串是否以指定字符串开头
-  props.position.startsWith('top') ? 'top' : 'bottom'
+  props.position.startsWith('top') ? 'top' : 'bottom',
 );
 
 const customStyle = computed(() => ({

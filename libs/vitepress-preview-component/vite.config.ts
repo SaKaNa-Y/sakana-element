@@ -1,22 +1,22 @@
-import { defineConfig } from "vite";
-import { resolve } from "path";
-import vue from "@vitejs/plugin-vue";
-import dts from "vite-plugin-dts";
+import { resolve } from 'node:path';
+import vue from '@vitejs/plugin-vue';
+import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   build: {
-    outDir: "_product",
+    outDir: '_product',
     lib: {
-      entry: resolve(__dirname, "./index.ts"),
-      name: "previewComponent",
-      fileName: "preview-component",
-      formats: ["es"],
+      entry: resolve(__dirname, './index.ts'),
+      name: 'previewComponent',
+      fileName: 'preview-component',
+      formats: ['es'],
     },
     rollupOptions: {
-      external: ["vue"],
+      external: ['vue'],
       output: {
         globals: {
-          vue: "Vue",
+          vue: 'Vue',
         },
       },
     },

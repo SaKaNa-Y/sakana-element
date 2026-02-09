@@ -1,85 +1,85 @@
-import { describe, it, expect } from 'vitest'
+import { each } from 'lodash-es';
+import { describe, expect, it } from 'vitest';
 import {
-  debugWarn,
-  throwError,
-  withInstall,
-  withInstallFunction,
-  typeIconMap,
   addUnit,
-  rAF,
+  clearPixelIconRegistry,
+  debugWarn,
+  getIconNameMap,
+  getPixelIcon,
+  getRegisteredIconNames,
+  hasPixelIcon,
   RenderVnode,
+  rAF,
   registerPixelIcon,
   registerPixelIcons,
-  getPixelIcon,
-  hasPixelIcon,
-  getRegisteredIconNames,
-  clearPixelIconRegistry,
   resolveIconName,
-  getIconNameMap,
-} from '..'
-import { each } from 'lodash-es'
+  throwError,
+  typeIconMap,
+  withInstall,
+  withInstallFunction,
+} from '..';
 
 describe('utils/index', () => {
   //it应该做某事，test做某事应该是什么结果
   //被定义时触发提示
   it('debugWarn should be exported', () => {
-    expect(debugWarn).toBeDefined()
-  })
+    expect(debugWarn).toBeDefined();
+  });
   it('throwError should be exported', () => {
-    expect(throwError).toBeDefined()
-  })
+    expect(throwError).toBeDefined();
+  });
   it('withInstall should be exported', () => {
-    expect(withInstall).toBeDefined()
-  })
+    expect(withInstall).toBeDefined();
+  });
   it('typeIconMap should be worked', () => {
-    expect(typeIconMap).toBeDefined()
+    expect(typeIconMap).toBeDefined();
     each(
       [
         ['info', 'info-box'],
         ['success', 'check'],
         ['warning', 'warning-box'],
         ['danger', 'close-box'],
-        ['error', 'close-box']
+        ['error', 'close-box'],
       ],
       ([type, icon]) => {
-        expect(typeIconMap.get(type)).toBe(icon)
-      }
-    )
-  })
+        expect(typeIconMap.get(type)).toBe(icon);
+      },
+    );
+  });
   it('withInstallFunction should be exported', () => {
-    expect(withInstallFunction).toBeDefined()
-  })
+    expect(withInstallFunction).toBeDefined();
+  });
   it('addUnit should be exported', () => {
-    expect(addUnit).toBeDefined()
-  })
+    expect(addUnit).toBeDefined();
+  });
   it('rAF should be exported', () => {
-    expect(rAF).toBeDefined()
-  })
+    expect(rAF).toBeDefined();
+  });
   it('RenderVnode should be exported', () => {
-    expect(RenderVnode).toBeDefined()
-  })
+    expect(RenderVnode).toBeDefined();
+  });
   it('registerPixelIcon should be exported', () => {
-    expect(registerPixelIcon).toBeDefined()
-  })
+    expect(registerPixelIcon).toBeDefined();
+  });
   it('registerPixelIcons should be exported', () => {
-    expect(registerPixelIcons).toBeDefined()
-  })
+    expect(registerPixelIcons).toBeDefined();
+  });
   it('getPixelIcon should be exported', () => {
-    expect(getPixelIcon).toBeDefined()
-  })
+    expect(getPixelIcon).toBeDefined();
+  });
   it('hasPixelIcon should be exported', () => {
-    expect(hasPixelIcon).toBeDefined()
-  })
+    expect(hasPixelIcon).toBeDefined();
+  });
   it('getRegisteredIconNames should be exported', () => {
-    expect(getRegisteredIconNames).toBeDefined()
-  })
+    expect(getRegisteredIconNames).toBeDefined();
+  });
   it('clearPixelIconRegistry should be exported', () => {
-    expect(clearPixelIconRegistry).toBeDefined()
-  })
+    expect(clearPixelIconRegistry).toBeDefined();
+  });
   it('resolveIconName should be exported', () => {
-    expect(resolveIconName).toBeDefined()
-  })
+    expect(resolveIconName).toBeDefined();
+  });
   it('getIconNameMap should be exported', () => {
-    expect(getIconNameMap).toBeDefined()
-  })
-})
+    expect(getIconNameMap).toBeDefined();
+  });
+});

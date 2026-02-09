@@ -1,6 +1,6 @@
+import type { App } from 'vue';
 import { vLoading } from './directive';
 import { Loading } from './service';
-import type { App } from 'vue';
 
 export const PxLoading = {
   name: 'PxLoading',
@@ -17,10 +17,6 @@ export const PxLoading = {
 
 export default PxLoading;
 
-export {
-  vLoading,
-  vLoading as PxLoadingDirective,
-  Loading as PxLoadingService,
-};
+export { vLoading, vLoading as PxLoadingDirective, Loading as PxLoadingService };
 
 export * from './types';

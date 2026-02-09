@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { CollapseItemProps } from './types';
-import { inject, computed } from 'vue';
-import { COLLAPSE_CTX_KEY } from './constants';
+import { computed, inject } from 'vue';
 import PxIcon from '../Icon/Icon.vue';
+import { COLLAPSE_CTX_KEY } from './constants';
 import transitionEvents from './transitionEvents';
+import type { CollapseItemProps } from './types';
 
 defineOptions({
   name: 'PxCollapseItem',

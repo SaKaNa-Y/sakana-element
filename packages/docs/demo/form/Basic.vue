@@ -17,13 +17,13 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
 import { PxMessage } from 'sakana-element';
+import { reactive } from 'vue';
 
 const form = reactive({
   name: '',
   email: '',
-  active: false
+  active: false,
 });
 
 const onSubmit = () => {

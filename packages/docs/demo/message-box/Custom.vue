@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { PxMessageBox, PxMessage } from 'sakana-element';
+import { PxMessage, PxMessageBox } from 'sakana-element';
 
 const showCustom = async () => {
   try {
@@ -13,7 +13,7 @@ const showCustom = async () => {
       type: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it',
-      cancelButtonText: 'No, cancel'
+      cancelButtonText: 'No, cancel',
     });
     PxMessage.success('Deleted!');
   } catch {

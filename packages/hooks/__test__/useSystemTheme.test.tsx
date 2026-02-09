@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { defineComponent, nextTick } from 'vue';
 import { mount } from '@vue/test-utils';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { defineComponent, nextTick } from 'vue';
 
 type ChangeHandler = (e: { matches: boolean }) => void;
 
@@ -31,7 +31,10 @@ describe('hooks/useSystemTheme', () => {
   beforeEach(async () => {
     vi.resetModules();
     mockMql = createMockMediaQuery(false);
-    vi.stubGlobal('matchMedia', vi.fn(() => mockMql));
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => mockMql),
+    );
     const mod = await import('../useSystemTheme');
     useSystemTheme = mod.useSystemTheme;
   });
@@ -48,14 +51,17 @@ describe('hooks/useSystemTheme', () => {
           result = useSystemTheme();
           return () => <div />;
         },
-      })
+      }),
     );
     expect(result!.prefersDark.value).toBe(false);
   });
 
   it('prefersDark should be true when system prefers dark', async () => {
     mockMql = createMockMediaQuery(true);
-    vi.stubGlobal('matchMedia', vi.fn(() => mockMql));
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => mockMql),
+    );
 
     let result: ReturnType<typeof useSystemTheme>;
     mount(
@@ -64,7 +70,7 @@ describe('hooks/useSystemTheme', () => {
           result = useSystemTheme();
           return () => <div />;
         },
-      })
+      }),
     );
     expect(result!.prefersDark.value).toBe(true);
   });
@@ -77,7 +83,7 @@ describe('hooks/useSystemTheme', () => {
           result = useSystemTheme();
           return () => <div />;
         },
-      })
+      }),
     );
     expect(result!.prefersDark.value).toBe(false);
     mockMql._trigger(true);
@@ -92,7 +98,7 @@ describe('hooks/useSystemTheme', () => {
           useSystemTheme();
           return () => <div />;
         },
-      })
+      }),
     );
     expect(mockMql.addEventListener).toHaveBeenCalledOnce();
     wrapper.unmount();
@@ -107,7 +113,7 @@ describe('hooks/useSystemTheme', () => {
           result = useSystemTheme();
           return () => <div />;
         },
-      })
+      }),
     );
     // Note: current implementation always returns 'light' - this documents the behavior
     expect(result!.prefers.value).toBe('light');

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { computed, ref, inject } from 'vue';
-import type { ButtonProps, ButtonEmits, ButtonInstance } from './types';
 import { throttle } from 'lodash-es';
+import { computed, inject, ref } from 'vue';
 import PxIcon from '../Icon/Icon.vue';
 import { BUTTON_GROUP_CTX_KEY } from './contants';
+import type { ButtonEmits, ButtonInstance, ButtonProps } from './types';
 
 defineOptions({
   name: 'PxButton',
@@ -106,11 +106,9 @@ const customColorStyle = computed(() => {
 });
 
 const handleBtnClick = (e: MouseEvent) => emits('click', e);
-const handleBtnClickThrottle = throttle(
-  handleBtnClick,
-  props.throttleDuration,
-  { trailing: false }
-);
+const handleBtnClickThrottle = throttle(handleBtnClick, props.throttleDuration, {
+  trailing: false,
+});
 
 defineExpose<ButtonInstance>({
   ref: _ref,

@@ -1,6 +1,6 @@
-import { describe, test, expect, afterEach } from 'vitest';
-import { message, closeAll } from './methods';
 import { rAF } from '@sakana-element/utils';
+import { afterEach, describe, expect, test } from 'vitest';
+import { closeAll, message } from './methods';
 
 function getTopValue(element: Element) {
   const styles = window.getComputedStyle(element);

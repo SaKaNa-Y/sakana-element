@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import { createApp } from 'vue';
-import type { MessageBoxType } from './types';
-import MessageBox from './methods';
-import { PxMessageBox } from './index';
 import { rAF } from '@sakana-element/utils';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { createApp } from 'vue';
+import { PxMessageBox } from './index';
+import MessageBox from './methods';
+import type { MessageBoxType } from './types';
 
 describe('MessageBox Component', () => {
   afterEach(async () => {
@@ -49,9 +49,7 @@ describe('MessageBox Component', () => {
     MessageBox(props).catch((action) => doAction(action));
     await rAF();
 
-    const closeBtn = document.querySelector(
-      '.px-message-box__header-btn'
-    ) as HTMLButtonElement;
+    const closeBtn = document.querySelector('.px-message-box__header-btn') as HTMLButtonElement;
     closeBtn.click();
 
     await rAF();
@@ -71,9 +69,7 @@ describe('MessageBox Component', () => {
     MessageBox(props).then((action) => doAction(action));
     await rAF();
 
-    const confirmBtn = document.querySelector(
-      '.px-message-box__footer-btn'
-    ) as HTMLButtonElement;
+    const confirmBtn = document.querySelector('.px-message-box__footer-btn') as HTMLButtonElement;
     confirmBtn.click();
     await rAF();
 
@@ -92,9 +88,7 @@ describe('MessageBox Component', () => {
     MessageBox(props).catch((action) => doAction(action));
     await rAF();
 
-    const cancelBtn = document.querySelector(
-      '.px-message-box__cancel-btn'
-    ) as HTMLButtonElement;
+    const cancelBtn = document.querySelector('.px-message-box__cancel-btn') as HTMLButtonElement;
     cancelBtn.click();
 
     await rAF();
@@ -118,9 +112,7 @@ describe('MessageBox Component', () => {
     input.value = 'Test Input';
     input.dispatchEvent(new Event('input'));
 
-    const confirmBtn = document.querySelector(
-      '.px-message-box__confirm-btn'
-    ) as HTMLButtonElement;
+    const confirmBtn = document.querySelector('.px-message-box__confirm-btn') as HTMLButtonElement;
     confirmBtn.click();
 
     await rAF();
@@ -149,9 +141,7 @@ describe('MessageBox Component', () => {
     });
     await rAF();
 
-    const confirmBtn = document.querySelector(
-      '.px-message-box__footer-btn'
-    ) as HTMLButtonElement;
+    const confirmBtn = document.querySelector('.px-message-box__footer-btn') as HTMLButtonElement;
     confirmBtn.click();
     await rAF();
 
@@ -167,9 +157,7 @@ describe('MessageBox Component', () => {
     }).catch((action) => doAction(action));
     await rAF();
 
-    const overlay = document.querySelector(
-      '.px-overlay-message-box'
-    ) as HTMLElement;
+    const overlay = document.querySelector('.px-overlay-message-box') as HTMLElement;
     overlay.click();
     await rAF();
     expect(doAction).toHaveBeenCalledWith('close');
@@ -214,19 +202,15 @@ describe('MessageBox Component', () => {
     input.dispatchEvent(new Event('input'));
 
     // Simulate Enter key
-    input.dispatchEvent(
-      new KeyboardEvent('keyup', { key: 'Enter', bubbles: true })
-    );
+    input.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter', bubbles: true }));
     await rAF();
     expect(doAction).toHaveBeenCalled();
   });
 
   it('should support beforeClose callback', async () => {
-    const beforeClose = vi.fn(
-      (_action: string, _state: any, done: () => void) => {
-        done();
-      }
-    );
+    const beforeClose = vi.fn((_action: string, _state: any, done: () => void) => {
+      done();
+    });
     MessageBox({
       title: 'Test',
       message: 'msg',
@@ -235,9 +219,7 @@ describe('MessageBox Component', () => {
     });
     await rAF();
 
-    const confirmBtn = document.querySelector(
-      '.px-message-box__footer-btn'
-    ) as HTMLButtonElement;
+    const confirmBtn = document.querySelector('.px-message-box__footer-btn') as HTMLButtonElement;
     confirmBtn.click();
     await rAF();
 

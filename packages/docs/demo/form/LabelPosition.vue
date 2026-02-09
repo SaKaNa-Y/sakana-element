@@ -27,11 +27,10 @@ const labelPosition = ref<'left' | 'right' | 'top'>('right');
 
 const form = reactive({
   name: '',
-  email: ''
+  email: '',
 });
 
-function onSubmit() {
-}
+function onSubmit() {}
 
 function onCancel() {
   form.name = '';

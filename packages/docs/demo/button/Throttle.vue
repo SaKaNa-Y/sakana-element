@@ -1,6 +1,5 @@
 <script setup>
-function handleBtnClick() {
-}
+function handleBtnClick() {}
 </script>
 
 <template>
