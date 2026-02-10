@@ -62,7 +62,7 @@ jobs:
     needs: build
     steps:
       - name: Download docs
-        uses: actions/download-artifact@v4 # v4.1.8
+        uses: actions/download-artifact@v7 # v4.1.8
         with:
           name: docs
 
