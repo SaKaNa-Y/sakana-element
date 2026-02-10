@@ -1,11 +1,25 @@
 import type { TranslatePair } from '@sakana-element/locale';
 import English from '@sakana-element/locale/lang/en';
 import { debugWarn } from '@sakana-element/utils';
-import { merge } from 'lodash-es';
+import { mergeWith } from 'lodash-es';
 import type { App, MaybeRef, Ref } from 'vue';
 import { computed, getCurrentInstance, inject, provide, ref, unref, watch } from 'vue';
 import { createI18n, i18nSymbol } from 'vue3-i18n';
 import { type ConfigProviderContext, configProviderContextKey } from './constants';
+
+const DANGEROUS_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+
+/**
+ * Safe deep merge that rejects prototype-pollution keys.
+ * Uses lodash mergeWith with a customizer that preserves the original target value
+ * when a dangerous key (__proto__, constructor, prototype) is encountered,
+ * effectively ignoring the malicious source value.
+ */
+function safeMerge<T extends object>(target: T, ...sources: object[]): T {
+  return mergeWith(target, ...sources, (objValue: unknown, _srcValue: unknown, key: string) => {
+    if (DANGEROUS_KEYS.has(key)) return objValue;
+  });
+}
 
 const globalConfig = ref<ConfigProviderContext>(); // 全局配置
 
@@ -27,7 +41,7 @@ export function useGlobalConfig(
 }
 
 const _createI18n = (opts?: ConfigProviderContext) => {
-  const mergeMsg = (msg: TranslatePair) => merge(msg, opts?.extendsI18nMsg ?? {});
+  const mergeMsg = (msg: TranslatePair) => safeMerge(msg, opts?.extendsI18nMsg ?? {});
 
   //如果opts?.locale不存在，则返回一个createI18n实例，locale为en，messages为mergeMsg({en: English.el})
   if (!opts?.locale) {
@@ -69,7 +83,7 @@ export function provideGlobalConfig(
     (val) => {
       const cfg = unref(val);
       if (!oldCfg?.value) return cfg;
-      context.value = merge(oldCfg.value, cfg);
+      context.value = safeMerge(oldCfg.value, cfg);
     },
     { deep: true },
   );

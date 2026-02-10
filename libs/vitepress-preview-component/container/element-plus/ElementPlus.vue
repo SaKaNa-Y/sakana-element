@@ -3,6 +3,7 @@ import { computed, onMounted, ref, watch } from 'vue';
 import { useCodeCopy } from '../../hooks/use-codecopy';
 import { useCodeFold } from '../../hooks/use-codefold';
 import { useNameSpace } from '../../hooks/use-namespaces';
+import { sanitizeHtml } from '../../hooks/use-sanitize';
 import CodeClose from '../../icons/code-close.vue';
 import CodeCopy from '../../icons/code-copy.vue';
 import CodeOpen from '../../icons/code-open.vue';
@@ -25,7 +26,7 @@ const { isCodeFold, setCodeFold } = useCodeFold();
 const { clickCopy } = useCodeCopy();
 
 const sourceCode = ref(decodeURIComponent(props.code));
-const showSourceCode = ref(decodeURIComponent(props.showCode));
+const showSourceCode = ref(sanitizeHtml(decodeURIComponent(props.showCode)));
 const sourceCodeArea = ref<any>(null);
 
 const clickCodeCopy = () => {

@@ -13,8 +13,8 @@ dist
 dist-ssr
 *.local
 
-/cyperss/videos/
-/cypress/srceenshots/
+/cypress/videos/
+/cypress/screenshots/
 
 .vitepress/dist
 .vitepress/cache
@@ -29,3 +29,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Build artifacts
+packages/play/storybook-static

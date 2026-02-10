@@ -1,9 +1,12 @@
 <script lang="ts" setup>
+import { debugWarn } from '@sakana-element/utils';
 import { throttle } from 'lodash-es';
 import { computed, inject, ref } from 'vue';
 import PxIcon from '../Icon/Icon.vue';
 import { BUTTON_GROUP_CTX_KEY } from './contants';
 import type { ButtonEmits, ButtonInstance, ButtonProps } from './types';
+
+const ALLOWED_BUTTON_TAGS = new Set(['button', 'a', 'div', 'span', 'router-link']);
 
 defineOptions({
   name: 'PxButton',
@@ -15,11 +18,22 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   throttleDuration: 500,
 });
 
+if (typeof props.tag === 'string' && !ALLOWED_BUTTON_TAGS.has(props.tag)) {
+  debugWarn(
+    'PxButton',
+    `Invalid tag "${props.tag}". Allowed tags: ${[...ALLOWED_BUTTON_TAGS].join(', ')}. Falling back to "button".`,
+  );
+}
+
 const emits = defineEmits<ButtonEmits>();
 
 const slots = defineSlots();
 const ctx = inject(BUTTON_GROUP_CTX_KEY, void 0); //第一个参数是注入的key，第二个参数是默认值
 const _ref = ref<HTMLButtonElement>();
+const safeTag = computed(() => {
+  if (typeof props.tag !== 'string') return props.tag; // Component object — pass through
+  return ALLOWED_BUTTON_TAGS.has(props.tag) ? props.tag : 'button';
+});
 const size = computed(() => ctx?.size ?? props?.size ?? '');
 const type = computed(() => ctx?.type ?? props?.type ?? '');
 const disabled = computed(() => ctx?.disabled || props?.disabled || false);
@@ -119,10 +133,10 @@ defineExpose<ButtonInstance>({
 </script>
 <template>
   <component
-    :is="tag"
+    :is="safeTag"
     ref="_ref"
     :autofocus="autofocus"
-    :type="tag === 'button' ? nativeType : void 0"
+    :type="safeTag === 'button' ? nativeType : void 0"
     class="px-button"
     :disabled="disabled || loading ? true : void 0"
     :class="{

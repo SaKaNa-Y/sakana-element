@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getPixelIcon, resolveIconName } from '@sakana-element/utils';
+import { getPixelIcon, resolveIconName, sanitizeSvg } from '@sakana-element/utils';
 import { computed } from 'vue';
 import type { IconProps } from './types';
 import { iconSizeMap } from './types';
@@ -13,9 +13,12 @@ const props = withDefaults(defineProps<IconProps>(), {
   size: 'md',
 });
 
-// Resolve icon name (handles aliases) and get SVG
+// Resolve icon name (handles aliases) and get SVG (sanitized for XSS safety)
 const resolvedIconName = computed(() => resolveIconName(props.icon));
-const pixelSvg = computed(() => getPixelIcon(resolvedIconName.value));
+const pixelSvg = computed(() => {
+  const raw = getPixelIcon(resolvedIconName.value);
+  return raw ? sanitizeSvg(raw) : undefined;
+});
 
 // Build CSS classes
 const iconClasses = computed(() => {

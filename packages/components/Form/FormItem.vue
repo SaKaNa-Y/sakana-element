@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { useId } from '@sakana-element/hooks';
-
+import { debugWarn } from '@sakana-element/utils';
 import Schema, { type RuleItem } from 'async-validator';
+
+const DANGEROUS_PATH_SEGMENTS = new Set(['__proto__', 'constructor', 'prototype']);
+
 import {
   cloneDeep,
   endsWith,
@@ -54,8 +57,20 @@ const validateStatus: Ref<ValidateStatus> = ref('init');
 const errMsg = ref('');
 const inputIds = ref<string[]>([]);
 
+const hasDangerousPath = (prop: string | string[]): boolean => {
+  const segments = isArray(prop) ? prop : prop.split('.');
+  return segments.some((s) => DANGEROUS_PATH_SEGMENTS.has(s));
+};
+
 const getValByProp = (target: Record<string, any> | undefined) => {
   if (target && props.prop && !isNil(get(target, props.prop))) {
+    if (hasDangerousPath(props.prop)) {
+      debugWarn(
+        'PxFormItem',
+        `Prop path "${props.prop}" contains a dangerous segment and was rejected.`,
+      );
+      return null;
+    }
     return get(target, props.prop);
   }
   return null;

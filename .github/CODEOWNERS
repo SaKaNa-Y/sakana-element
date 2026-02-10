@@ -1,0 +1,11 @@
+# Default code owners for all files
+* @yu859
+
+# CI/CD and workflow changes require explicit review
+.github/ @yu859
+
+# Published packages require review
+packages/core/ @yu859
+packages/components/ @yu859
+packages/hooks/ @yu859
+packages/utils/ @yu859

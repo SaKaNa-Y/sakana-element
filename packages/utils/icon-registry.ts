@@ -3,25 +3,30 @@
  * A singleton Map registry for pixel-art SVG icons
  */
 
+import { sanitizeSvg } from './sanitize-svg';
+
 // The registry stores SVG strings keyed by icon name
 const pixelIconRegistry = new Map<string, string>();
 
 /**
- * Register a pixel icon SVG
+ * Register a pixel icon SVG.
+ * The SVG content is sanitized to remove dangerous tags/attributes (e.g. <script>, on* handlers)
+ * before being stored in the registry.
  * @param name - The icon name (e.g., 'loader', 'close', 'check')
  * @param svg - The SVG string content
  */
 export function registerPixelIcon(name: string, svg: string): void {
-  pixelIconRegistry.set(name, svg);
+  pixelIconRegistry.set(name, sanitizeSvg(svg));
 }
 
 /**
- * Register multiple pixel icons at once
+ * Register multiple pixel icons at once.
+ * All SVG content is sanitized before being stored.
  * @param icons - An object mapping icon names to SVG strings
  */
 export function registerPixelIcons(icons: Record<string, string>): void {
   for (const [name, svg] of Object.entries(icons)) {
-    pixelIconRegistry.set(name, svg);
+    pixelIconRegistry.set(name, sanitizeSvg(svg));
   }
 }
 
