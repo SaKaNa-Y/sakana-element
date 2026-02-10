@@ -51,7 +51,7 @@ jobs:
         run: npm run docs:build
 
       - name: Upload docs
-        uses: actions/upload-artifact@v4 # v4.6.2
+        uses: actions/upload-artifact@v6 # v4.6.2
         with:
           name: docs
           path: ./packages/docs/.vitepress/dist
