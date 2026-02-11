@@ -76,8 +76,8 @@ importers:
         specifier: ^2.4.6
         version: 2.4.6
       '@vue/tsconfig':
-        specifier: ^0.5.1
-        version: 0.5.1
+        specifier: ^0.8.1
+        version: 0.8.1(typescript@5.8.2)(vue@3.5.13(typescript@5.8.2))
       async-validator:
         specifier: ^4.2.5
         version: 4.2.5
@@ -252,8 +252,8 @@ importers:
         specifier: ^6.0.4
         version: 6.0.4(vite@6.4.1(@types/node@20.17.28)(sass@1.86.3)(terser@5.39.0)(yaml@2.8.2))(vue@3.5.28(typescript@5.8.2))
       '@vue/tsconfig':
-        specifier: ^0.7.0
-        version: 0.7.0(typescript@5.8.2)(vue@3.5.28(typescript@5.8.2))
+        specifier: ^0.8.1
+        version: 0.8.1(typescript@5.8.2)(vue@3.5.28(typescript@5.8.2))
       storybook:
         specifier: 8.5.4
         version: 8.5.4
@@ -2253,11 +2253,8 @@ packages:
   '@vue/test-utils@2.4.6':
     resolution: {integrity: sha512-FMxEjOpYNYiFe0GkaHsnJPXFHxQ6m4t8vI/ElPGpMWxZKpmRvQ33OIrvRXemy6yha03RxhOlQuy+gZMC3CQSow==}
 
-  '@vue/tsconfig@0.5.1':
-    resolution: {integrity: sha512-VcZK7MvpjuTPx2w6blwnwZAu5/LgBUtejFOi3pPGQFXQN5Ela03FUtd2Qtg4yWGGissVL0dr6Ro1LfOFh+PCuQ==}
-
-  '@vue/tsconfig@0.7.0':
-    resolution: {integrity: sha512-ku2uNz5MaZ9IerPPUyOHzyjhXoX2kVJaVf7hL315DC17vS6IiZRmmCPfggNbU16QTvM80+uYYy3eYJB59WCtvg==}
+  '@vue/tsconfig@0.8.1':
+    resolution: {integrity: sha512-aK7feIWPXFSUhsCP9PFqPyFOcz4ENkb8hZ2pneL6m2UjCkccvaOhC/5KCKluuBufvp2KzkbdA2W2pk20vLzu3g==}
     peerDependencies:
       typescript: 5.x
       vue: ^3.4.0
@@ -8294,9 +8291,12 @@ snapshots:
       js-beautify: 1.15.4
       vue-component-type-helpers: 2.2.8
 
-  '@vue/tsconfig@0.5.1': {}
+  '@vue/tsconfig@0.8.1(typescript@5.8.2)(vue@3.5.13(typescript@5.8.2))':
+    optionalDependencies:
+      typescript: 5.8.2
+      vue: 3.5.13(typescript@5.8.2)
 
-  '@vue/tsconfig@0.7.0(typescript@5.8.2)(vue@3.5.28(typescript@5.8.2))':
+  '@vue/tsconfig@0.8.1(typescript@5.8.2)(vue@3.5.28(typescript@5.8.2))':
     optionalDependencies:
       typescript: 5.8.2
       vue: 3.5.28(typescript@5.8.2)
