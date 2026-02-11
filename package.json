@@ -38,6 +38,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "packageManager": "pnpm@10.24.0",
   "devDependencies": {
     "@biomejs/biome": "2.3.14",
     "@lerna-lite/cli": "^3.12.3",
