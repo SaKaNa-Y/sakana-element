@@ -278,7 +278,6 @@ async function callRemoteMethod(method: Function, search: string) {
     debugWarn(error as Error);
     debugWarn(COMPONENT_NAME, 'callRemoteMethod error');
     result = [];
-    return Promise.reject(error);
   }
 
   return result;
