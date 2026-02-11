@@ -113,9 +113,9 @@ const getSidebar = (lang: 'zh' | 'en') => [
 export default defineConfig({
   title: 'Sakana Element',
   description: 'A Pixel-style Vue 3 Component Library',
-  base: '/sakana-element/',
+  base: '/',
   appearance: true, // Enable dark mode
-  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/sakana-element/logo.svg' }]],
+  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
   locales: {
     zh: {
       label: '简体中文',
