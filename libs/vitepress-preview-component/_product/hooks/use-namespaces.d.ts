@@ -7,9 +7,10 @@
  * ns.bem(element,modifier) => block__element--modifier
  */
 interface UseNameSpaceReturn {
-  b: () => string;
-  e: (element: string) => string;
-  m: (modifier: string) => string;
-  bem: (_block?: string, element?: string, modifier?: string) => string;
+    b: () => string;
+    e: (element: string) => string;
+    m: (modifier: string) => string;
+    bem: (_block?: string, element?: string, modifier?: string) => string;
 }
 export declare const useNameSpace: (block?: string) => UseNameSpaceReturn;
+export {};
