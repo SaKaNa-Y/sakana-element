@@ -90,5 +90,11 @@
     "lodash-es": "^4.17.21",
     "sakana-element": "workspace:*",
     "vue": "^3.4.19"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "@parcel/watcher"
+    ]
   }
 }
