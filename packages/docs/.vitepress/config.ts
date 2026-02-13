@@ -114,7 +114,6 @@ export default defineConfig({
   title: 'Sakana Element',
   description: 'A Pixel-style Vue 3 Component Library',
   base: '/',
-  outDir: '../../dist',
   appearance: true, // Enable dark mode
   head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
   locales: {
