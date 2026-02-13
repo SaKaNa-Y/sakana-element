@@ -11,6 +11,8 @@ export interface TooltipProps {
   transition?: string;
   showTimeout?: number;
   hideTimeout?: number;
+  virtualRef?: HTMLElement | undefined;
+  virtualTriggering?: boolean;
 }
 
 export interface TooltipEmits {

@@ -7,15 +7,10 @@ import type { TooltipEmits, TooltipInstance, TooltipProps } from './types';
 
 import useEventsToTiggerNode from './useEventsToTiggerNode';
 
-interface _TooltipProps extends TooltipProps {
-  virtualRef?: HTMLElement | undefined; //虚拟触发节点
-  virtualTriggering?: boolean; //是否虚拟触发
-}
-
 defineOptions({
   name: 'PxTooltip', //加前缀，避免和别的组件冲突，业界惯例
 });
-const props = withDefaults(defineProps<_TooltipProps>(), {
+const props = withDefaults(defineProps<TooltipProps>(), {
   //defineProps不仅可以用来接收父组件传递的数据，还可以用来定义和导入类型
   //withDefaults 设置默认值
   placement: 'bottom',

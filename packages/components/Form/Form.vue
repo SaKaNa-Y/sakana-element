@@ -1,16 +1,9 @@
 <script setup lang="ts">
-import type { ValidateError, ValidateFieldsError } from 'async-validator';
+import type { ValidateFieldsError } from 'async-validator';
 import { each, filter, includes, size } from 'lodash-es';
 import { provide, reactive, toRefs } from 'vue';
 import { FORM_CTX_KEY } from './constants';
-import type {
-  FormContext,
-  FormEmits,
-  FormInstance,
-  FormItemContext,
-  FormProps,
-  FormValidateCallback,
-} from './types';
+import type { FormContext, FormEmits, FormInstance, FormItemContext, FormProps } from './types';
 
 defineOptions({ name: 'PxForm' });
 const props = withDefaults(defineProps<FormProps>(), {

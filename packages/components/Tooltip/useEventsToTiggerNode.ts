@@ -4,7 +4,7 @@ import { onMounted, onUnmounted, watch } from 'vue';
 import type { TooltipProps } from './types';
 
 export function useEvenstToTiggerNode(
-  props: TooltipProps & { virtualTriggering?: boolean; virtualRef?: HTMLElement | undefined },
+  props: TooltipProps,
   triggerNode: ComputedRef<HTMLElement | undefined>,
   events: Ref<Record<string, EventListener>>,
   closeMethod: () => void,
@@ -16,7 +16,7 @@ export function useEvenstToTiggerNode(
 
   const _bindEventToVirtualTiggerNode = () => {
     const el = triggerNode.value;
-    if (!isElement(el)) return;
+    if (!el || !isElement(el)) return;
 
     each(events.value, (fn, event) => {
       _eventHandleMap.set(event, fn);
@@ -26,7 +26,7 @@ export function useEvenstToTiggerNode(
 
   const _unbindEventToVirtualTiggerNode = (el?: HTMLElement) => {
     const targetEl = el ?? triggerNode.value;
-    if (!isElement(targetEl)) return;
+    if (!targetEl || !isElement(targetEl)) return;
 
     each(
       ['mouseenter', 'click', 'contextmenu'],

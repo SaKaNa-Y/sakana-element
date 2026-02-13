@@ -2,7 +2,7 @@
 import { useClickOutside, useDisabledStyle } from '@sakana-element/hooks';
 import { isNil, omit } from 'lodash-es';
 import { computed, provide, ref } from 'vue';
-import { type ButtonInstance, PxButton, PxButtonGroup } from '../Button/index';
+import { PxButton, PxButtonGroup } from '../Button/index';
 import PxTooltip from '../Tooltip/Tooltip.vue';
 import type { TooltipInstance } from '../Tooltip/types';
 
