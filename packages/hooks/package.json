@@ -2,8 +2,8 @@
   "name": "@sakana-element/hooks",
   "version": "1.0.0",
   "type": "module",
-  "module": "./.dist/index.js",
-  "types": "./.dist/index.d.ts",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
@@ -20,6 +20,7 @@
   "license": "ISC",
   "peerDependencies": {
     "vue": "^3.4.19",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.17.21",
+    "vue3-i18n": "^1.1.5"
   }
 }
