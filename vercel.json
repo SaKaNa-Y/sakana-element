@@ -1,6 +1,6 @@
 {
-  "buildCommand": "pnpm -w run build-hooks && pnpm -w run docs:build",
-  "outputDirectory": "packages/docs/.vitepress/dist",
+  "buildCommand": "pnpm -w run build-hooks && pnpm -w run docs:build && cp -r packages/docs/.vitepress/dist ./dist",
+  "outputDirectory": "dist",
   "installCommand": "pnpm install",
   "framework": null
 }
