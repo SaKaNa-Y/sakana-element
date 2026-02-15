@@ -219,6 +219,9 @@ importers:
       vue:
         specifier: ^3.4.19
         version: 3.5.13(typescript@5.8.2)
+      vue3-i18n:
+        specifier: ^1.1.5
+        version: 1.1.5(vue@3.5.13(typescript@5.8.2))
 
   packages/locale: {}
 
