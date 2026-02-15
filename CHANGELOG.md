@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.0.1 (2026-02-15)</small>
+
+* fix: clean up post-publish artifacts ([4b6d4d4](https://github.com/yu859/sakana-element/commit/4b6d4d4))
+* fix: fix package exports and rewrite docs ([9816e60](https://github.com/yu859/sakana-element/commit/9816e60))
+* fix: update lockfile for vue3-i18n peer dependency ([5509a1a](https://github.com/yu859/sakana-element/commit/5509a1a))
+
 ## 2.0.0 (2026-02-15)
 
 * fix: Fix deployment ([fad0219](https://github.com/yu859/sakana-element/commit/fad0219))

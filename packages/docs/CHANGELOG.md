@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.0.1 (2026-02-15)</small>
+
+* fix: fix package exports and rewrite docs ([9816e60](https://github.com/yu859/sakana-element/commit/9816e60))
+
 ## 2.0.0 (2026-02-15)
 
 * fix: Fix deployment ([fad0219](https://github.com/yu859/sakana-element/commit/fad0219))
