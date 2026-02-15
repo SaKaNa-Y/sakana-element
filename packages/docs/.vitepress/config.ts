@@ -1,3 +1,4 @@
+import { resolve } from 'node:path';
 import { componentPreview, containerPreview } from '@vitepress-demo-preview/plugin';
 import { defineConfig } from 'vitepress';
 
@@ -116,6 +117,14 @@ export default defineConfig({
   base: '/',
   appearance: true, // Enable dark mode
   head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
+  vite: {
+    resolve: {
+      alias: {
+        // Resolve to source so VitePress collects scoped component CSS from .vue files
+        'sakana-element': resolve(__dirname, '../../core/index.ts'),
+      },
+    },
+  },
   locales: {
     zh: {
       label: '简体中文',
