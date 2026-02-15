@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Sakana-Element is a Vue 3 + TypeScript component library that aims to be highly compatible with Element Plus. It's a monorepo managed by pnpm workspaces and Lerna, providing a comprehensive UI component library with extensive documentation.
+Sakana-Element is a Vue 3 + TypeScript component library with a pixel art design aesthetic. It's a monorepo managed by pnpm workspaces and Lerna, providing a comprehensive UI component library with extensive bilingual documentation.
 
 ## Monorepo Structure
 
@@ -12,12 +12,12 @@ The repository uses pnpm workspaces with the following key packages:
 
 - `packages/core` - Main package entry point (published as `sakana-element`)
 - `packages/components` - Individual component implementations
-- `packages/hooks` - Reusable Vue composition functions
-- `packages/utils` - Shared utility functions
-- `packages/theme` - CSS theme files
-- `packages/locale` - Internationalization support
-- `packages/docs` - VitePress documentation site
-- `packages/play` - Development playground with Storybook
+- `packages/hooks` - Reusable Vue composition functions (private, not published)
+- `packages/utils` - Shared utility functions (private)
+- `packages/theme` - CSS theme files and Houdini Paint Worklets (private)
+- `packages/locale` - Internationalization support (private)
+- `packages/docs` - VitePress documentation site (private)
+- `packages/play` - Development playground with Storybook (private)
 - `libs/vite-plugins` - Custom Vite plugins for build process
 - `libs/vitepress-preview-component` - Custom VitePress component preview
 
@@ -33,7 +33,7 @@ pnpm build:dev        # Build in watch mode for development
 
 ### Testing
 ```bash
-pnpm test             # Run all tests (utils + components)
+pnpm test             # Run all tests (utils + hooks + components)
 pnpm test-comp        # Run component tests only
 pnpm test-utils       # Run utils tests only
 pnpm test-hooks       # Run hooks tests only
@@ -58,10 +58,16 @@ The core package builds both ES modules and UMD bundles using separate Vite conf
 pnpm changed          # Version bump with conventional commits and GitHub release
 pnpm changed:patch    # Patch version bump
 pnpm changed:major    # Major version bump
-pnpm release          # Publish packages to npm
+pnpm release          # Publish packages to npm via Lerna
 ```
 
-Uses Lerna with conventional commits for versioning and changelog generation.
+Uses @lerna-lite with conventional commits for versioning and changelog generation.
+
+**Important publishing notes:**
+- npm requires 2FA or a granular access token to publish. `pnpm release` (Lerna) cannot handle interactive OTP prompts, so use `cd packages/core && npm publish` as a fallback.
+- Only `sakana-element` (packages/core) is published to npm. All other packages are private.
+- The `pnpm changed:*` scripts use `dotenv-cli` to load `GH_TOKEN` from `.env` for GitHub releases.
+- After `pnpm changed:*` runs, Lerna may leave `gitHead` fields and resolved `workspace:*` references in package.json files — revert these after publishing.
 
 ## Component Architecture
 
@@ -87,19 +93,27 @@ Components use the `withInstall` utility from `@sakana-element/utils` to enable 
 import Component from './Component.vue';
 import { withInstall } from '@sakana-element/utils';
 
-export const ErComponent = withInstall(Component);
+export const PxComponent = withInstall(Component);
 ```
 
-All components are prefixed with `Er` (e.g., `ErButton`, `ErInput`).
+All components are prefixed with `Px` (e.g., `PxButton`, `PxInput`, `PxIcon`).
 
 ### Component Exports
 
 - `packages/components/index.ts` exports all components
 - `packages/core/index.ts` is the main entry point that:
-  - Registers FontAwesome icons globally
+  - Registers default pixel icons via `registerDefaultPixelIcons()`
+  - Registers CSS Houdini Paint Worklets for pixel-style borders/shadows
   - Creates a global installer via `makeInstaller`
   - Re-exports all components and locale
   - Imports theme CSS (`@sakana-element/theme/index.css`)
+
+### Icon System
+
+The project uses a custom SVG-based pixel icon system (not FontAwesome):
+- Icons defined in `packages/components/Icon/icons/`
+- Registered via `registerPixelIcons()` from `@sakana-element/utils`
+- Used through the `PxIcon` component
 
 ## Build System
 
@@ -116,13 +130,12 @@ CSS handling:
 - Component-specific styles go to `theme/[name].css`
 - Theme styles are moved to `dist/theme` after build
 
+Build cleanup is handled by a custom Vite plugin (`libs/vite-plugins/hooksPlugin.ts`) using `shelljs` — no separate `rimraf` or `clean` step needed.
+
 ### External Dependencies
 
-The following are marked as external (peer dependencies):
+The following are marked as external in the ES build (peer dependencies):
 - `vue`
-- `@fortawesome/fontawesome-svg-core`
-- `@fortawesome/free-solid-svg-icons`
-- `@fortawesome/vue-fontawesome`
 - `@popperjs/core`
 - `async-validator`
 
@@ -140,7 +153,7 @@ Styles use PostCSS with:
 Tests use Vitest with Vue Test Utils in jsdom environment.
 
 Setup (`vitest.setup.ts`):
-- Registers FontAwesome icons globally before tests
+- Registers default pixel icons globally before tests
 
 Global test config (`vitest.config.ts`):
 - Globals enabled
@@ -160,6 +173,7 @@ cross-env NODE_ENV=test pnpm --filter @sakana-element/hooks build
 - JSX: preserve with Vue as import source
 - Strict mode enabled
 - Includes all `.ts`, `.tsx`, `.vue` files in `packages/`
+- `env.d.ts` provides Vite client types (`import.meta.env`) and CSS Houdini Paint API types
 
 Build-specific config (`tsconfig.build.json`) is used for type generation during builds.
 
@@ -194,5 +208,6 @@ Uses conventional commits with custom changelog sections:
 
 4. **Documentation:**
    - Add component docs in `packages/docs/`
+   - Bilingual: add both `en/` and `zh/` versions
    - Run docs locally: `pnpm docs:dev`
    - Build docs: `pnpm docs:build`

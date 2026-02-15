@@ -11,10 +11,11 @@
   ],
   "exports": {
     ".": {
-      "import": "./index.ts",
+      "import": "./dist/es/index.js",
       "require": "./dist/umd/index.umd.cjs",
       "types": "./dist/types/core/index.d.ts"
     },
+    "./dist/index.css": "./dist/index.css",
     "./dist/": {
       "import": "./dist/",
       "require": "./dist/"
