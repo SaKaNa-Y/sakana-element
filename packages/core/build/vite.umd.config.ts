@@ -8,6 +8,7 @@ import { hooksPlugin as hooks } from '@sakana-element/vite-plugins'; //导入hoo
 import vue from '@vitejs/plugin-vue'; //vue插件，不引入jsx是因为jsx只在测试中使用
 import { defer, delay } from 'lodash-es'; //延迟函数
 import shell from 'shelljs'; //导入shelljs，用于删除文件
+import type { Plugin } from 'vite';
 import { defineConfig } from 'vite'; //vite的defineConfig
 import { compression } from 'vite-plugin-compression2'; //压缩插件,压缩成gzip
 
@@ -23,12 +24,42 @@ function moveStyles() {
   });
 }
 
+/**
+ * UMD counterpart of extractBase64FontsPlugin.
+ * Replaces base64 font data URLs with a relative path to the font file
+ * emitted by the ES build (dist/theme/fonts/zpix.ttf).
+ * moveStyles copies dist/umd/index.css → dist/index.css, so
+ * ./theme/fonts/zpix.ttf resolves correctly from dist/.
+ */
+function extractBase64FontsPlugin(): Plugin {
+  return {
+    name: 'extract-base64-fonts',
+    enforce: 'post',
+    generateBundle(_, bundle) {
+      const dataUrlRe = /url\(\s*"?data:font\/[^;]+;base64,([A-Za-z0-9+/=]+)"?\s*\)/g;
+
+      for (const [fileName, chunk] of Object.entries(bundle)) {
+        if (chunk.type !== 'asset' || !/\.css$/i.test(fileName)) continue;
+
+        const css =
+          typeof chunk.source === 'string' ? chunk.source : new TextDecoder().decode(chunk.source);
+
+        if (!dataUrlRe.test(css)) continue;
+        dataUrlRe.lastIndex = 0;
+
+        chunk.source = css.replace(dataUrlRe, () => `url("./theme/fonts/zpix.ttf")`);
+      }
+    },
+  };
+}
+
 export default defineConfig({
   plugins: [
     vue(),
     compression({
       include: /.(cjs|css)$/i,
     }),
+    extractBase64FontsPlugin(),
     terser({
       compress: {
         drop_console: true, // 删除所有console语句

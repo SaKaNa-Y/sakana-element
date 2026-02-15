@@ -9,14 +9,6 @@ A Vue 3 + TypeScript component library with pixel art design aesthetic.
 
 ---
 
-## Features / 特性
-
-- 🎮 **Pixel Art Design** — Unique retro pixel aesthetic using CSS Houdini Paint Worklets / 独特的像素复古风格
-- 🧩 **Vue 3 + TypeScript** — Full Composition API & type safety / 完整的组合式 API 和类型安全
-- 🌙 **Dark Mode** — Built-in dark theme support / 内置暗色主题
-- 🌐 **i18n** — Bilingual (EN/ZH) internationalization / 双语国际化支持
-- 📦 **Tree-shakable** — ES module build with per-component chunks / ES 模块构建，支持按需引入
-
 ## Install / 安装
 
 ```bash
@@ -77,59 +69,11 @@ Add the `px-dark` or `dark` class to an ancestor element:
 </html>
 ```
 
-## Development / 开发
+## Links / 链接
 
-### Prerequisites / 前置要求
-
-- Node.js >= 18
-- pnpm >= 8
-
-### Setup / 设置
-
-```bash
-git clone https://github.com/yu859/sakana-element.git
-cd sakana-element
-pnpm install
-```
-
-### Dev Commands / 开发命令
-
-```bash
-pnpm dev          # Development playground / 开发环境
-pnpm story        # Storybook / 组件预览
-pnpm docs:dev     # Documentation site / 文档站点
-```
-
-### Test Commands / 测试命令
-
-```bash
-pnpm test         # All tests / 全部测试
-pnpm test-comp    # Component tests / 组件测试
-pnpm test-utils   # Utils tests / 工具测试
-pnpm test-hooks   # Hooks tests / Hooks 测试
-```
-
-### Build / 构建
-
-```bash
-pnpm build        # Build library / 构建组件库
-pnpm docs:build   # Build docs / 构建文档
-```
-
-## Monorepo Structure / 项目结构
-
-```
-packages/
-├── core        — Main entry, published as `sakana-element`
-├── components  — Component implementations
-├── hooks       — Reusable composition functions
-├── utils       — Shared utilities
-├── theme       — CSS theme & Houdini Paint Worklets
-├── locale      — i18n support
-├── docs        — VitePress documentation
-└── play        — Storybook playground
-```
+- [GitHub](https://github.com/yu859/sakana-element)
+- [npm](https://www.npmjs.com/package/sakana-element)
 
 ## License / 许可证
 
-[ISC](./LICENSE)
+[ISC](https://github.com/yu859/sakana-element/blob/master/LICENSE)

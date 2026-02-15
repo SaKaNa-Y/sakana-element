@@ -1,6 +1,7 @@
 //es打包需要打包工具
 //当使用 import 语法时，会自动选择 ES 模块格式
 
+import { Buffer } from 'node:buffer';
 import { readdir, readdirSync } from 'node:fs';
 import { resolve } from 'node:path'; //路径解析
 import terser from '@rollup/plugin-terser'; //压缩插件
@@ -33,6 +34,57 @@ function moveStyles() {
   });
 }
 
+/**
+ * Vite library mode force-inlines all CSS url() assets as base64.
+ * The zpix.ttf font (~6.9MB) becomes a ~9.3MB base64 string embedded in CSS,
+ * causing stack overflows in downstream Vite consumers.
+ *
+ * This plugin reverses that: it finds base64 font data URLs in CSS bundles,
+ * decodes them back to binary, emits a separate font file, and rewrites
+ * the CSS to reference the file by path.
+ */
+function extractBase64FontsPlugin(): import('vite').Plugin {
+  return {
+    name: 'extract-base64-fonts',
+    enforce: 'post',
+    generateBundle(_, bundle) {
+      const dataUrlRe = /url\(\s*"?data:font\/[^;]+;base64,([A-Za-z0-9+/=]+)"?\s*\)/g;
+
+      for (const [fileName, chunk] of Object.entries(bundle)) {
+        if (chunk.type !== 'asset' || !/\.css$/i.test(fileName)) continue;
+
+        const css =
+          typeof chunk.source === 'string' ? chunk.source : new TextDecoder().decode(chunk.source);
+
+        if (!dataUrlRe.test(css)) continue;
+        dataUrlRe.lastIndex = 0; // reset after test()
+
+        const newCss = css.replace(dataUrlRe, (_match, b64) => {
+          const fontData = Buffer.from(b64, 'base64');
+          const fontPath = 'theme/fonts/zpix.ttf';
+
+          this.emitFile({
+            type: 'asset',
+            fileName: fontPath,
+            source: fontData,
+          });
+
+          // Compute relative path from CSS location to font
+          const cssDir = fileName.includes('/')
+            ? fileName.substring(0, fileName.lastIndexOf('/'))
+            : '.';
+          const depth = cssDir === '.' ? 0 : cssDir.split('/').length;
+          const prefix = depth > 0 ? '../'.repeat(depth) : './';
+
+          return `url("${prefix}${fontPath}")`;
+        });
+
+        chunk.source = newCss;
+      }
+    },
+  };
+}
+
 export default defineConfig({
   plugins: [
     vue(), //vue插件
@@ -44,6 +96,7 @@ export default defineConfig({
       rmFiles: ['./dist/es', './dist/theme', './dist/types'],
       afterBuild: moveStyles,
     }), //删除文件
+    extractBase64FontsPlugin(),
     terser({
       compress: {
         sequences: isProd, // 在生产环境下启用序列优化，将多个语句合并成一条语句
