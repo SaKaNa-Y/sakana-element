@@ -1,6 +1,6 @@
 {
   "name": "sakana-element",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "Components library by Vue3 + Ts",
   "type": "module",
   "main": "./dist/umd/index.umd.cjs",
