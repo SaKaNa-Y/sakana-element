@@ -19,8 +19,8 @@
   },
   "license": "ISC",
   "peerDependencies": {
-    "vue": "^3.4.19",
     "lodash-es": "^4.17.21",
+    "vue": "^3.4.19",
     "vue3-i18n": "^1.1.5"
   }
 }

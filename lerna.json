@@ -7,7 +7,6 @@
     "version": {
       "conventionalCommits": true,
       "changelog": true,
-      "changelogIncludeCommitsClientLogin": "by.@%a",
       "createRelease": "github",
       "message": "chore(release): publish new version %v",
       "allowPeerDependenciesUpdate": true
