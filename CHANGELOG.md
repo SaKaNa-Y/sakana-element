@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.0.2 (2026-02-15)</small>
+
+* fix: extract base64 font from CSS to prevent stack overflow ([d78edd1](https://github.com/yu859/sakana-element/commit/d78edd1))
+
 ## <small>2.0.1 (2026-02-15)</small>
 
 * fix: clean up post-publish artifacts ([4b6d4d4](https://github.com/yu859/sakana-element/commit/4b6d4d4))
