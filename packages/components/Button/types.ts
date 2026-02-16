@@ -15,8 +15,11 @@ export interface ButtonProps {
   circle?: boolean;
   plain?: boolean;
   round?: boolean;
+  dash?: boolean;
+  ghost?: boolean;
   color?: string;
   loadingIcon?: string;
+  ariaLabel?: string;
   autofocus?: boolean;
   useThrottle?: boolean;
   throttleDuration?: number;

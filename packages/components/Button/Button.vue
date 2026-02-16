@@ -3,7 +3,7 @@ import { debugWarn } from '@sakana-element/utils';
 import { throttle } from 'lodash-es';
 import { computed, inject, ref } from 'vue';
 import PxIcon from '../Icon/Icon.vue';
-import { BUTTON_GROUP_CTX_KEY } from './contants';
+import { BUTTON_GROUP_CTX_KEY } from './constants';
 import type { ButtonEmits, ButtonInstance, ButtonProps } from './types';
 
 const ALLOWED_BUTTON_TAGS = new Set(['button', 'a', 'div', 'span', 'router-link']);
@@ -85,6 +85,42 @@ const customColorStyle = computed(() => {
   const lightColor = lighten(color, 20);
   const lighterColor = lighten(color, 35);
 
+  if (props.ghost) {
+    return {
+      '--px-button-text-color': color,
+      '--px-button-bg-color': 'transparent',
+      '--px-button-border-color': 'transparent',
+      '--px-button-shadow-color': 'transparent',
+      '--px-button-hover-text-color': darkColor,
+      '--px-button-hover-bg-color': lighterColor,
+      '--px-button-hover-border-color': 'transparent',
+      '--px-button-active-text-color': darkColor,
+      '--px-button-active-bg-color': lightColor,
+      '--px-button-active-border-color': 'transparent',
+      '--px-button-disabled-text-color': lightColor,
+      '--px-button-disabled-bg-color': 'transparent',
+      '--px-button-disabled-border-color': 'transparent',
+    } as Record<string, string>;
+  }
+
+  if (props.dash) {
+    return {
+      '--px-button-text-color': color,
+      '--px-button-bg-color': lighterColor,
+      '--px-button-border-color': color,
+      '--px-button-shadow-color': 'transparent',
+      '--px-button-hover-text-color': darkColor,
+      '--px-button-hover-bg-color': lightColor,
+      '--px-button-hover-border-color': darkColor,
+      '--px-button-active-text-color': darkColor,
+      '--px-button-active-bg-color': color,
+      '--px-button-active-border-color': darkColor,
+      '--px-button-disabled-text-color': lightColor,
+      '--px-button-disabled-bg-color': lighterColor,
+      '--px-button-disabled-border-color': lightColor,
+    } as Record<string, string>;
+  }
+
   if (props.plain) {
     return {
       '--px-button-text-color': color,
@@ -138,6 +174,7 @@ defineExpose<ButtonInstance>({
     :autofocus="autofocus"
     :type="safeTag === 'button' ? nativeType : void 0"
     class="px-button"
+    :aria-label="ariaLabel"
     :disabled="disabled || loading ? true : void 0"
     :class="{
       [`px-button--${type}`]: type,
@@ -145,6 +182,8 @@ defineExpose<ButtonInstance>({
       'is-plain': plain,
       'is-round': round,
       'is-circle': circle,
+      'is-dash': dash,
+      'is-ghost': ghost,
       'is-disabled': disabled,
       'is-loading': loading,
     }"

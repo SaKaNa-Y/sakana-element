@@ -18,6 +18,14 @@ Use `disabled` property to disable the button.
 demo-preview=../../demo/button/Disabled.vue
 :::
 
+## Different Sizes
+
+Use `size` property to set the button size.
+
+::: preview
+demo-preview=../../demo/button/Size.vue
+:::
+
 ## Icon Button
 
 Use `icon` property to add an icon to the button.
@@ -26,12 +34,20 @@ Use `icon` property to add an icon to the button.
 demo-preview=../../demo/button/Icon.vue
 :::
 
-## Button Group
+## Dash Border
 
-Use `<px-button-group>` component to group multiple buttons.
+Use `dash` property to apply a dashed border style. The pixel `clip-path` border is replaced with a CSS dashed border for a hand-drawn/cutout feel.
 
 ::: preview
-demo-preview=../../demo/button/Group.vue
+demo-preview=../../demo/button/Dash.vue
+:::
+
+## Ghost Button
+
+Use `ghost` property to create a borderless, background-free button. Only the text is visible — a subtle fill appears on hover.
+
+::: preview
+demo-preview=../../demo/button/Ghost.vue
 :::
 
 ## Loading State
@@ -42,12 +58,12 @@ Use `loading` property to set the button's loading state.
 demo-preview=../../demo/button/Loading.vue
 :::
 
-## Different Sizes
+## Button Group
 
-Use `size` property to set the button size.
+Use `<px-button-group>` component to group multiple buttons.
 
 ::: preview
-demo-preview=../../demo/button/Size.vue
+demo-preview=../../demo/button/Group.vue
 :::
 
 ## Custom Color
@@ -56,6 +72,14 @@ Use `color` property to set a custom button color. The text color, hover state, 
 
 ::: preview
 demo-preview=../../demo/button/Color.vue
+:::
+
+## Login Button
+
+Combine `icon` and `color` props to create social login buttons. All 486 pixelarticons are bundled — icons like `github` and `mail` work out of the box.
+
+::: preview
+demo-preview=../../demo/button/Login.vue
 :::
 
 ## Custom Tag
@@ -86,6 +110,8 @@ demo-preview=../../demo/button/Throttle.vue
 | plain | Plain button | `boolean` | `false` |
 | round | Round button | `boolean` | `false` |
 | circle | Circle button | `boolean` | `false` |
+| dash | Dash border style | `boolean` | `false` |
+| ghost | Ghost button (no border/bg) | `boolean` | `false` |
 | loading | Loading state | `boolean` | `false` |
 | loading-icon | Custom loading icon | `string` | `'spinner'` |
 | disabled | Disabled state | `boolean` | `false` |

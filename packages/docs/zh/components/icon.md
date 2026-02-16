@@ -1,6 +1,6 @@
 # Icon 图标
 
-Sakana Element 使用 [pixelarticons](https://pixelarticons.com/) 作为图标方案 - 一个像素风格的图标库，包含 480+ 个基于 24x24 网格的图标。
+Sakana Element 内置了 [pixelarticons](https://pixelarticons.com/) 的全部 486 个图标 - 一个基于 24x24 网格的像素风格图标库。所有图标开箱即用，无需额外安装。
 
 ## 基础用法
 
@@ -61,7 +61,22 @@ registerPixelIcon('my-icon', '<svg viewBox="0 0 24 24">...</svg>');
 
 ## 可用图标
 
-以下是 Sakana Element 内置的常用图标：
+[pixelarticons v1.8.0](https://pixelarticons.com/) 的全部 486 个图标已内置，可直接使用。在 [pixelarticons.com](https://pixelarticons.com/) 浏览完整图标库查找图标名称。
+
+### 品牌 / 社交图标
+
+以下品牌和社交图标已包含在内置图标集中：
+
+| 图标名称 | 描述 |
+| --- | --- |
+| `github` | GitHub 标志 |
+| `github-2` | GitHub 标志（备选） |
+| `mail` | 邮件信封 |
+| `mastodon` | Mastodon 标志 |
+| `bitcoin` | 比特币标志 |
+| `android` | Android 标志 |
+
+### 常用图标
 
 | 图标名称 | 描述 |
 | --- | --- |
@@ -86,8 +101,6 @@ registerPixelIcon('my-icon', '<svg viewBox="0 0 24 24">...</svg>');
 | `sliders` | 设置 |
 | `edit` | 编辑 / 铅笔 |
 | `trash` | 删除 / 垃圾桶 |
-
-完整的图标列表请访问 [pixelarticons.com](https://pixelarticons.com/)。
 
 ## 图标名称映射
 

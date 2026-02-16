@@ -34,6 +34,8 @@ describe('Button.vue', () => {
     ['circle', 'is-circle'],
     ['disabled', 'is-disabled'],
     ['loading', 'is-loading'],
+    ['dash', 'is-dash'],
+    ['ghost', 'is-ghost'],
   ])('should has the correct class when prop %s is set to true', (prop, className) => {
     const wrapper = mount(Button, {
       props: { [prop]: true },
@@ -219,6 +221,99 @@ describe('Button.vue', () => {
     });
     const iconElement = wrapper.findComponent(Icon);
     expect(iconElement.attributes('icon')).toBe('check');
+  });
+
+  // Props: dash
+  it('should apply is-dash class when dash prop is set', () => {
+    const wrapper = mount(Button, {
+      props: { dash: true },
+    });
+    expect(wrapper.classes()).toContain('is-dash');
+  });
+
+  it('should combine dash with type correctly', () => {
+    const wrapper = mount(Button, {
+      props: { dash: true, type: 'primary' },
+    });
+    expect(wrapper.classes()).toContain('is-dash');
+    expect(wrapper.classes()).toContain('px-button--primary');
+  });
+
+  // Props: ghost
+  it('should apply is-ghost class when ghost prop is set', () => {
+    const wrapper = mount(Button, {
+      props: { ghost: true },
+    });
+    expect(wrapper.classes()).toContain('is-ghost');
+  });
+
+  it('should combine ghost with type correctly', () => {
+    const wrapper = mount(Button, {
+      props: { ghost: true, type: 'primary' },
+    });
+    expect(wrapper.classes()).toContain('is-ghost');
+    expect(wrapper.classes()).toContain('px-button--primary');
+  });
+
+  it('should allow dash and ghost to coexist', () => {
+    const wrapper = mount(Button, {
+      props: { dash: true, ghost: true },
+    });
+    expect(wrapper.classes()).toContain('is-dash');
+    expect(wrapper.classes()).toContain('is-ghost');
+  });
+
+  // Login button tests (icon + color)
+  it('should render correctly with github icon and brand color', () => {
+    const wrapper = mount(Button, {
+      props: { icon: 'github', color: '#24292f' },
+      slots: { default: 'Login with GitHub' },
+      global: {
+        stubs: ['PxIcon'],
+      },
+    });
+    const iconElement = wrapper.findComponent(Icon);
+    expect(iconElement.exists()).toBeTruthy();
+    expect(iconElement.attributes('icon')).toBe('github');
+    const style = wrapper.attributes('style');
+    expect(style).toContain('--px-button-bg-color');
+  });
+
+  it('should render correctly with mail icon and brand color', () => {
+    const wrapper = mount(Button, {
+      props: { icon: 'mail', color: '#000000' },
+      slots: { default: 'Login with Email' },
+      global: {
+        stubs: ['PxIcon'],
+      },
+    });
+    const iconElement = wrapper.findComponent(Icon);
+    expect(iconElement.exists()).toBeTruthy();
+    expect(iconElement.attributes('icon')).toBe('mail');
+    const style = wrapper.attributes('style');
+    expect(style).toContain('--px-button-bg-color');
+  });
+
+  // Props: ghost + color (custom color support)
+  it('should apply ghost color style variables when ghost and color props are set', () => {
+    const wrapper = mount(Button, {
+      props: { ghost: true, color: '#626aef' },
+    });
+    const style = wrapper.attributes('style');
+    expect(style).toContain('--px-button-text-color');
+    expect(style).toContain('--px-button-bg-color: transparent');
+    expect(style).toContain('--px-button-border-color: transparent');
+  });
+
+  // Props: dash + color (custom color support)
+  it('should apply dash color style variables when dash and color props are set', () => {
+    const wrapper = mount(Button, {
+      props: { dash: true, color: '#626aef' },
+    });
+    const style = wrapper.attributes('style');
+    expect(style).toContain('--px-button-text-color');
+    expect(style).toContain('--px-button-border-color');
+    expect(style).toContain('--px-button-shadow-color: transparent');
   });
 });
 

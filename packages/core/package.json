@@ -36,6 +36,14 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yu859/sakana-element.git"
+  },
+  "homepage": "https://github.com/yu859/sakana-element#readme",
+  "bugs": {
+    "url": "https://github.com/yu859/sakana-element/issues"
+  },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "async-validator": "^4.2.5"

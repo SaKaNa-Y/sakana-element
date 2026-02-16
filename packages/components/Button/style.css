@@ -129,6 +129,90 @@
     --px-button-hover-border-color: var(--px-color-primary);
   }
 
+  /* Dash variant - Dashed border on the button itself, no pixel shadow */
+  &.is-dash {
+    border: 2px dashed var(--px-button-border-color);
+    filter: none;
+
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      clip-path: none;
+      inset: 0;
+      background: var(--px-button-bg-color);
+    }
+
+    &:hover:not(.is-disabled):not(.is-loading) {
+      transform: none;
+      filter: none;
+      border-color: var(--px-button-hover-border-color);
+
+      &::after {
+        background: var(--px-button-hover-bg-color);
+      }
+    }
+
+    &:active:not(.is-disabled):not(.is-loading) {
+      transform: none;
+      filter: none;
+      border-color: var(--px-button-active-border-color);
+
+      &::after {
+        background: var(--px-button-active-bg-color);
+      }
+    }
+  }
+
+  /* Ghost variant - No border/background, subtle hover fill */
+  &.is-ghost {
+    filter: none;
+    --px-button-shadow-color: transparent;
+
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      clip-path: none;
+      inset: 0;
+      background: transparent;
+    }
+
+    &:hover:not(.is-disabled):not(.is-loading) {
+      transform: none;
+      filter: none;
+      color: var(--px-button-hover-text-color);
+
+      &::after {
+        background: var(--px-button-hover-bg-color, var(--px-fill-color-light));
+      }
+    }
+
+    &:active:not(.is-disabled):not(.is-loading) {
+      transform: none;
+      filter: none;
+      color: var(--px-button-active-text-color);
+
+      &::after {
+        background: var(--px-button-active-bg-color, var(--px-fill-color));
+      }
+    }
+
+    &.is-loading,
+    &.is-disabled,
+    &.is-disabled:hover,
+    &.is-disabled:focus,
+    &[disabled],
+    &[disabled]:hover,
+    &[disabled]:focus {
+      &::after {
+        background: transparent;
+      }
+    }
+  }
+
   /* Round - Pixel-style rounded with 3-step staircase corners */
   &.is-round {
     padding: 8px 20px;
@@ -204,6 +288,35 @@
     --px-button-disabled-text-color: var(--px-color-white);
     --px-button-disabled-bg-color: var(--px-color-$(val)-light-5);
     --px-button-disabled-border-color: var(--px-color-$(val)-light-5);
+  }
+
+  /* Dash variant for type buttons */
+  .px-button--$(val).is-dash {
+    --px-button-text-color: var(--px-color-$(val));
+    --px-button-bg-color: var(--px-color-$(val)-light-9);
+    --px-button-border-color: var(--px-color-$(val));
+    --px-button-shadow-color: transparent;
+    --px-button-hover-text-color: var(--px-color-$(val)-dark);
+    --px-button-hover-bg-color: var(--px-color-$(val)-light-7);
+    --px-button-hover-border-color: var(--px-color-$(val)-dark);
+    --px-button-active-text-color: var(--px-color-white);
+    --px-button-active-bg-color: var(--px-color-$(val));
+    --px-button-active-border-color: var(--px-color-$(val)-dark);
+    --px-button-disabled-text-color: var(--px-color-$(val)-light-5);
+    --px-button-disabled-bg-color: var(--px-color-$(val)-light-9);
+    --px-button-disabled-border-color: var(--px-color-$(val)-light-5);
+  }
+
+  /* Ghost variant for type buttons */
+  .px-button--$(val).is-ghost {
+    --px-button-text-color: var(--px-color-$(val));
+    --px-button-shadow-color: transparent;
+    --px-button-hover-text-color: var(--px-color-$(val)-dark);
+    --px-button-hover-bg-color: var(--px-color-$(val)-light-9);
+    --px-button-active-text-color: var(--px-color-$(val)-dark);
+    --px-button-active-bg-color: var(--px-color-$(val)-light-7);
+    --px-button-disabled-text-color: var(--px-color-$(val)-light-5);
+    --px-button-disabled-bg-color: transparent;
   }
 
   /* Plain variant for type buttons */

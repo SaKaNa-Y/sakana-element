@@ -1,6 +1,6 @@
 # Icon
 
-Sakana Element uses [pixelarticons](https://pixelarticons.com/) as the icon solution - a pixel-art style icon library with 480+ icons on a 24x24 grid.
+Sakana Element bundles all 486 icons from [pixelarticons](https://pixelarticons.com/) — a pixel-art style icon library on a 24x24 grid. Every icon is available out of the box with no extra installation.
 
 ## Basic Usage
 
@@ -61,7 +61,22 @@ Then use it like any other icon:
 
 ## Available Icons
 
-Here are some commonly used icons bundled with Sakana Element:
+All 486 icons from [pixelarticons v1.8.0](https://pixelarticons.com/) are bundled and ready to use. Browse the full gallery at [pixelarticons.com](https://pixelarticons.com/) to find icon names.
+
+### Brand / Social Icons
+
+The following brand and social icons are available as part of the bundled set:
+
+| Icon Name | Description |
+| --- | --- |
+| `github` | GitHub logo |
+| `github-2` | GitHub logo (alternate) |
+| `mail` | Email envelope |
+| `mastodon` | Mastodon logo |
+| `bitcoin` | Bitcoin logo |
+| `android` | Android logo |
+
+### Commonly Used Icons
 
 | Icon Name | Description |
 | --- | --- |
@@ -86,8 +101,6 @@ Here are some commonly used icons bundled with Sakana Element:
 | `sliders` | Settings |
 | `edit` | Edit / Pencil |
 | `trash` | Trash / Delete |
-
-For a complete list of available icons, visit [pixelarticons.com](https://pixelarticons.com/).
 
 ## Icon Name Mapping
 

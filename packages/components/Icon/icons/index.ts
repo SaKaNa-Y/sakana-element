@@ -36,11 +36,11 @@ export { default as user } from './user';
 export { default as warningBox } from './warning-box';
 export { default as zap } from './zap';
 
+// Hand-curated custom icon imports (may override same-named pixelarticons)
 import alert from './alert';
 import arrowLeft from './arrow-left';
 import arrowRight from './arrow-right';
 import bookmark from './bookmark';
-// Icon map for registration (name -> SVG string)
 import check from './check';
 import chevronDown from './chevron-down';
 import chevronLeft from './chevron-left';
@@ -64,6 +64,8 @@ import message from './message';
 import moonStar from './moon-star';
 import music from './music';
 import notification from './notification';
+// Bulk import: all 486 pixelarticons
+import { pixelarticonsMap } from './pixelarticons-all';
 import search from './search';
 import sliders from './sliders';
 import trash from './trash';
@@ -72,7 +74,11 @@ import user from './user';
 import warningBox from './warning-box';
 import zap from './zap';
 
+// Icon map for registration (name -> SVG string)
+// All 486 pixelarticons are available; custom icons override same-named entries
 export const defaultPixelIcons: Record<string, string> = {
+  ...pixelarticonsMap,
+  // Custom overrides below take priority (hand-curated SVGs)
   check,
   close,
   'close-box': closeBox,
