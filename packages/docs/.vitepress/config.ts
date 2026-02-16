@@ -8,6 +8,10 @@ const getGuideItems = (lang: 'zh' | 'en') => [
     text: lang === 'zh' ? '快速开始' : 'Getting Started',
     link: `/${lang}/get-started`,
   },
+  {
+    text: lang === 'zh' ? '深色模式' : 'Dark Mode',
+    link: `/${lang}/dark-mode`,
+  },
 ];
 
 const getBasicItems = (lang: 'zh' | 'en') => [
