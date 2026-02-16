@@ -25,7 +25,9 @@
     "types": ["node"],
     "baseUrl": "./",
     "paths": {
-      "@sakana-element/components": ["./packages/components"]
+      "@sakana-element/components": ["./packages/components"],
+      "@sakana-element/hooks": ["./packages/hooks"],
+      "@sakana-element/locale": ["./packages/locale"]
     }
   },
   "include": [
