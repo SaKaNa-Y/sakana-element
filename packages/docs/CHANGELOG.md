@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.1 (2026-02-16)</small>
+
+**Note:** Version bump only for package @sakana-element/docs
+
 ## <small>2.0.2 (2026-02-15)</small>
 
 **Note:** Version bump only for package @sakana-element/docs

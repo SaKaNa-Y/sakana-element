@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.1 (2026-02-16)</small>
+
+* chore: sync lerna.json version to 2.1.0 and add missing git tag ([b38cce6](https://github.com/yu859/sakana-element/commit/b38cce6))
+
 ## <small>2.0.2 (2026-02-15)</small>
 
 * fix: extract base64 font from CSS to prevent stack overflow ([d78edd1](https://github.com/yu859/sakana-element/commit/d78edd1))
