@@ -91,6 +91,7 @@ defineExpose<NotificationCompInstance>({
       :style="customStyle"
       v-show="visible"
       role="alert"
+      :aria-live="type === 'danger' || type === 'warning' ? 'assertive' : 'polite'"
       @click="onClick"
       @mouseenter="clearTimer"
       @mouseleave="startTimmer"

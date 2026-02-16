@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { createPopper, type Instance } from '@popperjs/core';
-import { useClickOutside } from '@sakana-element/hooks';
+import { useClickOutside, useId } from '@sakana-element/hooks';
 import { bind, type DebouncedFunc, debounce } from 'lodash-es';
 import { computed, onUnmounted, type Ref, ref, watch, watchEffect } from 'vue';
 import type { TooltipEmits, TooltipInstance, TooltipProps } from './types';
@@ -22,6 +22,7 @@ const props = withDefaults(defineProps<TooltipProps>(), {
 
 const emits = defineEmits<TooltipEmits>(); //定义子组件向父组件发送什么类型的事件
 const visible = ref(false);
+const tooltipId = useId('px-tooltip');
 
 const events: Ref<Record<string, EventListener>> = ref({}); //Record创建一个对象类型，指定键值的类型，EventListener是事件处理函数类型，Ref告诉后面是一个ref数据
 const outerEvents: Ref<Record<string, EventListener>> = ref({});
@@ -197,6 +198,7 @@ defineExpose<TooltipInstance>({
       ref="_triggerNode"
       v-on="events"
       v-if="!virtualTriggering"
+      :aria-describedby="visible ? tooltipId : undefined"
     >
       <slot></slot>
     </div>
@@ -208,6 +210,8 @@ defineExpose<TooltipInstance>({
         ref="popperNode"
         v-on="dropdownEvents"
         v-if="visible"
+        :id="tooltipId"
+        role="tooltip"
       >
         <slot name="content">
           {{ content }}

@@ -30,6 +30,7 @@ const slots = defineSlots(); //控制所有插槽
 
 const tooltipRef = ref<TooltipInstance>();
 const dropdownRef = ref<HTMLElement>();
+const isOpen = ref(false);
 
 const tooltipProps = computed(
   () => omit(props, ['items', 'hideOnClick', 'size', 'type', 'splitButton']), //排除这些属性
@@ -65,12 +66,12 @@ defineExpose<DropdownInstance>({
 </script>
 
 <template>
-  <div ref="dropdownRef" class="px-dropdown" :class="{ 'is-disabled': props.disabled }">
+  <div ref="dropdownRef" class="px-dropdown" :class="{ 'is-disabled': props.disabled }" role="menu" aria-haspopup="true" :aria-expanded="isOpen">
     <px-tooltip
       ref="tooltipRef"
       v-bind="tooltipProps"
       :manual="splitButton"
-      @visible-change="$emit('visible-change', $event)"
+      @visible-change="(val: boolean) => { isOpen = val; $emit('visible-change', val); }"
     >
       <px-button-group
         v-if="splitButton"

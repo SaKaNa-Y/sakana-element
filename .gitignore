@@ -33,3 +33,4 @@ dist-ssr
 
 # Build artifacts
 packages/play/storybook-static
+*.timestamp*

@@ -87,6 +87,7 @@ defineExpose<MessageCompInstance>({
       :style="customStyle"
       v-show="visible"
       role="alert"
+      :aria-live="type === 'danger' || type === 'warning' ? 'assertive' : 'polite'"
       @mouseenter="clearTimer"
       @mouseleave="startTimmer"
     >
