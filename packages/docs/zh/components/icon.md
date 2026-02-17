@@ -34,12 +34,28 @@ demo-preview=../../demo/icon/Size.vue
 demo-preview=../../demo/icon/Color.vue
 :::
 
+## 翻转与旋转
+
+使用 `flip` 属性可水平、垂直或双向翻转图标。使用 `rotation` 属性可旋转 90°、180° 或 270°。两者可以组合使用。
+
+::: preview
+demo-preview=../../demo/icon/Flip.vue
+:::
+
 ## 图标动画
 
 支持多种像素风格的动画效果，使用 CSS `steps()` 实现逐帧动画效果：`spin`、`pulse`、`bounce`、`shake`、`beat`、`fade`。
 
 ::: preview
 demo-preview=../../demo/icon/Animation.vue
+:::
+
+## 图标集合
+
+浏览和搜索所有内置图标。点击任意图标即可复制其名称。
+
+::: preview
+demo-preview=../../demo/icon/Collection.vue
 :::
 
 ## 自定义图标
@@ -59,69 +75,6 @@ registerPixelIcon('my-icon', '<svg viewBox="0 0 24 24">...</svg>');
 <px-icon icon="my-icon" />
 ```
 
-## 可用图标
-
-[pixelarticons v1.8.0](https://pixelarticons.com/) 的全部 486 个图标已内置，可直接使用。在 [pixelarticons.com](https://pixelarticons.com/) 浏览完整图标库查找图标名称。
-
-### 品牌 / 社交图标
-
-以下品牌和社交图标已包含在内置图标集中：
-
-| 图标名称 | 描述 |
-| --- | --- |
-| `github` | GitHub 标志 |
-| `github-2` | GitHub 标志（备选） |
-| `mail` | 邮件信封 |
-| `mastodon` | Mastodon 标志 |
-| `bitcoin` | 比特币标志 |
-| `android` | Android 标志 |
-
-### 常用图标
-
-| 图标名称 | 描述 |
-| --- | --- |
-| `loader` | 加载中 |
-| `check` | 对勾 / 成功 |
-| `close` | 关闭 / X |
-| `close-box` | 方框内关闭 / 错误 |
-| `info-box` | 信息 |
-| `warning-box` | 警告 |
-| `eye` | 眼睛 / 可见 |
-| `eye-closed` | 闭眼 / 隐藏 |
-| `chevron-down` | 下箭头 |
-| `chevron-up` | 上箭头 |
-| `chevron-left` | 左箭头 |
-| `chevron-right` | 右箭头 |
-| `home` | 主页 |
-| `user` | 用户 |
-| `search` | 搜索 |
-| `heart` | 心形 |
-| `bookmark` | 书签 / 星标 |
-| `notification` | 通知 / 铃铛 |
-| `sliders` | 设置 |
-| `edit` | 编辑 / 铅笔 |
-| `trash` | 删除 / 垃圾桶 |
-
-## 图标名称映射
-
-为了方便使用，一些常见的 FontAwesome 图标名称会自动映射到 pixelarticons 的等效名称：
-
-| 别名 | 映射到 |
-| --- | --- |
-| `spinner`、`loading` | `loader` |
-| `xmark`、`x`、`times` | `close` |
-| `circle-xmark`、`x-circle`、`error` | `close-box` |
-| `circle-info`、`info-circle`、`info` | `info-box` |
-| `check-circle`、`circle-check`、`success` | `check` |
-| `circle-exclamation`、`exclamation-circle`、`warning` | `warning-box` |
-| `eye-slash`、`eye-off` | `eye-closed` |
-| `angle-down`、`caret-down` | `chevron-down` |
-| `angle-up`、`caret-up` | `chevron-up` |
-| `angle-left`、`caret-left` | `chevron-left` |
-| `angle-right`、`caret-right` | `chevron-right` |
-| `gear`、`cog`、`settings` | `sliders` |
-| `star`、`star-solid` | `bookmark` |
-
 ## API
 
 ### Props
@@ -132,11 +85,11 @@ registerPixelIcon('my-icon', '<svg viewBox="0 0 24 24">...</svg>');
 | size | 图标大小 | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| '1x' \| '2x' \| '3x'` | `'md'` |
 | type | 图标类型颜色 | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | — |
 | color | 自定义颜色 | `string` | — |
+| flip | 翻转方向 | `'horizontal' \| 'vertical' \| 'both'` | — |
+| rotation | 旋转角度 | `90 \| 180 \| 270` | — |
 | spin | 旋转动画（逐帧） | `boolean` | `false` |
 | pulse | 脉冲动画（旋转 + 缩放） | `boolean` | `false` |
 | bounce | 弹跳动画（垂直跳动） | `boolean` | `false` |
 | shake | 抖动动画（水平抖动） | `boolean` | `false` |
 | beat | 心跳动画（缩放跳动） | `boolean` | `false` |
 | fade | 淡入淡出动画（透明度闪烁） | `boolean` | `false` |
-| rotation | 旋转角度 | `90 \| 180 \| 270` | — |
-| flip | 翻转方向 | `'horizontal' \| 'vertical' \| 'both'` | — |

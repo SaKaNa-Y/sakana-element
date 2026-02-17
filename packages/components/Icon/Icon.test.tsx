@@ -110,6 +110,43 @@ describe('Icon.vue', () => {
     });
     expect(wrapper.classes()).toContain('px-icon--rotate-90');
   });
+
+  it('should apply all rotation values', () => {
+    const rotations = [90, 180, 270] as const;
+    rotations.forEach((rotation) => {
+      const wrapper = mount(Icon, {
+        props: { icon: 'check', rotation },
+      });
+      expect(wrapper.classes()).toContain(`px-icon--rotate-${rotation}`);
+    });
+  });
+
+  it('should apply rotation with string values', () => {
+    const rotations = ['90', '180', '270'] as const;
+    rotations.forEach((rotation) => {
+      const wrapper = mount(Icon, {
+        props: { icon: 'check', rotation },
+      });
+      expect(wrapper.classes()).toContain(`px-icon--rotate-${rotation}`);
+    });
+  });
+
+  it('should apply flip and rotation together', () => {
+    const wrapper = mount(Icon, {
+      props: { icon: 'check', flip: 'horizontal', rotation: 180 },
+    });
+    expect(wrapper.classes()).toContain('px-icon--flip-h');
+    expect(wrapper.classes()).toContain('px-icon--rotate-180');
+  });
+
+  it('should apply flip=both and rotation together', () => {
+    const wrapper = mount(Icon, {
+      props: { icon: 'check', flip: 'both', rotation: 270 },
+    });
+    expect(wrapper.classes()).toContain('px-icon--flip-h');
+    expect(wrapper.classes()).toContain('px-icon--flip-v');
+    expect(wrapper.classes()).toContain('px-icon--rotate-270');
+  });
 });
 
 describe('Icon/index', () => {

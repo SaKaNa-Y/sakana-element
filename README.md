@@ -45,7 +45,7 @@ createApp(App).use(SakanaElement).mount('#app')
 | `PxInput` | Input / 输入框 |
 | `PxSelect` | Select / 选择器 |
 | `PxSwitch` | Switch / 开关 |
-| `PxIcon` | Icon / 图标 |
+| `PxIcon` | Icon / 图标 (486 built-in pixelarticons) |
 | `PxAlert` | Alert / 警告提示 |
 | `PxCollapse` | Collapse / 折叠面板 |
 | `PxDropdown` | Dropdown / 下拉菜单 |
@@ -58,6 +58,17 @@ createApp(App).use(SakanaElement).mount('#app')
 | `PxLoading` | Loading / 加载 |
 | `PxOverlay` | Overlay / 遮罩层 |
 | `PxConfigProvider` | ConfigProvider / 全局配置 |
+
+## Icons / 图标
+
+486 icons from [pixelarticons](https://pixelarticons.com/) are bundled out of the box — with support for flip, rotation, animations, and custom SVG registration.
+
+内置 [pixelarticons](https://pixelarticons.com/) 的 486 个像素风格图标，开箱即用 — 支持翻转、旋转、动画及自定义 SVG 注册。
+
+```vue
+<px-icon icon="home" size="lg" type="primary" />
+<px-icon icon="heart" color="#e91e63" beat />
+```
 
 ## Bundled Font / 内置字体
 
