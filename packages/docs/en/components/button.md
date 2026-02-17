@@ -1,3 +1,8 @@
+---
+title: Button | Sakana Element
+description: Pixel-style button component for Sakana Element. Supports multiple types, sizes, disabled state, loading, and icon buttons for Vue 3.
+---
+
 # Button
 
 Commonly used button component with pixel-style visual effects.

@@ -1,3 +1,8 @@
+---
+title: Message 消息 | Sakana Element 像素组件库
+description: Sakana Element 像素风格消息提示组件，用于操作反馈和全局提示。
+---
+
 # Message 消息提示
 
 常用于主动操作后的反馈提示。

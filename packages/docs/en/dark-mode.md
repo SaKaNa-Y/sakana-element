@@ -1,3 +1,8 @@
+---
+title: Dark Mode | Sakana Element
+description: Learn about dark mode support in Sakana Element pixel component library with Catppuccin color scheme and system preference detection.
+---
+
 # Dark Mode
 
 Sakana Element has full built-in dark mode support with a [Catppuccin Mocha](https://catppuccin.com/) inspired color palette. The theme system provides three modes — `light`, `dark`, and `system` — with automatic localStorage persistence and system preference detection.

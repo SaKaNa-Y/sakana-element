@@ -1,3 +1,8 @@
+---
+title: MessageBox 消息弹框 | Sakana Element 像素组件库
+description: Sakana Element 像素风格消息弹框组件，支持确认、提示和输入模式。
+---
+
 # MessageBox 消息弹框
 
 模拟系统的消息提示框而实现的一套模态对话框组件。

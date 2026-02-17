@@ -1,3 +1,8 @@
+---
+title: Select 选择器 | Sakana Element 像素组件库
+description: Sakana Element 像素风格选择器组件，支持单选、搜索、禁用和自定义选项。Vue 3 像素 UI 组件。
+---
+
 # Select 选择器
 
 下拉选择器组件，用于从一组选项中选择一个值。

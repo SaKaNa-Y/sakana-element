@@ -1,3 +1,8 @@
+---
+title: Switch 开关 | Sakana Element 像素组件库
+description: Sakana Element 像素风格开关组件，支持禁用、自定义颜色和尺寸。
+---
+
 # Switch 开关
 
 用于在两种状态之间切换的开关组件。

@@ -1,3 +1,8 @@
+---
+title: Dropdown 下拉菜单 | Sakana Element 像素组件库
+description: Sakana Element 像素风格下拉菜单组件，支持多级菜单和自定义触发方式。
+---
+
 # Dropdown 下拉菜单
 
 将动作或菜单折叠到下拉菜单中。

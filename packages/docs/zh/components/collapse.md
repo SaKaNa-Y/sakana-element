@@ -1,3 +1,8 @@
+---
+title: Collapse 折叠面板 | Sakana Element 像素组件库
+description: Sakana Element 像素风格折叠面板组件，支持手风琴模式和自定义标题。
+---
+
 # Collapse 折叠面板
 
 可以折叠/展开的内容区域。

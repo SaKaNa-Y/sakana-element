@@ -1,3 +1,8 @@
+---
+title: Message | Sakana Element
+description: Pixel-style message notification component for operation feedback in Vue 3.
+---
+
 # Message
 
 Used to show feedback after an activity.

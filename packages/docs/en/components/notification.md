@@ -1,3 +1,8 @@
+---
+title: Notification | Sakana Element
+description: Pixel-style notification component with multiple positions and custom content for Vue 3.
+---
+
 # Notification
 
 Displays a global notification message at a corner of the page.

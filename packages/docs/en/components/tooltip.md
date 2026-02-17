@@ -1,3 +1,8 @@
+---
+title: Tooltip | Sakana Element
+description: Pixel-style tooltip component showing details on hover for Vue 3.
+---
+
 # Tooltip
 
 Display prompt information on mouse hover.

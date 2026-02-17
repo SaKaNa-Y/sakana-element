@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sakana-element-docs.vercel.app/sitemap.xml

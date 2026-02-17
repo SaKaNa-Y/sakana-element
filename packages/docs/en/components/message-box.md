@@ -1,3 +1,8 @@
+---
+title: MessageBox | Sakana Element
+description: Pixel-style message box with confirm, alert, and prompt modes for Vue 3.
+---
+
 # MessageBox
 
 A set of modal boxes simulating system message box.

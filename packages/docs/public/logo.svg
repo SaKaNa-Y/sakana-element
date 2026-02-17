@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 18 14" shape-rendering="crispEdges">
+  <!-- Dorsal fin (top fin) -->
+  <rect x="7" y="0" width="1" height="1" fill="black"/>
+  <rect x="8" y="0" width="1" height="1" fill="black"/>
+  <rect x="9" y="0" width="1" height="1" fill="black"/>
+  <rect x="7" y="1" width="1" height="1" fill="black"/>
+  <rect x="9" y="1" width="1" height="1" fill="black"/>
+
+  <!-- Body top edge -->
+  <rect x="1" y="2" width="1" height="1" fill="black"/>
+  <rect x="2" y="2" width="1" height="1" fill="black"/>
+  <rect x="3" y="2" width="1" height="1" fill="black"/>
+  <rect x="4" y="2" width="1" height="1" fill="black"/>
+  <rect x="5" y="2" width="1" height="1" fill="black"/>
+  <rect x="6" y="2" width="1" height="1" fill="black"/>
+  <rect x="7" y="2" width="1" height="1" fill="black"/>
+  <rect x="8" y="2" width="1" height="1" fill="black"/>
+  <rect x="9" y="2" width="1" height="1" fill="black"/>
+  <rect x="10" y="2" width="1" height="1" fill="black"/>
+  <rect x="11" y="2" width="1" height="1" fill="black"/>
+
+  <!-- Body left edge -->
+  <rect x="0" y="3" width="1" height="1" fill="black"/>
+  <rect x="0" y="4" width="1" height="1" fill="black"/>
+  <rect x="0" y="5" width="1" height="1" fill="black"/>
+  <rect x="0" y="6" width="1" height="1" fill="black"/>
+  <rect x="0" y="7" width="1" height="1" fill="black"/>
+  <rect x="0" y="8" width="1" height="1" fill="black"/>
+
+  <!-- Body right edge -->
+  <rect x="11" y="3" width="1" height="1" fill="black"/>
+  <rect x="11" y="4" width="1" height="1" fill="black"/>
+  <rect x="11" y="5" width="1" height="1" fill="black"/>
+  <rect x="11" y="6" width="1" height="1" fill="black"/>
+  <rect x="11" y="7" width="1" height="1" fill="black"/>
+  <rect x="11" y="8" width="1" height="1" fill="black"/>
+
+  <!-- Body bottom edge -->
+  <rect x="1" y="9" width="1" height="1" fill="black"/>
+  <rect x="2" y="9" width="1" height="1" fill="black"/>
+  <rect x="3" y="9" width="1" height="1" fill="black"/>
+  <rect x="4" y="9" width="1" height="1" fill="black"/>
+  <rect x="5" y="9" width="1" height="1" fill="black"/>
+  <rect x="6" y="9" width="1" height="1" fill="black"/>
+  <rect x="7" y="9" width="1" height="1" fill="black"/>
+  <rect x="8" y="9" width="1" height="1" fill="black"/>
+  <rect x="9" y="9" width="1" height="1" fill="black"/>
+  <rect x="10" y="9" width="1" height="1" fill="black"/>
+  <rect x="11" y="9" width="1" height="1" fill="black"/>
+
+  <!-- Eye -->
+  <rect x="3" y="5" width="1" height="1" fill="black"/>
+  <rect x="3" y="6" width="1" height="1" fill="black"/>
+  <rect x="4" y="5" width="1" height="1" fill="black"/>
+  <rect x="4" y="6" width="1" height="1" fill="black"/>
+
+  <!-- Tail fin -->
+  <rect x="12" y="4" width="1" height="1" fill="black"/>
+  <rect x="13" y="3" width="1" height="1" fill="black"/>
+  <rect x="14" y="3" width="1" height="1" fill="black"/>
+  <rect x="14" y="4" width="1" height="1" fill="black"/>
+  <rect x="14" y="5" width="1" height="1" fill="black"/>
+  <rect x="14" y="6" width="1" height="1" fill="black"/>
+  <rect x="14" y="7" width="1" height="1" fill="black"/>
+  <rect x="14" y="8" width="1" height="1" fill="black"/>
+  <rect x="13" y="8" width="1" height="1" fill="black"/>
+  <rect x="12" y="7" width="1" height="1" fill="black"/>
+
+  <!-- Bottom fins -->
+  <!-- Left fin -->
+  <rect x="4" y="10" width="1" height="1" fill="black"/>
+  <rect x="4" y="11" width="1" height="1" fill="black"/>
+  <!-- Right fin -->
+  <rect x="7" y="10" width="1" height="1" fill="black"/>
+  <rect x="7" y="11" width="1" height="1" fill="black"/>
+</svg>

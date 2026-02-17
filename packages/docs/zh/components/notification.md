@@ -1,3 +1,8 @@
+---
+title: Notification 通知 | Sakana Element 像素组件库
+description: Sakana Element 像素风格通知组件，支持多种位置和自定义内容。
+---
+
 # Notification 通知
 
 悬浮出现在页面角落，显示全局的通知提醒消息。

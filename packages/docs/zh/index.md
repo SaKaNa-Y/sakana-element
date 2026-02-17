@@ -1,9 +1,14 @@
 ---
+title: Sakana Element - 像素风格 Vue 3 组件库
+description: Sakana Element 是一个像素风格的 Vue 3 组件库，拥有复古游戏美学设计，支持 TypeScript、按需引入、深色模式和中英双语文档。像素组件库首选。
 layout: home
 hero:
   name: Sakana Element
   text: 像素风格 Vue 3 组件库
   tagline: 复古游戏美学，现代开发体验
+  image:
+    src: /logo.svg
+    alt: Sakana Element Logo
   actions:
     - theme: brand
       text: 快速开始

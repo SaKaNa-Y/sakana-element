@@ -1,3 +1,8 @@
+---
+title: Loading 加载 | Sakana Element 像素组件库
+description: Sakana Element 像素风格加载组件，支持全屏和区域加载效果。
+---
+
 # Loading 加载
 
 加载数据时显示动效。

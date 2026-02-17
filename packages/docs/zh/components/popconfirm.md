@@ -1,3 +1,8 @@
+---
+title: Popconfirm 气泡确认框 | Sakana Element 像素组件库
+description: Sakana Element 像素风格气泡确认框组件，轻量级确认交互。
+---
+
 # Popconfirm 气泡确认框
 
 点击某个元素弹出一个简单的气泡确认框。

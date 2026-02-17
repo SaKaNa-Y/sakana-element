@@ -1,3 +1,8 @@
+---
+title: Form | Sakana Element
+description: Pixel-style form component with validation, custom rules, and responsive layout for Vue 3.
+---
+
 # Form
 
 Form consists of input, select, radio, checkbox and other controls, for collecting, validating, and submitting data.

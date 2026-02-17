@@ -1,3 +1,8 @@
+---
+title: Icon | Sakana Element
+description: 486 built-in pixel art icons from pixelarticons. Supports size, color, flip, rotation, and animation effects in Sakana Element for Vue 3.
+---
+
 # Icon
 
 Sakana Element bundles all 486 icons from [pixelarticons](https://pixelarticons.com/) — a pixel-art style icon library on a 24x24 grid. Every icon is available out of the box with no extra installation.

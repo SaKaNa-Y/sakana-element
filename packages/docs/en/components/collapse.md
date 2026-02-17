@@ -1,3 +1,8 @@
+---
+title: Collapse | Sakana Element
+description: Pixel-style collapsible panel component with accordion mode for Vue 3.
+---
+
 # Collapse
 
 A content area that can be collapsed or expanded.

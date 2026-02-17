@@ -1,3 +1,8 @@
+---
+title: Switch | Sakana Element
+description: Pixel-style toggle switch component with disabled state and custom colors for Vue 3.
+---
+
 # Switch
 
 A toggle switch component for switching between two states.

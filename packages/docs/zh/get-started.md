@@ -1,3 +1,8 @@
+---
+title: 快速开始 | Sakana Element 像素组件库
+description: 了解如何在 Vue 3 项目中安装和配置 Sakana Element 像素风格组件库，支持 npm、yarn、pnpm 安装。
+---
+
 # 快速开始
 
 本指南将帮助你在 Vue 3 项目中安装和配置 Sakana Element。

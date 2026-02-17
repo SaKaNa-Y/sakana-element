@@ -1,3 +1,8 @@
+---
+title: Input 输入框 | Sakana Element 像素组件库
+description: Sakana Element 像素风格输入框组件，支持文本输入、密码、禁用、清除和前后缀图标。
+---
+
 # Input 输入框
 
 用于接收用户输入的文本框组件。

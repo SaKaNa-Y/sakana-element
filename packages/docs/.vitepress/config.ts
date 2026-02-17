@@ -1,6 +1,9 @@
 import { resolve } from 'node:path';
 import { componentPreview, containerPreview } from '@vitepress-demo-preview/plugin';
+import type { HeadConfig } from 'vitepress';
 import { defineConfig } from 'vitepress';
+
+const HOSTNAME = 'https://sakana-element-docs.vercel.app';
 
 // Shared sidebar configuration
 const getGuideItems = (lang: 'zh' | 'en') => [
@@ -120,7 +123,115 @@ export default defineConfig({
   description: 'A Pixel-style Vue 3 Component Library',
   base: '/',
   appearance: true, // Enable dark mode
-  head: [['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }]],
+
+  sitemap: {
+    hostname: HOSTNAME,
+  },
+
+  head: [
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
+    // SEO meta tags
+    [
+      'meta',
+      {
+        name: 'keywords',
+        content:
+          'pixel component library, sakana component library, vue 3 component library, pixel UI, retro game UI, 像素组件库, 像素风格 Vue 组件库, sakana element',
+      },
+    ],
+    // Open Graph
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:site_name', content: 'Sakana Element' }],
+    [
+      'meta',
+      {
+        property: 'og:title',
+        content: 'Sakana Element - Pixel-style Vue 3 Component Library',
+      },
+    ],
+    [
+      'meta',
+      {
+        property: 'og:description',
+        content:
+          'A pixel-style Vue 3 component library with retro game aesthetics. Built with TypeScript, tree-shakable, dark mode support.',
+      },
+    ],
+    ['meta', { property: 'og:url', content: `${HOSTNAME}/` }],
+    // Twitter Card
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    [
+      'meta',
+      {
+        name: 'twitter:title',
+        content: 'Sakana Element - Pixel-style Vue 3 Component Library',
+      },
+    ],
+    [
+      'meta',
+      {
+        name: 'twitter:description',
+        content:
+          'A pixel-style Vue 3 component library with retro game aesthetics. Built with TypeScript, tree-shakable, dark mode support.',
+      },
+    ],
+    // Structured Data (JSON-LD)
+    [
+      'script',
+      { type: 'application/ld+json' },
+      JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareSourceCode',
+        name: 'Sakana Element',
+        description: 'A pixel-style Vue 3 component library with retro game aesthetics',
+        url: `${HOSTNAME}/`,
+        codeRepository: 'https://github.com/yu859/sakana-element',
+        programmingLanguage: ['TypeScript', 'Vue'],
+        runtimePlatform: 'Vue 3',
+        license: 'https://opensource.org/licenses/MIT',
+      }),
+    ],
+  ],
+
+  transformHead({ pageData }) {
+    const head: HeadConfig[] = [];
+    const relativePath = pageData.relativePath;
+
+    // Canonical URL
+    const canonicalUrl = `${HOSTNAME}/${relativePath}`
+      .replace(/index\.md$/, '')
+      .replace(/\.md$/, '.html');
+    head.push(['link', { rel: 'canonical', href: canonicalUrl }]);
+
+    // hreflang alternate links for bilingual pages
+    if (relativePath.startsWith('zh/')) {
+      const enPath = relativePath.replace(/^zh\//, 'en/');
+      const zhUrl = canonicalUrl;
+      const enUrl = `${HOSTNAME}/${enPath}`.replace(/index\.md$/, '').replace(/\.md$/, '.html');
+      head.push(
+        ['link', { rel: 'alternate', hreflang: 'zh-CN', href: zhUrl }],
+        ['link', { rel: 'alternate', hreflang: 'en-US', href: enUrl }],
+        ['link', { rel: 'alternate', hreflang: 'x-default', href: enUrl }],
+      );
+    } else if (relativePath.startsWith('en/')) {
+      const zhPath = relativePath.replace(/^en\//, 'zh/');
+      const enUrl = canonicalUrl;
+      const zhUrl = `${HOSTNAME}/${zhPath}`.replace(/index\.md$/, '').replace(/\.md$/, '.html');
+      head.push(
+        ['link', { rel: 'alternate', hreflang: 'zh-CN', href: zhUrl }],
+        ['link', { rel: 'alternate', hreflang: 'en-US', href: enUrl }],
+        ['link', { rel: 'alternate', hreflang: 'x-default', href: enUrl }],
+      );
+    } else if (relativePath === 'index.md') {
+      head.push(
+        ['link', { rel: 'alternate', hreflang: 'zh-CN', href: `${HOSTNAME}/zh/` }],
+        ['link', { rel: 'alternate', hreflang: 'en-US', href: `${HOSTNAME}/en/` }],
+        ['link', { rel: 'alternate', hreflang: 'x-default', href: `${HOSTNAME}/en/` }],
+      );
+    }
+
+    return head;
+  },
   vite: {
     resolve: {
       alias: {
@@ -134,6 +245,8 @@ export default defineConfig({
       label: '简体中文',
       lang: 'zh-CN',
       link: '/zh/',
+      description:
+        'Sakana Element - 像素风格 Vue 3 组件库 | 复古游戏美学，TypeScript 支持，按需引入，深色模式，像素组件库',
       themeConfig: {
         nav: [
           { text: '指南', link: '/zh/get-started' },
@@ -160,6 +273,8 @@ export default defineConfig({
       label: 'English',
       lang: 'en-US',
       link: '/en/',
+      description:
+        'Sakana Element - A pixel-style Vue 3 component library with retro game aesthetics, TypeScript support, tree-shaking, and dark mode',
       themeConfig: {
         nav: [
           { text: 'Guide', link: '/en/get-started' },

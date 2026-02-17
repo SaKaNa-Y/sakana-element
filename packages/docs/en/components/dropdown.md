@@ -1,3 +1,8 @@
+---
+title: Dropdown | Sakana Element
+description: Pixel-style dropdown menu component with multi-level support and custom triggers for Vue 3.
+---
+
 # Dropdown
 
 Toggleable menu for displaying lists of links and actions.

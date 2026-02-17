@@ -1,3 +1,8 @@
+---
+title: Button 按钮 | Sakana Element 像素组件库
+description: Sakana Element 像素风格按钮组件，支持多种类型、尺寸、禁用状态和加载效果。Vue 3 像素 UI 按钮组件。
+---
+
 # Button 按钮
 
 常用的操作按钮，具有像素风格的视觉效果。

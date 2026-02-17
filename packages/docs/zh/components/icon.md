@@ -1,3 +1,8 @@
+---
+title: Icon 图标 | Sakana Element 像素组件库
+description: Sakana Element 内置 486 个像素风格图标，基于 pixelarticons，支持尺寸、颜色、翻转、旋转和动画效果。
+---
+
 # Icon 图标
 
 Sakana Element 内置了 [pixelarticons](https://pixelarticons.com/) 的全部 486 个图标 - 一个基于 24x24 网格的像素风格图标库。所有图标开箱即用，无需额外安装。

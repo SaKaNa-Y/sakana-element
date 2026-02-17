@@ -1,3 +1,8 @@
+---
+title: Popconfirm | Sakana Element
+description: Pixel-style popconfirm component for lightweight confirmation interactions in Vue 3.
+---
+
 # Popconfirm
 
 A simple confirmation dialog of an element click action.

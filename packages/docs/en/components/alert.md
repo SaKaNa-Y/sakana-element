@@ -1,3 +1,8 @@
+---
+title: Alert | Sakana Element
+description: Pixel-style alert component with multiple types, closable, and custom descriptions for Vue 3.
+---
+
 # Alert
 
 Used to display important alert messages on the page.

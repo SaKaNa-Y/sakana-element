@@ -1,3 +1,8 @@
+---
+title: Getting Started | Sakana Element
+description: Learn how to install and set up Sakana Element pixel-style component library in your Vue 3 project with npm, yarn, or pnpm.
+---
+
 # Getting Started
 
 This guide will walk you through installing and setting up Sakana Element in your Vue 3 project.

@@ -1,3 +1,8 @@
+---
+title: Input | Sakana Element
+description: Pixel-style text input component for Sakana Element. Supports clearable, password, prefix/suffix icons, and disabled state for Vue 3.
+---
+
 # Input
 
 A text input component for receiving user input.

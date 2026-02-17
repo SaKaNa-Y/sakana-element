@@ -1,3 +1,8 @@
+---
+title: Tooltip 文字提示 | Sakana Element 像素组件库
+description: Sakana Element 像素风格文字提示组件，鼠标悬停显示详细信息。
+---
+
 # Tooltip 文字提示
 
 常用于展示鼠标 hover 时的提示信息。

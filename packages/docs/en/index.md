@@ -1,9 +1,14 @@
 ---
+title: Sakana Element - Pixel-style Vue 3 Component Library
+description: Sakana Element is a pixel-style Vue 3 component library featuring retro game aesthetics, TypeScript support, tree-shaking, dark mode, and full bilingual docs.
 layout: home
 hero:
   name: Sakana Element
   text: Pixel-style Vue 3 Component Library
   tagline: Retro game aesthetics, modern development experience
+  image:
+    src: /logo.svg
+    alt: Sakana Element Logo
   actions:
     - theme: brand
       text: Get Started

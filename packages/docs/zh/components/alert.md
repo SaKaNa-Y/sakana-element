@@ -1,3 +1,8 @@
+---
+title: Alert 提示 | Sakana Element 像素组件库
+description: Sakana Element 像素风格警告提示组件，支持多种类型、可关闭和自定义描述。
+---
+
 # Alert 提示
 
 用于页面中展示重要的提示信息。

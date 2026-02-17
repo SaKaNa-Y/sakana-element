@@ -1,3 +1,8 @@
+---
+title: Select | Sakana Element
+description: Pixel-style dropdown select component. Supports single selection, filterable, disabled, and custom options for Vue 3.
+---
+
 # Select
 
 A dropdown selector component for selecting a value from a set of options.

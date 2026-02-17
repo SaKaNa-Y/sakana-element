@@ -1,3 +1,8 @@
+---
+title: 深色模式 | Sakana Element 像素组件库
+description: 了解 Sakana Element 像素组件库的深色模式支持，采用 Catppuccin 配色方案，支持自动检测系统偏好。
+---
+
 # 深色模式
 
 Sakana Element 内置了完整的深色模式支持，采用 [Catppuccin Mocha](https://catppuccin.com/) 风格的配色方案。主题系统提供三种模式 —— `light`、`dark` 和 `system` —— 并自动将选择保存到 localStorage，同时支持检测系统偏好。

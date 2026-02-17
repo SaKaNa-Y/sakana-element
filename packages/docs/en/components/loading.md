@@ -1,3 +1,8 @@
+---
+title: Loading | Sakana Element
+description: Pixel-style loading component with fullscreen and area loading for Vue 3.
+---
+
 # Loading
 
 Show animation while loading data.
