@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.3 (2026-02-18)</small>
+
+* refactor(color): replace imperative if-chain customColorStyle with declarative template pattern ([b48b184](https://github.com/yu859/sakana-element/commit/b48b184))
+* feat: add Badge component with various styles and custom color support ([319f95d](https://github.com/yu859/sakana-element/commit/319f95d))
+
 ## <small>2.1.2 (2026-02-17)</small>
 
 * docs: add Icon flip/collection demos and streamline icon docs ([6f06384](https://github.com/yu859/sakana-element/commit/6f06384))
