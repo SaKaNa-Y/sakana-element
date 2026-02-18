@@ -25,6 +25,7 @@ export const RenderVnode = defineComponent({
   },
 });
 
+export * from './color';
 export * from './error';
 export * from './icon-map';
 export * from './icon-registry';

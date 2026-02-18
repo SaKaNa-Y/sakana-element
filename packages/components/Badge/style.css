@@ -1,0 +1,155 @@
+/* Badge Variables */
+.px-badge {
+  --px-badge-text-color: var(--px-color-white);
+  --px-badge-bg-color: var(--px-color-primary);
+  --px-badge-border-color: var(--px-color-primary-dark);
+  --px-badge-shadow-color: var(--px-color-primary-dark);
+  --px-badge-font-size: var(--px-font-size-extra-small);
+  --px-badge-height: 22px;
+  --px-badge-padding: 0 8px;
+}
+
+/* Base Badge Styles - Pixel Game Aesthetic */
+.px-badge {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--px-badge-height);
+  padding: var(--px-badge-padding);
+  font-size: var(--px-badge-font-size);
+  font-family: var(--px-font-family);
+  font-weight: 500;
+  color: var(--px-badge-text-color);
+  line-height: 1;
+  white-space: nowrap;
+  box-sizing: border-box;
+  position: relative;
+  background: transparent;
+  vertical-align: middle;
+
+  /* Remove traditional border — pixel border via pseudo-elements */
+  border: none;
+
+  /* Pixel shadow via drop-shadow */
+  filter: drop-shadow(2px 2px 0px var(--px-badge-shadow-color));
+
+  transition: none;
+
+  /* Border layer — filled with border color, clipped to pixel shape */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-badge-border-color);
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0,
+      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+    z-index: -1;
+  }
+
+  /* Fill layer — inset by border width, filled with bg color */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-badge-bg-color);
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0,
+      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+    z-index: -1;
+  }
+
+  & + & {
+    margin-left: 8px;
+  }
+
+  /* Outline variant */
+  &.is-outline {
+    border: 2px solid var(--px-badge-border-color);
+    filter: none;
+
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      clip-path: none;
+      inset: 0;
+      background: var(--px-badge-bg-color);
+    }
+  }
+
+  /* Dash variant */
+  &.is-dash {
+    border: 2px dashed var(--px-badge-border-color);
+    filter: none;
+
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      clip-path: none;
+      inset: 0;
+      background: var(--px-badge-bg-color);
+    }
+  }
+
+  /* Round - Pixel-style rounded corners */
+  &.is-round {
+    padding: 0 10px;
+
+    &::before, &::after {
+      clip-path: polygon(
+        0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+        calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+        100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+        4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+      );
+    }
+  }
+}
+
+/* Type variants */
+@each $val in primary, success, info, warning, danger {
+  .px-badge--$(val) {
+    --px-badge-text-color: var(--px-color-white);
+    --px-badge-bg-color: var(--px-color-$(val));
+    --px-badge-border-color: var(--px-color-$(val)-dark);
+    --px-badge-shadow-color: var(--px-color-$(val)-dark);
+  }
+
+  /* Outline variant for type */
+  .px-badge--$(val).is-outline {
+    --px-badge-text-color: var(--px-color-$(val));
+    --px-badge-bg-color: transparent;
+    --px-badge-border-color: var(--px-color-$(val));
+  }
+
+  /* Dash variant for type */
+  .px-badge--$(val).is-dash {
+    --px-badge-text-color: var(--px-color-$(val));
+    --px-badge-bg-color: var(--px-color-$(val)-light-9);
+    --px-badge-border-color: var(--px-color-$(val));
+  }
+}
+
+/* Size variants */
+.px-badge--large {
+  --px-badge-height: 28px;
+  --px-badge-padding: 0 12px;
+  --px-badge-font-size: var(--px-font-size-small);
+}
+
+.px-badge--small {
+  --px-badge-height: 18px;
+  --px-badge-padding: 0 6px;
+  --px-badge-font-size: 10px;
+  filter: drop-shadow(1px 1px 0px var(--px-badge-shadow-color));
+}

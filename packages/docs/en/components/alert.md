@@ -63,6 +63,30 @@ Use `center` property to center the content.
 demo-preview=../../demo/alert/TextCenter.vue
 :::
 
+## Outline
+
+Use `outline` property to display a solid border with transparent background.
+
+::: preview
+demo-preview=../../demo/alert/Outline.vue
+:::
+
+## Dash
+
+Use `dash` property to display a dashed border with a light background.
+
+::: preview
+demo-preview=../../demo/alert/Dash.vue
+:::
+
+## Custom Color
+
+Use `color` property to set a custom hex color. Works with default, outline, and dash variants.
+
+::: preview
+demo-preview=../../demo/alert/CustomColor.vue
+:::
+
 ## API
 
 ### Props
@@ -74,9 +98,11 @@ demo-preview=../../demo/alert/TextCenter.vue
 | description | Description text | `string` | — |
 | closable | Closable | `boolean` | `true` |
 | center | Center text | `boolean` | `false` |
-| close-text | Close button text | `string` | — |
 | show-icon | Show icon | `boolean` | `false` |
 | effect | Theme style | `'light' \| 'dark'` | `'light'` |
+| outline | Outline border style | `boolean` | `false` |
+| dash | Dashed border style | `boolean` | `false` |
+| color | Custom hex color | `string` | — |
 
 ### Events
 

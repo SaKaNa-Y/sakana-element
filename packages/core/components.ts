@@ -1,5 +1,6 @@
 import {
   PxAlert,
+  PxBadge,
   PxButton,
   PxButtonGroup,
   PxCollapse,
@@ -24,6 +25,7 @@ import {
 import type { Plugin } from 'vue';
 
 export default [
+  PxBadge,
   PxButton,
   PxButtonGroup,
   PxIcon,

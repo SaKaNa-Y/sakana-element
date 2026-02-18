@@ -136,6 +136,174 @@ describe('Alert.vue', () => {
     await wrapper.vm.open();
     expect(wrapper.find('.px-alert').attributes().style).toBe('');
   });
+
+  // --- New tests for vertical centering fix ---
+  it('should not render description element when no description is provided', () => {
+    const wrapper = mount(Alert, {
+      props: {
+        title,
+        closable: false,
+      },
+      global: {
+        stubs: ['PxIcon'],
+      },
+    });
+    expect(wrapper.find('.px-alert__description').exists()).toBe(false);
+  });
+
+  it('should render description element when description prop is provided', () => {
+    const wrapper = mount(Alert, {
+      props: {
+        title,
+        description: desc,
+        closable: false,
+      },
+      global: {
+        stubs: ['PxIcon'],
+      },
+    });
+    expect(wrapper.find('.px-alert__description').exists()).toBe(true);
+    expect(wrapper.find('.px-alert__description').text()).toBe(desc);
+  });
+
+  it('should render description element when default slot is provided', () => {
+    const wrapper = mount(Alert, {
+      props: {
+        title,
+        closable: false,
+      },
+      slots: {
+        default: desc,
+      },
+      global: {
+        stubs: ['PxIcon'],
+      },
+    });
+    expect(wrapper.find('.px-alert__description').exists()).toBe(true);
+    expect(wrapper.find('.px-alert__description').text()).toBe(desc);
+  });
+
+  // --- New tests for outline variant ---
+  it('should apply is-outline class when outline prop is true', () => {
+    const wrapper = mount(Alert, {
+      props: {
+        title,
+        outline: true,
+        closable: false,
+      },
+      global: {
+        stubs: ['PxIcon'],
+      },
+    });
+    expect(wrapper.find('.px-alert').classes()).toContain('is-outline');
+  });
+
+  it('should not apply is-outline class when outline prop is false', () => {
+    const wrapper = mount(Alert, {
+      props: {
+        title,
+        closable: false,
+      },
+      global: {
+        stubs: ['PxIcon'],
+      },
+    });
+    expect(wrapper.find('.px-alert').classes()).not.toContain('is-outline');
+  });
+
+  // --- New tests for dash variant ---
+  it('should apply is-dash class when dash prop is true', () => {
+    const wrapper = mount(Alert, {
+      props: {
+        title,
+        dash: true,
+        closable: false,
+      },
+      global: {
+        stubs: ['PxIcon'],
+      },
+    });
+    expect(wrapper.find('.px-alert').classes()).toContain('is-dash');
+  });
+
+  it('should not apply is-dash class when dash prop is false', () => {
+    const wrapper = mount(Alert, {
+      props: {
+        title,
+        closable: false,
+      },
+      global: {
+        stubs: ['PxIcon'],
+      },
+    });
+    expect(wrapper.find('.px-alert').classes()).not.toContain('is-dash');
+  });
+
+  // --- New tests for custom color ---
+  it('should apply custom color CSS variables when color prop is provided', () => {
+    const wrapper = mount(Alert, {
+      props: {
+        title,
+        color: '#ff6600',
+        closable: false,
+      },
+      global: {
+        stubs: ['PxIcon'],
+      },
+    });
+    const style = wrapper.find('.px-alert').attributes('style');
+    expect(style).toContain('--px-alert-bg-color');
+    expect(style).toContain('--px-alert-border-color');
+    expect(style).toContain('--px-alert-text-color');
+  });
+
+  it('should not apply custom color style when no color prop is provided', () => {
+    const wrapper = mount(Alert, {
+      props: {
+        title,
+        closable: false,
+      },
+      global: {
+        stubs: ['PxIcon'],
+      },
+    });
+    const style = wrapper.find('.px-alert').attributes('style') || '';
+    expect(style).not.toContain('--px-alert-bg-color');
+  });
+
+  it('should apply outline custom color correctly', () => {
+    const wrapper = mount(Alert, {
+      props: {
+        title,
+        color: '#ff6600',
+        outline: true,
+        closable: false,
+      },
+      global: {
+        stubs: ['PxIcon'],
+      },
+    });
+    const style = wrapper.find('.px-alert').attributes('style');
+    expect(style).toContain('--px-alert-bg-color');
+    expect(style).toContain('transparent');
+  });
+
+  it('should apply dash custom color correctly', () => {
+    const wrapper = mount(Alert, {
+      props: {
+        title,
+        color: '#ff6600',
+        dash: true,
+        closable: false,
+      },
+      global: {
+        stubs: ['PxIcon'],
+      },
+    });
+    const style = wrapper.find('.px-alert').attributes('style');
+    expect(style).toContain('--px-alert-bg-color');
+    expect(style).toContain('--px-alert-border-color');
+  });
 });
 
 describe('Alert/index', () => {

@@ -86,7 +86,9 @@
   /* Content area */
   .px-alert__content {
     color: var(--px-alert-text-color);
-    vertical-align: text-top;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     flex: 1;
 
     .px-alert__title {
@@ -160,6 +162,38 @@
       text-align: center;
     }
   }
+
+  /* Outline variant - solid border, transparent bg, no pixel shadow */
+  &.is-outline {
+    border: 2px solid var(--px-alert-border-color);
+    filter: none;
+
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      clip-path: none;
+      inset: 0;
+      background: var(--px-alert-bg-color);
+    }
+  }
+
+  /* Dash variant - dashed border, light bg, no pixel shadow */
+  &.is-dash {
+    border: 2px dashed var(--px-alert-border-color);
+    filter: none;
+
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      clip-path: none;
+      inset: 0;
+      background: var(--px-alert-bg-color);
+    }
+  }
 }
 
 /* Animation - instant for pixel feel */
@@ -193,5 +227,19 @@
     &::after {
       box-shadow: inset 2px 2px 0 0 rgba(255, 255, 255, 0.15);
     }
+  }
+
+  /* Outline variant for type */
+  .px-alert__$(val).is-outline {
+    --px-alert-text-color: var(--px-color-$(val));
+    --px-alert-bg-color: transparent;
+    --px-alert-border-color: var(--px-color-$(val));
+  }
+
+  /* Dash variant for type */
+  .px-alert__$(val).is-dash {
+    --px-alert-text-color: var(--px-color-$(val));
+    --px-alert-bg-color: var(--px-color-$(val)-light-9);
+    --px-alert-border-color: var(--px-color-$(val));
   }
 }

@@ -15,12 +15,12 @@ Basic usage of the input component.
 demo-preview=../../demo/input/Basic.vue
 :::
 
-## Different Sizes
+## Disabled & Readonly
 
-Use `size` property to set the input size.
+Use `disabled` and `readonly` properties to control the input state.
 
 ::: preview
-demo-preview=../../demo/input/Size.vue
+demo-preview=../../demo/input/Disabled.vue
 :::
 
 ## Clearable
@@ -37,6 +37,22 @@ Use `type="password"` and `show-password` properties to create a password input.
 
 ::: preview
 demo-preview=../../demo/input/Password.vue
+:::
+
+## Different Sizes
+
+Use `size` property to set the input size.
+
+::: preview
+demo-preview=../../demo/input/Size.vue
+:::
+
+## Prefix & Suffix
+
+Use `prefix-icon` / `suffix-icon` properties or `prefix` / `suffix` slots to add content before or after the input.
+
+::: preview
+demo-preview=../../demo/input/PrefixSuffix.vue
 :::
 
 ## API

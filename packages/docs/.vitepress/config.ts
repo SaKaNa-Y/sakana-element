@@ -52,6 +52,10 @@ const getDataItems = (lang: 'zh' | 'en') => [
     text: lang === 'zh' ? 'Collapse 折叠面板' : 'Collapse',
     link: `/${lang}/components/collapse`,
   },
+  {
+    text: lang === 'zh' ? 'Badge 徽章' : 'Badge',
+    link: `/${lang}/components/badge`,
+  },
 ];
 
 const getFeedbackItems = (lang: 'zh' | 'en') => [

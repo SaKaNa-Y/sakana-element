@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { typeIconMap } from '@sakana-element/utils';
+import { darken, getTextColor, lighten, typeIconMap } from '@sakana-element/utils';
 import { computed, ref } from 'vue';
 import PxIcon from '../Icon/Icon.vue';
 import type { AlertEmits, AlertInstance, AlertProps } from './types';
@@ -24,6 +24,40 @@ const visible = ref(true);
 const iconName = computed(() => typeIconMap.get(props.type) ?? 'circle-info');
 // 判断是否存在描述
 const withDescription = computed(() => props.description || slots.default);
+
+const customColorStyle = computed(() => {
+  if (!props.color) return {};
+
+  const color = props.color;
+  const textColor = getTextColor(color);
+  const darkColor = darken(color, 15);
+  const lightColor = lighten(color, 35);
+
+  if (props.outline) {
+    return {
+      '--px-alert-text-color': color,
+      '--px-alert-bg-color': 'transparent',
+      '--px-alert-border-color': color,
+      '--px-alert-shadow-color': 'transparent',
+    } as Record<string, string>;
+  }
+
+  if (props.dash) {
+    return {
+      '--px-alert-text-color': color,
+      '--px-alert-bg-color': lightColor,
+      '--px-alert-border-color': color,
+      '--px-alert-shadow-color': 'transparent',
+    } as Record<string, string>;
+  }
+
+  return {
+    '--px-alert-text-color': textColor,
+    '--px-alert-bg-color': color,
+    '--px-alert-border-color': darkColor,
+    '--px-alert-shadow-color': darkColor,
+  } as Record<string, string>;
+});
 
 function close() {
   visible.value = false;
@@ -51,7 +85,10 @@ defineExpose<AlertInstance>({
         [`px-alert__${type}`]: type,
         [`px-alert__${effect}`]: effect,
         'text-center': center,
+        'is-outline': outline,
+        'is-dash': dash,
       }"
+      :style="customColorStyle"
     >
       <px-icon
         v-if="showIcon"
@@ -67,7 +104,7 @@ defineExpose<AlertInstance>({
         >
           <slot name="title">{{ title }}</slot>
         </span>
-        <p class="px-alert__description">
+        <p v-if="withDescription" class="px-alert__description">
           <slot>{{ description }}</slot>
         </p>
         <div class="px-alert__close" v-if="closable">

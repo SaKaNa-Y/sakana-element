@@ -15,12 +15,12 @@ description: Sakana Element 像素风格输入框组件，支持文本输入、�
 demo-preview=../../demo/input/Basic.vue
 :::
 
-## 不同尺寸
+## 禁用与只读
 
-使用 `size` 属性来设置输入框的大小。
+使用 `disabled` 和 `readonly` 属性来控制输入框状态。
 
 ::: preview
-demo-preview=../../demo/input/Size.vue
+demo-preview=../../demo/input/Disabled.vue
 :::
 
 ## 可清空
@@ -37,6 +37,22 @@ demo-preview=../../demo/input/Clearable.vue
 
 ::: preview
 demo-preview=../../demo/input/Password.vue
+:::
+
+## 不同尺寸
+
+使用 `size` 属性来设置输入框的大小。
+
+::: preview
+demo-preview=../../demo/input/Size.vue
+:::
+
+## 前缀和后缀
+
+使用 `prefix-icon` / `suffix-icon` 属性或 `prefix` / `suffix` 插槽来在输入框前后添加内容。
+
+::: preview
+demo-preview=../../demo/input/PrefixSuffix.vue
 :::
 
 ## API

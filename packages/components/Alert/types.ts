@@ -8,6 +8,9 @@ export interface AlertProps {
   closable?: boolean;
   center?: boolean;
   showIcon?: boolean;
+  outline?: boolean;
+  dash?: boolean;
+  color?: string;
 }
 
 export type AlertEmits = (e: 'close') => void;

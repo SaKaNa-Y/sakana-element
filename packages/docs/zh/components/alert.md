@@ -63,6 +63,30 @@ demo-preview=../../demo/alert/IconDesc.vue
 demo-preview=../../demo/alert/TextCenter.vue
 :::
 
+## 轮廓样式
+
+使用 `outline` 属性来显示实线边框、透明背景。
+
+::: preview
+demo-preview=../../demo/alert/Outline.vue
+:::
+
+## 虚线样式
+
+使用 `dash` 属性来显示虚线边框、浅色背景。
+
+::: preview
+demo-preview=../../demo/alert/Dash.vue
+:::
+
+## 自定义颜色
+
+使用 `color` 属性来设置自定义十六进制颜色。可与默认、轮廓和虚线样式搭配使用。
+
+::: preview
+demo-preview=../../demo/alert/CustomColor.vue
+:::
+
 ## API
 
 ### 属性
@@ -74,9 +98,11 @@ demo-preview=../../demo/alert/TextCenter.vue
 | description | 描述文本 | `string` | — |
 | closable | 是否可关闭 | `boolean` | `true` |
 | center | 文字是否居中 | `boolean` | `false` |
-| close-text | 关闭按钮文本 | `string` | — |
 | show-icon | 是否显示图标 | `boolean` | `false` |
 | effect | 主题样式 | `'light' \| 'dark'` | `'light'` |
+| outline | 轮廓边框样式 | `boolean` | `false` |
+| dash | 虚线边框样式 | `boolean` | `false` |
+| color | 自定义十六进制颜色 | `string` | — |
 
 ### 事件
 
