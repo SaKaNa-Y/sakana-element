@@ -47,6 +47,7 @@ createApp(App).use(SakanaElement).mount('#app')
 | `PxSwitch` | Switch / 开关 |
 | `PxIcon` | Icon / 图标 (486 built-in pixelarticons) |
 | `PxAlert` | Alert / 警告提示 |
+| `PxBadge` | Badge / 徽章 |
 | `PxCollapse` | Collapse / 折叠面板 |
 | `PxDropdown` | Dropdown / 下拉菜单 |
 | `PxForm` | Form / 表单 |

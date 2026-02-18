@@ -32,3 +32,65 @@ export function getTextColor(hex: string): string {
   const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
   return luminance > 0.6 ? '#1e1e2e' : '#ffffff';
 }
+
+/** Mapping from CSS variable suffix → palette key */
+export type ColorTemplate = Record<string, string>;
+
+/**
+ * Build a standard color palette from a hex color.
+ * Components can extend this with additional derived colors.
+ */
+export function createColorPalette(hex: string): Record<string, string> {
+  return {
+    color: hex,
+    dark: darken(hex, 15),
+    light: lighten(hex, 35),
+    contrast: getTextColor(hex),
+    transparent: 'transparent',
+  };
+}
+
+/**
+ * Resolve a color template into CSS custom properties.
+ *
+ * @param palette  - Pre-computed color values (e.g. from createColorPalette)
+ * @param prefix   - CSS variable prefix (e.g. 'px-alert', 'px-badge')
+ * @param template - Maps CSS variable suffix → palette key
+ * @returns Record to bind via :style
+ */
+export function resolveColorVars(
+  palette: Record<string, string>,
+  prefix: string,
+  template: ColorTemplate,
+): Record<string, string> {
+  const result: Record<string, string> = {};
+  for (const [suffix, paletteKey] of Object.entries(template)) {
+    result[`--${prefix}-${suffix}`] = palette[paletteKey];
+  }
+  return result;
+}
+
+/**
+ * Shared variant templates for simple components (Alert, Badge).
+ * Each key maps a CSS variable suffix to a palette color key.
+ */
+export const SIMPLE_COLOR_TEMPLATES: Record<string, ColorTemplate> = {
+  outline: {
+    'text-color': 'color',
+    'bg-color': 'transparent',
+    'border-color': 'color',
+    'shadow-color': 'transparent',
+  },
+  dash: {
+    'text-color': 'color',
+    'bg-color': 'light',
+    'border-color': 'color',
+    'shadow-color': 'transparent',
+  },
+  default: {
+    'text-color': 'contrast',
+    'bg-color': 'color',
+    'border-color': 'dark',
+    'shadow-color': 'dark',
+  },
+};

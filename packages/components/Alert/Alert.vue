@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { darken, getTextColor, lighten, typeIconMap } from '@sakana-element/utils';
+import {
+  createColorPalette,
+  resolveColorVars,
+  SIMPLE_COLOR_TEMPLATES,
+  typeIconMap,
+} from '@sakana-element/utils';
 import { computed, ref } from 'vue';
 import PxIcon from '../Icon/Icon.vue';
 import type { AlertEmits, AlertInstance, AlertProps } from './types';
@@ -27,36 +32,12 @@ const withDescription = computed(() => props.description || slots.default);
 
 const customColorStyle = computed(() => {
   if (!props.color) return {};
-
-  const color = props.color;
-  const textColor = getTextColor(color);
-  const darkColor = darken(color, 15);
-  const lightColor = lighten(color, 35);
-
-  if (props.outline) {
-    return {
-      '--px-alert-text-color': color,
-      '--px-alert-bg-color': 'transparent',
-      '--px-alert-border-color': color,
-      '--px-alert-shadow-color': 'transparent',
-    } as Record<string, string>;
-  }
-
-  if (props.dash) {
-    return {
-      '--px-alert-text-color': color,
-      '--px-alert-bg-color': lightColor,
-      '--px-alert-border-color': color,
-      '--px-alert-shadow-color': 'transparent',
-    } as Record<string, string>;
-  }
-
-  return {
-    '--px-alert-text-color': textColor,
-    '--px-alert-bg-color': color,
-    '--px-alert-border-color': darkColor,
-    '--px-alert-shadow-color': darkColor,
-  } as Record<string, string>;
+  const variant = props.outline ? 'outline' : props.dash ? 'dash' : 'default';
+  return resolveColorVars(
+    createColorPalette(props.color),
+    'px-alert',
+    SIMPLE_COLOR_TEMPLATES[variant],
+  );
 });
 
 function close() {
