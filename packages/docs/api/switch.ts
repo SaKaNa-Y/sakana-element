@@ -64,6 +64,7 @@ export const switchApi: ApiSection[] = [
     items: [
       {
         name: 'change',
+        category: 'event',
         type: '(value: boolean) => void',
         desc: { zh: '状态改变时触发', en: 'Triggered when state changes' },
       },
@@ -74,6 +75,7 @@ export const switchApi: ApiSection[] = [
     items: [
       {
         name: 'ref',
+        category: 'expose',
         type: 'Ref<HTMLInputElement>',
         desc: { zh: '开关 HTML 元素', en: 'Switch HTML element' },
       },

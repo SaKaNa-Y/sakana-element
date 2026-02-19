@@ -9,7 +9,18 @@ const props = defineProps<{
 
 const search = ref('');
 
-const CATEGORY_ORDER: ApiCategory[] = ['style', 'size', 'color', 'state', 'behavior', 'content'];
+const CATEGORY_ORDER: ApiCategory[] = [
+  'style',
+  'size',
+  'color',
+  'state',
+  'behavior',
+  'content',
+  'event',
+  'slot',
+  'expose',
+  'method',
+];
 
 const CATEGORY_CONFIG: Record<
   ApiCategory,
@@ -57,12 +68,41 @@ const CATEGORY_CONFIG: Record<
     cssBg: 'var(--api-cat-content-bg)',
     icon: 'article',
   },
+  event: {
+    en: 'Event',
+    zh: '事件',
+    cssColor: 'var(--api-cat-event)',
+    cssBg: 'var(--api-cat-event-bg)',
+    icon: 'radio-on',
+  },
+  slot: {
+    en: 'Slot',
+    zh: '插槽',
+    cssColor: 'var(--api-cat-slot)',
+    cssBg: 'var(--api-cat-slot-bg)',
+    icon: 'view-col',
+  },
+  expose: {
+    en: 'Expose',
+    zh: '暴露',
+    cssColor: 'var(--api-cat-expose)',
+    cssBg: 'var(--api-cat-expose-bg)',
+    icon: 'external-link',
+  },
+  method: {
+    en: 'Method',
+    zh: '方法',
+    cssColor: 'var(--api-cat-method)',
+    cssBg: 'var(--api-cat-method-bg)',
+    icon: 'script',
+  },
 };
 
 interface FlatItem {
   name: string;
   desc: { zh: string; en: string };
   category?: ApiCategory;
+  component?: string;
   type?: string;
   default?: string;
   sectionTitle: { zh: string; en: string };
@@ -73,6 +113,7 @@ function matchesSearch(item: FlatItem, q: string): boolean {
   if (!q) return true;
   const lower = q.toLowerCase();
   if (item.name.toLowerCase().includes(lower)) return true;
+  if (item.component?.toLowerCase().includes(lower)) return true;
   if (item.type?.toLowerCase().includes(lower)) return true;
   if (item.desc.zh.toLowerCase().includes(lower)) return true;
   if (item.desc.en.toLowerCase().includes(lower)) return true;
@@ -148,8 +189,9 @@ const searchPlaceholder = computed(() =>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in filteredItems" :key="item.name + '-' + item.sectionIndex" class="api-row">
+          <tr v-for="item in filteredItems" :key="(item.component || '') + '-' + item.name + '-' + item.sectionIndex" class="api-row">
             <td class="col-name">
+              <span v-if="item.component" class="api-component">{{ item.component }}</span>
               <code class="api-name">{{ item.name }}</code>
             </td>
             <td class="col-category">
@@ -199,6 +241,16 @@ const searchPlaceholder = computed(() =>
   --api-cat-behavior-bg: rgba(168, 85, 247, 0.12);
   --api-cat-content-bg: rgba(20, 184, 166, 0.12);
 
+  --api-cat-event: #ec4899;
+  --api-cat-slot: #06b6d4;
+  --api-cat-expose: #eab308;
+  --api-cat-method: #6366f1;
+
+  --api-cat-event-bg: rgba(236, 72, 153, 0.12);
+  --api-cat-slot-bg: rgba(6, 182, 212, 0.12);
+  --api-cat-expose-bg: rgba(234, 179, 8, 0.12);
+  --api-cat-method-bg: rgba(99, 102, 241, 0.12);
+
   --api-border: #e5e7eb;
   --api-bg: #ffffff;
   --api-bg-header: #f9fafb;
@@ -221,6 +273,11 @@ const searchPlaceholder = computed(() =>
   --api-cat-state-bg: rgba(249, 115, 22, 0.2);
   --api-cat-behavior-bg: rgba(168, 85, 247, 0.2);
   --api-cat-content-bg: rgba(20, 184, 166, 0.2);
+
+  --api-cat-event-bg: rgba(236, 72, 153, 0.2);
+  --api-cat-slot-bg: rgba(6, 182, 212, 0.2);
+  --api-cat-expose-bg: rgba(234, 179, 8, 0.2);
+  --api-cat-method-bg: rgba(99, 102, 241, 0.2);
 
   --api-border: #374151;
   --api-bg: #1f2937;
@@ -330,6 +387,13 @@ const searchPlaceholder = computed(() =>
 }
 
 /* ───── Name code ───── */
+.api-component {
+  display: block;
+  font-size: 11px;
+  color: var(--api-text-muted);
+  margin-bottom: 2px;
+}
+
 .api-name {
   font-family: 'Fira Code', 'Cascadia Code', ui-monospace, monospace;
   font-size: 13px;

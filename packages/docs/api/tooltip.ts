@@ -72,6 +72,7 @@ export const tooltipApi: ApiSection[] = [
     items: [
       {
         name: 'visible-change',
+        category: 'event',
         type: '(visible: boolean) => void',
         desc: { zh: '可见性改变时触发', en: 'Triggered when visibility changes' },
       },
@@ -80,15 +81,29 @@ export const tooltipApi: ApiSection[] = [
   {
     title: { zh: '插槽', en: 'Slots' },
     items: [
-      { name: 'default', desc: { zh: '触发 Tooltip 的元素', en: 'Element that triggers Tooltip' } },
-      { name: 'content', desc: { zh: '自定义内容', en: 'Custom content' } },
+      {
+        name: 'default',
+        category: 'slot',
+        desc: { zh: '触发 Tooltip 的元素', en: 'Element that triggers Tooltip' },
+      },
+      { name: 'content', category: 'slot', desc: { zh: '自定义内容', en: 'Custom content' } },
     ],
   },
   {
     title: { zh: '暴露', en: 'Exposes' },
     items: [
-      { name: 'show', type: '() => void', desc: { zh: '显示 Tooltip', en: 'Show Tooltip' } },
-      { name: 'hide', type: '() => void', desc: { zh: '隐藏 Tooltip', en: 'Hide Tooltip' } },
+      {
+        name: 'show',
+        category: 'expose',
+        type: '() => void',
+        desc: { zh: '显示 Tooltip', en: 'Show Tooltip' },
+      },
+      {
+        name: 'hide',
+        category: 'expose',
+        type: '() => void',
+        desc: { zh: '隐藏 Tooltip', en: 'Hide Tooltip' },
+      },
     ],
   },
 ];

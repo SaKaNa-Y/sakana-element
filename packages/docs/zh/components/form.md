@@ -12,13 +12,7 @@ import { formApi, formItemApi } from '../../api/form'
 由输入框、选择器、单选框、多选框等控件组成，用以收集、校验、提交数据。
 
 
-### Form
-
-<ApiTable :sections="formApi" lang="zh" />
-
-### FormItem
-
-<ApiTable :sections="formItemApi" lang="zh" />
+<ApiTable :sections="[...formApi, ...formItemApi]" lang="zh" />
 
 ## 基础用法
 

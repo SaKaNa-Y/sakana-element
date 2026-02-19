@@ -73,31 +73,37 @@ export const notificationApi: ApiSection[] = [
     items: [
       {
         name: 'PxNotification',
+        category: 'method',
         type: '(options: NotificationOptions) => NotificationHandler',
         desc: { zh: '显示通知', en: 'Show notification' },
       },
       {
         name: 'PxNotification.success',
+        category: 'method',
         type: '(options: NotificationOptions) => NotificationHandler',
         desc: { zh: '显示成功通知', en: 'Show success notification' },
       },
       {
         name: 'PxNotification.warning',
+        category: 'method',
         type: '(options: NotificationOptions) => NotificationHandler',
         desc: { zh: '显示警告通知', en: 'Show warning notification' },
       },
       {
         name: 'PxNotification.info',
+        category: 'method',
         type: '(options: NotificationOptions) => NotificationHandler',
         desc: { zh: '显示信息通知', en: 'Show info notification' },
       },
       {
         name: 'PxNotification.danger',
+        category: 'method',
         type: '(options: NotificationOptions) => NotificationHandler',
         desc: { zh: '显示危险通知', en: 'Show danger notification' },
       },
       {
         name: 'PxNotification.closeAll',
+        category: 'method',
         type: '() => void',
         desc: { zh: '关闭所有通知', en: 'Close all notifications' },
       },

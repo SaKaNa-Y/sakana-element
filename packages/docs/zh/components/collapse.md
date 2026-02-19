@@ -12,13 +12,7 @@ import { collapseApi, collapseItemApi } from '../../api/collapse'
 可以折叠/展开的内容区域。
 
 
-### Collapse
-
-<ApiTable :sections="collapseApi" lang="zh" />
-
-### CollapseItem
-
-<ApiTable :sections="collapseItemApi" lang="zh" />
+<ApiTable :sections="[...collapseApi, ...collapseItemApi]" lang="zh" />
 
 ## 基础用法
 

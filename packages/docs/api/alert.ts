@@ -73,6 +73,7 @@ export const alertApi: ApiSection[] = [
     items: [
       {
         name: 'close',
+        category: 'event',
         type: '() => void',
         desc: { zh: '关闭时触发', en: 'Triggered when closed' },
       },
@@ -81,8 +82,8 @@ export const alertApi: ApiSection[] = [
   {
     title: { zh: '插槽', en: 'Slots' },
     items: [
-      { name: 'default', desc: { zh: '默认内容', en: 'Default content' } },
-      { name: 'title', desc: { zh: '标题内容', en: 'Title content' } },
+      { name: 'default', category: 'slot', desc: { zh: '默认内容', en: 'Default content' } },
+      { name: 'title', category: 'slot', desc: { zh: '标题内容', en: 'Title content' } },
     ],
   },
 ];

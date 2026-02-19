@@ -77,34 +77,43 @@ export const inputApi: ApiSection[] = [
     items: [
       {
         name: 'input',
+        category: 'event',
         type: '(value: string) => void',
         desc: { zh: '输入时触发', en: 'Triggered on input' },
       },
       {
         name: 'change',
+        category: 'event',
         type: '(value: string) => void',
         desc: { zh: '值改变时触发', en: 'Triggered when value changes' },
       },
       {
         name: 'focus',
+        category: 'event',
         type: '(event: FocusEvent) => void',
         desc: { zh: '获取焦点时触发', en: 'Triggered on focus' },
       },
       {
         name: 'blur',
+        category: 'event',
         type: '(event: FocusEvent) => void',
         desc: { zh: '失去焦点时触发', en: 'Triggered on blur' },
       },
-      { name: 'clear', type: '() => void', desc: { zh: '清空时触发', en: 'Triggered on clear' } },
+      {
+        name: 'clear',
+        category: 'event',
+        type: '() => void',
+        desc: { zh: '清空时触发', en: 'Triggered on clear' },
+      },
     ],
   },
   {
     title: { zh: '插槽', en: 'Slots' },
     items: [
-      { name: 'prefix', desc: { zh: '前缀内容', en: 'Prefix content' } },
-      { name: 'suffix', desc: { zh: '后缀内容', en: 'Suffix content' } },
-      { name: 'prepend', desc: { zh: '前置内容', en: 'Prepend content' } },
-      { name: 'append', desc: { zh: '后置内容', en: 'Append content' } },
+      { name: 'prefix', category: 'slot', desc: { zh: '前缀内容', en: 'Prefix content' } },
+      { name: 'suffix', category: 'slot', desc: { zh: '后缀内容', en: 'Suffix content' } },
+      { name: 'prepend', category: 'slot', desc: { zh: '前置内容', en: 'Prepend content' } },
+      { name: 'append', category: 'slot', desc: { zh: '后置内容', en: 'Append content' } },
     ],
   },
   {
@@ -112,16 +121,28 @@ export const inputApi: ApiSection[] = [
     items: [
       {
         name: 'ref',
+        category: 'expose',
         type: 'Ref<HTMLInputElement>',
         desc: { zh: '输入框 HTML 元素', en: 'Input HTML element' },
       },
       {
         name: 'focus',
+        category: 'expose',
         type: '() => void',
         desc: { zh: '使输入框获取焦点', en: 'Focus the input' },
       },
-      { name: 'blur', type: '() => void', desc: { zh: '使输入框失去焦点', en: 'Blur the input' } },
-      { name: 'clear', type: '() => void', desc: { zh: '清空输入框内容', en: 'Clear the input' } },
+      {
+        name: 'blur',
+        category: 'expose',
+        type: '() => void',
+        desc: { zh: '使输入框失去焦点', en: 'Blur the input' },
+      },
+      {
+        name: 'clear',
+        category: 'expose',
+        type: '() => void',
+        desc: { zh: '清空输入框内容', en: 'Clear the input' },
+      },
     ],
   },
 ];

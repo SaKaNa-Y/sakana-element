@@ -12,13 +12,7 @@ import { selectApi, optionApi } from '../../api/select'
 A dropdown selector component for selecting a value from a set of options.
 
 
-### Select
-
-<ApiTable :sections="selectApi" lang="en" />
-
-### Option
-
-<ApiTable :sections="optionApi" lang="en" />
+<ApiTable :sections="[...selectApi, ...optionApi]" lang="en" />
 
 ## Basic Usage
 

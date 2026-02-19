@@ -74,11 +74,13 @@ export const popconfirmApi: ApiSection[] = [
     items: [
       {
         name: 'confirm',
+        category: 'event',
         type: '(event: MouseEvent) => void',
         desc: { zh: '点击确认按钮时触发', en: 'Triggered when confirm is clicked' },
       },
       {
         name: 'cancel',
+        category: 'event',
         type: '(event: MouseEvent) => void',
         desc: { zh: '点击取消按钮时触发', en: 'Triggered when cancel is clicked' },
       },
@@ -89,9 +91,10 @@ export const popconfirmApi: ApiSection[] = [
     items: [
       {
         name: 'default',
+        category: 'slot',
         desc: { zh: '触发 Popconfirm 的元素', en: 'Element that triggers Popconfirm' },
       },
-      { name: 'reference', desc: { zh: '同 default', en: 'Same as default' } },
+      { name: 'reference', category: 'slot', desc: { zh: '同 default', en: 'Same as default' } },
     ],
   },
 ];

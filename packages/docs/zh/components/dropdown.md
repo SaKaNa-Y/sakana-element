@@ -12,13 +12,7 @@ import { dropdownApi, dropdownItemApi } from '../../api/dropdown'
 将动作或菜单折叠到下拉菜单中。
 
 
-### Dropdown
-
-<ApiTable :sections="dropdownApi" lang="zh" />
-
-### DropdownItem
-
-<ApiTable :sections="dropdownItemApi" lang="zh" />
+<ApiTable :sections="[...dropdownApi, ...dropdownItemApi]" lang="zh" />
 
 ## 基础用法
 

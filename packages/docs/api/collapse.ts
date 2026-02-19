@@ -24,6 +24,7 @@ export const collapseApi: ApiSection[] = [
     items: [
       {
         name: 'change',
+        category: 'event',
         type: '(activeNames: string | string[]) => void',
         desc: { zh: '激活面板改变时触发', en: 'Triggered when active panels change' },
       },
@@ -38,13 +39,21 @@ export const collapseItemApi: ApiSection[] = [
       {
         name: 'name',
         category: 'content',
+        component: 'CollapseItem',
         type: 'string',
         desc: { zh: '唯一标识符', en: 'Unique identifier' },
       },
-      { name: 'title', category: 'content', type: 'string', desc: { zh: '标题', en: 'Title' } },
+      {
+        name: 'title',
+        category: 'content',
+        component: 'CollapseItem',
+        type: 'string',
+        desc: { zh: '标题', en: 'Title' },
+      },
       {
         name: 'disabled',
         category: 'state',
+        component: 'CollapseItem',
         type: 'boolean',
         default: 'false',
         desc: { zh: '是否禁用', en: 'Whether disabled' },
@@ -54,8 +63,18 @@ export const collapseItemApi: ApiSection[] = [
   {
     title: { zh: '插槽', en: 'Slots' },
     items: [
-      { name: 'default', desc: { zh: '面板内容', en: 'Panel content' } },
-      { name: 'title', desc: { zh: '自定义标题', en: 'Custom title' } },
+      {
+        name: 'default',
+        category: 'slot',
+        component: 'CollapseItem',
+        desc: { zh: '面板内容', en: 'Panel content' },
+      },
+      {
+        name: 'title',
+        category: 'slot',
+        component: 'CollapseItem',
+        desc: { zh: '自定义标题', en: 'Custom title' },
+      },
     ],
   },
 ];

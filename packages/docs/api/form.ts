@@ -70,6 +70,7 @@ export const formApi: ApiSection[] = [
     items: [
       {
         name: 'validate',
+        category: 'event',
         type: '(prop: string, isValid: boolean, message: string) => void',
         desc: { zh: '字段验证后触发', en: 'Triggered after field validation' },
       },
@@ -80,21 +81,25 @@ export const formApi: ApiSection[] = [
     items: [
       {
         name: 'validate',
+        category: 'expose',
         type: '(callback?: FormValidateCallback) => Promise<boolean>',
         desc: { zh: '验证整个表单', en: 'Validate the whole form' },
       },
       {
         name: 'validateField',
+        category: 'expose',
         type: '(props?: string[], callback?: FormValidateCallback) => Promise<boolean>',
         desc: { zh: '验证指定字段', en: 'Validate specific fields' },
       },
       {
         name: 'resetFields',
+        category: 'expose',
         type: '(props?: string[]) => void',
         desc: { zh: '重置表单字段', en: 'Reset form fields' },
       },
       {
         name: 'clearValidate',
+        category: 'expose',
         type: '(props?: string[]) => void',
         desc: { zh: '清除验证状态', en: 'Clear validation status' },
       },
@@ -109,24 +114,28 @@ export const formItemApi: ApiSection[] = [
       {
         name: 'prop',
         category: 'content',
+        component: 'FormItem',
         type: 'string | string[]',
         desc: { zh: 'model 的键名', en: 'Key name of model' },
       },
       {
         name: 'label',
         category: 'content',
+        component: 'FormItem',
         type: 'string',
         desc: { zh: '标签文本', en: 'Label text' },
       },
       {
         name: 'labelWidth',
         category: 'style',
+        component: 'FormItem',
         type: 'number | string',
         desc: { zh: '标签宽度', en: 'Label width' },
       },
       {
         name: 'required',
         category: 'behavior',
+        component: 'FormItem',
         type: 'boolean',
         default: 'false',
         desc: { zh: '是否必填', en: 'Whether required' },
@@ -134,18 +143,21 @@ export const formItemApi: ApiSection[] = [
       {
         name: 'rules',
         category: 'behavior',
+        component: 'FormItem',
         type: 'FormItemRule[]',
         desc: { zh: '验证规则', en: 'Validation rules' },
       },
       {
         name: 'error',
         category: 'content',
+        component: 'FormItem',
         type: 'string',
         desc: { zh: '错误信息', en: 'Error message' },
       },
       {
         name: 'showMessage',
         category: 'behavior',
+        component: 'FormItem',
         type: 'boolean',
         default: 'true',
         desc: { zh: '是否显示校验错误信息', en: 'Whether to show validation error' },
@@ -153,6 +165,7 @@ export const formItemApi: ApiSection[] = [
       {
         name: 'disabled',
         category: 'state',
+        component: 'FormItem',
         type: 'boolean',
         default: 'false',
         desc: { zh: '是否禁用', en: 'Whether disabled' },
@@ -162,9 +175,24 @@ export const formItemApi: ApiSection[] = [
   {
     title: { zh: '插槽', en: 'Slots' },
     items: [
-      { name: 'default', desc: { zh: '表单项内容', en: 'Form item content' } },
-      { name: 'label', desc: { zh: '自定义标签', en: 'Custom label' } },
-      { name: 'error', desc: { zh: '自定义错误信息', en: 'Custom error message' } },
+      {
+        name: 'default',
+        category: 'slot',
+        component: 'FormItem',
+        desc: { zh: '表单项内容', en: 'Form item content' },
+      },
+      {
+        name: 'label',
+        category: 'slot',
+        component: 'FormItem',
+        desc: { zh: '自定义标签', en: 'Custom label' },
+      },
+      {
+        name: 'error',
+        category: 'slot',
+        component: 'FormItem',
+        desc: { zh: '自定义错误信息', en: 'Custom error message' },
+      },
     ],
   },
 ];

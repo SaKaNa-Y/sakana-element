@@ -127,6 +127,7 @@ export const buttonApi: ApiSection[] = [
     items: [
       {
         name: 'click',
+        category: 'event',
         type: '(event: MouseEvent) => void',
         desc: { zh: '点击按钮时触发', en: 'Triggered when button is clicked' },
       },
@@ -135,8 +136,12 @@ export const buttonApi: ApiSection[] = [
   {
     title: { zh: '插槽', en: 'Slots' },
     items: [
-      { name: 'default', desc: { zh: '按钮内容', en: 'Button content' } },
-      { name: 'loading', desc: { zh: '自定义加载图标', en: 'Custom loading icon' } },
+      { name: 'default', category: 'slot', desc: { zh: '按钮内容', en: 'Button content' } },
+      {
+        name: 'loading',
+        category: 'slot',
+        desc: { zh: '自定义加载图标', en: 'Custom loading icon' },
+      },
     ],
   },
   {
@@ -144,13 +149,25 @@ export const buttonApi: ApiSection[] = [
     items: [
       {
         name: 'ref',
+        category: 'expose',
         type: 'Ref<HTMLButtonElement>',
         desc: { zh: '按钮 HTML 元素', en: 'Button HTML element' },
       },
-      { name: 'size', type: 'ComputedRef<string>', desc: { zh: '按钮尺寸', en: 'Button size' } },
-      { name: 'type', type: 'ComputedRef<string>', desc: { zh: '按钮类型', en: 'Button type' } },
+      {
+        name: 'size',
+        category: 'expose',
+        type: 'ComputedRef<string>',
+        desc: { zh: '按钮尺寸', en: 'Button size' },
+      },
+      {
+        name: 'type',
+        category: 'expose',
+        type: 'ComputedRef<string>',
+        desc: { zh: '按钮类型', en: 'Button type' },
+      },
       {
         name: 'disabled',
+        category: 'expose',
         type: 'ComputedRef<boolean>',
         desc: { zh: '是否禁用', en: 'Disabled state' },
       },

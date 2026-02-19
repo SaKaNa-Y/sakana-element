@@ -12,13 +12,7 @@ import { dropdownApi, dropdownItemApi } from '../../api/dropdown'
 Toggleable menu for displaying lists of links and actions.
 
 
-### Dropdown
-
-<ApiTable :sections="dropdownApi" lang="en" />
-
-### DropdownItem
-
-<ApiTable :sections="dropdownItemApi" lang="en" />
+<ApiTable :sections="[...dropdownApi, ...dropdownItemApi]" lang="en" />
 
 ## Basic Usage
 

@@ -45,16 +45,19 @@ export const selectApi: ApiSection[] = [
     items: [
       {
         name: 'change',
+        category: 'event',
         type: '(value: string | number) => void',
         desc: { zh: '选中值改变时触发', en: 'Triggered when selected value changes' },
       },
       {
         name: 'visible-change',
+        category: 'event',
         type: '(visible: boolean) => void',
         desc: { zh: '下拉框显示/隐藏时触发', en: 'Triggered when dropdown shows/hides' },
       },
       {
         name: 'clear',
+        category: 'event',
         type: '() => void',
         desc: { zh: '清空选中值时触发', en: 'Triggered when value is cleared' },
       },
@@ -69,18 +72,21 @@ export const optionApi: ApiSection[] = [
       {
         name: 'value',
         category: 'content',
+        component: 'Option',
         type: 'string | number',
         desc: { zh: '选项值', en: 'Option value' },
       },
       {
         name: 'label',
         category: 'content',
+        component: 'Option',
         type: 'string',
         desc: { zh: '选项标签', en: 'Option label' },
       },
       {
         name: 'disabled',
         category: 'state',
+        component: 'Option',
         type: 'boolean',
         default: 'false',
         desc: { zh: '是否禁用', en: 'Whether disabled' },

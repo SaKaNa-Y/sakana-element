@@ -119,26 +119,31 @@ export const messageBoxApi: ApiSection[] = [
     items: [
       {
         name: 'PxMessageBox',
+        category: 'method',
         type: '(options: MessageBoxOptions) => Promise<MessageBoxData>',
         desc: { zh: '打开消息弹框', en: 'Open message box' },
       },
       {
         name: 'PxMessageBox.alert',
+        category: 'method',
         type: '(message, title, options?) => Promise<MessageBoxData>',
         desc: { zh: '打开 alert 弹框', en: 'Open alert box' },
       },
       {
         name: 'PxMessageBox.confirm',
+        category: 'method',
         type: '(message, title, options?) => Promise<MessageBoxData>',
         desc: { zh: '打开 confirm 弹框', en: 'Open confirm box' },
       },
       {
         name: 'PxMessageBox.prompt',
+        category: 'method',
         type: '(message, title, options?) => Promise<MessageBoxData>',
         desc: { zh: '打开 prompt 弹框', en: 'Open prompt box' },
       },
       {
         name: 'PxMessageBox.close',
+        category: 'method',
         type: '() => void',
         desc: { zh: '关闭当前弹框', en: 'Close current box' },
       },

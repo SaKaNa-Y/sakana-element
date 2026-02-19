@@ -55,36 +55,43 @@ export const messageApi: ApiSection[] = [
     items: [
       {
         name: 'PxMessage',
+        category: 'method',
         type: '(options: MessageOptions | string) => MessageHandler',
         desc: { zh: '显示消息', en: 'Show message' },
       },
       {
         name: 'PxMessage.success',
+        category: 'method',
         type: '(options: MessageOptions | string) => MessageHandler',
         desc: { zh: '显示成功消息', en: 'Show success message' },
       },
       {
         name: 'PxMessage.warning',
+        category: 'method',
         type: '(options: MessageOptions | string) => MessageHandler',
         desc: { zh: '显示警告消息', en: 'Show warning message' },
       },
       {
         name: 'PxMessage.info',
+        category: 'method',
         type: '(options: MessageOptions | string) => MessageHandler',
         desc: { zh: '显示信息消息', en: 'Show info message' },
       },
       {
         name: 'PxMessage.danger',
+        category: 'method',
         type: '(options: MessageOptions | string) => MessageHandler',
         desc: { zh: '显示危险消息', en: 'Show danger message' },
       },
       {
         name: 'PxMessage.error',
+        category: 'method',
         type: '(options: MessageOptions | string) => MessageHandler',
         desc: { zh: '显示错误消息', en: 'Show error message' },
       },
       {
         name: 'PxMessage.closeAll',
+        category: 'method',
         type: '(type?: MessageType) => void',
         desc: { zh: '关闭所有消息', en: 'Close all messages' },
       },
@@ -95,6 +102,7 @@ export const messageApi: ApiSection[] = [
     items: [
       {
         name: 'close',
+        category: 'method',
         type: '() => void',
         desc: { zh: '关闭当前消息', en: 'Close current message' },
       },

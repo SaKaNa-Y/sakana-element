@@ -12,13 +12,7 @@ import { formApi, formItemApi } from '../../api/form'
 Form consists of input, select, radio, checkbox and other controls, for collecting, validating, and submitting data.
 
 
-### Form
-
-<ApiTable :sections="formApi" lang="en" />
-
-### FormItem
-
-<ApiTable :sections="formItemApi" lang="en" />
+<ApiTable :sections="[...formApi, ...formItemApi]" lang="en" />
 
 ## Basic Usage
 

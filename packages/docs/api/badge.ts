@@ -49,6 +49,6 @@ export const badgeApi: ApiSection[] = [
   },
   {
     title: { zh: '插槽', en: 'Slots' },
-    items: [{ name: 'default', desc: { zh: '徽章内容', en: 'Badge content' } }],
+    items: [{ name: 'default', category: 'slot', desc: { zh: '徽章内容', en: 'Badge content' } }],
   },
 ];

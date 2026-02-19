@@ -6,16 +6,19 @@ export const darkModeApi: ApiSection[] = [
     items: [
       {
         name: 'theme',
+        category: 'expose',
         type: "ComputedRef<'light' | 'dark' | 'system'>",
         desc: { zh: '当前主题设置', en: 'Current theme setting' },
       },
       {
         name: 'isDark',
+        category: 'expose',
         type: 'ComputedRef<boolean>',
         desc: { zh: '当前是否为深色模式', en: 'Whether dark mode is currently active' },
       },
       {
         name: 'setTheme',
+        category: 'method',
         type: '(theme: Theme) => void',
         desc: {
           zh: "设置主题为 'light'、'dark' 或 'system'",
@@ -24,6 +27,7 @@ export const darkModeApi: ApiSection[] = [
       },
       {
         name: 'toggleTheme',
+        category: 'method',
         type: '() => void',
         desc: { zh: '在 light 和 dark 之间切换', en: 'Toggle between light and dark' },
       },
@@ -34,11 +38,13 @@ export const darkModeApi: ApiSection[] = [
     items: [
       {
         name: 'prefersDark',
+        category: 'expose',
         type: 'Ref<boolean>',
         desc: { zh: '操作系统是否偏好深色模式', en: 'Whether the OS prefers dark mode' },
       },
       {
         name: 'prefers',
+        category: 'expose',
         type: "Ref<'light' | 'dark'>",
         desc: { zh: '操作系统配色方案偏好', en: 'The OS color scheme preference' },
       },

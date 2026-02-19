@@ -59,7 +59,12 @@ export const loadingApi: ApiSection[] = [
   {
     title: { zh: '实例方法', en: 'Instance Methods' },
     items: [
-      { name: 'close', type: '() => void', desc: { zh: '关闭 Loading', en: 'Close Loading' } },
+      {
+        name: 'close',
+        category: 'method',
+        type: '() => void',
+        desc: { zh: '关闭 Loading', en: 'Close Loading' },
+      },
     ],
   },
 ];

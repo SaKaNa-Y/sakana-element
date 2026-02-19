@@ -12,13 +12,7 @@ import { collapseApi, collapseItemApi } from '../../api/collapse'
 A content area that can be collapsed or expanded.
 
 
-### Collapse
-
-<ApiTable :sections="collapseApi" lang="en" />
-
-### CollapseItem
-
-<ApiTable :sections="collapseItemApi" lang="en" />
+<ApiTable :sections="[...collapseApi, ...collapseItemApi]" lang="en" />
 
 ## Basic Usage
 

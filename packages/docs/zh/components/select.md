@@ -12,13 +12,7 @@ import { selectApi, optionApi } from '../../api/select'
 下拉选择器组件，用于从一组选项中选择一个值。
 
 
-### Select
-
-<ApiTable :sections="selectApi" lang="zh" />
-
-### Option
-
-<ApiTable :sections="optionApi" lang="zh" />
+<ApiTable :sections="[...selectApi, ...optionApi]" lang="zh" />
 
 ## 基础用法
 
