@@ -3,9 +3,15 @@ title: Dark Mode | Sakana Element
 description: Learn about dark mode support in Sakana Element pixel component library with Catppuccin color scheme and system preference detection.
 ---
 
+<script setup>
+import { darkModeApi } from '../api/dark-mode'
+</script>
+
 # Dark Mode
 
 Sakana Element has full built-in dark mode support with a [Catppuccin Mocha](https://catppuccin.com/) inspired color palette. The theme system provides three modes — `light`, `dark`, and `system` — with automatic localStorage persistence and system preference detection.
+
+<ApiTable :sections="darkModeApi" lang="en" />
 
 ## Basic Usage
 
@@ -101,21 +107,3 @@ demo-preview=../demo/dark-mode/CustomVars.vue
 ::: tip
 Each semantic color (primary, success, etc.) has a `-dark` shade and `-light-3` through `-light-9` variants. Override these too for a consistent look across hover, disabled, and focus states.
 :::
-
-## API Reference
-
-### useTheme
-
-| Return Value | Type | Description |
-| --- | --- | --- |
-| `theme` | `ComputedRef<'light' \| 'dark' \| 'system'>` | Current theme setting |
-| `isDark` | `ComputedRef<boolean>` | Whether dark mode is currently active |
-| `setTheme` | `(theme: Theme) => void` | Set theme to `'light'`, `'dark'`, or `'system'` |
-| `toggleTheme` | `() => void` | Toggle between `light` and `dark` |
-
-### useSystemTheme
-
-| Return Value | Type | Description |
-| --- | --- | --- |
-| `prefersDark` | `Ref<boolean>` | Whether the OS prefers dark mode |
-| `prefers` | `Ref<'light' \| 'dark'>` | The OS color scheme preference |

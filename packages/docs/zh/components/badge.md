@@ -3,9 +3,16 @@ title: Badge 徽章 | Sakana Element 像素组件库
 description: Sakana Element 像素风格徽章组件，用于状态标识、标签和标记。
 ---
 
+<script setup>
+import { badgeApi } from '../../api/badge'
+</script>
+
 # Badge 徽章
 
 小型状态标识组件，用于标签和标记。
+
+
+<ApiTable :sections="badgeApi" lang="zh" />
 
 ## 基础用法
 
@@ -55,21 +62,3 @@ demo-preview=../../demo/badge/Dash.vue
 demo-preview=../../demo/badge/CustomColor.vue
 :::
 
-## API
-
-### 属性
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| type | 类型 | `'primary' \| 'success' \| 'info' \| 'warning' \| 'danger'` | `'primary'` |
-| size | 尺寸 | `'large' \| 'default' \| 'small'` | `'default'` |
-| outline | 轮廓边框样式 | `boolean` | `false` |
-| dash | 虚线边框样式 | `boolean` | `false` |
-| color | 自定义十六进制颜色 | `string` | — |
-| round | 圆角像素风格 | `boolean` | `false` |
-
-### 插槽
-
-| 插槽名 | 说明 |
-| --- | --- |
-| default | 徽章内容 |

@@ -3,9 +3,16 @@ title: Icon | Sakana Element
 description: 486 built-in pixel art icons from pixelarticons. Supports size, color, flip, rotation, and animation effects in Sakana Element for Vue 3.
 ---
 
+<script setup>
+import { iconApi } from '../../api/icon'
+</script>
+
 # Icon
 
 Sakana Element bundles all 486 icons from [pixelarticons](https://pixelarticons.com/) — a pixel-art style icon library on a 24x24 grid. Every icon is available out of the box with no extra installation.
+
+
+<ApiTable :sections="iconApi" lang="en" />
 
 ## Basic Usage
 
@@ -80,21 +87,3 @@ Then use it like any other icon:
 <px-icon icon="my-icon" />
 ```
 
-## API
-
-### Props
-
-| Property | Description | Type | Default |
-| --- | --- | --- | --- |
-| icon | Icon name (pixelarticons name or mapped alias) | `string` | — |
-| size | Icon size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| '1x' \| '2x' \| '3x'` | `'md'` |
-| type | Icon type color | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | — |
-| color | Custom color | `string` | — |
-| flip | Flip direction | `'horizontal' \| 'vertical' \| 'both'` | — |
-| rotation | Rotation angle | `90 \| 180 \| 270` | — |
-| spin | Spin animation (stepped) | `boolean` | `false` |
-| pulse | Pulse animation (rotate + scale) | `boolean` | `false` |
-| bounce | Bounce animation (vertical hop) | `boolean` | `false` |
-| shake | Shake animation (horizontal shake) | `boolean` | `false` |
-| beat | Beat animation (scale throb) | `boolean` | `false` |
-| fade | Fade animation (opacity flicker) | `boolean` | `false` |

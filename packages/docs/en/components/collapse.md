@@ -3,9 +3,22 @@ title: Collapse | Sakana Element
 description: Pixel-style collapsible panel component with accordion mode for Vue 3.
 ---
 
+<script setup>
+import { collapseApi, collapseItemApi } from '../../api/collapse'
+</script>
+
 # Collapse
 
 A content area that can be collapsed or expanded.
+
+
+### Collapse
+
+<ApiTable :sections="collapseApi" lang="en" />
+
+### CollapseItem
+
+<ApiTable :sections="collapseItemApi" lang="en" />
 
 ## Basic Usage
 
@@ -39,32 +52,3 @@ Use `disabled` property to disable the panel.
 demo-preview=../../demo/collapse/Disabled.vue
 :::
 
-## API
-
-### Collapse Props
-
-| Property | Description | Type | Default |
-| --- | --- | --- | --- |
-| model-value / v-model | Currently active panels | `string \| string[]` | — |
-| accordion | Enable accordion mode | `boolean` | `false` |
-
-### Collapse Events
-
-| Event | Description | Type |
-| --- | --- | --- |
-| change | Triggered when active panels change | `(activeNames: string \| string[]) => void` |
-
-### CollapseItem Props
-
-| Property | Description | Type | Default |
-| --- | --- | --- | --- |
-| name | Unique identifier | `string` | — |
-| title | Title | `string` | — |
-| disabled | Disabled state | `boolean` | `false` |
-
-### CollapseItem Slots
-
-| Slot | Description |
-| --- | --- |
-| default | Panel content |
-| title | Custom title |

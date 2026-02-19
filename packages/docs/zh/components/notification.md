@@ -3,9 +3,16 @@ title: Notification 通知 | Sakana Element 像素组件库
 description: Sakana Element 像素风格通知组件，支持多种位置和自定义内容。
 ---
 
+<script setup>
+import { notificationApi } from '../../api/notification'
+</script>
+
 # Notification 通知
 
 悬浮出现在页面角落，显示全局的通知提醒消息。
+
+
+<ApiTable :sections="notificationApi" lang="zh" />
 
 ## 基础用法
 
@@ -37,30 +44,3 @@ demo-preview=../../demo/notification/Position.vue
 demo-preview=../../demo/notification/Duration.vue
 :::
 
-## API
-
-### Options
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| title | 标题 | `string` | — |
-| message | 通知内容 | `string \| VNode` | — |
-| type | 通知类型 | `'success' \| 'warning' \| 'info' \| 'danger'` | — |
-| duration | 显示时间（毫秒），设为 0 则不会自动关闭 | `number` | `4500` |
-| position | 弹出位置 | `'top-right' \| 'top-left' \| 'bottom-right' \| 'bottom-left'` | `'top-right'` |
-| showClose | 是否显示关闭按钮 | `boolean` | `true` |
-| offset | 距离窗口边缘的偏移量 | `number` | `16` |
-| icon | 自定义图标 | `string` | — |
-| onClick | 点击回调 | `() => void` | — |
-| onClose | 关闭回调 | `() => void` | — |
-
-### Methods
-
-| 方法名 | 说明 | 参数 |
-| --- | --- | --- |
-| PxNotification | 显示通知 | `(options: NotificationOptions) => NotificationHandler` |
-| PxNotification.success | 显示成功通知 | `(options: NotificationOptions) => NotificationHandler` |
-| PxNotification.warning | 显示警告通知 | `(options: NotificationOptions) => NotificationHandler` |
-| PxNotification.info | 显示信息通知 | `(options: NotificationOptions) => NotificationHandler` |
-| PxNotification.danger | 显示危险通知 | `(options: NotificationOptions) => NotificationHandler` |
-| PxNotification.closeAll | 关闭所有通知 | `() => void` |

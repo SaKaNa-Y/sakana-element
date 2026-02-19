@@ -3,9 +3,16 @@ title: Switch | Sakana Element
 description: Pixel-style toggle switch component with disabled state and custom colors for Vue 3.
 ---
 
+<script setup>
+import { switchApi } from '../../api/switch'
+</script>
+
 # Switch
 
 A toggle switch component for switching between two states.
+
+
+<ApiTable :sections="switchApi" lang="en" />
 
 ## Basic Usage
 
@@ -31,29 +38,3 @@ Use `disabled` property to disable the switch.
 demo-preview=../../demo/switch/Disabled.vue
 :::
 
-## API
-
-### Props
-
-| Property | Description | Type | Default |
-| --- | --- | --- | --- |
-| model-value / v-model | Binding value | `boolean` | `false` |
-| disabled | Disabled state | `boolean` | `false` |
-| size | Size | `'large' \| 'default' \| 'small'` | `'default'` |
-| active-text | Text when on | `string` | — |
-| inactive-text | Text when off | `string` | — |
-| active-value | Value when on | `boolean \| string \| number` | `true` |
-| inactive-value | Value when off | `boolean \| string \| number` | `false` |
-| name | Native name attribute | `string` | — |
-
-### Events
-
-| Event | Description | Type |
-| --- | --- | --- |
-| change | Triggered when state changes | `(value: boolean) => void` |
-
-### Exposes
-
-| Property | Description | Type |
-| --- | --- | --- |
-| ref | Switch HTML element | `Ref<HTMLInputElement>` |

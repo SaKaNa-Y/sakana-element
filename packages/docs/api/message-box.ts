@@ -1,0 +1,147 @@
+import type { ApiSection } from './types';
+
+export const messageBoxApi: ApiSection[] = [
+  {
+    title: { zh: '配置项', en: 'Options' },
+    items: [
+      { name: 'title', category: 'content', type: 'string', desc: { zh: '标题', en: 'Title' } },
+      {
+        name: 'message',
+        category: 'content',
+        type: 'string | VNode',
+        desc: { zh: '消息内容', en: 'Message content' },
+      },
+      {
+        name: 'type',
+        category: 'style',
+        type: "'success' | 'warning' | 'info' | 'danger' | 'error'",
+        desc: { zh: '消息类型', en: 'Message type' },
+      },
+      {
+        name: 'showClose',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'true',
+        desc: { zh: '是否显示关闭按钮', en: 'Whether to show close button' },
+      },
+      {
+        name: 'showCancelButton',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'false',
+        desc: { zh: '是否显示取消按钮', en: 'Whether to show cancel button' },
+      },
+      {
+        name: 'showConfirmButton',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'true',
+        desc: { zh: '是否显示确认按钮', en: 'Whether to show confirm button' },
+      },
+      {
+        name: 'cancelButtonText',
+        category: 'content',
+        type: 'string',
+        default: "'No'",
+        desc: { zh: '取消按钮文字', en: 'Cancel button text' },
+      },
+      {
+        name: 'confirmButtonText',
+        category: 'content',
+        type: 'string',
+        default: "'Yes'",
+        desc: { zh: '确认按钮文字', en: 'Confirm button text' },
+      },
+      {
+        name: 'cancelButtonType',
+        category: 'style',
+        type: 'ButtonType',
+        desc: { zh: '取消按钮类型', en: 'Cancel button type' },
+      },
+      {
+        name: 'confirmButtonType',
+        category: 'style',
+        type: 'ButtonType',
+        default: "'primary'",
+        desc: { zh: '确认按钮类型', en: 'Confirm button type' },
+      },
+      {
+        name: 'center',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: { zh: '是否居中布局', en: 'Whether to center layout' },
+      },
+      {
+        name: 'lockScroll',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'true',
+        desc: { zh: '是否锁定滚动', en: 'Whether to lock scroll' },
+      },
+      {
+        name: 'closeOnClickModal',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'true',
+        desc: { zh: '是否可通过点击遮罩关闭', en: 'Whether to close on modal click' },
+      },
+      {
+        name: 'showInput',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'false',
+        desc: { zh: '是否显示输入框', en: 'Whether to show input' },
+      },
+      {
+        name: 'inputPlaceholder',
+        category: 'content',
+        type: 'string',
+        desc: { zh: '输入框占位文本', en: 'Input placeholder' },
+      },
+      {
+        name: 'inputValue',
+        category: 'content',
+        type: 'string',
+        desc: { zh: '输入框初始值', en: 'Input initial value' },
+      },
+      {
+        name: 'inputType',
+        category: 'style',
+        type: "'text' | 'textarea' | 'password' | 'number'",
+        default: "'text'",
+        desc: { zh: '输入框类型', en: 'Input type' },
+      },
+    ],
+  },
+  {
+    title: { zh: '方法', en: 'Methods' },
+    items: [
+      {
+        name: 'PxMessageBox',
+        type: '(options: MessageBoxOptions) => Promise<MessageBoxData>',
+        desc: { zh: '打开消息弹框', en: 'Open message box' },
+      },
+      {
+        name: 'PxMessageBox.alert',
+        type: '(message, title, options?) => Promise<MessageBoxData>',
+        desc: { zh: '打开 alert 弹框', en: 'Open alert box' },
+      },
+      {
+        name: 'PxMessageBox.confirm',
+        type: '(message, title, options?) => Promise<MessageBoxData>',
+        desc: { zh: '打开 confirm 弹框', en: 'Open confirm box' },
+      },
+      {
+        name: 'PxMessageBox.prompt',
+        type: '(message, title, options?) => Promise<MessageBoxData>',
+        desc: { zh: '打开 prompt 弹框', en: 'Open prompt box' },
+      },
+      {
+        name: 'PxMessageBox.close',
+        type: '() => void',
+        desc: { zh: '关闭当前弹框', en: 'Close current box' },
+      },
+    ],
+  },
+];

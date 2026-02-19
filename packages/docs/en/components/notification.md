@@ -3,9 +3,16 @@ title: Notification | Sakana Element
 description: Pixel-style notification component with multiple positions and custom content for Vue 3.
 ---
 
+<script setup>
+import { notificationApi } from '../../api/notification'
+</script>
+
 # Notification
 
 Displays a global notification message at a corner of the page.
+
+
+<ApiTable :sections="notificationApi" lang="en" />
 
 ## Basic Usage
 
@@ -37,30 +44,3 @@ Setting `duration` to `0` will not auto close the notification.
 demo-preview=../../demo/notification/Duration.vue
 :::
 
-## API
-
-### Options
-
-| Property | Description | Type | Default |
-| --- | --- | --- | --- |
-| title | Title | `string` | — |
-| message | Notification content | `string \| VNode` | — |
-| type | Notification type | `'success' \| 'warning' \| 'info' \| 'danger'` | — |
-| duration | Display duration (ms), 0 means no auto close | `number` | `4500` |
-| position | Position | `'top-right' \| 'top-left' \| 'bottom-right' \| 'bottom-left'` | `'top-right'` |
-| showClose | Whether to show close button | `boolean` | `true` |
-| offset | Offset from window edge | `number` | `16` |
-| icon | Custom icon | `string` | — |
-| onClick | Click callback | `() => void` | — |
-| onClose | Close callback | `() => void` | — |
-
-### Methods
-
-| Method | Description | Parameters |
-| --- | --- | --- |
-| PxNotification | Show notification | `(options: NotificationOptions) => NotificationHandler` |
-| PxNotification.success | Show success notification | `(options: NotificationOptions) => NotificationHandler` |
-| PxNotification.warning | Show warning notification | `(options: NotificationOptions) => NotificationHandler` |
-| PxNotification.info | Show info notification | `(options: NotificationOptions) => NotificationHandler` |
-| PxNotification.danger | Show danger notification | `(options: NotificationOptions) => NotificationHandler` |
-| PxNotification.closeAll | Close all notifications | `() => void` |

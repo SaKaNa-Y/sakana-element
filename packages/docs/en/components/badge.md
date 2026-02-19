@@ -3,9 +3,16 @@ title: Badge | Sakana Element
 description: Pixel-style badge component for status indicators, labels, and tags in Vue 3.
 ---
 
+<script setup>
+import { badgeApi } from '../../api/badge'
+</script>
+
 # Badge
 
 A small status indicator component for labels and tags.
+
+
+<ApiTable :sections="badgeApi" lang="en" />
 
 ## Basic Usage
 
@@ -55,21 +62,3 @@ Use `color` property to set a custom hex color. Works with default, outline, and
 demo-preview=../../demo/badge/CustomColor.vue
 :::
 
-## API
-
-### Props
-
-| Property | Description | Type | Default |
-| --- | --- | --- | --- |
-| type | Type | `'primary' \| 'success' \| 'info' \| 'warning' \| 'danger'` | `'primary'` |
-| size | Size | `'large' \| 'default' \| 'small'` | `'default'` |
-| outline | Outline border style | `boolean` | `false` |
-| dash | Dashed border style | `boolean` | `false` |
-| color | Custom hex color | `string` | — |
-| round | Rounded pixel corners | `boolean` | `false` |
-
-### Slots
-
-| Slot | Description |
-| --- | --- |
-| default | Badge content |

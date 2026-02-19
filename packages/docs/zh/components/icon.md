@@ -3,9 +3,16 @@ title: Icon 图标 | Sakana Element 像素组件库
 description: Sakana Element 内置 486 个像素风格图标，基于 pixelarticons，支持尺寸、颜色、翻转、旋转和动画效果。
 ---
 
+<script setup>
+import { iconApi } from '../../api/icon'
+</script>
+
 # Icon 图标
 
 Sakana Element 内置了 [pixelarticons](https://pixelarticons.com/) 的全部 486 个图标 - 一个基于 24x24 网格的像素风格图标库。所有图标开箱即用，无需额外安装。
+
+
+<ApiTable :sections="iconApi" lang="zh" />
 
 ## 基础用法
 
@@ -80,21 +87,3 @@ registerPixelIcon('my-icon', '<svg viewBox="0 0 24 24">...</svg>');
 <px-icon icon="my-icon" />
 ```
 
-## API
-
-### Props
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| icon | 图标名称（pixelarticons 名称或映射别名） | `string` | — |
-| size | 图标大小 | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| '1x' \| '2x' \| '3x'` | `'md'` |
-| type | 图标类型颜色 | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | — |
-| color | 自定义颜色 | `string` | — |
-| flip | 翻转方向 | `'horizontal' \| 'vertical' \| 'both'` | — |
-| rotation | 旋转角度 | `90 \| 180 \| 270` | — |
-| spin | 旋转动画（逐帧） | `boolean` | `false` |
-| pulse | 脉冲动画（旋转 + 缩放） | `boolean` | `false` |
-| bounce | 弹跳动画（垂直跳动） | `boolean` | `false` |
-| shake | 抖动动画（水平抖动） | `boolean` | `false` |
-| beat | 心跳动画（缩放跳动） | `boolean` | `false` |
-| fade | 淡入淡出动画（透明度闪烁） | `boolean` | `false` |

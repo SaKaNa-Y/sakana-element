@@ -3,9 +3,15 @@ title: 深色模式 | Sakana Element 像素组件库
 description: 了解 Sakana Element 像素组件库的深色模式支持，采用 Catppuccin 配色方案，支持自动检测系统偏好。
 ---
 
+<script setup>
+import { darkModeApi } from '../api/dark-mode'
+</script>
+
 # 深色模式
 
 Sakana Element 内置了完整的深色模式支持，采用 [Catppuccin Mocha](https://catppuccin.com/) 风格的配色方案。主题系统提供三种模式 —— `light`、`dark` 和 `system` —— 并自动将选择保存到 localStorage，同时支持检测系统偏好。
+
+<ApiTable :sections="darkModeApi" lang="zh" />
 
 ## 基本用法
 
@@ -101,21 +107,3 @@ demo-preview=../demo/dark-mode/CustomVars.vue
 ::: tip
 每个语义颜色（primary、success 等）都有 `-dark` 深色变体和 `-light-3` 到 `-light-9` 的浅色变体。覆盖这些变体可以在 hover、disabled 和 focus 状态下保持一致的外观。
 :::
-
-## API 参考
-
-### useTheme
-
-| 返回值 | 类型 | 说明 |
-| --- | --- | --- |
-| `theme` | `ComputedRef<'light' \| 'dark' \| 'system'>` | 当前主题设置 |
-| `isDark` | `ComputedRef<boolean>` | 当前是否为深色模式 |
-| `setTheme` | `(theme: Theme) => void` | 设置主题为 `'light'`、`'dark'` 或 `'system'` |
-| `toggleTheme` | `() => void` | 在 `light` 和 `dark` 之间切换 |
-
-### useSystemTheme
-
-| 返回值 | 类型 | 说明 |
-| --- | --- | --- |
-| `prefersDark` | `Ref<boolean>` | 操作系统是否偏好深色模式 |
-| `prefers` | `Ref<'light' \| 'dark'>` | 操作系统配色方案偏好 |

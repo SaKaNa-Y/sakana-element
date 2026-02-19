@@ -3,9 +3,16 @@ title: Popconfirm | Sakana Element
 description: Pixel-style popconfirm component for lightweight confirmation interactions in Vue 3.
 ---
 
+<script setup>
+import { popconfirmApi } from '../../api/popconfirm'
+</script>
+
 # Popconfirm
 
 A simple confirmation dialog of an element click action.
+
+
+<ApiTable :sections="popconfirmApi" lang="en" />
 
 ## Basic Usage
 
@@ -29,33 +36,3 @@ Set `hide-icon` to hide the icon.
 demo-preview=../../demo/popconfirm/HideIcon.vue
 :::
 
-## API
-
-### Props
-
-| Property | Description | Type | Default |
-| --- | --- | --- | --- |
-| title | Title | `string` | — |
-| confirmButtonText | Confirm button text | `string` | `'Confirm'` |
-| cancelButtonText | Cancel button text | `string` | `'Cancel'` |
-| confirmButtonType | Confirm button type | `ButtonType` | `'primary'` |
-| cancelButtonType | Cancel button type | `ButtonType` | — |
-| icon | Icon | `string` | `'question-circle'` |
-| iconColor | Icon color | `string` | `'#f90'` |
-| hideIcon | Whether to hide icon | `boolean` | `false` |
-| hideAfter | Hide delay (ms) | `number` | `200` |
-| width | Popover width | `number \| string` | `150` |
-
-### Events
-
-| Event | Description | Parameters |
-| --- | --- | --- |
-| confirm | Triggered when confirm button clicked | `(event: MouseEvent) => void` |
-| cancel | Triggered when cancel button clicked | `(event: MouseEvent) => void` |
-
-### Slots
-
-| Slot | Description |
-| --- | --- |
-| default | Element that triggers Popconfirm |
-| reference | Same as default |

@@ -3,9 +3,16 @@ title: Button | Sakana Element
 description: Pixel-style button component for Sakana Element. Supports multiple types, sizes, disabled state, loading, and icon buttons for Vue 3.
 ---
 
+<script setup>
+import { buttonApi } from '../../api/button'
+</script>
+
 # Button
 
 Commonly used button component with pixel-style visual effects.
+
+
+<ApiTable :sections="buttonApi" lang="en" />
 
 ## Basic Usage
 
@@ -103,48 +110,3 @@ Use `use-throttle` and `throttle-duration` properties to enable throttle mode.
 demo-preview=../../demo/button/Throttle.vue
 :::
 
-## API
-
-### Props
-
-| Property | Description | Type | Default |
-| --- | --- | --- | --- |
-| size | Button size | `'large' \| 'default' \| 'small'` | `'default'` |
-| type | Button type | `'primary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | — |
-| color | Custom button color (hex) | `string` | — |
-| plain | Plain button | `boolean` | `false` |
-| round | Round button | `boolean` | `false` |
-| circle | Circle button | `boolean` | `false` |
-| dash | Dash border style | `boolean` | `false` |
-| ghost | Ghost button (no border/bg) | `boolean` | `false` |
-| loading | Loading state | `boolean` | `false` |
-| loading-icon | Custom loading icon | `string` | `'spinner'` |
-| disabled | Disabled state | `boolean` | `false` |
-| icon | Icon name | `string` | — |
-| autofocus | Auto focus | `boolean` | `false` |
-| native-type | Native type attribute | `'button' \| 'submit' \| 'reset'` | `'button'` |
-| tag | Custom element tag | `string` | `'button'` |
-| use-throttle | Enable throttle | `boolean` | `false` |
-| throttle-duration | Throttle duration (ms) | `number` | `500` |
-
-### Events
-
-| Event | Description | Type |
-| --- | --- | --- |
-| click | Triggered when button is clicked | `(event: MouseEvent) => void` |
-
-### Slots
-
-| Slot | Description |
-| --- | --- |
-| default | Button content |
-| loading | Custom loading icon |
-
-### Exposes
-
-| Property | Description | Type |
-| --- | --- | --- |
-| ref | Button HTML element | `Ref<HTMLButtonElement>` |
-| size | Button size | `ComputedRef<string>` |
-| type | Button type | `ComputedRef<string>` |
-| disabled | Disabled state | `ComputedRef<boolean>` |

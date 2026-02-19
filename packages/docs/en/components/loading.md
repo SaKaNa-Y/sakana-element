@@ -3,9 +3,16 @@ title: Loading | Sakana Element
 description: Pixel-style loading component with fullscreen and area loading for Vue 3.
 ---
 
+<script setup>
+import { loadingApi } from '../../api/loading'
+</script>
+
 # Loading
 
 Show animation while loading data.
+
+
+<ApiTable :sections="loadingApi" lang="en" />
 
 ## Area Loading
 
@@ -39,27 +46,3 @@ Loading can also be invoked as a service.
 demo-preview=../../demo/loading/Service.vue
 :::
 
-## API
-
-### Directive
-
-| Directive | Description | Type |
-| --- | --- | --- |
-| v-loading | Whether to show loading | `boolean` |
-
-### Options (Service)
-
-| Property | Description | Type | Default |
-| --- | --- | --- | --- |
-| target | Target element to cover | `HTMLElement \| string` | `document.body` |
-| fullscreen | Whether fullscreen loading | `boolean` | `false` |
-| lock | Lock screen scroll | `boolean` | `false` |
-| text | Loading text | `string` | — |
-| background | Overlay background color | `string` | — |
-| spinner | Custom loading icon | `string \| boolean` | — |
-
-### Instance Methods
-
-| Method | Description |
-| --- | --- |
-| close | Close Loading |

@@ -3,9 +3,16 @@ title: Alert | Sakana Element
 description: Pixel-style alert component with multiple types, closable, and custom descriptions for Vue 3.
 ---
 
+<script setup>
+import { alertApi } from '../../api/alert'
+</script>
+
 # Alert
 
 Used to display important alert messages on the page.
+
+
+<ApiTable :sections="alertApi" lang="en" />
 
 ## Basic Usage
 
@@ -87,32 +94,3 @@ Use `color` property to set a custom hex color. Works with default, outline, and
 demo-preview=../../demo/alert/CustomColor.vue
 :::
 
-## API
-
-### Props
-
-| Property | Description | Type | Default |
-| --- | --- | --- | --- |
-| title | Title | `string` | — |
-| type | Type | `'success' \| 'warning' \| 'info' \| 'danger'` | `'info'` |
-| description | Description text | `string` | — |
-| closable | Closable | `boolean` | `true` |
-| center | Center text | `boolean` | `false` |
-| show-icon | Show icon | `boolean` | `false` |
-| effect | Theme style | `'light' \| 'dark'` | `'light'` |
-| outline | Outline border style | `boolean` | `false` |
-| dash | Dashed border style | `boolean` | `false` |
-| color | Custom hex color | `string` | — |
-
-### Events
-
-| Event | Description | Type |
-| --- | --- | --- |
-| close | Triggered when closed | `() => void` |
-
-### Slots
-
-| Slot | Description |
-| --- | --- |
-| default | Default content |
-| title | Title content |

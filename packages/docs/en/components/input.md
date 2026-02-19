@@ -3,9 +3,16 @@ title: Input | Sakana Element
 description: Pixel-style text input component for Sakana Element. Supports clearable, password, prefix/suffix icons, and disabled state for Vue 3.
 ---
 
+<script setup>
+import { inputApi } from '../../api/input'
+</script>
+
 # Input
 
 A text input component for receiving user input.
+
+
+<ApiTable :sections="inputApi" lang="en" />
 
 ## Basic Usage
 
@@ -55,47 +62,3 @@ Use `prefix-icon` / `suffix-icon` properties or `prefix` / `suffix` slots to add
 demo-preview=../../demo/input/PrefixSuffix.vue
 :::
 
-## API
-
-### Props
-
-| Property | Description | Type | Default |
-| --- | --- | --- | --- |
-| model-value / v-model | Binding value | `string` | — |
-| type | Input type | `'text' \| 'password' \| 'textarea'` | `'text'` |
-| placeholder | Placeholder | `string` | — |
-| disabled | Disabled state | `boolean` | `false` |
-| readonly | Read-only state | `boolean` | `false` |
-| clearable | Show clear button | `boolean` | `false` |
-| show-password | Show password toggle button | `boolean` | `false` |
-| size | Size | `'large' \| 'default' \| 'small'` | `'default'` |
-| prefix-icon | Prefix icon | `string` | — |
-| suffix-icon | Suffix icon | `string` | — |
-
-### Events
-
-| Event | Description | Type |
-| --- | --- | --- |
-| input | Triggered on input | `(value: string) => void` |
-| change | Triggered when value changes | `(value: string) => void` |
-| focus | Triggered on focus | `(event: FocusEvent) => void` |
-| blur | Triggered on blur | `(event: FocusEvent) => void` |
-| clear | Triggered when cleared | `() => void` |
-
-### Slots
-
-| Slot | Description |
-| --- | --- |
-| prefix | Prefix content |
-| suffix | Suffix content |
-| prepend | Prepend content |
-| append | Append content |
-
-### Exposes
-
-| Property | Description | Type |
-| --- | --- | --- |
-| ref | Input HTML element | `Ref<HTMLInputElement>` |
-| focus | Focus the input | `() => void` |
-| blur | Blur the input | `() => void` |
-| clear | Clear the input value | `() => void` |

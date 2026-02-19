@@ -3,9 +3,16 @@ title: Loading 加载 | Sakana Element 像素组件库
 description: Sakana Element 像素风格加载组件，支持全屏和区域加载效果。
 ---
 
+<script setup>
+import { loadingApi } from '../../api/loading'
+</script>
+
 # Loading 加载
 
 加载数据时显示动效。
+
+
+<ApiTable :sections="loadingApi" lang="zh" />
 
 ## 区域加载
 
@@ -39,27 +46,3 @@ Loading 还可以以服务方式调用。
 demo-preview=../../demo/loading/Service.vue
 :::
 
-## API
-
-### 指令
-
-| 指令名 | 说明 | 类型 |
-| --- | --- | --- |
-| v-loading | 是否显示加载 | `boolean` |
-
-### Options (服务方式)
-
-| 属性名 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| target | 加载需要覆盖的目标元素 | `HTMLElement \| string` | `document.body` |
-| fullscreen | 是否全屏加载 | `boolean` | `false` |
-| lock | 锁定屏幕滚动 | `boolean` | `false` |
-| text | 加载文案 | `string` | — |
-| background | 遮罩背景色 | `string` | — |
-| spinner | 自定义加载图标 | `string \| boolean` | — |
-
-### Instance Methods
-
-| 方法名 | 说明 |
-| --- | --- |
-| close | 关闭 Loading |
