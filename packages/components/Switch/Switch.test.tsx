@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 import { PxSwitch } from './index';
 import Switch from './Switch.vue';
+import type { SwitchType } from './types';
 
 describe('Switch.vue', () => {
   it('should render correctly', () => {
@@ -129,6 +130,88 @@ describe('Switch.vue', () => {
     // Just verify the exposed checked ref reflects initial value
     const vm = wrapper.vm as any;
     expect(vm.checked).toBe(false);
+  });
+
+  // Type prop tests
+  it.each([['primary'], ['success'], ['warning'], ['danger'], ['info']] as [
+    SwitchType,
+  ][])('should apply correct class for type %s', (type) => {
+    const wrapper = mount(Switch, {
+      props: { modelValue: false, type },
+    });
+    expect(wrapper.classes()).toContain(`px-switch--${type}`);
+  });
+
+  it('should not apply type class by default', () => {
+    const wrapper = mount(Switch, {
+      props: { modelValue: false },
+    });
+    const classes = wrapper.classes();
+    expect(classes).not.toContain('px-switch--primary');
+    expect(classes).not.toContain('px-switch--success');
+    expect(classes).not.toContain('px-switch--warning');
+    expect(classes).not.toContain('px-switch--danger');
+    expect(classes).not.toContain('px-switch--info');
+  });
+
+  // Custom color tests
+  it('should apply activeColor as --px-switch-on-color CSS variable', () => {
+    const wrapper = mount(Switch, {
+      props: { modelValue: false, activeColor: '#ff6600' },
+    });
+    const style = wrapper.attributes('style') || '';
+    expect(style).toContain('--px-switch-on-color');
+  });
+
+  it('should apply inactiveColor as --px-switch-off-color CSS variable', () => {
+    const wrapper = mount(Switch, {
+      props: { modelValue: false, inactiveColor: '#999999' },
+    });
+    const style = wrapper.attributes('style') || '';
+    expect(style).toContain('--px-switch-off-color');
+  });
+
+  it('should apply both color CSS variables when both activeColor and inactiveColor are set', () => {
+    const wrapper = mount(Switch, {
+      props: { modelValue: false, activeColor: '#ff6600', inactiveColor: '#999999' },
+    });
+    const style = wrapper.attributes('style') || '';
+    expect(style).toContain('--px-switch-on-color');
+    expect(style).toContain('--px-switch-off-color');
+  });
+
+  it('should not apply custom CSS variables when no color props are set', () => {
+    const wrapper = mount(Switch, {
+      props: { modelValue: false },
+    });
+    const style = wrapper.attributes('style') || '';
+    expect(style).not.toContain('--px-switch-on-color');
+    expect(style).not.toContain('--px-switch-off-color');
+  });
+
+  // Icon tests
+  it('should render activeIcon inside .px-switch__core-action when checked', () => {
+    const wrapper = mount(Switch, {
+      props: { modelValue: true, activeIcon: 'check' },
+    });
+    const action = wrapper.find('.px-switch__core-action');
+    expect(action.find('.px-icon').exists()).toBe(true);
+  });
+
+  it('should render inactiveIcon inside .px-switch__core-action when unchecked', () => {
+    const wrapper = mount(Switch, {
+      props: { modelValue: false, inactiveIcon: 'xmark' },
+    });
+    const action = wrapper.find('.px-switch__core-action');
+    expect(action.find('.px-icon').exists()).toBe(true);
+  });
+
+  it('should not render icon when no icon props are set', () => {
+    const wrapper = mount(Switch, {
+      props: { modelValue: false },
+    });
+    const action = wrapper.find('.px-switch__core-action');
+    expect(action.find('.px-icon').exists()).toBe(false);
   });
 });
 

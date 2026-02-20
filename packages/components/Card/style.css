@@ -1,0 +1,125 @@
+/* Card Variables */
+.px-card {
+  --px-card-bg-color: var(--px-bg-color);
+  --px-card-border-color: var(--px-border-color);
+  --px-card-shadow-color: var(--px-shadow-color);
+  --px-card-text-color: var(--px-text-color-primary);
+  --px-card-header-border-color: var(--px-border-color-light);
+  --px-card-footer-border-color: var(--px-border-color-light);
+  --px-card-padding: 16px;
+}
+
+/* Base Card Styles - Pixel Game Aesthetic */
+.px-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  color: var(--px-card-text-color);
+  font-family: var(--px-font-family);
+  font-size: var(--px-font-size-base);
+  background: transparent;
+  border: none;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: none;
+
+  /* Border layer — filled with border color, clipped to pixel shape */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-card-border-color);
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0,
+      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+    z-index: 0;
+  }
+
+  /* Fill layer — inset by border width, filled with bg color */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-card-bg-color);
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0,
+      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+    z-index: 0;
+  }
+}
+
+/* Card sections - all above pseudo-elements */
+.px-card__header {
+  position: relative;
+  z-index: 1;
+  padding: var(--px-card-padding);
+  border-bottom: 2px solid var(--px-card-header-border-color);
+  font-weight: 600;
+}
+
+.px-card__body {
+  position: relative;
+  z-index: 1;
+  padding: var(--px-card-padding);
+  flex: 1;
+}
+
+.px-card__footer {
+  position: relative;
+  z-index: 1;
+  padding: var(--px-card-padding);
+  border-top: 2px solid var(--px-card-footer-border-color);
+}
+
+/* Shadow variants */
+.px-card--shadow-always {
+  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-card-shadow-color));
+}
+
+.px-card--shadow-hover {
+  filter: none;
+
+  &:hover {
+    filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-card-shadow-color));
+  }
+}
+
+.px-card--shadow-never {
+  filter: none;
+}
+
+/* Hoverable interaction */
+.px-card.is-hoverable {
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-4px);
+    filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-card-shadow-color));
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+/* Size variants */
+.px-card--small {
+  --px-card-padding: 12px;
+  font-size: var(--px-font-size-small);
+  filter: drop-shadow(2px 2px 0px var(--px-card-shadow-color));
+
+  &.px-card--shadow-hover { filter: none; }
+  &.px-card--shadow-hover:hover { filter: drop-shadow(2px 2px 0px var(--px-card-shadow-color)); }
+  &.px-card--shadow-never { filter: none; }
+}
+
+.px-card--large {
+  --px-card-padding: 20px;
+  font-size: var(--px-font-size-large);
+}

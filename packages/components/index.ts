@@ -1,6 +1,7 @@
 export * from './Alert';
 export * from './Badge';
 export * from './Button';
+export * from './Card';
 export * from './Collapse';
 export * from './ConfigProvider';
 export * from './Dropdown';

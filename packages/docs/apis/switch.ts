@@ -57,6 +57,39 @@ export const switchApi: ApiSection[] = [
         type: 'string',
         desc: { zh: '原生 name 属性', en: 'Native name attribute' },
       },
+      {
+        name: 'type',
+        category: 'style',
+        type: "'primary' | 'success' | 'warning' | 'danger' | 'info'",
+        desc: { zh: '预设主题颜色类型', en: 'Preset theme color type' },
+      },
+      {
+        name: 'active-color',
+        category: 'color',
+        type: 'string',
+        desc: { zh: '开启时的自定义十六进制颜色', en: 'Custom hex color when active' },
+      },
+      {
+        name: 'inactive-color',
+        category: 'color',
+        type: 'string',
+        desc: { zh: '关闭时的自定义十六进制颜色', en: 'Custom hex color when inactive' },
+      },
+      {
+        name: 'active-icon',
+        category: 'content',
+        type: 'string',
+        desc: { zh: '开启时滑块内显示的图标名称', en: 'Icon name displayed in thumb when active' },
+      },
+      {
+        name: 'inactive-icon',
+        category: 'content',
+        type: 'string',
+        desc: {
+          zh: '关闭时滑块内显示的图标名称',
+          en: 'Icon name displayed in thumb when inactive',
+        },
+      },
     ],
   },
   {

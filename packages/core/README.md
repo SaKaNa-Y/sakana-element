@@ -40,6 +40,7 @@ createApp(App).use(SakanaElement).mount('#app')
 | `PxIcon` | Icon / 图标 |
 | `PxAlert` | Alert / 警告提示 |
 | `PxBadge` | Badge / 徽章 |
+| `PxCard` | Card / 卡片 |
 | `PxCollapse` | Collapse / 折叠面板 |
 | `PxDropdown` | Dropdown / 下拉菜单 |
 | `PxForm` | Form / 表单 |

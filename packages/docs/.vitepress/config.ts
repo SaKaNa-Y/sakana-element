@@ -56,6 +56,10 @@ const getDataItems = (lang: 'zh' | 'en') => [
     text: lang === 'zh' ? 'Badge 徽章' : 'Badge',
     link: `/${lang}/components/badge`,
   },
+  {
+    text: lang === 'zh' ? 'Card 卡片' : 'Card',
+    link: `/${lang}/components/card`,
+  },
 ];
 
 const getFeedbackItems = (lang: 'zh' | 'en') => [

@@ -22,12 +22,36 @@ import { switchApi } from '../../apis/switch'
 demo-preview=../../demo/switch/Basic.vue
 :::
 
+## 类型
+
+使用 `type` 属性来应用预设主题颜色。
+
+::: preview
+demo-preview=../../demo/switch/Type.vue
+:::
+
+## 自定义颜色
+
+使用 `active-color` 和 `inactive-color` 属性来设置开启/关闭状态的自定义十六进制颜色。
+
+::: preview
+demo-preview=../../demo/switch/CustomColor.vue
+:::
+
 ## 不同尺寸
 
 使用 `size` 属性来设置开关的大小。
 
 ::: preview
 demo-preview=../../demo/switch/Size.vue
+:::
+
+## 图标
+
+使用 `active-icon` 和 `inactive-icon` 属性来在开关滑块内显示图标。
+
+::: preview
+demo-preview=../../demo/switch/Icon.vue
 :::
 
 ## 禁用状态
@@ -37,4 +61,3 @@ demo-preview=../../demo/switch/Size.vue
 ::: preview
 demo-preview=../../demo/switch/Disabled.vue
 :::
-

@@ -167,8 +167,8 @@
   --px-border-color-darker: #ffffff;
 
   /* Dark shadows */
-  --px-shadow-color: #11111b;
-  --px-shadow-color-dark: #000000;
+  --px-shadow-color: #585b70;
+  --px-shadow-color-dark: #45475a;
 
   /* Dark disabled */
   --px-disabled-bg-color: var(--px-fill-color-light);

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useId } from '@sakana-element/hooks';
+import { createColorPalette } from '@sakana-element/utils';
 import { computed, onMounted, ref, watch } from 'vue';
+import PxIcon from '../Icon/Icon.vue';
 import type { SwitchEmits, SwitchInstance, SwitchProps } from './types';
 
 //inheritAttrs: false 表示组件的属性不会自动传入到子组件中,但是使用v-bind="$attrs"可以获取到
@@ -17,6 +19,23 @@ const innerValue = ref(props.modelValue);
 const inputRef = ref<HTMLInputElement>();
 const inputId = useId().value;
 const checked = computed(() => innerValue.value === props.activeValue);
+
+const currentIcon = computed(() => (checked.value ? props.activeIcon : props.inactiveIcon));
+
+const customColorStyle = computed(() => {
+  const style: Record<string, string> = {};
+  if (props.activeColor) {
+    const palette = createColorPalette(props.activeColor);
+    style['--px-switch-on-color'] = palette.color;
+    style['--px-switch-on-border-color'] = palette.dark;
+  }
+  if (props.inactiveColor) {
+    const palette = createColorPalette(props.inactiveColor);
+    style['--px-switch-off-color'] = palette.color;
+    style['--px-switch-off-border-color'] = palette.dark;
+  }
+  return style;
+});
 
 const focus: SwitchInstance['focus'] = () => {
   inputRef.value?.focus();
@@ -53,9 +72,11 @@ defineExpose<SwitchInstance>({
     class="px-switch"
     :class="{
       [`px-switch--${size}`]: size,
+      [`px-switch--${type}`]: type,
       'is-disabled': isDisabled,
       'is-checked': checked,
     }"
+    :style="customColorStyle"
     @click="handleChange"
   >
     <input
@@ -78,7 +99,14 @@ defineExpose<SwitchInstance>({
           {{ checked ? activeText : inactiveText }}
         </span>
       </div>
-      <div class="px-switch__core-action"></div>
+      <div class="px-switch__core-action">
+        <PxIcon
+          v-if="currentIcon"
+          class="px-switch__icon"
+          :icon="currentIcon"
+          size="xs"
+        />
+      </div>
     </div>
   </div>
 </template>

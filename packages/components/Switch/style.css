@@ -202,6 +202,9 @@
     background: transparent;
     transition: none;
     z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     /* Handle border layer */
     &::before {
@@ -248,6 +251,14 @@
     }
   }
 
+  /* Icon inside thumb */
+  .px-switch__core-action .px-switch__icon {
+    position: relative;
+    z-index: 3;
+    width: 12px !important;
+    height: 12px !important;
+  }
+
   /* Inner text container */
   .px-switch__core-inner {
     width: 100%;
@@ -271,5 +282,19 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
+  }
+}
+
+/* Type variants */
+@each $val in primary, success, info, warning, danger {
+  .px-switch--$(val) {
+    --px-switch-on-color: var(--px-color-$(val));
+    --px-switch-on-border-color: var(--px-color-$(val)-dark);
+  }
+
+  .px-switch--$(val).is-checked .px-switch__core {
+    filter: drop-shadow(
+      var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-color-$(val)-dark)
+    );
   }
 }
