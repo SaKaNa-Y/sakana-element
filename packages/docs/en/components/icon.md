@@ -4,7 +4,7 @@ description: 486 built-in pixel art icons from pixelarticons. Supports size, col
 ---
 
 <script setup>
-import { iconApi } from '../../api/icon'
+import { iconApi } from '../../apis/icon'
 </script>
 
 # Icon

@@ -4,7 +4,7 @@ description: Pixel-style toggle switch component with disabled state and custom 
 ---
 
 <script setup>
-import { switchApi } from '../../api/switch'
+import { switchApi } from '../../apis/switch'
 </script>
 
 # Switch

@@ -4,7 +4,7 @@ description: Pixel-style dropdown menu component with multi-level support and cu
 ---
 
 <script setup>
-import { dropdownApi, dropdownItemApi } from '../../api/dropdown'
+import { dropdownApi, dropdownItemApi } from '../../apis/dropdown'
 </script>
 
 # Dropdown

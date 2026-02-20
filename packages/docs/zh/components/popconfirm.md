@@ -4,7 +4,7 @@ description: Sakana Element 像素风格气泡确认框组件，轻量级确认�
 ---
 
 <script setup>
-import { popconfirmApi } from '../../api/popconfirm'
+import { popconfirmApi } from '../../apis/popconfirm'
 </script>
 
 # Popconfirm 气泡确认框

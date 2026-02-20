@@ -4,7 +4,7 @@ description: Sakana Element 像素风格下拉菜单组件，支持多级菜单�
 ---
 
 <script setup>
-import { dropdownApi, dropdownItemApi } from '../../api/dropdown'
+import { dropdownApi, dropdownItemApi } from '../../apis/dropdown'
 </script>
 
 # Dropdown 下拉菜单

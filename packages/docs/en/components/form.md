@@ -4,7 +4,7 @@ description: Pixel-style form component with validation, custom rules, and respo
 ---
 
 <script setup>
-import { formApi, formItemApi } from '../../api/form'
+import { formApi, formItemApi } from '../../apis/form'
 </script>
 
 # Form

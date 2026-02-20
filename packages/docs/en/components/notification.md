@@ -4,7 +4,7 @@ description: Pixel-style notification component with multiple positions and cust
 ---
 
 <script setup>
-import { notificationApi } from '../../api/notification'
+import { notificationApi } from '../../apis/notification'
 </script>
 
 # Notification

@@ -4,7 +4,7 @@ description: Pixel-style tooltip component showing details on hover for Vue 3.
 ---
 
 <script setup>
-import { tooltipApi } from '../../api/tooltip'
+import { tooltipApi } from '../../apis/tooltip'
 </script>
 
 # Tooltip

@@ -4,7 +4,7 @@ description: Sakana Element 像素风格加载组件，支持全屏和区域加�
 ---
 
 <script setup>
-import { loadingApi } from '../../api/loading'
+import { loadingApi } from '../../apis/loading'
 </script>
 
 # Loading 加载

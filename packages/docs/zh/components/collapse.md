@@ -4,7 +4,7 @@ description: Sakana Element 像素风格折叠面板组件，支持手风琴模�
 ---
 
 <script setup>
-import { collapseApi, collapseItemApi } from '../../api/collapse'
+import { collapseApi, collapseItemApi } from '../../apis/collapse'
 </script>
 
 # Collapse 折叠面板

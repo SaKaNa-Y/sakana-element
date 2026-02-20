@@ -4,7 +4,7 @@ description: Pixel-style badge component for status indicators, labels, and tags
 ---
 
 <script setup>
-import { badgeApi } from '../../api/badge'
+import { badgeApi } from '../../apis/badge'
 </script>
 
 # Badge

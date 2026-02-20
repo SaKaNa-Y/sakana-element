@@ -4,7 +4,7 @@ description: Learn about dark mode support in Sakana Element pixel component lib
 ---
 
 <script setup>
-import { darkModeApi } from '../api/dark-mode'
+import { darkModeApi } from '../apis/dark-mode'
 </script>
 
 # Dark Mode

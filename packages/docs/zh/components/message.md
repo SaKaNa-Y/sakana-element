@@ -4,7 +4,7 @@ description: Sakana Element 像素风格消息提示组件，用于操作反馈�
 ---
 
 <script setup>
-import { messageApi } from '../../api/message'
+import { messageApi } from '../../apis/message'
 </script>
 
 # Message 消息提示

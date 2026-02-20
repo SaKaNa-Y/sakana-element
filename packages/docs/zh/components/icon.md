@@ -4,7 +4,7 @@ description: Sakana Element 内置 486 个像素风格图标，基于 pixelartic
 ---
 
 <script setup>
-import { iconApi } from '../../api/icon'
+import { iconApi } from '../../apis/icon'
 </script>
 
 # Icon 图标

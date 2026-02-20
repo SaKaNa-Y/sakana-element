@@ -4,7 +4,7 @@ description: Pixel-style collapsible panel component with accordion mode for Vue
 ---
 
 <script setup>
-import { collapseApi, collapseItemApi } from '../../api/collapse'
+import { collapseApi, collapseItemApi } from '../../apis/collapse'
 </script>
 
 # Collapse

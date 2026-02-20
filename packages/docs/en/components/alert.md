@@ -4,7 +4,7 @@ description: Pixel-style alert component with multiple types, closable, and cust
 ---
 
 <script setup>
-import { alertApi } from '../../api/alert'
+import { alertApi } from '../../apis/alert'
 </script>
 
 # Alert

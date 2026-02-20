@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import type { ApiCategory, ApiSection } from '../../../api/types';
+import type { ApiCategory, ApiSection } from '../../../apis/types';
 
 const props = defineProps<{
   sections: ApiSection[];

@@ -4,7 +4,7 @@ description: Sakana Element 像素风格消息弹框组件，支持确认、提�
 ---
 
 <script setup>
-import { messageBoxApi } from '../../api/message-box'
+import { messageBoxApi } from '../../apis/message-box'
 </script>
 
 # MessageBox 消息弹框

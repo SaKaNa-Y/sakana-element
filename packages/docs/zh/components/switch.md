@@ -4,7 +4,7 @@ description: Sakana Element 像素风格开关组件，支持禁用、自定义�
 ---
 
 <script setup>
-import { switchApi } from '../../api/switch'
+import { switchApi } from '../../apis/switch'
 </script>
 
 # Switch 开关

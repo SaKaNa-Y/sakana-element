@@ -4,7 +4,7 @@ description: Pixel-style button component for Sakana Element. Supports multiple 
 ---
 
 <script setup>
-import { buttonApi } from '../../api/button'
+import { buttonApi } from '../../apis/button'
 </script>
 
 # Button

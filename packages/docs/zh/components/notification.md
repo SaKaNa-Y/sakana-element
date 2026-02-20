@@ -4,7 +4,7 @@ description: Sakana Element 像素风格通知组件，支持多种位置和自�
 ---
 
 <script setup>
-import { notificationApi } from '../../api/notification'
+import { notificationApi } from '../../apis/notification'
 </script>
 
 # Notification 通知

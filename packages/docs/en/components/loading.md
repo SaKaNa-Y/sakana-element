@@ -4,7 +4,7 @@ description: Pixel-style loading component with fullscreen and area loading for 
 ---
 
 <script setup>
-import { loadingApi } from '../../api/loading'
+import { loadingApi } from '../../apis/loading'
 </script>
 
 # Loading

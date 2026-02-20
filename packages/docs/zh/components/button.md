@@ -4,7 +4,7 @@ description: Sakana Element 像素风格按钮组件，支持多种类型、尺�
 ---
 
 <script setup>
-import { buttonApi } from '../../api/button'
+import { buttonApi } from '../../apis/button'
 </script>
 
 # Button 按钮

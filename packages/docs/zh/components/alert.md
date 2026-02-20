@@ -4,7 +4,7 @@ description: Sakana Element 像素风格警告提示组件，支持多种类型�
 ---
 
 <script setup>
-import { alertApi } from '../../api/alert'
+import { alertApi } from '../../apis/alert'
 </script>
 
 # Alert 提示

@@ -4,7 +4,7 @@ description: Sakana Element 像素风格选择器组件，支持单选、搜索�
 ---
 
 <script setup>
-import { selectApi, optionApi } from '../../api/select'
+import { selectApi, optionApi } from '../../apis/select'
 </script>
 
 # Select 选择器

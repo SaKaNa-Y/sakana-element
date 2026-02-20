@@ -4,7 +4,7 @@ description: Pixel-style popconfirm component for lightweight confirmation inter
 ---
 
 <script setup>
-import { popconfirmApi } from '../../api/popconfirm'
+import { popconfirmApi } from '../../apis/popconfirm'
 </script>
 
 # Popconfirm

@@ -4,7 +4,7 @@ description: Pixel-style text input component for Sakana Element. Supports clear
 ---
 
 <script setup>
-import { inputApi } from '../../api/input'
+import { inputApi } from '../../apis/input'
 </script>
 
 # Input

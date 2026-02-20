@@ -4,7 +4,7 @@ description: Pixel-style dropdown select component. Supports single selection, f
 ---
 
 <script setup>
-import { selectApi, optionApi } from '../../api/select'
+import { selectApi, optionApi } from '../../apis/select'
 </script>
 
 # Select

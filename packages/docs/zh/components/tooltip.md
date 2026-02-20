@@ -4,7 +4,7 @@ description: Sakana Element 像素风格文字提示组件，鼠标悬停显示�
 ---
 
 <script setup>
-import { tooltipApi } from '../../api/tooltip'
+import { tooltipApi } from '../../apis/tooltip'
 </script>
 
 # Tooltip 文字提示

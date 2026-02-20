@@ -4,7 +4,7 @@ description: 了解 Sakana Element 像素组件库的深色模式支持，采用
 ---
 
 <script setup>
-import { darkModeApi } from '../api/dark-mode'
+import { darkModeApi } from '../apis/dark-mode'
 </script>
 
 # 深色模式

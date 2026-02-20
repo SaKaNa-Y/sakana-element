@@ -4,7 +4,7 @@ description: Sakana Element 像素风格输入框组件，支持文本输入、�
 ---
 
 <script setup>
-import { inputApi } from '../../api/input'
+import { inputApi } from '../../apis/input'
 </script>
 
 # Input 输入框

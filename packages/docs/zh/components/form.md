@@ -4,7 +4,7 @@ description: Sakana Element 像素风格表单组件，支持数据校验、自�
 ---
 
 <script setup>
-import { formApi, formItemApi } from '../../api/form'
+import { formApi, formItemApi } from '../../apis/form'
 </script>
 
 # Form 表单

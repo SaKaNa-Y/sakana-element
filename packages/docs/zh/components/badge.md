@@ -4,7 +4,7 @@ description: Sakana Element 像素风格徽章组件，用于状态标识、标�
 ---
 
 <script setup>
-import { badgeApi } from '../../api/badge'
+import { badgeApi } from '../../apis/badge'
 </script>
 
 # Badge 徽章

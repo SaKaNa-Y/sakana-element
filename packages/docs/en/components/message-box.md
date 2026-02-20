@@ -4,7 +4,7 @@ description: Pixel-style message box with confirm, alert, and prompt modes for V
 ---
 
 <script setup>
-import { messageBoxApi } from '../../api/message-box'
+import { messageBoxApi } from '../../apis/message-box'
 </script>
 
 # MessageBox

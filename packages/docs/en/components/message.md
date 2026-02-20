@@ -4,7 +4,7 @@ description: Pixel-style message notification component for operation feedback i
 ---
 
 <script setup>
-import { messageApi } from '../../api/message'
+import { messageApi } from '../../apis/message'
 </script>
 
 # Message
