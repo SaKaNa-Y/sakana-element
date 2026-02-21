@@ -4,6 +4,8 @@ export interface InputProps {
   modelValue: string;
   type?: string;
   size?: 'large' | 'small';
+  color?: string;
+  ghost?: boolean;
   disabled?: boolean;
   clearable?: boolean;
   showPassword?: boolean;

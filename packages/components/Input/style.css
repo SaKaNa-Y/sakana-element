@@ -3,12 +3,13 @@
   --px-input-text-color: var(--px-text-color-primary);
   --px-input-border-color: var(--px-border-color);
   --px-input-hover-border-color: var(--px-hover-border-color);
-  --px-input-focus-border-color: var(--px-color-primary);
+  --px-input-focus-border-color: var(--px-hover-border-color);
   --px-input-bg-color: var(--px-fill-color-blank);
   --px-input-icon-color: var(--px-text-color-secondary);
   --px-input-placeholder-color: var(--px-text-color-placeholder);
   --px-input-clear-hover-color: var(--px-text-color-primary);
   --px-input-shadow-color: var(--px-shadow-color);
+  --px-input-focus-shadow-color: var(--px-shadow-color-dark);
 }
 
 /* Base Input Styles */
@@ -117,7 +118,7 @@
     &::before {
       background: var(--px-input-focus-border-color);
     }
-    filter: drop-shadow(4px 4px 0px var(--px-color-primary-dark));
+    filter: drop-shadow(4px 4px 0px var(--px-input-focus-shadow-color));
   }
 }
 
@@ -289,6 +290,69 @@
   }
 }
 
+/* Color variants */
+@each $val in primary, success, warning, info, danger {
+  .px-input--$(val) {
+    --px-input-border-color: var(--px-color-$(val));
+    --px-input-hover-border-color: var(--px-color-$(val)-dark);
+    --px-input-focus-border-color: var(--px-color-$(val)-dark);
+    --px-input-focus-shadow-color: var(--px-color-$(val)-dark);
+  }
+
+  .px-input--$(val) .px-input__wrapper {
+    filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-color-$(val)-dark));
+  }
+
+  .px-input--$(val).is-focus .px-input__wrapper {
+    filter: drop-shadow(4px 4px 0px var(--px-color-$(val)-dark));
+  }
+
+  /* Textarea color variant */
+  .px-input--$(val) .px-textarea__wrapper {
+    border-color: var(--px-color-$(val));
+    filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-color-$(val)-dark));
+    &:hover { border-color: var(--px-color-$(val)-dark); }
+    &:focus {
+      border-color: var(--px-color-$(val)-dark);
+      filter: drop-shadow(4px 4px 0px var(--px-color-$(val)-dark));
+    }
+  }
+}
+
+/* Ghost variant — no border/shadow at rest */
+.px-input.is-ghost {
+  .px-input__wrapper {
+    filter: none;
+    &::before { background: transparent; }
+    &:hover {
+      &::before { background: var(--px-input-hover-border-color); }
+      filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-input-shadow-color));
+    }
+  }
+  &.is-focus .px-input__wrapper {
+    &::before { background: var(--px-input-focus-border-color); }
+    filter: drop-shadow(4px 4px 0px var(--px-input-focus-shadow-color));
+  }
+}
+
+/* Ghost + Color variants */
+@each $val in primary, success, warning, info, danger {
+  .px-input--$(val).is-ghost {
+    .px-input__wrapper {
+      filter: none;
+      &::before { background: transparent; }
+      &:hover {
+        &::before { background: var(--px-color-$(val)); }
+        filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-color-$(val)-dark));
+      }
+    }
+    &.is-focus .px-input__wrapper {
+      &::before { background: var(--px-color-$(val)-dark); }
+      filter: drop-shadow(4px 4px 0px var(--px-color-$(val)-dark));
+    }
+  }
+}
+
 /* Prefix and Suffix */
 .px-input__prefix,
 .px-input__suffix {
@@ -446,7 +510,7 @@
     & + .px-textarea__border::before {
       background: var(--px-input-focus-border-color);
     }
-    filter: drop-shadow(4px 4px 0px var(--px-color-primary-dark));
+    filter: drop-shadow(4px 4px 0px var(--px-input-focus-shadow-color));
   }
 
   &::placeholder {

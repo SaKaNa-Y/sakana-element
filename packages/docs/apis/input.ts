@@ -13,9 +13,31 @@ export const inputApi: ApiSection[] = [
       {
         name: 'type',
         category: 'style',
-        type: "'text' | 'password' | 'textarea'",
+        type: "'text' | 'password' | 'textarea' | 'date' | 'time' | 'url' | ...",
         default: "'text'",
-        desc: { zh: '输入框类型', en: 'Input type' },
+        desc: {
+          zh: '输入框类型，支持原生 HTML input 类型',
+          en: 'Input type, supports native HTML input types',
+        },
+      },
+      {
+        name: 'color',
+        category: 'style',
+        type: "'primary' | 'success' | 'warning' | 'danger' | 'info' | string",
+        desc: {
+          zh: '输入框颜色，支持预设主题色或自定义十六进制色值',
+          en: 'Input color, accepts preset theme colors or custom hex values',
+        },
+      },
+      {
+        name: 'ghost',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: {
+          zh: '是否为幽灵样式（无边框/阴影，悬浮时显示）',
+          en: 'Whether to use ghost style (no border/shadow at rest, visible on hover)',
+        },
       },
       {
         name: 'placeholder',

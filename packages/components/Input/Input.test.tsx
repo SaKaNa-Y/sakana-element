@@ -228,6 +228,112 @@ describe('Input.vue', () => {
 
     expect(wrapper.get('input').element.placeholder).toBe('Enter text');
   });
+
+  // --- Preset color prop tests ---
+  describe('preset color', () => {
+    test.each([
+      'primary',
+      'success',
+      'warning',
+      'danger',
+      'info',
+    ])('should apply px-input--%s class for preset color', (color) => {
+      const wrapper = mount(Input, {
+        props: { modelValue: '', type: 'text', color },
+      });
+      expect(wrapper.classes()).toContain(`px-input--${color}`);
+    });
+
+    test('should not apply color class when color prop is not set', () => {
+      const wrapper = mount(Input, {
+        props: { modelValue: '', type: 'text' },
+      });
+      expect(
+        wrapper.classes().some((c) => /^px-input--(primary|success|warning|danger|info)$/.test(c)),
+      ).toBe(false);
+    });
+
+    test('should combine color with type and size correctly', () => {
+      const wrapper = mount(Input, {
+        props: { modelValue: '', type: 'text', color: 'primary', size: 'large' },
+      });
+      expect(wrapper.classes()).toContain('px-input--primary');
+      expect(wrapper.classes()).toContain('px-input--large');
+      expect(wrapper.classes()).toContain('px-input--text');
+    });
+  });
+
+  // --- Custom hex color prop tests ---
+  describe('custom hex color', () => {
+    test('should apply inline CSS variables for custom hex color', () => {
+      const wrapper = mount(Input, {
+        props: { modelValue: '', type: 'text', color: '#626aef' },
+      });
+      const style = wrapper.attributes('style') ?? '';
+      expect(style).toContain('--px-input-border-color');
+      expect(style).toContain('--px-input-shadow-color');
+    });
+
+    test('should apply ghost template for custom hex + ghost', () => {
+      const wrapper = mount(Input, {
+        props: { modelValue: '', type: 'text', color: '#626aef', ghost: true },
+      });
+      const style = wrapper.attributes('style') ?? '';
+      expect(style).toContain('--px-input-border-color: transparent');
+    });
+  });
+
+  // --- Ghost prop tests ---
+  describe('ghost', () => {
+    test('should apply is-ghost class when ghost prop is set', () => {
+      const wrapper = mount(Input, {
+        props: { modelValue: '', type: 'text', ghost: true },
+      });
+      expect(wrapper.classes()).toContain('is-ghost');
+    });
+
+    test('should not apply is-ghost class by default', () => {
+      const wrapper = mount(Input, {
+        props: { modelValue: '', type: 'text' },
+      });
+      expect(wrapper.classes()).not.toContain('is-ghost');
+    });
+
+    test('should combine ghost with preset color correctly', () => {
+      const wrapper = mount(Input, {
+        props: { modelValue: '', type: 'text', ghost: true, color: 'primary' },
+      });
+      expect(wrapper.classes()).toContain('is-ghost');
+      expect(wrapper.classes()).toContain('px-input--primary');
+    });
+  });
+
+  // --- Native HTML type tests ---
+  describe('native HTML types', () => {
+    test('should render native date input', () => {
+      const wrapper = mount(Input, {
+        props: { modelValue: '', type: 'date' },
+      });
+      expect(wrapper.get('input').attributes('type')).toBe('date');
+      expect(wrapper.classes()).toContain('px-input--date');
+    });
+
+    test('should render native time input', () => {
+      const wrapper = mount(Input, {
+        props: { modelValue: '', type: 'time' },
+      });
+      expect(wrapper.get('input').attributes('type')).toBe('time');
+      expect(wrapper.classes()).toContain('px-input--time');
+    });
+
+    test('should render native url input', () => {
+      const wrapper = mount(Input, {
+        props: { modelValue: '', type: 'url' },
+      });
+      expect(wrapper.get('input').attributes('type')).toBe('url');
+      expect(wrapper.classes()).toContain('px-input--url');
+    });
+  });
 });
 
 describe('Input/index', () => {

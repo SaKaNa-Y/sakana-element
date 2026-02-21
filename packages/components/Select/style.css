@@ -6,7 +6,7 @@
   --px-select-item-selected-font-color: var(--px-color-primary);
   --px-select-item-selected-bg-color: var(--px-color-primary-light-9);
   --px-select-item-disabled-font-color: var(--px-text-color-disabled);
-  --px-select-input-focus-border-color: var(--px-color-primary);
+  --px-select-input-focus-border-color: var(--px-hover-border-color);
   --px-select-border-color: var(--px-border-color);
   --px-select-shadow-color: var(--px-shadow-color);
   --px-select-dropdown-bg-color: var(--px-fill-color-blank);

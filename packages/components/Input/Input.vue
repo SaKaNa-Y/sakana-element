@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useFocusController, useId } from '@sakana-element/hooks';
-import { debugWarn } from '@sakana-element/utils';
+import { createColorPalette, debugWarn, resolveColorVars } from '@sakana-element/utils';
 import { each, noop } from 'lodash-es';
 import { computed, nextTick, ref, shallowRef, useAttrs, watch } from 'vue';
 import { useFormItem } from '../Form';
-
 import Icon from '../Icon/Icon.vue';
+import { INPUT_COLOR_TEMPLATES, PRESET_INPUT_COLORS } from './constants';
 import type { InputEmits, InputInstance, InputProps } from './types';
 
 defineOptions({
@@ -33,6 +33,16 @@ const { formItem } = useFormItem();
 const _ref = computed(() => inputRef.value || textareaRef.value);
 
 const isDisabled = computed(() => props.disabled); //是否禁用
+
+const isPresetColor = computed(() => PRESET_INPUT_COLORS.has(props.color ?? ''));
+const isCustomColor = computed(() => !!props.color && !isPresetColor.value);
+
+const customColorStyle = computed(() => {
+  if (!isCustomColor.value) return {};
+  const palette = createColorPalette(props.color!);
+  const variant = props.ghost ? 'ghost' : 'default';
+  return resolveColorVars(palette, 'px-input', INPUT_COLOR_TEMPLATES[variant]);
+});
 
 //可清除为true，且有值，且不禁止，且聚焦，!!表示非空
 const showClear = computed(
@@ -108,6 +118,8 @@ defineExpose<InputInstance>({
     :class="{
       [`px-input--${type}`]: type,
       [`px-input--${size}`]: size,
+      [`px-input--${color}`]: isPresetColor,
+      'is-ghost': ghost,
       'is-disabled': isDisabled,
       'is-prepend': $slots.prepend,
       'is-append': $slots.append,
@@ -115,6 +127,7 @@ defineExpose<InputInstance>({
       'is-suffix': $slots.suffix,
       'is-focus': isFocused,
     }"
+    :style="customColorStyle"
   >
     <template v-if="type !== 'textarea'">
       <div v-if="$slots.prepend" class="px-input__prepend">

@@ -102,6 +102,10 @@ All components are prefixed with `Px` (e.g., `PxButton`, `PxInput`, `PxIcon`).
 
 `PxButton` supports the following boolean style props: `plain`, `round`, `circle`, `dash`, `ghost`, `link`, `block`, `responsive`. These can be combined with `type` (primary, success, warning, danger, info) and `color` for custom colors.
 
+### Input Variants
+
+`PxInput` supports `color` (preset theme name or hex string) and `ghost` (boolean) props. Preset colors (primary, success, warning, danger, info) use CSS `@each` classes; custom hex colors use inline CSS variables via `createColorPalette()` + `resolveColorVars()`. The `type` prop accepts all native HTML input types (text, password, textarea, date, time, url, etc.).
+
 ### Component Exports
 
 - `packages/components/index.ts` exports all components
