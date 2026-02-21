@@ -2,7 +2,7 @@
 .px-input {
   --px-input-text-color: var(--px-text-color-primary);
   --px-input-border-color: var(--px-border-color);
-  --px-input-hover-border-color: var(--px-color-primary);
+  --px-input-hover-border-color: var(--px-hover-border-color);
   --px-input-focus-border-color: var(--px-color-primary);
   --px-input-bg-color: var(--px-fill-color-blank);
   --px-input-icon-color: var(--px-text-color-secondary);

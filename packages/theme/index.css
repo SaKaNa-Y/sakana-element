@@ -125,6 +125,14 @@
   --px-component-size: 36px;
   --px-component-size-small: 28px;
 
+  /* === HOVER INVERSION (default / untyped components) === */
+  --px-hover-text-color: var(--px-color-white);
+  --px-hover-bg-color: var(--px-color-black);
+  --px-hover-border-color: var(--px-color-black);
+  --px-active-text-color: var(--px-color-white);
+  --px-active-bg-color: var(--px-border-color-dark);
+  --px-active-border-color: var(--px-border-color-dark);
+
   /* === DISABLED STATES === */
   --px-disabled-bg-color: var(--px-fill-color-light);
   --px-disabled-text-color: var(--px-text-color-placeholder);
@@ -169,6 +177,14 @@
   /* Dark shadows */
   --px-shadow-color: #585b70;
   --px-shadow-color-dark: #45475a;
+
+  /* Dark hover inversion */
+  --px-hover-text-color: var(--px-color-black);
+  --px-hover-bg-color: var(--px-text-color-primary);
+  --px-hover-border-color: var(--px-text-color-primary);
+  --px-active-text-color: var(--px-color-black);
+  --px-active-bg-color: var(--px-border-color-light);
+  --px-active-border-color: var(--px-border-color-light);
 
   /* Dark disabled */
   --px-disabled-bg-color: var(--px-fill-color-light);

@@ -150,7 +150,7 @@
     }
 
     &::before {
-      border-color: var(--px-color-primary);
+      border-color: var(--px-hover-border-color);
     }
   }
 

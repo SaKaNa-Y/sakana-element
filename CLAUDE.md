@@ -98,6 +98,10 @@ export const PxComponent = withInstall(Component);
 
 All components are prefixed with `Px` (e.g., `PxButton`, `PxInput`, `PxIcon`).
 
+### Button Variants
+
+`PxButton` supports the following boolean style props: `plain`, `round`, `circle`, `dash`, `ghost`, `link`, `block`, `responsive`. These can be combined with `type` (primary, success, warning, danger, info) and `color` for custom colors.
+
 ### Component Exports
 
 - `packages/components/index.ts` exports all components

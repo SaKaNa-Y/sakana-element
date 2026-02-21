@@ -48,7 +48,15 @@ const customColorStyle = computed(() => {
     light: lighten(props.color, 20),
     lighter: lighten(props.color, 35),
   };
-  const variant = props.ghost ? 'ghost' : props.dash ? 'dash' : props.plain ? 'plain' : 'default';
+  const variant = props.ghost
+    ? 'ghost'
+    : props.dash
+      ? 'dash'
+      : props.plain
+        ? 'plain'
+        : props.link
+          ? 'link'
+          : 'default';
   return resolveColorVars(palette, 'px-button', BUTTON_COLOR_TEMPLATES[variant]);
 });
 
@@ -81,6 +89,9 @@ defineExpose<ButtonInstance>({
       'is-circle': circle,
       'is-dash': dash,
       'is-ghost': ghost,
+      'is-link': link,
+      'is-block': block,
+      'is-responsive': responsive,
       'is-disabled': disabled,
       'is-loading': loading,
     }"

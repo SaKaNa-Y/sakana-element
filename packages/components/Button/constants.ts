@@ -9,6 +9,21 @@ export const BUTTON_GROUP_CTX_KEY: InjectionKey<ButtonGroupContext> =
 //作用是提供按钮组上下文
 
 export const BUTTON_COLOR_TEMPLATES: Record<string, ColorTemplate> = {
+  link: {
+    'text-color': 'color',
+    'bg-color': 'transparent',
+    'border-color': 'transparent',
+    'shadow-color': 'transparent',
+    'hover-text-color': 'dark',
+    'hover-bg-color': 'transparent',
+    'hover-border-color': 'transparent',
+    'active-text-color': 'dark',
+    'active-bg-color': 'transparent',
+    'active-border-color': 'transparent',
+    'disabled-text-color': 'light',
+    'disabled-bg-color': 'transparent',
+    'disabled-border-color': 'transparent',
+  },
   ghost: {
     'text-color': 'color',
     'bg-color': 'transparent',

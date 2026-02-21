@@ -17,6 +17,9 @@ export interface ButtonProps {
   round?: boolean;
   dash?: boolean;
   ghost?: boolean;
+  link?: boolean;
+  block?: boolean;
+  responsive?: boolean;
   color?: string;
   loadingIcon?: string;
   ariaLabel?: string;

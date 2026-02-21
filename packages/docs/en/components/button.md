@@ -62,6 +62,38 @@ Use `ghost` property to create a borderless, background-free button. Only the te
 demo-preview=../../demo/button/Ghost.vue
 :::
 
+## Link Button
+
+Use `link` property to create an underlined text button with no border, background, or shadow. Ideal for inline actions or hyperlink-style interactions.
+
+::: preview
+demo-preview=../../demo/button/Link.vue
+:::
+
+## Block Button
+
+Use `block` property to make the button expand to the full width of its parent container.
+
+::: preview
+demo-preview=../../demo/button/Block.vue
+:::
+
+## Responsive Button
+
+Use `responsive` property to make the button automatically adapt its size based on the viewport width.
+
+| Breakpoint | Width | Height | Font Size |
+|------------|-------|--------|-----------|
+| Base | < 640px | 24px | extra-small |
+| sm | ≥ 640px | 28px | small |
+| md | ≥ 768px | 36px | base |
+| lg | ≥ 1024px | 44px | large |
+| xl | ≥ 1280px | 44px | large (wider padding) |
+
+::: preview
+demo-preview=../../demo/button/Responsive.vue
+:::
+
 ## Loading State
 
 Use `loading` property to set the button's loading state.

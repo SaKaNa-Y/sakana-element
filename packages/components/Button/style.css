@@ -12,12 +12,12 @@
   --px-button-disabled-text-color: var(--px-disabled-text-color);
   --px-button-disabled-bg-color: var(--px-fill-color-light);
   --px-button-disabled-border-color: var(--px-border-color-lighter);
-  --px-button-hover-text-color: var(--px-color-primary);
-  --px-button-hover-bg-color: var(--px-color-primary-light-9);
-  --px-button-hover-border-color: var(--px-color-primary);
-  --px-button-active-text-color: var(--px-color-primary-dark);
-  --px-button-active-border-color: var(--px-color-primary-dark);
-  --px-button-active-bg-color: var(--px-color-primary-light-7);
+  --px-button-hover-text-color: var(--px-hover-text-color);
+  --px-button-hover-bg-color: var(--px-hover-bg-color);
+  --px-button-hover-border-color: var(--px-hover-border-color);
+  --px-button-active-text-color: var(--px-active-text-color);
+  --px-button-active-border-color: var(--px-active-border-color);
+  --px-button-active-bg-color: var(--px-active-bg-color);
   --px-button-outline-color: var(--px-color-primary-light-5);
   --px-button-shadow-color: var(--px-shadow-color);
 }
@@ -125,14 +125,18 @@
   /* Plain variant */
   &.is-plain {
     --px-button-bg-color: var(--px-fill-color-blank);
+    --px-button-hover-text-color: var(--px-hover-bg-color);
     --px-button-hover-bg-color: var(--px-fill-color-light);
-    --px-button-hover-border-color: var(--px-color-primary);
+    --px-button-hover-border-color: var(--px-hover-border-color);
   }
 
   /* Dash variant - Dashed border on the button itself, no pixel shadow */
   &.is-dash {
     border: 2px dashed var(--px-button-border-color);
     filter: none;
+    isolation: isolate;
+    --px-button-hover-text-color: var(--px-hover-bg-color);
+    --px-button-hover-bg-color: var(--px-fill-color-light);
 
     &::before {
       display: none;
@@ -168,7 +172,10 @@
   /* Ghost variant - No border/background, subtle hover fill */
   &.is-ghost {
     filter: none;
+    isolation: isolate;
     --px-button-shadow-color: transparent;
+    --px-button-hover-text-color: var(--px-hover-bg-color);
+    --px-button-hover-bg-color: var(--px-fill-color-light);
 
     &::before {
       display: none;
@@ -186,7 +193,7 @@
       color: var(--px-button-hover-text-color);
 
       &::after {
-        background: var(--px-button-hover-bg-color, var(--px-fill-color-light));
+        background: var(--px-button-hover-bg-color);
       }
     }
 
@@ -196,7 +203,7 @@
       color: var(--px-button-active-text-color);
 
       &::after {
-        background: var(--px-button-active-bg-color, var(--px-fill-color));
+        background: var(--px-button-active-bg-color);
       }
     }
 
@@ -210,6 +217,94 @@
       &::after {
         background: transparent;
       }
+    }
+  }
+
+  /* Link variant - Underlined text, no border/background/shadow */
+  &.is-link {
+    filter: none;
+    --px-button-shadow-color: transparent;
+    --px-button-hover-text-color: var(--px-hover-bg-color);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    padding: 8px 4px;
+
+    &::before {
+      display: none;
+    }
+
+    &::after {
+      display: none;
+    }
+
+    &:hover:not(.is-disabled):not(.is-loading) {
+      transform: none;
+      filter: none;
+      color: var(--px-button-hover-text-color);
+      opacity: 0.8;
+    }
+
+    &:active:not(.is-disabled):not(.is-loading) {
+      transform: none;
+      filter: none;
+      color: var(--px-button-active-text-color);
+      opacity: 0.6;
+    }
+
+    &.is-loading,
+    &.is-disabled,
+    &.is-disabled:hover,
+    &.is-disabled:focus,
+    &[disabled],
+    &[disabled]:hover,
+    &[disabled]:focus {
+      filter: none;
+      opacity: 0.4;
+
+      &::before {
+        display: none;
+      }
+      &::after {
+        display: none;
+      }
+    }
+  }
+
+  /* Block variant - Full-width button */
+  &.is-block {
+    display: flex;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  /* Responsive variant - Viewport-adaptive sizing */
+  &.is-responsive {
+    height: 24px;
+    padding: 4px 8px;
+    font-size: var(--px-font-size-extra-small);
+
+    @media (min-width: 640px) {
+      height: 28px;
+      padding: 4px 12px;
+      font-size: var(--px-font-size-small);
+    }
+
+    @media (min-width: 768px) {
+      height: 36px;
+      padding: 8px 16px;
+      font-size: var(--px-font-size-base);
+    }
+
+    @media (min-width: 1024px) {
+      height: 44px;
+      padding: 12px 24px;
+      font-size: var(--px-font-size-large);
+    }
+
+    @media (min-width: 1280px) {
+      height: 44px;
+      padding: 12px 32px;
+      font-size: var(--px-font-size-large);
     }
   }
 
@@ -317,6 +412,15 @@
     --px-button-active-bg-color: var(--px-color-$(val)-light-7);
     --px-button-disabled-text-color: var(--px-color-$(val)-light-5);
     --px-button-disabled-bg-color: transparent;
+  }
+
+  /* Link variant for type buttons */
+  .px-button--$(val).is-link {
+    --px-button-text-color: var(--px-color-$(val));
+    --px-button-shadow-color: transparent;
+    --px-button-hover-text-color: var(--px-color-$(val)-dark);
+    --px-button-active-text-color: var(--px-active-text-color);
+    --px-button-disabled-text-color: var(--px-color-$(val)-light-5);
   }
 
   /* Plain variant for type buttons */

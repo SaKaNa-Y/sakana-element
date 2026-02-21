@@ -59,6 +59,30 @@ export const buttonApi: ApiSection[] = [
         desc: { zh: '是否为幽灵按钮（无边框/背景）', en: 'Ghost button (no border/bg)' },
       },
       {
+        name: 'link',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: { zh: '是否为链接按钮（下划线文字样式）', en: 'Link button (underlined text style)' },
+      },
+      {
+        name: 'block',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: { zh: '是否为块级按钮（撑满父容器宽度）', en: 'Block button (full-width)' },
+      },
+      {
+        name: 'responsive',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: {
+          zh: '是否为响应式按钮（根据视口自适应尺寸）',
+          en: 'Responsive button (viewport-adaptive sizing)',
+        },
+      },
+      {
         name: 'loading',
         category: 'state',
         type: 'boolean',

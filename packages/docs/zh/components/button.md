@@ -62,6 +62,38 @@ demo-preview=../../demo/button/Dash.vue
 demo-preview=../../demo/button/Ghost.vue
 :::
 
+## 链接按钮
+
+使用 `link` 属性来创建下划线文字按钮，无边框、无背景、无阴影。适用于内联操作或超链接风格的交互。
+
+::: preview
+demo-preview=../../demo/button/Link.vue
+:::
+
+## 块级按钮
+
+使用 `block` 属性使按钮撑满父容器的宽度。
+
+::: preview
+demo-preview=../../demo/button/Block.vue
+:::
+
+## 响应式按钮
+
+使用 `responsive` 属性使按钮根据视口宽度自动调整尺寸。
+
+| 断点 | 宽度 | 高度 | 字体大小 |
+|------|------|------|----------|
+| 基础 | < 640px | 24px | 超小 |
+| sm | ≥ 640px | 28px | 小 |
+| md | ≥ 768px | 36px | 基础 |
+| lg | ≥ 1024px | 44px | 大 |
+| xl | ≥ 1280px | 44px | 大（更宽内边距） |
+
+::: preview
+demo-preview=../../demo/button/Responsive.vue
+:::
+
 ## 加载状态
 
 使用 `loading` 属性来设置按钮的加载状态。

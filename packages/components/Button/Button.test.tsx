@@ -36,6 +36,9 @@ describe('Button.vue', () => {
     ['loading', 'is-loading'],
     ['dash', 'is-dash'],
     ['ghost', 'is-ghost'],
+    ['link', 'is-link'],
+    ['block', 'is-block'],
+    ['responsive', 'is-responsive'],
   ])('should has the correct class when prop %s is set to true', (prop, className) => {
     const wrapper = mount(Button, {
       props: { [prop]: true },
@@ -261,6 +264,85 @@ describe('Button.vue', () => {
     });
     expect(wrapper.classes()).toContain('is-dash');
     expect(wrapper.classes()).toContain('is-ghost');
+  });
+
+  // Props: link
+  it('should apply is-link class when link prop is set', () => {
+    const wrapper = mount(Button, {
+      props: { link: true },
+    });
+    expect(wrapper.classes()).toContain('is-link');
+  });
+
+  it('should combine link with type correctly', () => {
+    const wrapper = mount(Button, {
+      props: { link: true, type: 'primary' },
+    });
+    expect(wrapper.classes()).toContain('is-link');
+    expect(wrapper.classes()).toContain('px-button--primary');
+  });
+
+  it('should render text correctly with link variant', () => {
+    const wrapper = mount(Button, {
+      props: { link: true },
+      slots: { default: 'Click me' },
+    });
+    expect(wrapper.text()).toBe('Click me');
+    expect(wrapper.classes()).toContain('is-link');
+  });
+
+  // Props: block
+  it('should apply is-block class when block prop is set', () => {
+    const wrapper = mount(Button, {
+      props: { block: true },
+    });
+    expect(wrapper.classes()).toContain('is-block');
+  });
+
+  it('should combine block with type correctly', () => {
+    const wrapper = mount(Button, {
+      props: { block: true, type: 'primary' },
+    });
+    expect(wrapper.classes()).toContain('is-block');
+    expect(wrapper.classes()).toContain('px-button--primary');
+  });
+
+  // Props: responsive
+  it('should apply is-responsive class when responsive prop is set', () => {
+    const wrapper = mount(Button, {
+      props: { responsive: true },
+    });
+    expect(wrapper.classes()).toContain('is-responsive');
+  });
+
+  it('should combine responsive with type correctly', () => {
+    const wrapper = mount(Button, {
+      props: { responsive: true, type: 'primary' },
+    });
+    expect(wrapper.classes()).toContain('is-responsive');
+    expect(wrapper.classes()).toContain('px-button--primary');
+  });
+
+  // Default button hover contract
+  it('should not have a type class when no type is specified', () => {
+    const wrapper = mount(Button);
+    const classes = wrapper.classes();
+    expect(classes).not.toContain('px-button--primary');
+    expect(classes).not.toContain('px-button--success');
+    expect(classes).not.toContain('px-button--warning');
+    expect(classes).not.toContain('px-button--danger');
+    expect(classes).not.toContain('px-button--info');
+  });
+
+  // Props: link + color (custom color support)
+  it('should apply link color style variables when link and color props are set', () => {
+    const wrapper = mount(Button, {
+      props: { link: true, color: '#626aef' },
+    });
+    const style = wrapper.attributes('style');
+    expect(style).toContain('--px-button-text-color');
+    expect(style).toContain('--px-button-bg-color: transparent');
+    expect(style).toContain('--px-button-border-color: transparent');
   });
 
   // Login button tests (icon + color)
