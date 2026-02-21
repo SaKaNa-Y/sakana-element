@@ -200,4 +200,55 @@
   :deep(.px-input__inner) {
     cursor: pointer;
   }
+
+  /* Disabled state */
+  &.is-disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  /* Ghost style - transparent at rest, Input handles border/shadow via prop */
+  &.is-ghost {
+    :deep(.px-tooltip__popper) {
+      &::after {
+        background: var(--px-select-dropdown-bg-color);
+      }
+    }
+  }
+
+  /* Size: Large */
+  &.px-select--large {
+    line-height: 44px;
+
+    .px-select__menu-item {
+      height: 44px;
+      line-height: 44px;
+      font-size: var(--px-font-size-large);
+      padding: 0 20px 0 28px;
+
+      &::before {
+        left: 12px;
+        width: 8px;
+        height: 8px;
+      }
+    }
+  }
+
+  /* Size: Small */
+  &.px-select--small {
+    line-height: 28px;
+
+    .px-select__menu-item {
+      height: 28px;
+      line-height: 28px;
+      font-size: var(--px-font-size-small);
+      padding: 0 12px 0 20px;
+
+      &::before {
+        left: 8px;
+        width: 4px;
+        height: 4px;
+      }
+    }
+  }
 }

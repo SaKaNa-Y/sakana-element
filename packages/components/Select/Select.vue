@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useClickOutside, useFocusController, useId } from '@sakana-element/hooks';
-import { debugWarn, RenderVnode } from '@sakana-element/utils';
+import { debugWarn } from '@sakana-element/utils';
 import {
-  assign,
+  size as _size,
   debounce,
   each,
   eq,
@@ -15,10 +15,9 @@ import {
   isNil,
   map,
   noop,
-  size,
 } from 'lodash-es';
 
-import { computed, h, nextTick, onMounted, provide, reactive, ref, type VNode, watch } from 'vue';
+import { computed, nextTick, onMounted, provide, reactive, ref, type VNode, watch } from 'vue';
 import PxIcon from '../Icon/Icon.vue';
 import PxInput from '../Input/Input.vue';
 import type { InputInstance } from '../Input/types';
@@ -49,7 +48,7 @@ const slots = defineSlots(); //表示插槽，可以获取到这个组件的插�
 const selectRef = ref<HTMLElement>();
 const tooltipRef = ref<TooltipInstance>();
 const inputRef = ref<InputInstance>();
-const filteredChilds = ref<Map<VNode, SelectOptionProps>>(new Map());
+const filteredChilds = ref<Map<string, SelectOptionProps>>(new Map());
 const filteredOptions = ref(props.options ?? []);
 
 const isDropdownVisible = ref(false);
@@ -67,7 +66,7 @@ const selectStates = reactive<SelectStates>({
 const isDisabled = computed(() => props.disabled);
 //eq 判断两个值是否相等
 const children = computed(() => filter(slots?.default?.(), (child) => eq(child.type, PxOption)));
-const hasChildren = computed(() => size(children.value) > 0);
+const hasChildren = computed(() => _size(children.value) > 0);
 const showClear = computed(
   () => props.clearable && selectStates.mouseHover && selectStates.inputValue !== '',
 );
@@ -75,8 +74,7 @@ const showClear = computed(
 const highlightedLine = computed(() => {
   let result: SelectOptionProps | undefined;
   if (hasChildren.value) {
-    const node = [...filteredChilds.value][selectStates.highlightedIndex]?.[0];
-    result = filteredChilds.value.get(node);
+    result = [...filteredChilds.value.values()][selectStates.highlightedIndex];
   } else {
     result = filteredOptions.value[selectStates.highlightedIndex];
   }
@@ -88,12 +86,12 @@ const childrenOptions = computed(() => {
   if (!hasChildren.value) return [];
 
   return map(children.value, (item) => ({
-    vNode: h(item),
-    props: assign(item.props, {
+    props: {
+      ...item.props,
       disabled:
         item.props?.disabled === true ||
         (!isNil(item.props?.disabled) && !isBoolean(item.props?.disabled)),
-    }),
+    } as SelectOptionProps,
   }));
 });
 
@@ -108,12 +106,12 @@ const isNoData = computed(() => {
 const hasData = computed(
   () =>
     (hasChildren.value && filteredChilds.value.size > 0) ||
-    (!hasChildren.value && size(filteredOptions.value) > 0),
+    (!hasChildren.value && _size(filteredOptions.value) > 0),
 );
 
 //option的最大长度
 const lastIndex = computed(() =>
-  hasChildren.value ? filteredChilds.value.size - 1 : size(filteredOptions.value) - 1,
+  hasChildren.value ? filteredChilds.value.size - 1 : _size(filteredOptions.value) - 1,
 );
 
 const filterPlaceholder = computed(() =>
@@ -211,7 +209,7 @@ function handleSelect(opt: SelectOptionProps) {
 function setFilteredChilds(opts: typeof childrenOptions.value) {
   filteredChilds.value.clear();
   each(opts, (item) => {
-    filteredChilds.value.set(item.vNode, item.props as SelectOptionProps);
+    filteredChilds.value.set(item.props.value, item.props as SelectOptionProps);
   });
 }
 
@@ -342,6 +340,8 @@ defineExpose<SelectInstance>({
     class="px-select"
     :class="{
       'is-disabled': isDisabled,
+      'is-ghost': ghost,
+      [`px-select--${size}`]: size,
     }"
     @click.stop="toggleVisible"
     @mouseenter="selectStates.mouseHover = true"
@@ -361,6 +361,8 @@ defineExpose<SelectInstance>({
             v-model="selectStates.inputValue"
             :id="inputId"
             :disabled="isDisabled"
+            :ghost="ghost"
+            :size="size"
             :placeholder="filterable ? filterPlaceholder : placeholder"
             :readonly="!filterable || !isDropdownVisible"
             @focus="handleFocus"
@@ -402,12 +404,11 @@ defineExpose<SelectInstance>({
             />
           </template>
           <template v-else>
-            <template
-              v-for="[vNode, _props] in filteredChilds"
-              :key="_props.value"
-            >
-              <render-vnode :vNode="vNode" />
-            </template>
+            <px-option
+              v-for="[_value, _props] in filteredChilds"
+              :key="_value"
+              v-bind="_props"
+            />
           </template>
         </ul>
       </template>

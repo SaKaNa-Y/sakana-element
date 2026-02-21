@@ -1,7 +1,8 @@
 import { rAF } from '@sakana-element/utils';
 import { mount } from '@vue/test-utils';
 import { describe, expect, test, vi } from 'vitest';
-import { nextTick } from 'vue';
+import { h, nextTick } from 'vue';
+import PxInput from '../Input/Input.vue';
 import { SELECT_CTX_KEY } from './constants';
 import { PxOption, PxSelect } from './index';
 import Option from './Option.vue';
@@ -493,6 +494,116 @@ describe('Select', () => {
     });
 
     expect(wrapper.classes()).toContain('is-disabled');
+  });
+});
+
+describe('Select/VNode caching bug', () => {
+  test('should render options correctly on second open (slot usage)', async () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '' },
+      slots: {
+        default: () => [
+          h(Option, { value: '1', label: 'Opt A' }),
+          h(Option, { value: '2', label: 'Opt B' }),
+        ],
+      },
+    });
+
+    // First open
+    await wrapper.find('.px-select').trigger('click');
+    await rAF();
+    expect(wrapper.findAll('li').length).toBe(2);
+
+    // Select first option to close
+    await wrapper.findAll('li').at(0)?.trigger('click');
+    await rAF();
+
+    // Reopen — previously failed in production due to stale VNodes
+    await wrapper.find('.px-select').trigger('click');
+    await rAF();
+    expect(wrapper.findAll('li').length).toBe(2);
+    expect(wrapper.text()).toContain('Opt A');
+    expect(wrapper.text()).toContain('Opt B');
+  });
+
+  test('should not mutate original slot VNode props', async () => {
+    const optionVNode = h(Option, { value: '1', label: 'Test' });
+    const originalProps = { ...optionVNode.props };
+
+    mount(Select, {
+      props: { modelValue: '' },
+      slots: { default: () => [optionVNode] },
+    });
+    await rAF();
+
+    // The computed should not have added `disabled` to the original VNode props
+    expect(optionVNode.props).toEqual(originalProps);
+  });
+});
+
+describe('Select/ghost', () => {
+  test('should apply is-ghost class when ghost=true', () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options, ghost: true },
+    });
+    expect(wrapper.find('.px-select').classes()).toContain('is-ghost');
+  });
+
+  test('should not apply is-ghost class by default', () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options },
+    });
+    expect(wrapper.find('.px-select').classes()).not.toContain('is-ghost');
+  });
+
+  test('should pass ghost prop to inner PxInput', () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options, ghost: true },
+    });
+    const input = wrapper.findComponent(PxInput);
+    expect(input.props('ghost')).toBe(true);
+  });
+});
+
+describe('Select/size', () => {
+  test.each([
+    'large',
+    'small',
+  ] as const)('should apply px-select--%s class when size="%s"', (sz) => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options, size: sz },
+    });
+    expect(wrapper.find('.px-select').classes()).toContain(`px-select--${sz}`);
+  });
+
+  test('should not apply size class when no size prop', () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options },
+    });
+    const classes = wrapper.find('.px-select').classes();
+    expect(classes).not.toContain('px-select--large');
+    expect(classes).not.toContain('px-select--small');
+  });
+
+  test.each(['large', 'small'] as const)('should forward size="%s" to PxInput', (sz) => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options, size: sz },
+    });
+    const input = wrapper.findComponent(PxInput);
+    expect(input.props('size')).toBe(sz);
+  });
+});
+
+describe('Select/disabled behavior', () => {
+  test('should not toggle dropdown when disabled', async () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options, disabled: true },
+    });
+
+    await wrapper.find('.px-select').trigger('click');
+    await rAF();
+
+    expect(wrapper.emitted('visible-change')).toBeFalsy();
   });
 });
 

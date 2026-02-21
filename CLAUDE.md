@@ -106,6 +106,10 @@ All components are prefixed with `Px` (e.g., `PxButton`, `PxInput`, `PxIcon`).
 
 `PxInput` supports `color` (preset theme name or hex string) and `ghost` (boolean) props. Preset colors (primary, success, warning, danger, info) use CSS `@each` classes; custom hex colors use inline CSS variables via `createColorPalette()` + `resolveColorVars()`. The `type` prop accepts all native HTML input types (text, password, textarea, date, time, url, etc.).
 
+### Select Variants
+
+`PxSelect` supports `ghost` (boolean) and `size` (`'large' | 'small'`) props, which are forwarded to the inner `PxInput`. Options can be provided via the `options` prop (array of `{ value, label, disabled? }`) or via `<px-option>` slot children. Class naming follows the library convention: `is-ghost` for boolean flags, `px-select--${size}` for size variants.
+
 ### Component Exports
 
 - `packages/components/index.ts` exports all components
