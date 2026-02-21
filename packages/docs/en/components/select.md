@@ -61,6 +61,22 @@ Set `ghost` for a borderless, transparent input that only shows its border on ho
 demo-preview=../../demo/select/Ghost.vue
 :::
 
+## Select Colors
+
+Use `color` with a preset theme name (`primary`, `success`, `warning`, `danger`, `info`) to color the input border, selected indicator, and highlighted item.
+
+::: preview
+demo-preview=../../demo/select/Color.vue
+:::
+
+## Custom Colors
+
+Pass any hex color string to `color` for fully custom theming. Works with both default and `ghost` styles.
+
+::: preview
+demo-preview=../../demo/select/CustomColor.vue
+:::
+
 ## Different Sizes
 
 Use `size` to control the select height and menu item dimensions. Supports `large` and `small`.

@@ -10,6 +10,8 @@
   --px-select-border-color: var(--px-border-color);
   --px-select-shadow-color: var(--px-shadow-color);
   --px-select-dropdown-bg-color: var(--px-fill-color-blank);
+  --px-select-item-indicator-color: var(--px-color-primary);
+  --px-select-item-highlighted-border-color: var(--px-color-primary);
 }
 
 /* Base Select Styles - Pixel Dropdown */
@@ -122,8 +124,8 @@
       }
 
       &::before {
-        background: var(--px-color-primary);
-        border-color: var(--px-color-primary);
+        background: var(--px-select-item-indicator-color);
+        border-color: var(--px-select-item-indicator-color);
       }
     }
 
@@ -134,7 +136,7 @@
       }
 
       &::before {
-        border-color: var(--px-color-primary);
+        border-color: var(--px-select-item-highlighted-border-color);
       }
     }
 
@@ -249,6 +251,16 @@
         width: 4px;
         height: 4px;
       }
+    }
+  }
+
+  /* Color variants */
+  @each $val in primary, success, warning, info, danger {
+    &.px-select--$(val) {
+      --px-select-item-selected-font-color: var(--px-color-$(val));
+      --px-select-item-selected-bg-color: var(--px-color-$(val)-light-9);
+      --px-select-item-indicator-color: var(--px-color-$(val));
+      --px-select-item-highlighted-border-color: var(--px-color-$(val));
     }
   }
 }

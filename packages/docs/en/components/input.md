@@ -94,10 +94,3 @@ The `type` prop supports all native HTML input types. Here are examples with `da
 demo-preview=../../demo/input/NativeTypes.vue
 :::
 
-## URL with Validation
-
-Combine a `url` type input with Form validation for URL format checking.
-
-::: preview
-demo-preview=../../demo/input/UrlValidation.vue
-:::

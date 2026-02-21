@@ -94,10 +94,3 @@ demo-preview=../../demo/input/PrefixSuffix.vue
 demo-preview=../../demo/input/NativeTypes.vue
 :::
 
-## URL 验证
-
-将 `url` 类型的输入框与 Form 表单验证结合使用，实现 URL 格式校验。
-
-::: preview
-demo-preview=../../demo/input/UrlValidation.vue
-:::

@@ -78,6 +78,15 @@ export const selectApi: ApiSection[] = [
         desc: { zh: '幽灵样式，无边框和阴影', en: 'Ghost style with no border or shadow at rest' },
       },
       {
+        name: 'color',
+        category: 'style',
+        type: "'primary' | 'success' | 'warning' | 'danger' | 'info' | string",
+        desc: {
+          zh: '选择器颜色，支持预设主题色或自定义十六进制色值',
+          en: 'Select color, accepts preset theme colors or custom hex values',
+        },
+      },
+      {
         name: 'size',
         category: 'size',
         type: "'large' | 'small'",

@@ -61,6 +61,22 @@ demo-preview=../../demo/select/Filterable.vue
 demo-preview=../../demo/select/Ghost.vue
 :::
 
+## 选择器颜色
+
+通过 `color` 设置预设主题色（`primary`、`success`、`warning`、`danger`、`info`），为输入框边框、选中指示器和高亮项着色。
+
+::: preview
+demo-preview=../../demo/select/Color.vue
+:::
+
+## 自定义颜色
+
+传入任意十六进制色值实现完全自定义主题，支持默认和 `ghost` 两种样式。
+
+::: preview
+demo-preview=../../demo/select/CustomColor.vue
+:::
+
 ## 不同尺寸
 
 通过 `size` 控制选择器高度和菜单项尺寸。支持 `large` 和 `small`。

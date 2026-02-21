@@ -18,6 +18,7 @@ export interface SelectProps {
   disabled?: boolean;
   clearable?: boolean;
   ghost?: boolean;
+  color?: string;
   size?: 'large' | 'small';
   renderLabel?: RenderLabelFunc;
   filterable?: boolean;

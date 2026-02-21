@@ -1,3 +1,4 @@
+import type { ColorTemplate } from '@sakana-element/utils';
 import type { InjectionKey } from 'vue'; //InjectionKey 表示一个唯一的键，用于在 Vue 的依赖注入系统中标识一个上下文
 import type { SelectContext } from './types';
 
@@ -23,3 +24,20 @@ export const POPPER_OPTIONS: any = {
     },
   ],
 } as const;
+
+export const PRESET_SELECT_COLORS = new Set(['primary', 'success', 'warning', 'danger', 'info']);
+
+export const SELECT_COLOR_TEMPLATES: Record<string, ColorTemplate> = {
+  default: {
+    'item-selected-font-color': 'color',
+    'item-selected-bg-color': 'light',
+    'item-indicator-color': 'color',
+    'item-highlighted-border-color': 'color',
+  },
+  ghost: {
+    'item-selected-font-color': 'color',
+    'item-selected-bg-color': 'light',
+    'item-indicator-color': 'color',
+    'item-highlighted-border-color': 'color',
+  },
+};

@@ -594,6 +594,86 @@ describe('Select/size', () => {
   });
 });
 
+describe('Select/color', () => {
+  test.each([
+    'primary',
+    'success',
+    'warning',
+    'danger',
+    'info',
+  ] as const)('should apply px-select--%s class for preset color', (color) => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options, color },
+    });
+    expect(wrapper.find('.px-select').classes()).toContain(`px-select--${color}`);
+  });
+
+  test('should not apply color class when no color prop', () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options },
+    });
+    const classes = wrapper.find('.px-select').classes();
+    expect(classes).not.toContain('px-select--primary');
+    expect(classes).not.toContain('px-select--success');
+    expect(classes).not.toContain('px-select--warning');
+    expect(classes).not.toContain('px-select--danger');
+    expect(classes).not.toContain('px-select--info');
+  });
+
+  test('should pass color prop to inner PxInput', () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options, color: 'primary' },
+    });
+    const input = wrapper.findComponent(PxInput);
+    expect(input.props('color')).toBe('primary');
+  });
+
+  test('should combine color with size correctly', () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options, color: 'success', size: 'large' },
+    });
+    const classes = wrapper.find('.px-select').classes();
+    expect(classes).toContain('px-select--success');
+    expect(classes).toContain('px-select--large');
+  });
+
+  test('should apply inline CSS variables for custom hex color', () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options, color: '#626aef' },
+    });
+    const style = wrapper.find('.px-select').attributes('style') ?? '';
+    expect(style).toContain('--px-select-item-selected-font-color');
+    expect(style).toContain('--px-select-item-selected-bg-color');
+  });
+
+  test('should not apply preset color class for hex color', () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options, color: '#626aef' },
+    });
+    const classes = wrapper.find('.px-select').classes();
+    expect(classes).not.toContain('px-select--primary');
+    expect(classes).not.toContain('px-select--#626aef');
+  });
+
+  test('should pass custom hex color to inner PxInput', () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options, color: '#626aef' },
+    });
+    const input = wrapper.findComponent(PxInput);
+    expect(input.props('color')).toBe('#626aef');
+  });
+
+  test('should apply custom color style with ghost', () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options, color: '#626aef', ghost: true },
+    });
+    const style = wrapper.find('.px-select').attributes('style') ?? '';
+    expect(style).toContain('--px-select-item-selected-font-color');
+    expect(style).toContain('--px-select-item-selected-bg-color');
+    expect(wrapper.find('.px-select').classes()).toContain('is-ghost');
+  });
+});
+
 describe('Select/disabled behavior', () => {
   test('should not toggle dropdown when disabled', async () => {
     const wrapper = mount(Select, {

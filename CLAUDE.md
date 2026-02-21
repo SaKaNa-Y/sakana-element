@@ -108,7 +108,7 @@ All components are prefixed with `Px` (e.g., `PxButton`, `PxInput`, `PxIcon`).
 
 ### Select Variants
 
-`PxSelect` supports `ghost` (boolean) and `size` (`'large' | 'small'`) props, which are forwarded to the inner `PxInput`. Options can be provided via the `options` prop (array of `{ value, label, disabled? }`) or via `<px-option>` slot children. Class naming follows the library convention: `is-ghost` for boolean flags, `px-select--${size}` for size variants.
+`PxSelect` supports `color` (preset theme name or hex string), `ghost` (boolean), and `size` (`'large' | 'small'`) props, which are forwarded to the inner `PxInput`. Preset colors (primary, success, warning, danger, info) use CSS `@each` classes; custom hex colors use inline CSS variables via `createColorPalette()` + `resolveColorVars()`. Options can be provided via the `options` prop (array of `{ value, label, disabled? }`) or via `<px-option>` slot children. Class naming follows the library convention: `is-ghost` for boolean flags, `px-select--${size}` for size variants, `px-select--${color}` for preset colors.
 
 ### Component Exports
 

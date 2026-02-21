@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useClickOutside, useFocusController, useId } from '@sakana-element/hooks';
-import { debugWarn } from '@sakana-element/utils';
+import { createColorPalette, debugWarn, resolveColorVars } from '@sakana-element/utils';
 import {
   size as _size,
   debounce,
@@ -23,7 +23,12 @@ import PxInput from '../Input/Input.vue';
 import type { InputInstance } from '../Input/types';
 import PxTooltip from '../Tooltip/Tooltip.vue';
 import type { TooltipInstance } from '../Tooltip/types';
-import { POPPER_OPTIONS, SELECT_CTX_KEY } from './constants';
+import {
+  POPPER_OPTIONS,
+  PRESET_SELECT_COLORS,
+  SELECT_COLOR_TEMPLATES,
+  SELECT_CTX_KEY,
+} from './constants';
 import PxOption from './Option.vue';
 import type {
   SelectContext,
@@ -64,6 +69,14 @@ const selectStates = reactive<SelectStates>({
 });
 
 const isDisabled = computed(() => props.disabled);
+const isPresetColor = computed(() => PRESET_SELECT_COLORS.has(props.color ?? ''));
+const isCustomColor = computed(() => !!props.color && !isPresetColor.value);
+const customColorStyle = computed(() => {
+  if (!isCustomColor.value) return {};
+  const palette = createColorPalette(props.color!);
+  const variant = props.ghost ? 'ghost' : 'default';
+  return resolveColorVars(palette, 'px-select', SELECT_COLOR_TEMPLATES[variant]);
+});
 //eq 判断两个值是否相等
 const children = computed(() => filter(slots?.default?.(), (child) => eq(child.type, PxOption)));
 const hasChildren = computed(() => _size(children.value) > 0);
@@ -342,7 +355,9 @@ defineExpose<SelectInstance>({
       'is-disabled': isDisabled,
       'is-ghost': ghost,
       [`px-select--${size}`]: size,
+      [`px-select--${color}`]: isPresetColor,
     }"
+    :style="customColorStyle"
     @click.stop="toggleVisible"
     @mouseenter="selectStates.mouseHover = true"
     @mouseleave="selectStates.mouseHover = false"
@@ -362,6 +377,7 @@ defineExpose<SelectInstance>({
             :id="inputId"
             :disabled="isDisabled"
             :ghost="ghost"
+            :color="color"
             :size="size"
             :placeholder="filterable ? filterPlaceholder : placeholder"
             :readonly="!filterable || !isDropdownVisible"
