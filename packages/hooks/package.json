@@ -1,6 +1,6 @@
 {
   "name": "@sakana-element/hooks",
-  "version": "2.0.1",
+  "version": "2.1.4",
   "private": true,
   "type": "module",
   "module": "./dist/index.js",

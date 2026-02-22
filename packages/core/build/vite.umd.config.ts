@@ -27,16 +27,17 @@ function moveStyles() {
 /**
  * UMD counterpart of extractBase64FontsPlugin.
  * Replaces base64 font data URLs with a relative path to the font file
- * emitted by the ES build (dist/theme/fonts/zpix.ttf).
+ * emitted by the ES build (dist/theme/fonts/zpix.woff2).
  * moveStyles copies dist/umd/index.css → dist/index.css, so
- * ./theme/fonts/zpix.ttf resolves correctly from dist/.
+ * ./theme/fonts/zpix.woff2 resolves correctly from dist/.
  */
 function extractBase64FontsPlugin(): Plugin {
   return {
     name: 'extract-base64-fonts',
     enforce: 'post',
     generateBundle(_, bundle) {
-      const dataUrlRe = /url\(\s*"?data:font\/[^;]+;base64,([A-Za-z0-9+/=]+)"?\s*\)/g;
+      const dataUrlRe =
+        /url\(\s*"?data:(font\/[^;]+|application\/[^;]+);base64,([A-Za-z0-9+/=]+)"?\s*\)/g;
 
       for (const [fileName, chunk] of Object.entries(bundle)) {
         if (chunk.type !== 'asset' || !/\.css$/i.test(fileName)) continue;
@@ -47,7 +48,7 @@ function extractBase64FontsPlugin(): Plugin {
         if (!dataUrlRe.test(css)) continue;
         dataUrlRe.lastIndex = 0;
 
-        chunk.source = css.replace(dataUrlRe, () => `url("./theme/fonts/zpix.ttf")`);
+        chunk.source = css.replace(dataUrlRe, () => `url("./theme/fonts/zpix.woff2")`);
       }
     },
   };
