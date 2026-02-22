@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.4 (2026-02-22)</small>
+
+* feat(button): add link, block, responsive variants and inversion hover for default buttons ([1c37243](https://github.com/yu859/sakana-element/commit/1c37243))
+* feat(docs): replace static API tables with interactive ApiTable component ([e6ff7ec](https://github.com/yu859/sakana-element/commit/e6ff7ec))
+* feat(docs): unify API table categories and merge sub-component tables ([f07700b](https://github.com/yu859/sakana-element/commit/f07700b))
+* feat(input): add color variants, ghost style, and fix focus border to inversion system ([817ddde](https://github.com/yu859/sakana-element/commit/817ddde))
+* feat(select): add color variants with preset themes and custom hex support ([f64275b](https://github.com/yu859/sakana-element/commit/f64275b))
+* feat(select): add ghost/size variants, fix VNode caching bug, and rewrite docs ([973c233](https://github.com/yu859/sakana-element/commit/973c233))
+* fix(docs): rename api/ to apis/ to avoid Vercel serverless function detection ([5d9019b](https://github.com/yu859/sakana-element/commit/5d9019b))
+* fix(theme): improve dark mode shadow visibility across all components ([3e144f3](https://github.com/yu859/sakana-element/commit/3e144f3)), closes [#11111](https://github.com/yu859/sakana-element/issues/11111) [#585b70](https://github.com/yu859/sakana-element/issues/585b70) [#000000](https://github.com/yu859/sakana-element/issues/000000) [#45475](https://github.com/yu859/sakana-element/issues/45475)
+
 ## <small>2.1.3 (2026-02-18)</small>
 
 * feat: add Badge component with various styles and custom color support ([319f95d](https://github.com/yu859/sakana-element/commit/319f95d))

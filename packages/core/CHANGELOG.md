@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.1.4 (2026-02-22)</small>
+
+* fix: audit — computed side-effects, debounce leaks, bundle size, typos ([a7aba5b](https://github.com/yu859/sakana-element/commit/a7aba5b))
+* fix(theme): improve dark mode shadow visibility across all components ([3e144f3](https://github.com/yu859/sakana-element/commit/3e144f3)), closes [#11111](https://github.com/yu859/sakana-element/issues/11111) [#585b70](https://github.com/yu859/sakana-element/issues/585b70) [#000000](https://github.com/yu859/sakana-element/issues/000000) [#45475](https://github.com/yu859/sakana-element/issues/45475)
+
 ## <small>2.1.3 (2026-02-18)</small>
 
 * refactor(color): replace imperative if-chain customColorStyle with declarative template pattern ([b48b184](https://github.com/yu859/sakana-element/commit/b48b184))
