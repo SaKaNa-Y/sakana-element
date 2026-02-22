@@ -1,6 +1,8 @@
 import {
   PxAlert,
   PxBadge,
+  PxBreadcrumb,
+  PxBreadcrumbItem,
   PxButton,
   PxButtonGroup,
   PxCard,
@@ -27,6 +29,8 @@ import type { Plugin } from 'vue';
 
 export default [
   PxBadge,
+  PxBreadcrumb,
+  PxBreadcrumbItem,
   PxButton,
   PxButtonGroup,
   PxCard,

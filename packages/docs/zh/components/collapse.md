@@ -30,6 +30,54 @@ demo-preview=../../demo/collapse/Basic.vue
 demo-preview=../../demo/collapse/Accordion.vue
 :::
 
+## 颜色变体
+
+使用 `color` 属性设置预设颜色名称，为折叠面板添加主题色。
+
+::: preview
+demo-preview=../../demo/collapse/Color.vue
+:::
+
+## 自定义颜色
+
+传递任意十六进制颜色字符串给 `color` 属性，实现完全自定义的颜色主题。
+
+::: preview
+demo-preview=../../demo/collapse/CustomColor.vue
+:::
+
+## 幽灵模式
+
+启用 `ghost` 模式，移除边框和背景 — 适合嵌入其他容器内使用。
+
+::: preview
+demo-preview=../../demo/collapse/Ghost.vue
+:::
+
+## 聚焦触发
+
+设置 `trigger="focus"` 使面板在聚焦时展开、失焦时收起。可使用 Tab 键导航。
+
+::: preview
+demo-preview=../../demo/collapse/FocusTrigger.vue
+:::
+
+## 图标位置
+
+使用 `icon-placement="start"` 将箭头指示器移到标题前方。
+
+::: preview
+demo-preview=../../demo/collapse/IconStart.vue
+:::
+
+## 强制展开/收起
+
+在单个项目上使用 `force-open` 或 `force-close` 锁定其状态。`force-close` 优先级高于 `force-open`。
+
+::: preview
+demo-preview=../../demo/collapse/ForceState.vue
+:::
+
 ## 隐藏箭头
 
 设置 `show-arrow="false"` 隐藏箭头指示器，获得更简洁的外观。

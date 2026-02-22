@@ -30,6 +30,54 @@ Use `accordion` property to enable accordion mode, where only one panel can be e
 demo-preview=../../demo/collapse/Accordion.vue
 :::
 
+## Color Variants
+
+Use the `color` prop with preset names to style the collapse with theme colors.
+
+::: preview
+demo-preview=../../demo/collapse/Color.vue
+:::
+
+## Custom Color
+
+Pass any hex color string to the `color` prop for a fully custom color theme.
+
+::: preview
+demo-preview=../../demo/collapse/CustomColor.vue
+:::
+
+## Ghost
+
+Enable `ghost` mode for a borderless, backgroundless appearance — useful when embedding inside other containers.
+
+::: preview
+demo-preview=../../demo/collapse/Ghost.vue
+:::
+
+## Focus Trigger
+
+Set `trigger="focus"` to open panels on focus and close them on blur. Navigate with the Tab key.
+
+::: preview
+demo-preview=../../demo/collapse/FocusTrigger.vue
+:::
+
+## Icon Placement
+
+Use `icon-placement="start"` to move the arrow indicator before the title.
+
+::: preview
+demo-preview=../../demo/collapse/IconStart.vue
+:::
+
+## Force Open / Close
+
+Use `force-open` or `force-close` on individual items to lock their state. `force-close` takes precedence over `force-open`.
+
+::: preview
+demo-preview=../../demo/collapse/ForceState.vue
+:::
+
 ## No Arrow
 
 Hide the arrow indicator with `show-arrow="false"` for a cleaner look.

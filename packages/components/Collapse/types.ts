@@ -1,26 +1,36 @@
-import type { Ref } from 'vue'; //Ref 是一个响应式引用对象，它包装了一个值，使其成为响应式的。当该值发生变化时，依赖它的组件会自动更新。
+import type { Ref } from 'vue';
 
-export type CollapseItemName = string | number; // 定义CollapseItemName类型，可以是字符串或数字
+export type CollapseItemName = string | number;
 
 export interface CollapseProps {
-  modelValue: CollapseItemName[]; // 定义modelValue类型，是一个包含CollapseItemName的数组
-  accordion?: boolean; // 定义accordion类型，是一个布尔值,是否开启手风琴模式
+  modelValue: CollapseItemName[];
+  accordion?: boolean;
+  color?: string;
+  ghost?: boolean;
+  trigger?: 'click' | 'focus';
+  iconPlacement?: 'start' | 'end';
 }
 
 export interface CollapseItemProps {
-  name: CollapseItemName; // 唯一标识符
-  title?: string; // 标题
-  disabled?: boolean; // 是否禁用
-  showArrow?: boolean; // 是否显示箭头指示器，默认 true
-  icon?: string; // 自定义指示器图标名称，设为 "plus" 可实现加减号切换
+  name: CollapseItemName;
+  title?: string;
+  disabled?: boolean;
+  showArrow?: boolean;
+  icon?: string;
+  forceOpen?: boolean;
+  forceClose?: boolean;
 }
 
 export interface CollapseEmits {
-  (e: 'update:modelValue', value: CollapseItemName[]): void; // 调用签名 更新modelValue
-  (e: 'change', value: CollapseItemName[]): void; // 调用签名 改变
+  (e: 'update:modelValue', value: CollapseItemName[]): void;
+  (e: 'change', value: CollapseItemName[]): void;
 }
 
 export interface CollapseContext {
-  activeNames: Ref<CollapseItemName[]>; // 当前展开的item
-  handleItemClick(name: CollapseItemName): void; // 点击item
+  activeNames: Ref<CollapseItemName[]>;
+  handleItemClick(name: CollapseItemName): void;
+  color?: string;
+  ghost?: boolean;
+  trigger?: 'click' | 'focus';
+  iconPlacement?: 'start' | 'end';
 }

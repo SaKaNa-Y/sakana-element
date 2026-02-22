@@ -289,6 +289,316 @@ describe('CollapseItem icon prop', () => {
   });
 });
 
+describe('Collapse color variant', () => {
+  test('applies px-collapse--primary class for preset color', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={['a']} color="primary">
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    expect(wrapper.find('.px-collapse').classes()).toContain('px-collapse--primary');
+  });
+
+  test.each([
+    'primary',
+    'success',
+    'warning',
+    'danger',
+    'info',
+  ] as const)('applies px-collapse--%s class for preset type', (color) => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]} color={color}>
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    expect(wrapper.find('.px-collapse').classes()).toContain(`px-collapse--${color}`);
+  });
+
+  test('applies inline --px-collapse-* CSS vars for custom hex color', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]} color="#e91e63">
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const style = wrapper.find('.px-collapse').attributes('style') ?? '';
+    expect(style).toContain('--px-collapse-border-color');
+  });
+
+  test('does NOT apply preset class for hex color', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]} color="#e91e63">
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const classes = wrapper.find('.px-collapse').classes();
+    expect(classes).not.toContain('px-collapse--#e91e63');
+  });
+});
+
+describe('Collapse ghost variant', () => {
+  test('adds is-ghost class when ghost=true', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]} ghost>
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    expect(wrapper.find('.px-collapse').classes()).toContain('is-ghost');
+  });
+});
+
+describe('Collapse trigger="focus"', () => {
+  test('header gets tabindex="0" in focus mode', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]} trigger="focus">
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const header = wrapper.find('.px-collapse-item__header');
+    expect(header.attributes('tabindex')).toBe('0');
+  });
+
+  test('item opens on focus event', async () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]} trigger="focus">
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const header = wrapper.find('.px-collapse-item__header');
+    await header.trigger('focus');
+    expect(header.classes()).toContain('is-active');
+  });
+
+  test('item closes on focusout event', async () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={['a']} trigger="focus">
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const header = wrapper.find('.px-collapse-item__header');
+    await header.trigger('focusout');
+    expect(header.classes()).not.toContain('is-active');
+  });
+
+  test('click does NOT toggle in focus mode', async () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]} trigger="focus">
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const header = wrapper.find('.px-collapse-item__header');
+    await header.trigger('click');
+    expect(header.classes()).not.toContain('is-active');
+  });
+});
+
+describe('Collapse iconPlacement', () => {
+  test('icon is after title by default', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]}>
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const header = wrapper.find('.px-collapse-item__header');
+    expect(header.classes()).not.toContain('is-icon-start');
+  });
+
+  test('icon is before title when iconPlacement="start" (via is-icon-start class)', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]} iconPlacement="start">
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const header = wrapper.find('.px-collapse-item__header');
+    expect(header.classes()).toContain('is-icon-start');
+  });
+});
+
+describe('Collapse forceOpen', () => {
+  test('content always visible even if name not in modelValue', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]}>
+          <CollapseItem name="a" title="title a" forceOpen>
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const content = wrapper.find('.px-collapse-item__wapper');
+    expect(content.isVisible()).toBeTruthy();
+  });
+
+  test('clicking header does not close forceOpen item', async () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]}>
+          <CollapseItem name="a" title="title a" forceOpen>
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const header = wrapper.find('.px-collapse-item__header');
+    await header.trigger('click');
+    const content = wrapper.find('.px-collapse-item__wapper');
+    expect(content.isVisible()).toBeTruthy();
+  });
+});
+
+describe('Collapse forceClose', () => {
+  test('content always hidden even if name in modelValue', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={['a']}>
+          <CollapseItem name="a" title="title a" forceClose>
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const content = wrapper.find('.px-collapse-item__wapper');
+    expect(content.isVisible()).toBeFalsy();
+  });
+
+  test('clicking header does not open forceClose item', async () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]}>
+          <CollapseItem name="a" title="title a" forceClose>
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const header = wrapper.find('.px-collapse-item__header');
+    await header.trigger('click');
+    const content = wrapper.find('.px-collapse-item__wapper');
+    expect(content.isVisible()).toBeFalsy();
+  });
+
+  test('forceClose wins over forceOpen', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={['a']}>
+          <CollapseItem name="a" title="title a" forceClose forceOpen>
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const content = wrapper.find('.px-collapse-item__wapper');
+    expect(content.isVisible()).toBeFalsy();
+  });
+});
+
 describe('Collapse/transitionEvents.ts', () => {
   const wrapper = mount(() => <div></div>);
   test('beforeEnter', () => {

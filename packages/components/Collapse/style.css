@@ -344,6 +344,57 @@
   }
 }
 
+/* Ghost variant — no pixel border/shadow, borderless style */
+.px-collapse.is-ghost {
+  filter: none;
+
+  &::before,
+  &::after {
+    display: none;
+  }
+}
+
+.px-collapse.is-ghost .px-collapse-item {
+  border-bottom: none;
+}
+
+.px-collapse.is-ghost .px-collapse-item__header {
+  &::before {
+    display: none;
+  }
+
+  &::after {
+    background: transparent;
+  }
+}
+
+.px-collapse.is-ghost .px-collapse-item__content::before {
+  display: none;
+}
+
+/* Preset color variants */
+@each $val in primary, success, warning, info, danger {
+  .px-collapse--$(val) {
+    --px-collapse-border-color: var(--px-color-$(val)-dark);
+    --px-collapse-shadow-color: var(--px-color-$(val)-dark);
+    --px-collapse-active-bg-color: var(--px-color-$(val)-light-9);
+  }
+
+  .px-collapse--$(val) .px-collapse-item__header.is-active::before {
+    background: var(--px-color-$(val));
+    border-color: var(--px-color-$(val));
+  }
+}
+
+/* Icon at start position */
+.px-collapse-item__header.is-icon-start {
+  .header-angle {
+    order: -1;
+    margin-right: 8px;
+    margin-left: 0;
+  }
+}
+
 /* Animation - instant for pixel feel */
 .slide-enter-active,
 .slide-leave-active {

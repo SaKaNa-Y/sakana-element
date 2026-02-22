@@ -1,0 +1,86 @@
+/* Breadcrumb Variables */
+.px-breadcrumb {
+  --px-breadcrumb-text-color: var(--px-text-color-primary);
+  --px-breadcrumb-link-color: var(--px-color-primary);
+  --px-breadcrumb-separator-color: var(--px-text-color-secondary);
+
+  font-family: var(--px-font-family);
+  font-size: var(--px-font-size-base);
+  line-height: 1;
+}
+
+/* Breadcrumb List */
+.px-breadcrumb__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  gap: 0;
+}
+
+/* Breadcrumb Item */
+.px-breadcrumb__item {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+/* Last item separator is hidden via CSS */
+.px-breadcrumb__item:last-child .px-breadcrumb__separator {
+  display: none;
+}
+
+/* Breadcrumb Link */
+.px-breadcrumb__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--px-breadcrumb-link-color);
+  text-decoration: none;
+  font-weight: 500;
+  transition: none;
+}
+
+a.px-breadcrumb__link {
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+
+  &:hover:not(.is-disabled) {
+    border-bottom: 2px solid var(--px-breadcrumb-link-color);
+  }
+}
+
+/* Current (last) item — plain text, no link styling */
+.px-breadcrumb__link.is-current {
+  color: var(--px-breadcrumb-text-color);
+  font-weight: 700;
+  cursor: default;
+}
+
+/* Disabled state */
+.px-breadcrumb__item.is-disabled {
+  opacity: 0.6;
+}
+
+.px-breadcrumb__link.is-disabled {
+  cursor: not-allowed;
+  color: var(--px-breadcrumb-text-color);
+}
+
+/* Breadcrumb Icon */
+.px-breadcrumb__icon {
+  font-size: 14px;
+}
+
+/* Breadcrumb Separator */
+.px-breadcrumb__separator {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 8px;
+  color: var(--px-breadcrumb-separator-color);
+  font-weight: 400;
+}

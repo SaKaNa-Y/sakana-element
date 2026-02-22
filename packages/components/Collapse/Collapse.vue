@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { debugWarn } from '@sakana-element/utils';
-import { provide, ref, watch, watchEffect } from 'vue';
-import { COLLAPSE_CTX_KEY } from './constants';
+import { createColorPalette, debugWarn, resolveColorVars } from '@sakana-element/utils';
+import { computed, provide, ref, watch, watchEffect } from 'vue';
+import { COLLAPSE_COLOR_TEMPLATES, COLLAPSE_CTX_KEY, PRESET_COLLAPSE_COLORS } from './constants';
 import type { CollapseEmits, CollapseItemName, CollapseProps } from './types';
 
 const COMP_NAME = 'PxCollapse' as const;
@@ -17,11 +17,21 @@ if (props.accordion && activeNames.value.length > 1) {
   activeNames.value = [activeNames.value[0]];
 }
 
+const isPresetColor = computed(() => PRESET_COLLAPSE_COLORS.has(props.color ?? ''));
+const isCustomColor = computed(() => !!props.color && !isPresetColor.value);
+
+const customColorStyle = computed(() => {
+  if (!isCustomColor.value) return {};
+  const palette = createColorPalette(props.color!);
+  const variant = props.ghost ? 'ghost' : 'default';
+  return resolveColorVars(palette, 'px-collapse', COLLAPSE_COLOR_TEMPLATES[variant]);
+});
+
 function handleItemClick(item: CollapseItemName) {
-  let _activeNames = [...activeNames.value]; //私有变量，人为约定
+  let _activeNames = [...activeNames.value];
 
   if (props.accordion) {
-    _activeNames = [_activeNames[0] === item ? '' : item]; //如果当前点击的item与私有变量中的item相同，则将私有变量中的item设置为空，否则将当前点击的item设置为私有变量中的item
+    _activeNames = [_activeNames[0] === item ? '' : item];
     updateActiveNames(_activeNames);
     return;
   }
@@ -48,19 +58,29 @@ watchEffect(() => {
 });
 
 watch(
-  //外来的要用函数包，自家的直接用就行
-  () => props.modelValue, //监听modelValue的变化，这么写是监听响应式数据的变化
+  () => props.modelValue,
   (newNames) => updateActiveNames(newNames),
 );
 
 provide(COLLAPSE_CTX_KEY, {
   activeNames,
   handleItemClick,
+  color: props.color,
+  ghost: props.ghost,
+  trigger: props.trigger,
+  iconPlacement: props.iconPlacement,
 });
 </script>
 
 <template>
-  <div class="px-collapse">
+  <div
+    class="px-collapse"
+    :class="{
+      'is-ghost': ghost,
+      [`px-collapse--${color}`]: isPresetColor,
+    }"
+    :style="customColorStyle"
+  >
     <slot></slot>
   </div>
 </template>

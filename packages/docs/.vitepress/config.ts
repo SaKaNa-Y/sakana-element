@@ -62,6 +62,13 @@ const getDataItems = (lang: 'zh' | 'en') => [
   },
 ];
 
+const getNavigationItems = (lang: 'zh' | 'en') => [
+  {
+    text: lang === 'zh' ? 'Breadcrumb 面包屑' : 'Breadcrumb',
+    link: `/${lang}/components/breadcrumb`,
+  },
+];
+
 const getFeedbackItems = (lang: 'zh' | 'en') => [
   {
     text: lang === 'zh' ? 'Alert 提示' : 'Alert',
@@ -117,6 +124,11 @@ const getSidebar = (lang: 'zh' | 'en') => [
     text: lang === 'zh' ? '数据展示' : 'Data Display',
     collapsed: false,
     items: getDataItems(lang),
+  },
+  {
+    text: lang === 'zh' ? '导航组件' : 'Navigation',
+    collapsed: false,
+    items: getNavigationItems(lang),
   },
   {
     text: lang === 'zh' ? '反馈组件' : 'Feedback',

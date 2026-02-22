@@ -12,7 +12,14 @@ const props = withDefaults(defineProps<CollapseItemProps>(), {
   showArrow: true,
 });
 const ctx = inject(COLLAPSE_CTX_KEY, void 0);
-const isActive = computed(() => ctx?.activeNames.value?.includes(props.name)); // 判断是否展开
+
+const isActive = computed(() => {
+  if (props.forceClose) return false;
+  if (props.forceOpen) return true;
+  return ctx?.activeNames.value?.includes(props.name);
+});
+
+const isFocusMode = computed(() => ctx?.trigger === 'focus');
 
 const resolvedIcon = computed(() => {
   if (!props.icon) return 'chevron-right';
@@ -22,7 +29,27 @@ const resolvedIcon = computed(() => {
 
 function handleClick() {
   if (props.disabled) return;
+  if (props.forceOpen || props.forceClose) return;
+  if (isFocusMode.value) return;
   ctx?.handleItemClick(props.name);
+}
+
+function handleFocus() {
+  if (props.disabled) return;
+  if (props.forceOpen || props.forceClose) return;
+  if (!isFocusMode.value) return;
+  if (!isActive.value) {
+    ctx?.handleItemClick(props.name);
+  }
+}
+
+function handleFocusout(e: FocusEvent) {
+  if (props.disabled) return;
+  if (props.forceOpen || props.forceClose) return;
+  if (!isFocusMode.value) return;
+  if (isActive.value) {
+    ctx?.handleItemClick(props.name);
+  }
 }
 </script>
 
@@ -40,8 +67,12 @@ function handleClick() {
         'is-disabled': disabled,
         'is-active': isActive,
         'is-hidden-arrow': showArrow === false,
+        'is-icon-start': ctx?.iconPlacement === 'start',
       }"
+      :tabindex="isFocusMode ? 0 : undefined"
       @click="handleClick"
+      @focus="handleFocus"
+      @focusout="handleFocusout"
     >
       <span class="px-collapse-item__title">
         <slot name="title">
