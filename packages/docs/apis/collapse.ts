@@ -58,6 +58,24 @@ export const collapseItemApi: ApiSection[] = [
         default: 'false',
         desc: { zh: '是否禁用', en: 'Whether disabled' },
       },
+      {
+        name: 'show-arrow',
+        category: 'style',
+        component: 'CollapseItem',
+        type: 'boolean',
+        default: 'true',
+        desc: { zh: '是否显示箭头指示器', en: 'Whether to show the arrow indicator' },
+      },
+      {
+        name: 'icon',
+        category: 'style',
+        component: 'CollapseItem',
+        type: 'string',
+        desc: {
+          zh: '自定义指示器图标名称（支持所有内置图标）。设为 "plus" 时自动在展开/收起间切换加减号',
+          en: 'Custom indicator icon name (supports all built-in icons). Set to "plus" for an automatic plus/minus toggle effect',
+        },
+      },
     ],
   },
   {

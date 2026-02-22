@@ -30,6 +30,30 @@ Use `accordion` property to enable accordion mode, where only one panel can be e
 demo-preview=../../demo/collapse/Accordion.vue
 :::
 
+## No Arrow
+
+Hide the arrow indicator with `show-arrow="false"` for a cleaner look.
+
+::: preview
+demo-preview=../../demo/collapse/NoArrow.vue
+:::
+
+## Plus/Minus Icon
+
+Use `icon="plus"` for a plus/minus toggle indicator instead of the default arrow.
+
+::: preview
+demo-preview=../../demo/collapse/PlusMinusIcon.vue
+:::
+
+## Custom Icon
+
+Use the `icon` prop with any built-in icon name to replace the default arrow. The icon remains static (no rotation). Set `icon="plus"` for the special plus/minus toggle shown above.
+
+::: preview
+demo-preview=../../demo/collapse/CustomIcon.vue
+:::
+
 ## Custom Title
 
 Use `title` slot to customize the title content.
@@ -45,4 +69,3 @@ Use `disabled` property to disable the panel.
 ::: preview
 demo-preview=../../demo/collapse/Disabled.vue
 :::
-

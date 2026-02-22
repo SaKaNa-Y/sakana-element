@@ -11,6 +11,8 @@ export interface CollapseItemProps {
   name: CollapseItemName; // 唯一标识符
   title?: string; // 标题
   disabled?: boolean; // 是否禁用
+  showArrow?: boolean; // 是否显示箭头指示器，默认 true
+  icon?: string; // 自定义指示器图标名称，设为 "plus" 可实现加减号切换
 }
 
 export interface CollapseEmits {

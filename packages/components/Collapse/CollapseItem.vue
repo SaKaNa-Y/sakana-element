@@ -8,9 +8,17 @@ import type { CollapseItemProps } from './types';
 defineOptions({
   name: 'PxCollapseItem',
 });
-const props = defineProps<CollapseItemProps>();
+const props = withDefaults(defineProps<CollapseItemProps>(), {
+  showArrow: true,
+});
 const ctx = inject(COLLAPSE_CTX_KEY, void 0);
 const isActive = computed(() => ctx?.activeNames.value?.includes(props.name)); // 判断是否展开
+
+const resolvedIcon = computed(() => {
+  if (!props.icon) return 'chevron-right';
+  if (props.icon === 'plus') return isActive.value ? 'minus' : 'plus';
+  return props.icon;
+});
 
 function handleClick() {
   if (props.disabled) return;
@@ -31,6 +39,7 @@ function handleClick() {
       :class="{
         'is-disabled': disabled,
         'is-active': isActive,
+        'is-hidden-arrow': showArrow === false,
       }"
       @click="handleClick"
     >
@@ -39,7 +48,12 @@ function handleClick() {
           {{ title }}
         </slot>
       </span>
-      <px-icon icon="chevron-right" class="header-angle" />
+      <px-icon
+        v-if="showArrow !== false"
+        :icon="resolvedIcon"
+        class="header-angle"
+        :class="{ 'is-toggle-icon': !!icon }"
+      />
     </div>
     <transition name="slide" v-on="transitionEvents">
       <div class="px-collapse-item__wapper" v-show="isActive">

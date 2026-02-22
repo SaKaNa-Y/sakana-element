@@ -192,6 +192,16 @@
     transition: none;
     color: var(--px-text-color-secondary);
   }
+
+  /* Hidden arrow — remove extra right padding */
+  &.is-hidden-arrow {
+    padding-right: 24px;
+  }
+
+  /* Toggle icon (plus/minus) — no rotation on active */
+  &.is-active .header-angle.is-toggle-icon {
+    transform: none;
+  }
 }
 
 /* First item header needs pixel corners on top */

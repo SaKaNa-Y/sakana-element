@@ -162,6 +162,133 @@ describe('Collapse.vue', () => {
   expect(() => wrapper.vm.$nextTick()).toThrow();
 });
 
+describe('CollapseItem showArrow prop', () => {
+  test('icon should exist by default (showArrow omitted)', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={['a']}>
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    expect(wrapper.find('px-icon-stub').exists()).toBe(true);
+  });
+
+  test('icon should NOT exist when showArrow={false}', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={['a']}>
+          <CollapseItem name="a" title="title a" showArrow={false}>
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    expect(wrapper.find('px-icon-stub').exists()).toBe(false);
+  });
+
+  test('showArrow={false} should add is-hidden-arrow class to header', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={['a']}>
+          <CollapseItem name="a" title="title a" showArrow={false}>
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    expect(wrapper.find('.px-collapse-item__header').classes()).toContain('is-hidden-arrow');
+  });
+});
+
+describe('CollapseItem icon prop', () => {
+  test('renders default chevron-right when icon is omitted', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]}>
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const icon = wrapper.find('px-icon-stub');
+    expect(icon.exists()).toBe(true);
+    expect(icon.attributes('icon')).toBe('chevron-right');
+  });
+
+  test('renders plus icon when icon="plus" and item is inactive', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]}>
+          <CollapseItem name="a" title="title a" icon="plus">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const icon = wrapper.find('px-icon-stub');
+    expect(icon.attributes('icon')).toBe('plus');
+  });
+
+  test('renders minus icon when icon="plus" and item is active', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={['a']}>
+          <CollapseItem name="a" title="title a" icon="plus">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const icon = wrapper.find('px-icon-stub');
+    expect(icon.attributes('icon')).toBe('minus');
+  });
+
+  test('showArrow={false} takes precedence over icon prop (no icon shown)', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={['a']}>
+          <CollapseItem name="a" title="title a" showArrow={false} icon="plus">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    expect(wrapper.find('px-icon-stub').exists()).toBe(false);
+  });
+});
+
 describe('Collapse/transitionEvents.ts', () => {
   const wrapper = mount(() => <div></div>);
   test('beforeEnter', () => {

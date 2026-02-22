@@ -30,6 +30,30 @@ demo-preview=../../demo/collapse/Basic.vue
 demo-preview=../../demo/collapse/Accordion.vue
 :::
 
+## 隐藏箭头
+
+设置 `show-arrow="false"` 隐藏箭头指示器，获得更简洁的外观。
+
+::: preview
+demo-preview=../../demo/collapse/NoArrow.vue
+:::
+
+## 加减号图标
+
+使用 `icon="plus"` 将默认箭头替换为加减号切换指示器。
+
+::: preview
+demo-preview=../../demo/collapse/PlusMinusIcon.vue
+:::
+
+## 自定义图标
+
+使用 `icon` 属性设置任意内置图标名称来替换默认箭头。图标保持静态显示（不旋转）。设置 `icon="plus"` 可实现上方展示的加减号切换效果。
+
+::: preview
+demo-preview=../../demo/collapse/CustomIcon.vue
+:::
+
 ## 自定义标题
 
 使用 `title` 插槽来自定义标题内容。
@@ -45,4 +69,3 @@ demo-preview=../../demo/collapse/CustomTitle.vue
 ::: preview
 demo-preview=../../demo/collapse/Disabled.vue
 :::
-
