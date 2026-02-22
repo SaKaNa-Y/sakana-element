@@ -1,6 +1,6 @@
 {
   "name": "sakana-element",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "A pixel-style Vue 3 component library, built with TypeScript and Vitest",
   "type": "module",
   "main": "./dist/umd/index.umd.cjs",
