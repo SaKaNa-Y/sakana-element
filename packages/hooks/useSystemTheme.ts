@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted, type Ref, ref } from 'vue';
+import { computed, onMounted, onUnmounted, type Ref, ref } from 'vue';
 
 /**
  * Composable for detecting system color scheme preference
@@ -59,6 +59,6 @@ export function useSystemTheme() {
     prefersDark,
 
     /** System color scheme preference */
-    prefers: ref<'light' | 'dark'>('light'),
+    prefers: computed<'light' | 'dark'>(() => (prefersDark.value ? 'dark' : 'light')),
   };
 }

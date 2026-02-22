@@ -115,7 +115,25 @@ describe('hooks/useSystemTheme', () => {
         },
       }),
     );
-    // Note: current implementation always returns 'light' - this documents the behavior
+    expect(result!.prefers.value).toBe('light');
+  });
+
+  it('prefers ref should update when system preference changes', async () => {
+    let result: ReturnType<typeof useSystemTheme>;
+    mount(
+      defineComponent({
+        setup() {
+          result = useSystemTheme();
+          return () => <div />;
+        },
+      }),
+    );
+    expect(result!.prefers.value).toBe('light');
+    mockMql._trigger(true);
+    await nextTick();
+    expect(result!.prefers.value).toBe('dark');
+    mockMql._trigger(false);
+    await nextTick();
     expect(result!.prefers.value).toBe('light');
   });
 });

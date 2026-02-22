@@ -1,5 +1,5 @@
-import type { SelectOptionProps, SelectStates } from 'sakana-element';
 import type { ComputedRef, Ref } from 'vue';
+import type { SelectOptionProps, SelectStates } from './types';
 
 interface KeyMapParams {
   isDropdownVisible: Ref<boolean>;

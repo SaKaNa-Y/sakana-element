@@ -5,7 +5,7 @@ import { bind, type DebouncedFunc, debounce } from 'lodash-es';
 import { computed, onUnmounted, type Ref, ref, watch, watchEffect } from 'vue';
 import type { TooltipEmits, TooltipInstance, TooltipProps } from './types';
 
-import useEventsToTiggerNode from './useEventsToTiggerNode';
+import useEventsToTriggerNode from './useEventsToTriggerNode';
 
 defineOptions({
   name: 'PxTooltip', //加前缀，避免和别的组件冲突，业界惯例
@@ -164,6 +164,8 @@ watchEffect(() => {
   if (!props.manual) {
     attachEvents();
   }
+  openDebounce?.cancel();
+  closeDebounce?.cancel();
   openDebounce = debounce(bind(setVisible, null, true), openDelay.value);
   closeDebounce = debounce(bind(setVisible, null, false), closeDelay.value);
 });
@@ -175,13 +177,15 @@ useClickOutside(containerNode, () => {
   visible.value && closeFinal();
 });
 
-useEventsToTiggerNode(props, triggerNode, events, () => {
+useEventsToTriggerNode(props, triggerNode, events, () => {
   openDebounce?.cancel();
   setVisible(false);
 });
 
 onUnmounted(() => {
   destroyPopperInstance();
+  openDebounce?.cancel();
+  closeDebounce?.cancel();
 });
 
 defineExpose<TooltipInstance>({

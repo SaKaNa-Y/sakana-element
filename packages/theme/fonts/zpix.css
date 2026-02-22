@@ -1,13 +1,11 @@
 /**
  * zpix - A pixel font for retro UI
  * Source: https://github.com/SolidZORO/zpix-pixel-font
- *
- * Place zpix.ttf file in this directory (packages/theme/fonts/)
  */
 
 @font-face {
   font-family: "zpix";
-  src: url("./zpix.ttf") format("truetype");
+  src: url("./zpix.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;

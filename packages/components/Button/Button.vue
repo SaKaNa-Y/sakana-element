@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { createColorPalette, debugWarn, lighten, resolveColorVars } from '@sakana-element/utils';
 import { throttle } from 'lodash-es';
-import { computed, inject, ref } from 'vue';
+import { computed, inject, onBeforeUnmount, ref } from 'vue';
 import PxIcon from '../Icon/Icon.vue';
 import { BUTTON_COLOR_TEMPLATES, BUTTON_GROUP_CTX_KEY } from './constants';
 import type { ButtonEmits, ButtonInstance, ButtonProps } from './types';
@@ -63,6 +63,10 @@ const customColorStyle = computed(() => {
 const handleBtnClick = (e: MouseEvent) => emits('click', e);
 const handleBtnClickThrottle = throttle(handleBtnClick, props.throttleDuration, {
   trailing: false,
+});
+
+onBeforeUnmount(() => {
+  handleBtnClickThrottle.cancel();
 });
 
 defineExpose<ButtonInstance>({

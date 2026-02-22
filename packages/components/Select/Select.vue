@@ -17,7 +17,18 @@ import {
   noop,
 } from 'lodash-es';
 
-import { computed, nextTick, onMounted, provide, reactive, ref, type VNode, watch } from 'vue';
+import {
+  computed,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  provide,
+  reactive,
+  ref,
+  type VNode,
+  watch,
+  watchEffect,
+} from 'vue';
 import PxIcon from '../Icon/Icon.vue';
 import PxInput from '../Input/Input.vue';
 import type { InputInstance } from '../Input/types';
@@ -134,7 +145,12 @@ const filterPlaceholder = computed(() =>
 );
 const timeout = computed(() => (props.remote ? 300 : 100));
 
-const handleFilterDebounce = debounce(handleFilter, timeout.value);
+let handleFilterDebounce = debounce(handleFilter, timeout.value);
+
+watchEffect(() => {
+  handleFilterDebounce.cancel();
+  handleFilterDebounce = debounce(handleFilter, timeout.value);
+});
 
 const inputId = useId().value;
 const {
@@ -332,6 +348,10 @@ watch(
 
 onMounted(() => {
   setSelected();
+});
+
+onBeforeUnmount(() => {
+  handleFilterDebounce.cancel();
 });
 
 provide<SelectContext>(SELECT_CTX_KEY, {

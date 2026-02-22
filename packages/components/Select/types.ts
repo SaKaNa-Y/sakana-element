@@ -38,7 +38,7 @@ export interface SelectStates {
 export interface SelectEmits {
   (e: 'update:modelValue', value: string): void;
   (e: 'change', value: string): void;
-  (e: 'visible-change', vlaue: boolean): void;
+  (e: 'visible-change', value: boolean): void;
 
   (e: 'clear'): void;
   (e: 'focus'): void;

@@ -36,19 +36,28 @@ function moveStyles() {
 
 /**
  * Vite library mode force-inlines all CSS url() assets as base64.
- * The zpix.ttf font (~6.9MB) becomes a ~9.3MB base64 string embedded in CSS,
+ * The zpix.woff2 font (~943KB) becomes a ~1.3MB base64 string embedded in CSS,
  * causing stack overflows in downstream Vite consumers.
  *
  * This plugin reverses that: it finds base64 font data URLs in CSS bundles,
- * decodes them back to binary, emits a separate font file, and rewrites
- * the CSS to reference the file by path.
+ * decodes them back to binary, emits separate font files, and rewrites
+ * the CSS to reference the files by path.
  */
 function extractBase64FontsPlugin(): import('vite').Plugin {
+  const MIME_TO_EXT: Record<string, string> = {
+    'font/woff2': '.woff2',
+    'font/woff': '.woff',
+    'application/font-woff2': '.woff2',
+    'application/font-woff': '.woff',
+  };
+
   return {
     name: 'extract-base64-fonts',
     enforce: 'post',
     generateBundle(_, bundle) {
-      const dataUrlRe = /url\(\s*"?data:font\/[^;]+;base64,([A-Za-z0-9+/=]+)"?\s*\)/g;
+      const dataUrlRe =
+        /url\(\s*"?data:(font\/[^;]+|application\/[^;]+);base64,([A-Za-z0-9+/=]+)"?\s*\)/g;
+      const emittedFonts = new Set<string>();
 
       for (const [fileName, chunk] of Object.entries(bundle)) {
         if (chunk.type !== 'asset' || !/\.css$/i.test(fileName)) continue;
@@ -59,15 +68,19 @@ function extractBase64FontsPlugin(): import('vite').Plugin {
         if (!dataUrlRe.test(css)) continue;
         dataUrlRe.lastIndex = 0; // reset after test()
 
-        const newCss = css.replace(dataUrlRe, (_match, b64) => {
-          const fontData = Buffer.from(b64, 'base64');
-          const fontPath = 'theme/fonts/zpix.ttf';
+        const newCss = css.replace(dataUrlRe, (_match, mime, b64) => {
+          const ext = MIME_TO_EXT[mime] ?? '.ttf';
+          const fontPath = `theme/fonts/zpix${ext}`;
 
-          this.emitFile({
-            type: 'asset',
-            fileName: fontPath,
-            source: fontData,
-          });
+          if (!emittedFonts.has(fontPath)) {
+            const fontData = Buffer.from(b64, 'base64');
+            this.emitFile({
+              type: 'asset',
+              fileName: fontPath,
+              source: fontData,
+            });
+            emittedFonts.add(fontPath);
+          }
 
           // Compute relative path from CSS location to font
           const cssDir = fileName.includes('/')
