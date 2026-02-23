@@ -1,5 +1,6 @@
 import {
   PxAlert,
+  PxAvatar,
   PxBadge,
   PxBreadcrumb,
   PxBreadcrumbItem,
@@ -28,6 +29,7 @@ import {
 import type { Plugin } from 'vue';
 
 export default [
+  PxAvatar,
   PxBadge,
   PxBreadcrumb,
   PxBreadcrumbItem,

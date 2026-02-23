@@ -53,6 +53,10 @@ const getFormItems = (lang: 'zh' | 'en') => [
 
 const getDataItems = (lang: 'zh' | 'en') => [
   {
+    text: lang === 'zh' ? 'Avatar 头像' : 'Avatar',
+    link: `/${lang}/components/avatar`,
+  },
+  {
     text: lang === 'zh' ? 'Collapse 折叠面板' : 'Collapse',
     link: `/${lang}/components/collapse`,
   },
