@@ -66,7 +66,7 @@ defineExpose<DropdownInstance>({
 </script>
 
 <template>
-  <div ref="dropdownRef" class="px-dropdown" :class="{ 'is-disabled': props.disabled }" role="menu" aria-haspopup="true" :aria-expanded="isOpen">
+  <div ref="dropdownRef" class="px-dropdown" :class="{ 'is-disabled': props.disabled }" aria-haspopup="true" :aria-expanded="isOpen">
     <px-tooltip
       ref="tooltipRef"
       v-bind="tooltipProps"
@@ -87,7 +87,7 @@ defineExpose<DropdownInstance>({
       <slot name="default" v-else></slot>
 
       <template #content>
-        <div class="px-dropdown__menu">
+        <div class="px-dropdown__menu" role="menu">
           <slot name="dropdown">
             <template v-for="item in items" :key="item.command">
               <dropdown-item v-bind="item" />

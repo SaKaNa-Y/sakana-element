@@ -25,6 +25,8 @@ function handleClick() {
 
 <template>
   <li
+    role="option"
+    :aria-selected="selected"
     class="px-select__menu-item"
     :class="{
       'is-disabled': disabled,

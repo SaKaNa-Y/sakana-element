@@ -62,7 +62,7 @@ const hasDangerousPath = (prop: string | string[]): boolean => {
   return segments.some((s) => DANGEROUS_PATH_SEGMENTS.has(s));
 };
 
-const getValByProp = (target: Record<string, any> | undefined) => {
+const getValByProp = (target: Record<string, unknown> | undefined) => {
   if (target && props.prop && !isNil(get(target, props.prop))) {
     if (hasDangerousPath(props.prop)) {
       debugWarn(
@@ -157,7 +157,7 @@ const isRequired = computed(() => {
   return size(filter(itemRules.value, (rule) => rule.required)) > 0;
 });
 
-let initialVal: any = null;
+let initialVal: unknown = null;
 let isResetting: boolean = false;
 
 //获取触发规则
@@ -304,9 +304,10 @@ defineExpose<FormItemInstance>({
       </slot>
     </component>
     <div class="px-form-item__content" :style="isTop ? { width: '100%' } : {}"
+      :aria-describedby="validateStatus === 'error' ? `form-item-error-${labelId}` : undefined"
     >
       <slot :validate="validate"></slot>
-      <div class="px-form-item__error-msg" v-if="validateStatus === 'error'">
+      <div class="px-form-item__error-msg" v-if="validateStatus === 'error'" :id="`form-item-error-${labelId}`">
         <template v-if="ctx?.showMessage && showMessage">
           <slot name="error" :error="errMsg">{{ errMsg }}</slot>
         </template>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useClickOutside, useFocusController, useId } from '@sakana-element/hooks';
+import { useClickOutside, useFocusController, useId, useLocale } from '@sakana-element/hooks';
 import { createColorPalette, debugWarn, resolveColorVars } from '@sakana-element/utils';
 import {
   size as _size,
@@ -51,6 +51,7 @@ import type {
 } from './types';
 import useKeyMap from './useKeyMap';
 
+const locale = useLocale();
 const COMPONENT_NAME = 'PxSelect';
 
 defineOptions({ name: COMPONENT_NAME });
@@ -401,6 +402,8 @@ defineExpose<SelectInstance>({
             :size="size"
             :placeholder="filterable ? filterPlaceholder : placeholder"
             :readonly="!filterable || !isDropdownVisible"
+            :aria-controls="`px-select-menu-${inputId}`"
+            :aria-activedescendant="highlightedLine ? `select-item-${highlightedLine.value}` : undefined"
             @focus="handleFocus"
             @blur="handleBlur"
             @input="handleFilterDebounce"
@@ -429,9 +432,9 @@ defineExpose<SelectInstance>({
           <px-icon icon="loader" spin />
         </div>
         <div class="px-select__nodata" v-else-if="filterable && isNoData">
-          No data
+          {{ locale.t('select.noData') }}
         </div>
-        <ul class="px-select__menu">
+        <ul class="px-select__menu" role="listbox" :id="`px-select-menu-${inputId}`">
           <template v-if="!hasChildren">
             <px-option
               v-for="item in filteredOptions"

@@ -159,5 +159,5 @@
 
 .px-message.fade-up-enter-active,
 .px-message.fade-up-leave-active {
-  transition: opacity 0.1s, transform 0.1s;
+  transition: opacity 0.15s steps(3), transform 0.15s steps(3);
 }

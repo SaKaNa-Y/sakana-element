@@ -17,7 +17,7 @@ export interface FormValidateFailuer {
 }
 
 export interface FormProps {
-  model: Record<string, any>;
+  model: Record<string, unknown>;
   rules?: FormRules;
   disabled?: boolean;
   labelWidth?: number | string;

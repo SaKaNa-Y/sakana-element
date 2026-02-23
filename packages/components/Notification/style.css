@@ -125,5 +125,5 @@
 
 .px-notification-fade-enter-active,
 .px-notification-fade-leave-active {
-  transition: opacity 0.1s, transform 0.1s;
+  transition: opacity 0.15s steps(3), transform 0.15s steps(3);
 }

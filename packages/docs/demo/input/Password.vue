@@ -1,7 +1,7 @@
 <template>
-  <div class="demo-input">
+  <form class="demo-input" @submit.prevent>
     <px-input v-model="password" type="password" placeholder="请输入密码" show-password />
-  </div>
+  </form>
 </template>
 
 <script setup lang="ts">

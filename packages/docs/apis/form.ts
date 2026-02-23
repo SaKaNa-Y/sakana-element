@@ -170,6 +170,16 @@ export const formItemApi: ApiSection[] = [
         default: 'false',
         desc: { zh: '是否禁用', en: 'Whether disabled' },
       },
+      {
+        name: 'for',
+        category: 'behavior',
+        component: 'FormItem',
+        type: 'string',
+        desc: {
+          zh: '标签的 for 属性，关联到指定的表单控件',
+          en: "Label's for attribute, associates with a specific form control",
+        },
+      },
     ],
   },
   {

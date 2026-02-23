@@ -63,6 +63,9 @@ function handleFocusout(e: FocusEvent) {
     <div
       class="px-collapse-item__header"
       :id="`item-header-${name}`"
+      role="button"
+      :aria-expanded="isActive"
+      :aria-controls="`item-content-${name}`"
       :class="{
         'is-disabled': disabled,
         'is-active': isActive,

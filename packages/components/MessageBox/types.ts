@@ -12,7 +12,7 @@ export type MessageBoxInputData = {
   value: string;
   action: MessageBoxAction;
 };
-export type MessageBoxData = MessageBoxInputData & MessageBoxAction;
+export type MessageBoxData = MessageBoxInputData | MessageBoxAction;
 
 export interface MessageBoxOptions {
   title?: string;
@@ -63,7 +63,7 @@ export type MessageBoxShortcutMethod = ((
   ((message: MessageBoxOptions['message'], options?: MessageBoxOptions) => Promise<MessageBoxData>);
 
 export interface IErMessageBox {
-  (options: MessageBoxOptions | string | VNode): Promise<any>;
+  (options: MessageBoxOptions | string | VNode): Promise<MessageBoxData>;
 
   alert: MessageBoxShortcutMethod;
   confirm: MessageBoxShortcutMethod;

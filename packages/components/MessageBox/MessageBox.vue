@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useId, useZIndex } from '@sakana-element/hooks';
+import { useId, useLocale, useZIndex } from '@sakana-element/hooks';
 import { typeIconMap } from '@sakana-element/utils';
 import { isFunction, isNil } from 'lodash-es';
 import { computed, nextTick, type Ref, reactive, ref, watch } from 'vue';
@@ -23,18 +23,17 @@ const props = withDefaults(defineProps<MessageBoxProps>(), {
   roundButton: false,
   boxType: '',
   inputValue: '',
-  inputPlaceholder: 'Please input...',
-  confirmButtonText: 'Ok',
-  cancelButtonText: 'Cancel',
   showConfirmButton: true,
 });
 
+const locale = useLocale();
 const { doAction } = props;
 const { nextZIndex } = useZIndex();
 
 const headerRef = ref<HTMLElement>();
 const inputRef = ref<InputInstance>();
 const inputId = useId();
+const msgboxTitleId = `msgbox-title-${useId().value}`;
 
 //这里不用ref是因为要多写.value,而reactive不用
 const state = reactive({
@@ -93,6 +92,8 @@ function handleClose() {
     <px-overlay v-show="(visible as Ref).value" :z-index="state.zIndex" mask>
       <div
         role="dialog"
+        aria-modal="true"
+        :aria-labelledby="msgboxTitleId"
         class="px-overlay-message-box"
         @click="handleWrapperClick"
       >
@@ -112,7 +113,7 @@ function handleClose() {
             class="px-message-box__header"
             :class="{ 'show-close': state.showClose }"
           >
-            <div class="px-message-box__title">
+            <div class="px-message-box__title" :id="msgboxTitleId">
               <px-icon
                 v-if="iconComponent && state.center"
                 :class="{
@@ -167,7 +168,7 @@ function handleClose() {
               :loading="state.cancelButtonLoading"
               @click="handleAction('cancel')"
               @keydown.prevent.enter="handleAction('cancel')"
-              >{{ state.cancelButtonText }}</px-button
+              >{{ state.cancelButtonText || locale.t('messagebox.cancel') }}</px-button
             >
             <px-button
               v-show="state.showConfirmButton"
@@ -177,7 +178,7 @@ function handleClose() {
               :loading="state.confirmButtonLoading"
               @click="handleAction('confirm')"
               @keydown.prevent.enter="handleAction('confirm')"
-              >{{ state.confirmButtonText }}</px-button
+              >{{ state.confirmButtonText || locale.t('messagebox.confirm') }}</px-button
             >
           </div>
         </div>

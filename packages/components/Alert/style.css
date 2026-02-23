@@ -205,7 +205,7 @@
 
 .px-alert-fade-enter-active,
 .px-alert-fade-leave-active {
-  transition: opacity 0.15s, transform 0.15s;
+  transition: opacity 0.15s steps(3), transform 0.15s steps(3);
 }
 
 /* Type variants - Light theme */

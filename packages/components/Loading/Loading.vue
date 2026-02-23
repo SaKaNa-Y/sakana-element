@@ -23,6 +23,8 @@ const iconName = computed(() => {
     <div
       v-show="(props.visible as Ref).value"
       class="px-loading px-loading__mask"
+      role="status"
+      aria-live="polite"
       :class="{ 'is-fullscreen': fullscreen }"
     >
       <div class="px-loading__spinner">

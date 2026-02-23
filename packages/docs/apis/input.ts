@@ -92,6 +92,29 @@ export const inputApi: ApiSection[] = [
         type: 'string',
         desc: { zh: '后缀图标', en: 'Suffix icon' },
       },
+      {
+        name: 'autocomplete',
+        category: 'behavior',
+        type: 'string',
+        default: "'off'",
+        desc: { zh: '原生 autocomplete 属性', en: 'Native autocomplete attribute' },
+      },
+      {
+        name: 'autofocus',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'false',
+        desc: { zh: '是否自动聚焦', en: 'Whether to auto focus' },
+      },
+      {
+        name: 'form',
+        category: 'behavior',
+        type: 'string',
+        desc: {
+          zh: '原生 form 属性，关联到指定表单',
+          en: 'Native form attribute, associates with a form',
+        },
+      },
     ],
   },
   {
@@ -164,6 +187,12 @@ export const inputApi: ApiSection[] = [
         category: 'expose',
         type: '() => void',
         desc: { zh: '清空输入框内容', en: 'Clear the input' },
+      },
+      {
+        name: 'select',
+        category: 'expose',
+        type: '() => void',
+        desc: { zh: '选中输入框中的文本', en: 'Select the text in the input' },
       },
     ],
   },

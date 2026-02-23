@@ -30,8 +30,7 @@
     "build-umd": "vite build --config build/vite.umd.config.ts",
     "build-es": "vite build --config build/vite.es.config.ts",
     "build-umd:watch": "vite build --watch --config build/vite.umd.config.ts",
-    "build-es:watch": "vite build --watch --config build/vite.es.config.ts",
-    "release": "release-it"
+    "build-es:watch": "vite build --watch --config build/vite.es.config.ts"
   },
   "keywords": [],
   "author": "",

@@ -84,6 +84,7 @@ defineExpose<ButtonInstance>({
     :type="safeTag === 'button' ? nativeType : void 0"
     class="px-button"
     :aria-label="ariaLabel"
+    :aria-busy="loading || undefined"
     :disabled="disabled || loading ? true : void 0"
     :class="{
       [`px-button--${type}`]: type,

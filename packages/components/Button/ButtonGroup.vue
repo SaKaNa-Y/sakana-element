@@ -21,7 +21,7 @@ provide(
 </script>
 
 <template>
-  <div class="px-button-group">
+  <div class="px-button-group" role="group">
     <slot></slot>
   </div>
 </template>

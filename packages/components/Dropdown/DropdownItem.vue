@@ -27,6 +27,7 @@ function handleClick() {
 <template>
   <li v-if="divided" role="separator" class="divided-placeholder"></li>
   <li
+    role="menuitem"
     :id="`dropdown-item-${command ?? useId().value}`"
     :class="{
       'px-dropdown__item': true,

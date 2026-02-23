@@ -15,6 +15,10 @@ const getGuideItems = (lang: 'zh' | 'en') => [
     text: lang === 'zh' ? '深色模式' : 'Dark Mode',
     link: `/${lang}/dark-mode`,
   },
+  {
+    text: lang === 'zh' ? 'ConfigProvider 全局配置' : 'ConfigProvider',
+    link: `/${lang}/components/config-provider`,
+  },
 ];
 
 const getBasicItems = (lang: 'zh' | 'en') => [

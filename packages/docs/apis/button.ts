@@ -131,6 +131,15 @@ export const buttonApi: ApiSection[] = [
         desc: { zh: '自定义元素标签', en: 'Custom element tag' },
       },
       {
+        name: 'aria-label',
+        category: 'content',
+        type: 'string',
+        desc: {
+          zh: '按钮的 ARIA 标签，用于无障碍访问',
+          en: 'ARIA label for the button, for accessibility',
+        },
+      },
+      {
         name: 'use-throttle',
         category: 'behavior',
         type: 'boolean',

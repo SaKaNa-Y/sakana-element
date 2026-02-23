@@ -92,6 +92,12 @@ export const selectApi: ApiSection[] = [
         type: "'large' | 'small'",
         desc: { zh: '选择器尺寸', en: 'Select size' },
       },
+      {
+        name: 'id',
+        category: 'behavior',
+        type: 'string',
+        desc: { zh: '输入框的原生 id 属性', en: 'Native id attribute for the input' },
+      },
     ],
   },
   {
@@ -114,6 +120,18 @@ export const selectApi: ApiSection[] = [
         category: 'event',
         type: '() => void',
         desc: { zh: '清空选中值时触发', en: 'Triggered when value is cleared' },
+      },
+      {
+        name: 'focus',
+        category: 'event',
+        type: '(event: FocusEvent) => void',
+        desc: { zh: '获取焦点时触发', en: 'Triggered when the select is focused' },
+      },
+      {
+        name: 'blur',
+        category: 'event',
+        type: '(event: FocusEvent) => void',
+        desc: { zh: '失去焦点时触发', en: 'Triggered when the select is blurred' },
       },
     ],
   },

@@ -19,6 +19,7 @@ const ctx = inject(BREADCRUMB_CTX_KEY, { separator: '/' });
       :is="to && !disabled ? 'a' : 'span'"
       class="px-breadcrumb__link"
       :class="{ 'is-current': !to, 'is-disabled': disabled }"
+      :aria-current="!to && !disabled ? 'page' : undefined"
       v-bind="to && !disabled ? { href: to } : {}"
       @click.prevent
     >

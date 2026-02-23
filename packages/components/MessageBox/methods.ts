@@ -17,8 +17,8 @@ const messageInstanceMap = new Map<
   {
     options: MessageBoxOptions;
     callback: MessageBoxCallback | undefined;
-    resolve: (res: any) => void;
-    reject: (res: any) => void;
+    resolve: (res: MessageBoxData) => void;
+    reject: (res: MessageBoxData) => void;
   }
 >();
 
@@ -89,7 +89,7 @@ function createMessage(options: MessageBoxOptions) {
 }
 
 async function MessageBox(options: MessageBoxOptions): Promise<MessageBoxData>;
-function MessageBox(options: MessageBoxOptions | string | VNode): Promise<any> {
+function MessageBox(options: MessageBoxOptions | string | VNode): Promise<MessageBoxData> {
   let callback: MessageBoxCallback | undefined;
   if (isString(options) || isVNode(options)) {
     options = {

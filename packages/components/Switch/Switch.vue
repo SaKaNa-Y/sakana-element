@@ -83,6 +83,7 @@ defineExpose<SwitchInstance>({
       class="px-switch__input"
       type="checkbox"
       role="switch"
+      :aria-checked="checked"
       ref="inputRef"
       :id="inputId"
       :name="name"
