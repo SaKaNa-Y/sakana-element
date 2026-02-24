@@ -38,3 +38,6 @@ packages/play/storybook-static
 # AI agent local config & skills
 .claude/
 .agents/
+
+# Husky v9 bug artifact (husky --version creates this directory)
+--version/
