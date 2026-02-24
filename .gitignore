@@ -34,3 +34,7 @@ dist-ssr
 # Build artifacts
 packages/play/storybook-static
 *.timestamp*
+
+# AI agent local config & skills
+.claude/
+.agents/
