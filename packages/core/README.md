@@ -34,23 +34,25 @@ createApp(App).use(SakanaElement).mount('#app')
 | Component | Description / 描述 |
 |-----------|-------------------|
 | `PxButton` | Button / 按钮 |
+| `PxIcon` | Icon / 图标 |
 | `PxInput` | Input / 输入框 |
 | `PxSelect` | Select / 选择器 |
+| `PxFileInput` | FileInput / 文件输入 |
 | `PxSwitch` | Switch / 开关 |
-| `PxIcon` | Icon / 图标 |
-| `PxAlert` | Alert / 警告提示 |
+| `PxForm` | Form / 表单 |
+| `PxAvatar` | Avatar / 头像 |
 | `PxBadge` | Badge / 徽章 |
 | `PxCard` | Card / 卡片 |
 | `PxCollapse` | Collapse / 折叠面板 |
+| `PxBreadcrumb` | Breadcrumb / 面包屑 |
 | `PxDropdown` | Dropdown / 下拉菜单 |
-| `PxForm` | Form / 表单 |
-| `PxTooltip` | Tooltip / 文字提示 |
-| `PxPopconfirm` | Popconfirm / 气泡确认框 |
+| `PxAlert` | Alert / 警告提示 |
 | `PxMessage` | Message / 消息提示 |
 | `PxMessageBox` | MessageBox / 消息弹框 |
 | `PxNotification` | Notification / 通知 |
 | `PxLoading` | Loading / 加载 |
-| `PxOverlay` | Overlay / 遮罩层 |
+| `PxTooltip` | Tooltip / 文字提示 |
+| `PxPopconfirm` | Popconfirm / 气泡确认框 |
 | `PxConfigProvider` | ConfigProvider / 全局配置 |
 
 ## Bundled Font / 内置字体
