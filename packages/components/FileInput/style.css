@@ -1,0 +1,304 @@
+/* FileInput Variables */
+.px-file-input {
+  --px-file-input-text-color: var(--px-text-color-primary);
+  --px-file-input-border-color: var(--px-border-color);
+  --px-file-input-hover-border-color: var(--px-hover-border-color);
+  --px-file-input-bg-color: var(--px-fill-color-blank);
+  --px-file-input-placeholder-color: var(--px-text-color-placeholder);
+  --px-file-input-shadow-color: var(--px-shadow-color);
+  --px-file-input-hover-shadow-color: var(--px-shadow-color);
+  --px-file-input-trigger-bg-color: var(--px-fill-color-dark);
+  --px-file-input-trigger-text-color: var(--px-text-color-primary);
+  --px-file-input-trigger-hover-bg-color: var(--px-fill-color-darker);
+  --px-file-input-icon-color: var(--px-text-color-secondary);
+  --px-file-input-clear-hover-color: var(--px-text-color-primary);
+}
+
+/* Base FileInput Styles */
+.px-file-input {
+  --px-file-input-height: 36px;
+  position: relative;
+  font-size: var(--px-font-size-base);
+  font-family: var(--px-font-family);
+  display: inline-flex;
+  width: 100%;
+  line-height: var(--px-file-input-height);
+  box-sizing: border-box;
+  vertical-align: middle;
+
+  /* Disabled state */
+  &.is-disabled {
+    cursor: not-allowed;
+
+    .px-file-input__wrapper {
+      opacity: 0.6;
+      cursor: not-allowed;
+
+      &::before {
+        background: var(--px-disabled-border-color);
+      }
+      &::after {
+        background: var(--px-disabled-bg-color);
+      }
+    }
+
+    .px-file-input__trigger {
+      cursor: not-allowed;
+    }
+
+    .px-file-input__name {
+      color: var(--px-disabled-text-color);
+      cursor: not-allowed;
+    }
+  }
+}
+
+/* FileInput Wrapper - Main pixel-style container */
+.px-file-input__wrapper {
+  display: inline-flex;
+  flex-grow: 1;
+  align-items: center;
+  background: transparent;
+  border: none;
+  position: relative;
+  transition: none;
+  height: var(--px-file-input-height);
+  padding: 2px;
+  box-sizing: border-box;
+
+  /* Pixel shadow via drop-shadow */
+  filter: drop-shadow(
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-file-input-shadow-color)
+  );
+
+  /* Border layer — filled with border color, clipped to pixel shape */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--px-file-input-border-color);
+    clip-path: polygon(
+      0 4px,
+      2px 4px,
+      2px 2px,
+      4px 2px,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px calc(100% - 4px),
+      0 calc(100% - 4px)
+    );
+    z-index: -1;
+  }
+
+  /* Fill layer — inset by border width, filled with bg color */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: var(--px-file-input-bg-color);
+    clip-path: polygon(
+      0 4px,
+      2px 4px,
+      2px 2px,
+      4px 2px,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px calc(100% - 4px),
+      0 calc(100% - 4px)
+    );
+    z-index: -1;
+  }
+
+  &:hover {
+    &::before {
+      background: var(--px-file-input-hover-border-color);
+    }
+  }
+}
+
+/* Hidden native file input */
+.px-file-input__native {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Trigger button */
+.px-file-input__trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  padding: 0 12px;
+  background: var(--px-file-input-trigger-bg-color);
+  color: var(--px-file-input-trigger-text-color);
+  font-family: var(--px-font-family);
+  font-size: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+  border-right: 2px solid var(--px-file-input-border-color);
+  user-select: none;
+
+  /* Notch top-left and bottom-left corners to match the pixel staircase border */
+  clip-path: polygon(
+    0 2px,
+    2px 2px,
+    2px 0,
+    100% 0,
+    100% 100%,
+    2px 100%,
+    2px calc(100% - 2px),
+    0 calc(100% - 2px)
+  );
+
+  &:hover {
+    background: var(--px-file-input-trigger-hover-bg-color);
+  }
+}
+
+/* File name display */
+.px-file-input__name {
+  flex: 1;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  color: var(--px-file-input-text-color);
+  font-family: var(--px-font-family);
+  font-size: inherit;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+
+  &:only-of-type {
+    color: var(--px-file-input-placeholder-color);
+  }
+}
+
+/* Clear icon */
+.px-file-input__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  padding-right: 8px;
+  color: var(--px-file-input-icon-color);
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+
+  &:hover {
+    color: var(--px-file-input-clear-hover-color);
+  }
+}
+
+/* Size variants */
+.px-file-input--large {
+  --px-file-input-height: 44px;
+  font-size: var(--px-font-size-large);
+
+  .px-file-input__trigger {
+    padding: 0 16px;
+  }
+}
+
+.px-file-input--small {
+  --px-file-input-height: 28px;
+  font-size: var(--px-font-size-small);
+
+  .px-file-input__wrapper {
+    filter: drop-shadow(2px 2px 0px var(--px-file-input-shadow-color));
+  }
+
+  .px-file-input__trigger {
+    padding: 0 8px;
+  }
+
+  .px-file-input__name {
+    padding: 0 8px;
+  }
+}
+
+/* Color variants */
+@each $val in primary, success, warning, info, danger {
+  .px-file-input--$(val) {
+    --px-file-input-border-color: var(--px-color-$(val));
+    --px-file-input-hover-border-color: var(--px-color-$(val)-dark);
+    --px-file-input-shadow-color: var(--px-color-$(val)-dark);
+  }
+
+  .px-file-input--$(val) .px-file-input__wrapper {
+    filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-color-$(val)-dark));
+  }
+
+  .px-file-input--$(val) .px-file-input__trigger {
+    border-right-color: var(--px-color-$(val));
+  }
+}
+
+/* Ghost variant — no border/shadow at rest */
+.px-file-input.is-ghost {
+  .px-file-input__wrapper {
+    filter: none;
+    &::before { background: transparent; }
+    &:hover {
+      &::before { background: var(--px-file-input-hover-border-color); }
+      filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-file-input-hover-shadow-color));
+    }
+  }
+
+  .px-file-input__trigger {
+    border-right-color: transparent;
+  }
+
+  &:hover .px-file-input__trigger {
+    border-right-color: var(--px-file-input-hover-border-color);
+  }
+}
+
+/* Ghost + Color variants */
+@each $val in primary, success, warning, info, danger {
+  .px-file-input--$(val).is-ghost {
+    --px-file-input-hover-shadow-color: var(--px-color-$(val)-dark);
+
+    .px-file-input__wrapper {
+      filter: none;
+      &::before { background: transparent; }
+      &:hover {
+        &::before { background: var(--px-color-$(val)); }
+        filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-file-input-hover-shadow-color));
+      }
+    }
+  }
+}

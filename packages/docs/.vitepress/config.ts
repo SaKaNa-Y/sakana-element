@@ -42,6 +42,10 @@ const getFormItems = (lang: 'zh' | 'en') => [
     link: `/${lang}/components/select`,
   },
   {
+    text: lang === 'zh' ? 'FileInput 文件输入' : 'FileInput',
+    link: `/${lang}/components/file-input`,
+  },
+  {
     text: lang === 'zh' ? 'Switch 开关' : 'Switch',
     link: `/${lang}/components/switch`,
   },
