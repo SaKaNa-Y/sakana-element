@@ -225,6 +225,20 @@ describe('MessageBox Component', () => {
 
     expect(beforeClose).toHaveBeenCalled();
   });
+
+  it('should render close icon inside the close button', async () => {
+    MessageBox({
+      title: 'Close Icon Test',
+      message: 'Test message',
+      showClose: true,
+    });
+    await rAF();
+    const closeBtn = document.querySelector('.px-message-box__header-btn');
+    expect(closeBtn).toBeTruthy();
+    const icon = closeBtn?.querySelector('.px-icon');
+    expect(icon).toBeTruthy();
+    MessageBox.close();
+  });
 });
 
 describe('MessageBox factory methods', () => {

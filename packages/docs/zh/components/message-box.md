@@ -46,3 +46,19 @@ demo-preview=../../demo/message-box/Prompt.vue
 demo-preview=../../demo/message-box/Custom.vue
 :::
 
+## 居中布局
+
+使用 `center` 属性使标题和底部按钮居中对齐。
+
+::: preview
+demo-preview=../../demo/message-box/Center.vue
+:::
+
+## 关闭前回调
+
+使用 `beforeClose` 拦截关闭操作。回调接收 `action`、`instance` 和 `done` 函数 — 调用 `done()` 才会真正关闭对话框。
+
+::: preview
+demo-preview=../../demo/message-box/BeforeClose.vue
+:::
+

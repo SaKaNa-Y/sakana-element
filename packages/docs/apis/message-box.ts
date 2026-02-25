@@ -112,6 +112,21 @@ export const messageBoxApi: ApiSection[] = [
         default: "'text'",
         desc: { zh: '输入框类型', en: 'Input type' },
       },
+      {
+        name: 'callback',
+        category: 'behavior',
+        type: '(action: MessageBoxAction | { value: string; action: MessageBoxAction }) => void',
+        desc: { zh: '关闭后的回调函数', en: 'Callback after closing' },
+      },
+      {
+        name: 'beforeClose',
+        category: 'behavior',
+        type: '(action: MessageBoxAction, instance: MessageBoxOptions, done: () => void) => void',
+        desc: {
+          zh: '关闭前的回调，调用 done 关闭弹框',
+          en: 'Callback before closing; call done to close',
+        },
+      },
     ],
   },
   {

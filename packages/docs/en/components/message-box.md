@@ -46,3 +46,19 @@ Message box content can be customized.
 demo-preview=../../demo/message-box/Custom.vue
 :::
 
+## Center Layout
+
+Use `center` to align the title and footer to the center.
+
+::: preview
+demo-preview=../../demo/message-box/Center.vue
+:::
+
+## BeforeClose Callback
+
+Use `beforeClose` to intercept the close action. The callback receives the `action`, the `instance`, and a `done` function — call `done()` to actually close the dialog.
+
+::: preview
+demo-preview=../../demo/message-box/BeforeClose.vue
+:::
+

@@ -11,6 +11,7 @@ export * from './FileInput';
 export * from './Form';
 export * from './Icon';
 export * from './Input';
+export * from './Link';
 export * from './Loading';
 export * from './Message';
 export * from './MessageBox';

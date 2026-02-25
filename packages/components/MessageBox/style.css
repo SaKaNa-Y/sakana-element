@@ -114,6 +114,9 @@
       cursor: pointer;
       box-shadow: 2px 2px 0 0 var(--px-shadow-color);
       transition: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       i {
         color: var(--px-text-color-secondary);

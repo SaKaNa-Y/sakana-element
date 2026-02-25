@@ -1,0 +1,41 @@
+/* Link Variables */
+.px-link {
+  --px-link-text-color: var(--px-text-color-regular);
+  --px-link-hover-color: var(--px-text-color-primary);
+}
+
+/* Base Link Styles */
+.px-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--px-font-family);
+  font-size: var(--px-font-size-base);
+  color: var(--px-link-text-color);
+  cursor: pointer;
+  text-decoration: none;
+  transition: none;
+
+  &:hover {
+    color: var(--px-link-hover-color);
+  }
+
+  &.is-underline {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  &.is-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+/* Type variants */
+@each $val in primary, success, info, warning, danger {
+  .px-link--$(val) {
+    --px-link-text-color: var(--px-color-$(val));
+    --px-link-hover-color: var(--px-color-$(val)-dark);
+  }
+}

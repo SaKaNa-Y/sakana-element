@@ -79,6 +79,10 @@ const getNavigationItems = (lang: 'zh' | 'en') => [
     text: lang === 'zh' ? 'Breadcrumb 面包屑' : 'Breadcrumb',
     link: `/${lang}/components/breadcrumb`,
   },
+  {
+    text: lang === 'zh' ? 'Link 链接' : 'Link',
+    link: `/${lang}/components/link`,
+  },
 ];
 
 const getFeedbackItems = (lang: 'zh' | 'en') => [

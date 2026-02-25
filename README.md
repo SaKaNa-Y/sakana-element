@@ -44,6 +44,7 @@ createApp(App).use(SakanaElement).mount('#app')
 | `PxButton` | Button / 按钮 |
 | `PxIcon` | Icon / 图标 (486 built-in pixelarticons) |
 | `PxInput` | Input / 输入框 |
+| `PxLink` | Link / 链接 |
 | `PxSelect` | Select / 选择器 |
 | `PxFileInput` | FileInput / 文件输入 |
 | `PxSwitch` | Switch / 开关 |
