@@ -123,3 +123,67 @@
   --px-card-padding: 20px;
   font-size: var(--px-font-size-large);
 }
+
+/* Type variants */
+@each $val in primary, success, info, warning, danger {
+  .px-card--$(val) {
+    --px-card-bg-color: var(--px-color-$(val)-light-9);
+    --px-card-border-color: var(--px-color-$(val));
+    --px-card-shadow-color: var(--px-color-$(val)-dark);
+    --px-card-text-color: var(--px-text-color-primary);
+    --px-card-header-border-color: var(--px-color-$(val));
+    --px-card-footer-border-color: var(--px-color-$(val));
+  }
+
+  .px-card--$(val).is-outline {
+    --px-card-bg-color: transparent;
+    --px-card-border-color: var(--px-color-$(val));
+    --px-card-text-color: var(--px-color-$(val));
+  }
+
+  .px-card--$(val).is-dash {
+    --px-card-bg-color: var(--px-color-$(val)-light-9);
+    --px-card-border-color: var(--px-color-$(val));
+    --px-card-text-color: var(--px-color-$(val));
+  }
+
+  .px-card--$(val).is-ghost {
+    --px-card-bg-color: transparent;
+    --px-card-border-color: transparent;
+    --px-card-shadow-color: transparent;
+    --px-card-text-color: var(--px-color-$(val));
+  }
+}
+
+/* Outline variant */
+.px-card.is-outline {
+  border: 2px solid var(--px-card-border-color);
+  filter: none;
+
+  &::before { display: none; }
+  &::after {
+    clip-path: none;
+    inset: 0;
+    background: var(--px-card-bg-color);
+  }
+}
+
+/* Dash variant */
+.px-card.is-dash {
+  border: 2px dashed var(--px-card-border-color);
+  filter: none;
+
+  &::before { display: none; }
+  &::after {
+    clip-path: none;
+    inset: 0;
+    background: var(--px-card-bg-color);
+  }
+}
+
+/* Ghost variant */
+.px-card.is-ghost {
+  filter: none;
+
+  &::before, &::after { display: none; }
+}

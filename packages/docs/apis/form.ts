@@ -14,7 +14,10 @@ export const formApi: ApiSection[] = [
         name: 'rules',
         category: 'behavior',
         type: 'FormRules',
-        desc: { zh: '表单验证规则', en: 'Form validation rules' },
+        desc: {
+          zh: '表单验证规则（支持 Zod schema）',
+          en: 'Form validation rules (supports Zod schema)',
+        },
       },
       {
         name: 'disabled',
@@ -22,6 +25,23 @@ export const formApi: ApiSection[] = [
         type: 'boolean',
         default: 'false',
         desc: { zh: '是否禁用表单', en: 'Whether to disable form' },
+      },
+      {
+        name: 'inline',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: { zh: '是否使用行内表单', en: 'Whether to use inline form layout' },
+      },
+      {
+        name: 'statusIcon',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'false',
+        desc: {
+          zh: '验证后是否显示状态图标',
+          en: 'Whether to show status icon after validation',
+        },
       },
       {
         name: 'labelWidth',
@@ -145,7 +165,10 @@ export const formItemApi: ApiSection[] = [
         category: 'behavior',
         component: 'FormItem',
         type: 'FormItemRule[]',
-        desc: { zh: '验证规则', en: 'Validation rules' },
+        desc: {
+          zh: '验证规则（支持 Zod schema 或 required 简写）',
+          en: 'Validation rules (supports Zod schema or required shorthand)',
+        },
       },
       {
         name: 'error',

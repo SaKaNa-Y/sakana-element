@@ -1,5 +1,44 @@
 import type { ApiSection } from './types';
 
+export const loadingIndicatorApi: ApiSection[] = [
+  {
+    title: { zh: '属性', en: 'Props' },
+    items: [
+      {
+        name: 'variant',
+        category: 'style',
+        component: 'LoadingIndicator',
+        type: "'spinner' | 'dots' | 'bars' | 'ring'",
+        default: "'spinner'",
+        desc: { zh: '动画变体', en: 'Animation variant' },
+      },
+      {
+        name: 'size',
+        category: 'style',
+        component: 'LoadingIndicator',
+        type: "'xs' | 'sm' | 'md' | 'lg'",
+        default: "'md'",
+        desc: { zh: '指示器尺寸', en: 'Indicator size' },
+      },
+      {
+        name: 'type',
+        category: 'style',
+        component: 'LoadingIndicator',
+        type: "'primary' | 'success' | 'info' | 'warning' | 'danger'",
+        default: "'primary'",
+        desc: { zh: '颜色主题', en: 'Color theme' },
+      },
+      {
+        name: 'color',
+        category: 'style',
+        component: 'LoadingIndicator',
+        type: 'string',
+        desc: { zh: '自定义颜色（十六进制）', en: 'Custom color (hex)' },
+      },
+    ],
+  },
+];
+
 export const loadingApi: ApiSection[] = [
   {
     title: { zh: '指令', en: 'Directive' },

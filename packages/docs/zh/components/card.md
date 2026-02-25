@@ -1,6 +1,6 @@
 ---
 title: Card 卡片 | Sakana Element 像素组件库
-description: Sakana Element 像素风格卡片容器组件，用于展示结构化内容。
+description: Sakana Element 像素风格卡片容器组件，支持类型变体、轮廓、虚线、幽灵和自定义颜色。
 ---
 
 <script setup>
@@ -20,6 +20,14 @@ import { cardApi } from '../../apis/card'
 
 ::: preview
 demo-preview=../../demo/card/Basic.vue
+:::
+
+## 类型
+
+使用 `type` 设置卡片的颜色主题。可选值：`primary`、`success`、`info`、`warning`、`danger`。
+
+::: preview
+demo-preview=../../demo/card/Type.vue
 :::
 
 ## 尺寸
@@ -44,4 +52,36 @@ demo-preview=../../demo/card/Shadow.vue
 
 ::: preview
 demo-preview=../../demo/card/Hoverable.vue
+:::
+
+## 轮廓
+
+使用 `outline` 属性设置实线边框、透明背景的样式。
+
+::: preview
+demo-preview=../../demo/card/Outline.vue
+:::
+
+## 虚线
+
+使用 `dash` 属性设置虚线边框样式。
+
+::: preview
+demo-preview=../../demo/card/Dash.vue
+:::
+
+## 幽灵
+
+使用 `ghost` 属性移除边框和背景，只显示彩色文字。
+
+::: preview
+demo-preview=../../demo/card/Ghost.vue
+:::
+
+## 自定义颜色
+
+使用 `color` 属性传入十六进制色值，可创建任意颜色变体的卡片。
+
+::: preview
+demo-preview=../../demo/card/CustomColor.vue
 :::

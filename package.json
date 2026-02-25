@@ -56,7 +56,6 @@
     "@vitest/coverage-v8": "^4.0.18",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.5.1",
-    "async-validator": "^4.2.5",
     "conventional-changelog-conventionalcommits": "^8.0.0",
     "cross-env": "^7.0.3",
     "dotenv-cli": "^7.4.2",
@@ -86,7 +85,8 @@
     "@sakana-element/vite-plugins": "workspace:*",
     "lodash-es": "^4.17.21",
     "sakana-element": "workspace:*",
-    "vue": "^3.4.19"
+    "vue": "^3.4.19",
+    "zod": "^4.3.6"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

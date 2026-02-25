@@ -1,25 +1,33 @@
-import type { RuleItem, ValidateError, ValidateFieldsError } from 'async-validator';
 import type { Ref } from 'vue';
+import type { ZodType } from 'zod';
 
-export interface FormItemRule extends RuleItem {
+export interface FormItemRule {
   trigger?: string | string[];
+  schema?: ZodType;
+  required?: boolean;
+  message?: string;
 }
 export type FormRules = Record<string, FormItemRule[]>;
 
 export type FormValidateResult = Promise<boolean>;
-export type FormValidateCallback = (isValid: boolean, invalidFields?: ValidateFieldsError) => void;
+export type FormValidateCallback = (
+  isValid: boolean,
+  invalidFields?: FormValidateFailure['fields'],
+) => void;
 
 export type ValidateStatus = 'success' | 'error' | 'init' | 'validating';
 
-export interface FormValidateFailuer {
-  errors?: ValidateError[];
-  fields: ValidateFieldsError;
+export interface FormValidateFailure {
+  errors: { field: string; message: string }[];
+  fields: Record<string, { message: string }[]>;
 }
 
 export interface FormProps {
   model: Record<string, unknown>;
   rules?: FormRules;
   disabled?: boolean;
+  inline?: boolean;
+  statusIcon?: boolean;
   labelWidth?: number | string;
   labelPosition?: 'left' | 'right' | 'top';
   labelSuffix?: string;

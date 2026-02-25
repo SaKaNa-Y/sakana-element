@@ -153,7 +153,7 @@ export default defineConfig({
     },
     rollupOptions: {
       //rollup配置,rollup是vite的打包工具
-      external: ['vue', '@popperjs/core', 'async-validator'], //外部依赖
+      external: ['vue', '@popperjs/core', 'zod'], //外部依赖
       output: {
         //输出配置
         assetFileNames: (assetInfo) => {

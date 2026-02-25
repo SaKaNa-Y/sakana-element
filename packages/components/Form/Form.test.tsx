@@ -2,6 +2,7 @@ import { rAF } from '@sakana-element/utils';
 import { mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 import { nextTick, ref } from 'vue';
+import { z } from 'zod';
 import Form from './Form.vue';
 import FormItem from './FormItem.vue';
 import { PxForm, PxFormItem } from './index';
@@ -176,6 +177,261 @@ describe('Form.vue', () => {
     ));
     const formItem = wrapper.find('.px-form-item');
     expect(formItem.attributes('style')).toContain('flex-direction: column');
+  });
+});
+
+describe('Form Zod validation', () => {
+  it('should validate with Zod schema on form-item rules', async () => {
+    const model = ref({ name: '' });
+    const itemRules = [{ schema: z.string().min(1, 'Name is required'), trigger: 'blur' }];
+
+    const wrapper = mount(() => (
+      <Form model={model.value}>
+        <FormItem label="Name" prop="name" rules={itemRules}>
+          <input />
+        </FormItem>
+      </Form>
+    ));
+
+    const form = wrapper.findComponent(Form);
+    try {
+      await form.vm.validate();
+    } catch {
+      // expected
+    }
+    await rAF();
+    expect(wrapper.find('.px-form-item__error-msg').text()).toBe('Name is required');
+  });
+
+  it('should validate with form-level rules (Zod schema)', async () => {
+    const model = ref({ name: '' });
+    const rules = {
+      name: [{ schema: z.string().min(1, 'Field required'), trigger: 'blur' }],
+    };
+
+    const wrapper = mount(() => (
+      <Form model={model.value} rules={rules}>
+        <FormItem label="Name" prop="name">
+          <input />
+        </FormItem>
+      </Form>
+    ));
+
+    const form = wrapper.findComponent(Form);
+    try {
+      await form.vm.validate();
+    } catch {
+      // expected
+    }
+    await rAF();
+    expect(wrapper.find('.px-form-item__error-msg').text()).toBe('Field required');
+  });
+
+  it('should merge form-level and item-level Zod rules', async () => {
+    const model = ref({ name: 'a' });
+    const formRules = {
+      name: [{ schema: z.string().min(2, 'Too short from form'), trigger: 'blur' }],
+    };
+    const itemRules = [{ schema: z.string().min(1, 'Required from item'), trigger: 'blur' }];
+
+    const wrapper = mount(() => (
+      <Form model={model.value} rules={formRules}>
+        <FormItem label="Name" prop="name" rules={itemRules}>
+          <input />
+        </FormItem>
+      </Form>
+    ));
+
+    const form = wrapper.findComponent(Form);
+    // 'a' has length 1, passes item rule (min 1) but fails form rule (min 2)
+    try {
+      await form.vm.validate();
+    } catch {
+      // expected
+    }
+    await rAF();
+    expect(wrapper.find('.px-form-item__error-msg').text()).toBe('Too short from form');
+  });
+
+  it('should validate Zod schema with min/max length', async () => {
+    const model = ref({ name: 'a' });
+    const itemRules = [
+      { schema: z.string().min(2, 'Too short').max(20, 'Too long'), trigger: 'blur' },
+    ];
+
+    const wrapper = mount(() => (
+      <Form model={model.value}>
+        <FormItem label="Name" prop="name" rules={itemRules}>
+          <input />
+        </FormItem>
+      </Form>
+    ));
+
+    const form = wrapper.findComponent(Form);
+    try {
+      await form.vm.validate();
+    } catch {
+      // expected
+    }
+    await rAF();
+    expect(wrapper.find('.px-form-item__error-msg').text()).toBe('Too short');
+  });
+
+  it('should validate Zod email schema', async () => {
+    const model = ref({ email: 'notanemail' });
+    const itemRules = [{ schema: z.string().email('Invalid email format'), trigger: 'blur' }];
+
+    const wrapper = mount(() => (
+      <Form model={model.value}>
+        <FormItem label="Email" prop="email" rules={itemRules}>
+          <input />
+        </FormItem>
+      </Form>
+    ));
+
+    const form = wrapper.findComponent(Form);
+    try {
+      await form.vm.validate();
+    } catch {
+      // expected
+    }
+    await rAF();
+    expect(wrapper.find('.px-form-item__error-msg').text()).toBe('Invalid email format');
+  });
+
+  it('should use required shorthand without explicit Zod schema', async () => {
+    const model = ref({ name: '' });
+    const itemRules = [{ required: true, message: 'Please fill this field', trigger: 'blur' }];
+
+    const wrapper = mount(() => (
+      <Form model={model.value}>
+        <FormItem label="Name" prop="name" rules={itemRules}>
+          <input />
+        </FormItem>
+      </Form>
+    ));
+
+    const form = wrapper.findComponent(Form);
+    try {
+      await form.vm.validate();
+    } catch {
+      // expected
+    }
+    await rAF();
+    expect(wrapper.find('.px-form-item__error-msg').text()).toBe('Please fill this field');
+  });
+
+  it('should use rule.message override over Zod message', async () => {
+    const model = ref({ name: '' });
+    const itemRules = [
+      { schema: z.string().min(1, 'Zod message'), message: 'Override message', trigger: 'blur' },
+    ];
+
+    const wrapper = mount(() => (
+      <Form model={model.value}>
+        <FormItem label="Name" prop="name" rules={itemRules}>
+          <input />
+        </FormItem>
+      </Form>
+    ));
+
+    const form = wrapper.findComponent(Form);
+    try {
+      await form.vm.validate();
+    } catch {
+      // expected
+    }
+    await rAF();
+    expect(wrapper.find('.px-form-item__error-msg').text()).toBe('Override message');
+  });
+});
+
+describe('Form inline', () => {
+  it('should apply is-inline class when inline prop is true', () => {
+    const model = { name: '' };
+    const wrapper = mount(() => (
+      <Form model={model} inline>
+        <FormItem label="Name" prop="name">
+          <input />
+        </FormItem>
+      </Form>
+    ));
+    expect(wrapper.find('.px-form').classes()).toContain('is-inline');
+  });
+
+  it('should not apply is-inline class by default', () => {
+    const model = { name: '' };
+    const wrapper = mount(() => (
+      <Form model={model}>
+        <FormItem label="Name" prop="name">
+          <input />
+        </FormItem>
+      </Form>
+    ));
+    expect(wrapper.find('.px-form').classes()).not.toContain('is-inline');
+  });
+});
+
+describe('Form statusIcon', () => {
+  it('should show success icon after successful validation', async () => {
+    const model = ref({ name: 'John' });
+    const itemRules = [{ required: true, message: 'Required' }];
+
+    const wrapper = mount(() => (
+      <Form model={model.value} statusIcon>
+        <FormItem label="Name" prop="name" rules={itemRules}>
+          <input />
+        </FormItem>
+      </Form>
+    ));
+
+    const form = wrapper.findComponent(Form);
+    await form.vm.validate();
+    await rAF();
+
+    expect(wrapper.find('.px-form-item__status-icon.is-success').exists()).toBe(true);
+  });
+
+  it('should show error icon after failed validation', async () => {
+    const model = ref({ name: '' });
+    const itemRules = [{ required: true, message: 'Required' }];
+
+    const wrapper = mount(() => (
+      <Form model={model.value} statusIcon>
+        <FormItem label="Name" prop="name" rules={itemRules}>
+          <input />
+        </FormItem>
+      </Form>
+    ));
+
+    const form = wrapper.findComponent(Form);
+    try {
+      await form.vm.validate();
+    } catch {
+      // expected
+    }
+    await rAF();
+
+    expect(wrapper.find('.px-form-item__status-icon.is-error').exists()).toBe(true);
+  });
+
+  it('should not show status icon when statusIcon is not set', async () => {
+    const model = ref({ name: 'John' });
+    const itemRules = [{ required: true, message: 'Required' }];
+
+    const wrapper = mount(() => (
+      <Form model={model.value}>
+        <FormItem label="Name" prop="name" rules={itemRules}>
+          <input />
+        </FormItem>
+      </Form>
+    ));
+
+    const form = wrapper.findComponent(Form);
+    await form.vm.validate();
+    await rAF();
+
+    expect(wrapper.find('.px-form-item__status-icon').exists()).toBe(false);
   });
 });
 

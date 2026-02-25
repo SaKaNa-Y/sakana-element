@@ -3,7 +3,7 @@ import type { MaybeRef } from 'vue';
 export interface LoadingOptionsResolved {
   parent?: HTMLElement;
   target?: HTMLElement;
-  visible?: MaybeRef<boolean>; //表示可能是响应式布尔值，为了方便接收ref和普通值
+  visible?: MaybeRef<boolean>;
   background?: MaybeRef<string>;
   spinner?: MaybeRef<boolean | string>;
   text?: MaybeRef<string>;
@@ -13,7 +13,6 @@ export interface LoadingOptionsResolved {
   closed?(): void;
 }
 
-//Partial表示所有属性都是可选的，Omit表示排除parent和target属性，&表示联合类型
 export type LoadingOptions = Partial<
   Omit<LoadingOptionsResolved, 'parent' | 'target'> & {
     target: HTMLElement | string;
@@ -22,3 +21,14 @@ export type LoadingOptions = Partial<
     onAfterLeave(): void;
   }
 >;
+
+export type LoadingVariant = 'spinner' | 'dots' | 'bars' | 'ring';
+export type LoadingSize = 'xs' | 'sm' | 'md' | 'lg';
+export type LoadingType = 'primary' | 'success' | 'info' | 'warning' | 'danger';
+
+export interface LoadingIndicatorProps {
+  variant?: LoadingVariant;
+  size?: LoadingSize;
+  type?: LoadingType;
+  color?: string;
+}

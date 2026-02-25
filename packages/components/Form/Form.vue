@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import type { ValidateFieldsError } from 'async-validator';
 import { each, filter, includes, size } from 'lodash-es';
 import { provide, reactive, toRefs } from 'vue';
 import { FORM_CTX_KEY } from './constants';
-import type { FormContext, FormEmits, FormInstance, FormItemContext, FormProps } from './types';
+import type {
+  FormContext,
+  FormEmits,
+  FormInstance,
+  FormItemContext,
+  FormProps,
+  FormValidateFailure,
+} from './types';
 
 defineOptions({ name: 'PxForm' });
 const props = withDefaults(defineProps<FormProps>(), {
@@ -17,14 +23,14 @@ const emits = defineEmits<FormEmits>();
 const fields: FormItemContext[] = [];
 
 async function doValidateField(fields: FormItemContext[] = []) {
-  let validateErrors: ValidateFieldsError = {};
+  let validateErrors: FormValidateFailure['fields'] = {};
   for (const field of fields) {
     try {
       await field.validate('');
     } catch (error) {
       validateErrors = {
         ...validateErrors,
-        ...(error as ValidateFieldsError),
+        ...(error as FormValidateFailure['fields']),
       };
     }
   }
@@ -32,23 +38,18 @@ async function doValidateField(fields: FormItemContext[] = []) {
   return Promise.reject(validateErrors);
 }
 
-//添加表单项
 const addField: FormContext['addField'] = (field) => {
-  //如果表单项没有prop，则不添加
   if (!field.prop) return;
   fields.push(field);
 };
 
-//移除表单项
 const removeField: FormContext['removeField'] = (field) => {
   if (!field.prop) return;
   fields.splice(fields.indexOf(field), 1);
 };
 
-//验证表单
 const validate: FormInstance['validate'] = async (callback) => validateField([], callback);
 
-//验证表单项
 const validateField: FormInstance['validateField'] = async (keys, callback) => {
   try {
     const result = await doValidateField(filterFields(fields, keys ?? []));
@@ -58,7 +59,7 @@ const validateField: FormInstance['validateField'] = async (keys, callback) => {
     return result;
   } catch (error) {
     if (error instanceof Error) throw error;
-    const invalidFields = error as ValidateFieldsError;
+    const invalidFields = error as FormValidateFailure['fields'];
     callback?.(false, invalidFields);
     return Promise.reject(invalidFields);
   }
@@ -94,7 +95,7 @@ defineExpose<FormInstance>({
 </script>
 
 <template>
-  <form class="px-form">
+  <form class="px-form" :class="{ 'is-inline': inline }">
     <slot></slot>
   </form>
 </template>

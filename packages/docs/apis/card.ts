@@ -5,6 +5,19 @@ export const cardApi: ApiSection[] = [
     title: { zh: '属性', en: 'Props' },
     items: [
       {
+        name: 'type',
+        category: 'style',
+        type: "'primary' | 'success' | 'info' | 'warning' | 'danger'",
+        default: '—',
+        desc: { zh: '卡片类型', en: 'Card type' },
+      },
+      {
+        name: 'color',
+        category: 'style',
+        type: 'string',
+        desc: { zh: '自定义颜色（十六进制）', en: 'Custom color (hex)' },
+      },
+      {
         name: 'hoverable',
         category: 'behavior',
         type: 'boolean',
@@ -24,6 +37,30 @@ export const cardApi: ApiSection[] = [
         type: "'small' | 'large'",
         default: '—',
         desc: { zh: '卡片尺寸', en: 'Card size' },
+      },
+      {
+        name: 'outline',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: {
+          zh: '轮廓样式（实线边框，透明背景）',
+          en: 'Outline style (solid border, transparent background)',
+        },
+      },
+      {
+        name: 'dash',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: { zh: '虚线样式（虚线边框）', en: 'Dashed style (dashed border)' },
+      },
+      {
+        name: 'ghost',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: { zh: '幽灵样式（无边框、无背景）', en: 'Ghost style (no border, no background)' },
       },
     ],
   },

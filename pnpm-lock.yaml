@@ -32,6 +32,9 @@ importers:
       vue:
         specifier: ^3.4.19
         version: 3.5.13(typescript@5.8.2)
+      zod:
+        specifier: ^4.3.6
+        version: 4.3.6
     devDependencies:
       '@biomejs/biome':
         specifier: 2.3.14
@@ -78,9 +81,6 @@ importers:
       '@vue/tsconfig':
         specifier: ^0.5.1
         version: 0.5.1
-      async-validator:
-        specifier: ^4.2.5
-        version: 4.2.5
       conventional-changelog-conventionalcommits:
         specifier: ^8.0.0
         version: 8.0.0
@@ -164,12 +164,12 @@ importers:
       '@popperjs/core':
         specifier: ^2.11.8
         version: 2.11.8
-      async-validator:
-        specifier: ^4.2.5
-        version: 4.2.5
       vue:
         specifier: ^3.4.19
         version: 3.5.13(typescript@5.8.2)
+      zod:
+        specifier: ^3.0.0 || ^4.0.0
+        version: 4.3.6
     devDependencies:
       '@rollup/plugin-terser':
         specifier: ^0.4.4
@@ -5496,6 +5496,9 @@ packages:
     resolution: {integrity: sha512-cYVsTjKl8b+FrnidjibDWskAv7UKOfcwaVZdp/it9n1s9fU3IkgDbhdIRKCW4JDsAlECJY0ytoVPT3sK6kideA==}
     engines: {node: '>=18'}
 
+  zod@4.3.6:
+    resolution: {integrity: sha512-rftlrkhHZOcjDwkGlnUtZZkvaPHCsDATp4pGpuOOMDaTdDDXF91wuVDJoWoPsKX/3YPQ5fHuF3STjcYyKr+Qhg==}
+
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
@@ -7843,7 +7846,8 @@ snapshots:
 
   async-function@1.0.0: {}
 
-  async-validator@4.2.5: {}
+  async-validator@4.2.5:
+    optional: true
 
   asynckit@0.4.0: {}
 
@@ -11228,5 +11232,7 @@ snapshots:
   yocto-queue@1.2.1: {}
 
   yoctocolors-cjs@2.1.2: {}
+
+  zod@4.3.6: {}
 
   zwitch@2.0.4: {}

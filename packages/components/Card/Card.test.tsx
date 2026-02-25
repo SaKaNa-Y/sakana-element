@@ -154,6 +154,118 @@ describe('Card.vue', () => {
   });
 });
 
+describe('Card type variants', () => {
+  it('should apply type class when type prop is set', () => {
+    const wrapper = mount(Card, {
+      props: { type: 'primary' },
+      slots: { default: 'Body' },
+    });
+    expect(wrapper.find('.px-card').classes()).toContain('px-card--primary');
+  });
+
+  it.each([
+    'primary',
+    'success',
+    'info',
+    'warning',
+    'danger',
+  ] as const)('should apply px-card--%s class for type="%s"', (type) => {
+    const wrapper = mount(Card, {
+      props: { type },
+      slots: { default: 'Body' },
+    });
+    expect(wrapper.find('.px-card').classes()).toContain(`px-card--${type}`);
+  });
+
+  it('should not apply any type class by default', () => {
+    const wrapper = mount(Card, {
+      slots: { default: 'Body' },
+    });
+    const classes = wrapper.find('.px-card').classes();
+    expect(classes).not.toContain('px-card--primary');
+    expect(classes).not.toContain('px-card--success');
+    expect(classes).not.toContain('px-card--info');
+    expect(classes).not.toContain('px-card--warning');
+    expect(classes).not.toContain('px-card--danger');
+  });
+});
+
+describe('Card style variants', () => {
+  it('should apply is-outline class when outline is true', () => {
+    const wrapper = mount(Card, {
+      props: { outline: true },
+      slots: { default: 'Body' },
+    });
+    expect(wrapper.find('.px-card').classes()).toContain('is-outline');
+  });
+
+  it('should apply is-dash class when dash is true', () => {
+    const wrapper = mount(Card, {
+      props: { dash: true },
+      slots: { default: 'Body' },
+    });
+    expect(wrapper.find('.px-card').classes()).toContain('is-dash');
+  });
+
+  it('should apply is-ghost class when ghost is true', () => {
+    const wrapper = mount(Card, {
+      props: { ghost: true },
+      slots: { default: 'Body' },
+    });
+    expect(wrapper.find('.px-card').classes()).toContain('is-ghost');
+  });
+
+  it('should not apply variant classes by default', () => {
+    const wrapper = mount(Card, {
+      slots: { default: 'Body' },
+    });
+    const classes = wrapper.find('.px-card').classes();
+    expect(classes).not.toContain('is-outline');
+    expect(classes).not.toContain('is-dash');
+    expect(classes).not.toContain('is-ghost');
+  });
+
+  it('should combine type with outline', () => {
+    const wrapper = mount(Card, {
+      props: { type: 'primary', outline: true },
+      slots: { default: 'Body' },
+    });
+    const classes = wrapper.find('.px-card').classes();
+    expect(classes).toContain('px-card--primary');
+    expect(classes).toContain('is-outline');
+  });
+});
+
+describe('Card custom color', () => {
+  it('should apply CSS variables when color prop is set', () => {
+    const wrapper = mount(Card, {
+      props: { color: '#8B5CF6' },
+      slots: { default: 'Body' },
+    });
+    const style = wrapper.find('.px-card').attributes('style');
+    expect(style).toContain('--px-card-bg-color');
+  });
+
+  it('should use outline template when color + outline', () => {
+    const wrapper = mount(Card, {
+      props: { color: '#8B5CF6', outline: true },
+      slots: { default: 'Body' },
+    });
+    const style = wrapper.find('.px-card').attributes('style');
+    expect(style).toContain('--px-card-bg-color: transparent');
+  });
+
+  it('should use ghost template when color + ghost', () => {
+    const wrapper = mount(Card, {
+      props: { color: '#8B5CF6', ghost: true },
+      slots: { default: 'Body' },
+    });
+    const style = wrapper.find('.px-card').attributes('style');
+    expect(style).toContain('--px-card-bg-color: transparent');
+    expect(style).toContain('--px-card-border-color: transparent');
+  });
+});
+
 describe('Card/index', () => {
   it('should be exported with withInstall()', () => {
     expect(PxCard.install).toBeDefined();

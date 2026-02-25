@@ -16,7 +16,7 @@
       "!**/_product",
       "!**/storybook-static",
       "!pnpm-lock.yaml",
-      "!packages/components/**/style.css",
+      "!packages/components/**/*.css",
       "!packages/theme"
     ],
     "ignoreUnknown": true
@@ -124,7 +124,7 @@
       }
     },
     {
-      "includes": ["packages/components/**/style.css", "packages/theme/**/*.css"],
+      "includes": ["packages/components/**/*.css", "packages/theme/**/*.css"],
       "formatter": {
         "enabled": false
       },

@@ -44,8 +44,7 @@
     "url": "https://github.com/yu859/sakana-element/issues"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.8",
-    "async-validator": "^4.2.5"
+    "@popperjs/core": "^2.11.8"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
@@ -54,6 +53,7 @@
     "vite-plugin-compression2": "^1.3.3"
   },
   "peerDependencies": {
-    "vue": "^3.4.19"
+    "vue": "^3.4.19",
+    "zod": "^3.0.0 || ^4.0.0"
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <px-form ref="formRef" :model="form" :rules="rules" label-width="80px">
+  <px-form ref="formRef" :model="form" :rules="rules" status-icon label-width="80px">
     <px-form-item label="Name" prop="name">
       <px-input v-model="form.name" placeholder="Enter name" />
     </px-form-item>
@@ -7,41 +7,32 @@
       <px-input v-model="form.email" placeholder="Enter email" />
     </px-form-item>
     <px-form-item>
-      <px-button type="primary" @click="onSubmit">Submit</px-button>
+      <px-button type="primary" @click="onSubmit">Validate</px-button>
       <px-button @click="onReset">Reset</px-button>
     </px-form-item>
   </px-form>
 </template>
 
 <script setup lang="ts">
-import { PxMessage } from 'sakana-element';
 import { reactive, ref } from 'vue';
 import { z } from 'zod';
 
 const formRef = ref();
-
 const form = reactive({
   name: '',
   email: '',
 });
 
 const rules = {
-  name: [
-    { schema: z.string().min(1, 'Please input name'), trigger: 'blur' },
-    { schema: z.string().min(2).max(20, 'Length should be 2 to 20'), trigger: 'blur' },
-  ],
-  email: [
-    { schema: z.string().min(1, 'Please input email'), trigger: 'blur' },
-    { schema: z.string().email('Please input a valid email'), trigger: 'blur' },
-  ],
+  name: [{ schema: z.string().min(1, 'Name is required'), trigger: 'blur' }],
+  email: [{ schema: z.string().email('Invalid email'), trigger: 'blur' }],
 };
 
 const onSubmit = async () => {
   try {
     await formRef.value.validate();
-    PxMessage.success('Submit success!');
   } catch {
-    PxMessage.danger('Validation failed');
+    // validation failed
   }
 };
 

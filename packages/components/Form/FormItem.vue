@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useId } from '@sakana-element/hooks';
 import { debugWarn } from '@sakana-element/utils';
-import Schema, { type RuleItem } from 'async-validator';
+import { type ZodType, z } from 'zod';
 
 const DANGEROUS_PATH_SEGMENTS = new Set(['__proto__', 'constructor', 'prototype']);
 
@@ -31,6 +31,7 @@ import {
   ref,
   toRefs,
 } from 'vue';
+import PxIcon from '../Icon/Icon.vue';
 import { FORM_CTX_KEY, FORM_ITEM_CTX_KEY } from './constants';
 import type {
   FormItemContext,
@@ -38,7 +39,7 @@ import type {
   FormItemProps,
   FormItemRule,
   FormValidateCallback,
-  FormValidateFailuer,
+  FormValidateFailure,
   ValidateStatus,
 } from './types';
 
@@ -128,7 +129,7 @@ const itemRules = computed(() => {
   if (formRules && props.prop) {
     const _rules = getValByProp(formRules);
     if (_rules) {
-      rules.push(...rules);
+      rules.push(...(_rules as FormItemRule[]));
     }
   }
 
@@ -160,7 +161,6 @@ const isRequired = computed(() => {
 let initialVal: unknown = null;
 let isResetting: boolean = false;
 
-//获取触发规则
 function getTriggeredRules(trigger: string) {
   const rules = itemRules.value;
   if (!rules) return [];
@@ -170,26 +170,35 @@ function getTriggeredRules(trigger: string) {
       return r.trigger.includes(trigger);
     }
     return r.trigger === trigger;
-  }).map(({ trigger, ...rule }) => rule as RuleItem);
+  });
 }
 
-async function doValidate(rules: RuleItem[]) {
-  const modleName = propString.value;
-  const validator = new Schema({ [modleName]: rules });
-  return validator
-    .validate({ [modleName]: innerVal.value }, { firstFields: true })
-    .then(() => {
-      validateStatus.value = 'success';
-      ctx?.emits('validate', props, true, '');
-      return true;
-    })
-    .catch((err: FormValidateFailuer) => {
-      const { errors } = err;
+async function doValidate(rules: FormItemRule[]) {
+  const value = innerVal.value;
+  for (const rule of rules) {
+    let schema: ZodType | null = rule.schema ?? null;
+    if (!schema && rule.required) {
+      schema = z
+        .string({ message: rule.message ?? 'This field is required' })
+        .min(1, rule.message ?? 'This field is required');
+    }
+    if (!schema) continue;
+    const result = schema.safeParse(value);
+    if (!result.success) {
+      const msg = rule.message ?? result.error.issues[0]?.message ?? 'Validation failed';
       validateStatus.value = 'error';
-      errMsg.value = errors && size(errors) > 0 ? (errors[0].message ?? '') : '';
-      ctx?.emits('validate', props, false, errMsg.value);
-      return Promise.reject(err);
-    });
+      errMsg.value = msg;
+      const failure: FormValidateFailure = {
+        errors: [{ field: propString.value, message: msg }],
+        fields: { [propString.value]: [{ message: msg }] },
+      };
+      ctx?.emits('validate', props, false, msg);
+      return Promise.reject(failure);
+    }
+  }
+  validateStatus.value = 'success';
+  ctx?.emits('validate', props, true, '');
+  return true;
 }
 
 const validate: FormItemInstance['validate'] = async (
@@ -215,7 +224,7 @@ const validate: FormItemInstance['validate'] = async (
       callback?.(true);
       return true;
     })
-    .catch((err: FormValidateFailuer) => {
+    .catch((err: FormValidateFailure) => {
       const { fields } = err;
       callback?.(false, fields);
       return Promise.reject(fields);
@@ -255,14 +264,12 @@ const formItemCtx: FormItemContext = reactive({
   removeInputId,
 });
 
-//挂载时
 onMounted(() => {
   if (!props.prop) return;
   ctx?.addField(formItemCtx);
   initialVal = innerVal.value;
 });
 
-//卸载时
 onUnmounted(() => {
   if (!props.prop) return;
   ctx?.removeField(formItemCtx);
@@ -306,7 +313,11 @@ defineExpose<FormItemInstance>({
     <div class="px-form-item__content" :style="isTop ? { width: '100%' } : {}"
       :aria-describedby="validateStatus === 'error' ? `form-item-error-${labelId}` : undefined"
     >
-      <slot :validate="validate"></slot>
+      <div class="px-form-item__input-wrap">
+        <slot :validate="validate"></slot>
+        <px-icon v-if="ctx?.statusIcon && validateStatus === 'success'" icon="check" class="px-form-item__status-icon is-success" size="sm" />
+        <px-icon v-if="ctx?.statusIcon && validateStatus === 'error'" icon="close" class="px-form-item__status-icon is-error" size="sm" />
+      </div>
       <div class="px-form-item__error-msg" v-if="validateStatus === 'error'" :id="`form-item-error-${labelId}`">
         <template v-if="ctx?.showMessage && showMessage">
           <slot name="error" :error="errMsg">{{ errMsg }}</slot>
@@ -320,6 +331,6 @@ defineExpose<FormItemInstance>({
 @import './style.css';
 
 .px-form-item {
-  --px-form-lebel-width: v-bind(normalizeLabelWidth) !important;
+  --px-form-label-width: v-bind(normalizeLabelWidth) !important;
 }
 </style>

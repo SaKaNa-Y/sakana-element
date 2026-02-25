@@ -1,6 +1,6 @@
 ---
 title: Form 表单 | Sakana Element 像素组件库
-description: Sakana Element 像素风格表单组件，支持数据校验、自定义规则和响应式布局。
+description: Sakana Element 像素风格表单组件，支持 Zod 数据校验、行内布局、状态图标和响应式设计。
 ---
 
 <script setup>
@@ -24,10 +24,18 @@ demo-preview=../../demo/form/Basic.vue
 
 ## 表单校验
 
-Form 组件提供了表单验证的功能。
+表单校验使用 [Zod](https://zod.dev) 模式验证。每条规则可提供 `schema`（Zod 类型）或使用 `required` 简写进行简单的必填检查。
 
 ::: preview
 demo-preview=../../demo/form/Validation.vue
+:::
+
+## 行内表单
+
+设置 `inline` 属性可以让表单项水平排列，适用于搜索表单和筛选器。
+
+::: preview
+demo-preview=../../demo/form/Inline.vue
 :::
 
 ## 标签位置
@@ -38,3 +46,18 @@ demo-preview=../../demo/form/Validation.vue
 demo-preview=../../demo/form/LabelPosition.vue
 :::
 
+## 状态图标
+
+设置 `status-icon` 属性可以在验证后显示成功/失败图标。
+
+::: preview
+demo-preview=../../demo/form/StatusIcon.vue
+:::
+
+## 禁用
+
+在表单上设置 `disabled` 属性可以禁用所有表单控件。
+
+::: preview
+demo-preview=../../demo/form/Disabled.vue
+:::

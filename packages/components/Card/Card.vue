@@ -1,10 +1,22 @@
 <script setup lang="ts">
+import {
+  createColorPalette,
+  resolveColorVars,
+  SIMPLE_COLOR_TEMPLATES,
+} from '@sakana-element/utils';
 import { computed, useSlots } from 'vue';
 import type { CardProps } from './types';
 
 defineOptions({
   name: 'PxCard',
 });
+
+const GHOST_TEMPLATE = {
+  'text-color': 'color',
+  'bg-color': 'transparent',
+  'border-color': 'transparent',
+  'shadow-color': 'transparent',
+};
 
 const props = withDefaults(defineProps<CardProps>(), {
   shadow: 'always',
@@ -18,6 +30,19 @@ const shadowClass = computed(() => {
   if (val === false) return 'px-card--shadow-never';
   return `px-card--shadow-${val}`;
 });
+
+const customColorStyle = computed(() => {
+  if (!props.color) return {};
+  const variant = props.ghost
+    ? 'ghost'
+    : props.outline
+      ? 'outline'
+      : props.dash
+        ? 'dash'
+        : 'default';
+  const templates = { ...SIMPLE_COLOR_TEMPLATES, ghost: GHOST_TEMPLATE };
+  return resolveColorVars(createColorPalette(props.color), 'px-card', templates[variant]);
+});
 </script>
 
 <template>
@@ -26,10 +51,15 @@ const shadowClass = computed(() => {
     :class="[
       shadowClass,
       {
+        [`px-card--${type}`]: type,
         [`px-card--${size}`]: size,
         'is-hoverable': hoverable,
+        'is-outline': outline,
+        'is-dash': dash,
+        'is-ghost': ghost,
       },
     ]"
+    :style="customColorStyle"
   >
     <div v-if="slots.header" class="px-card__header">
       <slot name="header"></slot>

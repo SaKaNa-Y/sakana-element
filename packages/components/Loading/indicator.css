@@ -1,0 +1,153 @@
+/* LoadingIndicator Variables */
+.px-loading-indicator {
+  --px-loading-indicator-color: var(--px-color-primary);
+  --px-loading-indicator-size: 24px;
+}
+
+/* Base */
+.px-loading-indicator {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--px-loading-indicator-size);
+  height: var(--px-loading-indicator-size);
+  color: var(--px-loading-indicator-color);
+  font-family: var(--px-font-family);
+  vertical-align: middle;
+}
+
+/* Size variants */
+.px-loading-indicator--xs {
+  --px-loading-indicator-size: 16px;
+}
+.px-loading-indicator--sm {
+  --px-loading-indicator-size: 20px;
+}
+.px-loading-indicator--md {
+  --px-loading-indicator-size: 24px;
+}
+.px-loading-indicator--lg {
+  --px-loading-indicator-size: 32px;
+}
+
+/* Type variants */
+@each $val in primary, success, info, warning, danger {
+  .px-loading-indicator--$(val) {
+    --px-loading-indicator-color: var(--px-color-$(val));
+  }
+}
+
+/* ─── Spinner variant ─── */
+.px-loading-indicator--spinner .px-loading-indicator__inner {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 2px solid transparent;
+  border-top-color: var(--px-loading-indicator-color);
+  border-right-color: var(--px-loading-indicator-color);
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: px-indicator-spin 0.8s steps(8) infinite;
+}
+
+@keyframes px-indicator-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ─── Dots variant ─── */
+.px-loading-indicator--dots {
+  gap: 3px;
+}
+
+.px-loading-indicator--dots .px-loading-indicator__inner {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+.px-loading-indicator--dots .px-loading-indicator__inner::before,
+.px-loading-indicator--dots .px-loading-indicator__inner::after {
+  content: '';
+  display: block;
+  width: calc(var(--px-loading-indicator-size) * 0.2);
+  height: calc(var(--px-loading-indicator-size) * 0.2);
+  background: var(--px-loading-indicator-color);
+}
+
+.px-loading-indicator--dots .px-loading-indicator__inner::before {
+  animation: px-indicator-dot 0.9s steps(3) infinite;
+}
+
+.px-loading-indicator--dots .px-loading-indicator__inner {
+  background: var(--px-loading-indicator-color);
+  width: calc(var(--px-loading-indicator-size) * 0.2);
+  height: calc(var(--px-loading-indicator-size) * 0.2);
+  animation: px-indicator-dot 0.9s steps(3) 0.15s infinite;
+}
+
+.px-loading-indicator--dots .px-loading-indicator__inner::after {
+  animation: px-indicator-dot 0.9s steps(3) 0.3s infinite;
+}
+
+@keyframes px-indicator-dot {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+/* ─── Bars variant ─── */
+.px-loading-indicator--bars .px-loading-indicator__inner {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+.px-loading-indicator--bars .px-loading-indicator__inner::before,
+.px-loading-indicator--bars .px-loading-indicator__inner::after {
+  content: '';
+  display: block;
+  width: calc(var(--px-loading-indicator-size) * 0.18);
+  background: var(--px-loading-indicator-color);
+}
+
+.px-loading-indicator--bars .px-loading-indicator__inner::before {
+  height: 40%;
+  animation: px-indicator-bar 0.8s steps(4) infinite;
+}
+
+.px-loading-indicator--bars .px-loading-indicator__inner {
+  background: var(--px-loading-indicator-color);
+  width: calc(var(--px-loading-indicator-size) * 0.18);
+  animation: px-indicator-bar 0.8s steps(4) 0.15s infinite;
+}
+
+.px-loading-indicator--bars .px-loading-indicator__inner::after {
+  height: 60%;
+  animation: px-indicator-bar 0.8s steps(4) 0.3s infinite;
+}
+
+@keyframes px-indicator-bar {
+  0%, 100% { height: 30%; }
+  50% { height: 100%; }
+}
+
+/* ─── Ring variant ─── */
+.px-loading-indicator--ring .px-loading-indicator__inner {
+  display: block;
+  width: 80%;
+  height: 80%;
+  border: 2px solid transparent;
+  border-top-color: var(--px-loading-indicator-color);
+  border-right-color: var(--px-loading-indicator-color);
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: px-indicator-spin 1s steps(12) infinite;
+}

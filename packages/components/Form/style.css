@@ -4,6 +4,17 @@
   /* Form container styles */
 }
 
+/* Inline layout */
+.px-form.is-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 16px;
+}
+
+.px-form.is-inline .px-form-item {
+  margin-bottom: 12px;
+}
+
 .px-form-item {
   display: flex;
   flex-wrap: wrap;
@@ -19,7 +30,7 @@
   line-height: 32px;
   padding: 0 12px 0 0;
   box-sizing: border-box;
-  width: var(--px-form-lebel-width, 150px);
+  width: var(--px-form-label-width, 150px);
   flex-shrink: 0;
   text-align: right;
 }
@@ -54,4 +65,27 @@
   content: "*";
   color: var(--px-color-danger);
   margin-right: 4px;
+}
+
+/* Input wrapper for status icon alignment */
+.px-form-item__input-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* Status icon */
+.px-form-item__status-icon {
+  position: absolute;
+  right: 8px;
+  z-index: 1;
+}
+
+.px-form-item__status-icon.is-success {
+  color: var(--px-color-success);
+}
+
+.px-form-item__status-icon.is-error {
+  color: var(--px-color-danger);
 }
