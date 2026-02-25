@@ -45,6 +45,12 @@ export const badgeApi: ApiSection[] = [
         default: 'false',
         desc: { zh: '圆角像素风格', en: 'Round pixel style' },
       },
+      {
+        name: 'icon',
+        category: 'content',
+        type: 'string',
+        desc: { zh: '图标名称', en: 'Icon name' },
+      },
     ],
   },
   {

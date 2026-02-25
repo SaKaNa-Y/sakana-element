@@ -8,4 +8,5 @@ export interface BadgeProps {
   dash?: boolean;
   color?: string;
   round?: boolean;
+  icon?: string;
 }

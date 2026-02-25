@@ -14,6 +14,7 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  gap: 4px;
   height: var(--px-badge-height);
   padding: var(--px-badge-padding);
   font-size: var(--px-badge-font-size);
@@ -113,6 +114,12 @@
         4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
       );
     }
+  }
+
+  /* Empty badge - dot indicator */
+  &.is-empty {
+    width: var(--px-badge-height);
+    padding: 0;
   }
 }
 

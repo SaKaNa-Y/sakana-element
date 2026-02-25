@@ -1,6 +1,7 @@
 import { withInstall } from '@sakana-element/utils';
 import { mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
+import Icon from '../Icon/Icon.vue';
 import Badge from './Badge.vue';
 import { PxBadge } from './index';
 import type { BadgeType } from './types';
@@ -139,6 +140,56 @@ describe('Badge.vue', () => {
   it('should render as empty badge when no content', () => {
     const wrapper = mount(Badge);
     expect(wrapper.find('.px-badge').exists()).toBe(true);
+  });
+
+  // Icon prop
+  it('should render PxIcon when icon prop is provided', () => {
+    const wrapper = mount(Badge, {
+      props: { icon: 'heart' },
+      slots: { default: 'Badge' },
+    });
+    const icon = wrapper.findComponent(Icon);
+    expect(icon.exists()).toBe(true);
+    expect(icon.props('icon')).toBe('heart');
+  });
+
+  it('should render both icon and text', () => {
+    const wrapper = mount(Badge, {
+      props: { icon: 'check' },
+      slots: { default: 'Done' },
+    });
+    expect(wrapper.findComponent(Icon).exists()).toBe(true);
+    expect(wrapper.text()).toContain('Done');
+  });
+
+  it('should not render PxIcon by default', () => {
+    const wrapper = mount(Badge, {
+      slots: { default: 'Badge' },
+    });
+    expect(wrapper.findComponent(Icon).exists()).toBe(false);
+  });
+
+  // Empty badge class
+  it('should have is-empty class when no slot content', () => {
+    const wrapper = mount(Badge);
+    expect(wrapper.find('.px-badge').classes()).toContain('is-empty');
+  });
+
+  it('should not have is-empty class when slot content exists', () => {
+    const wrapper = mount(Badge, {
+      slots: { default: 'Badge' },
+    });
+    expect(wrapper.find('.px-badge').classes()).not.toContain('is-empty');
+  });
+
+  it('should apply is-empty with size and type classes', () => {
+    const wrapper = mount(Badge, {
+      props: { type: 'danger', size: 'small' },
+    });
+    const classes = wrapper.find('.px-badge').classes();
+    expect(classes).toContain('is-empty');
+    expect(classes).toContain('px-badge--danger');
+    expect(classes).toContain('px-badge--small');
   });
 });
 

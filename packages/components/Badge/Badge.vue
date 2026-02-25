@@ -4,7 +4,8 @@ import {
   resolveColorVars,
   SIMPLE_COLOR_TEMPLATES,
 } from '@sakana-element/utils';
-import { computed } from 'vue';
+import { computed, useSlots } from 'vue';
+import PxIcon from '../Icon/Icon.vue';
 import type { BadgeProps } from './types';
 
 defineOptions({
@@ -15,6 +16,10 @@ const props = withDefaults(defineProps<BadgeProps>(), {
   type: 'primary',
   size: 'default',
 });
+
+const slots = useSlots();
+const isEmpty = computed(() => !slots.default);
+const iconSize = computed(() => (props.size === 'small' ? 'xs' : 'sm'));
 
 const customColorStyle = computed(() => {
   if (!props.color) return {};
@@ -36,9 +41,11 @@ const customColorStyle = computed(() => {
       'is-outline': outline,
       'is-dash': dash,
       'is-round': round,
+      'is-empty': isEmpty,
     }"
     :style="customColorStyle"
   >
+    <px-icon v-if="icon" :icon="icon" :size="iconSize" />
     <slot></slot>
   </span>
 </template>

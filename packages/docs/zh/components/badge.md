@@ -38,6 +38,30 @@ demo-preview=../../demo/badge/Type.vue
 demo-preview=../../demo/badge/Size.vue
 :::
 
+## 图标
+
+使用 `icon` 属性在徽章内添加像素图标，可与文本内容组合使用。
+
+::: preview
+demo-preview=../../demo/badge/Icon.vue
+:::
+
+## 空徽章
+
+省略插槽内容可渲染为空心圆点指示器，随 `size` 自动缩放。
+
+::: preview
+demo-preview=../../demo/badge/Empty.vue
+:::
+
+## 圆角样式
+
+使用 `round` 属性来应用像素风格的圆角。
+
+::: preview
+demo-preview=../../demo/badge/Round.vue
+:::
+
 ## 轮廓样式
 
 使用 `outline` 属性来显示实线边框、透明背景。
@@ -62,3 +86,18 @@ demo-preview=../../demo/badge/Dash.vue
 demo-preview=../../demo/badge/CustomColor.vue
 :::
 
+## 文本中的徽章
+
+徽章可以内联放置在标题和段落中。
+
+::: preview
+demo-preview=../../demo/badge/InText.vue
+:::
+
+## 按钮中的徽章
+
+徽章可以嵌套在按钮内部，作为计数指示器或圆点标记。
+
+::: preview
+demo-preview=../../demo/badge/InButton.vue
+:::
