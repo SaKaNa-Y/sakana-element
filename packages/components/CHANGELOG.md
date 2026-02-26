@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.2.0 (2026-02-26)
+
+* fix: fix typos, suppress test warnings, and improve test coverage ([37d5fbe](https://github.com/yu859/sakana-element/commit/37d5fbe))
+* fix(notification): add default position to imperative API, document extendsI18nMsg ([673649c](https://github.com/yu859/sakana-element/commit/673649c))
+* feat(card,form,loading): add card variants, migrate form to zod, add LoadingIndicator ([d6bef4c](https://github.com/yu859/sakana-element/commit/d6bef4c))
+* feat(avatar): add PxAvatar component with pixel-art initials, status indicator, and border ([6c75f31](https://github.com/yu859/sakana-element/commit/6c75f31))
+* feat(badge): add icon prop, empty badge styling, and reorganize docs ([a65b04d](https://github.com/yu859/sakana-element/commit/a65b04d))
+* feat(breadcrumb): add disabled prop, fix hover jitter, and prevent link navigation ([a052ab0](https://github.com/yu859/sakana-element/commit/a052ab0))
+* feat(collapse): add showArrow and icon props with custom indicator support ([7da7422](https://github.com/yu859/sakana-element/commit/7da7422))
+* feat(file-input): add PxFileInput component with browse trigger, clearable, and ghost support ([81ef7ec](https://github.com/yu859/sakana-element/commit/81ef7ec))
+* feat(link): add PxLink component and fix MessageBox close icon centering ([9eeba57](https://github.com/yu859/sakana-element/commit/9eeba57))
+
 ## <small>2.1.5 (2026-02-22)</small>
 
 * chore(release): publish new version 2.1.4 ([99d3c18](https://github.com/yu859/sakana-element/commit/99d3c18))

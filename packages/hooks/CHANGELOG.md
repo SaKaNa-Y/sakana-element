@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.2.0 (2026-02-26)
+
+* fix: fix typos, suppress test warnings, and improve test coverage ([37d5fbe](https://github.com/yu859/sakana-element/commit/37d5fbe))
+* fix(notification): add default position to imperative API, document extendsI18nMsg ([673649c](https://github.com/yu859/sakana-element/commit/673649c))
+
 ## <small>2.1.5 (2026-02-22)</small>
 
 * chore(release): publish new version 2.1.4 ([99d3c18](https://github.com/yu859/sakana-element/commit/99d3c18))

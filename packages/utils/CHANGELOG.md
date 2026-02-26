@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.2.0 (2026-02-26)
+
+* fix: fix typos, suppress test warnings, and improve test coverage ([37d5fbe](https://github.com/yu859/sakana-element/commit/37d5fbe))
+
 ## <small>2.1.3 (2026-02-18)</small>
 
 * refactor(color): replace imperative if-chain customColorStyle with declarative template pattern ([b48b184](https://github.com/yu859/sakana-element/commit/b48b184))

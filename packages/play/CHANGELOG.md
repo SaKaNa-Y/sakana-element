@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.2.0 (2026-02-26)
+
+* docs: update README component tables and remove boilerplate ([176165d](https://github.com/yu859/sakana-element/commit/176165d))
+
 ## 2.0.0 (2026-02-15)
 
 * chore: bump @storybook/addon-interactions from 8.5.4 to 8.6.14 ([4bb9d8d](https://github.com/yu859/sakana-element/commit/4bb9d8d))
