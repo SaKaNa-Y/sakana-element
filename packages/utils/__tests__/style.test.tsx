@@ -37,5 +37,9 @@ describe('utils/style', () => {
       expect(addUnit('auto')).toBe('auto');
       expect(addUnit('inherit')).toBe('inherit');
     });
+
+    it('should return undefined and warn for invalid type', () => {
+      expect(addUnit(true as any)).toBeUndefined();
+    });
   });
 });

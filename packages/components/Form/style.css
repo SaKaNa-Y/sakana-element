@@ -43,7 +43,7 @@
   min-width: 0;
 }
 
-.px-form-item__error {
+.px-form-item__error-msg {
   color: var(--px-color-danger);
   font-size: var(--px-font-size-small);
   line-height: 1;

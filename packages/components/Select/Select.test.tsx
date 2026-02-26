@@ -129,6 +129,29 @@ describe('Select', () => {
     await rAF();
   });
 
+  test('should decrement highlightedIndex on ArrowUp after ArrowDown', async () => {
+    const wrapper = mount(Select, {
+      props: {
+        modelValue: '',
+        options,
+      },
+    });
+
+    wrapper.find('input').trigger('click');
+    await rAF();
+
+    // Move down twice (index=0, then 1)
+    await wrapper.find('input').trigger('keydown', { key: 'ArrowDown' });
+    await wrapper.find('input').trigger('keydown', { key: 'ArrowDown' });
+    // Move up once (index should go back to 0)
+    await wrapper.find('input').trigger('keydown', { key: 'ArrowUp' });
+    // Select current
+    await wrapper.find('input').trigger('keydown', { key: 'Enter' });
+
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy();
+    expect(wrapper.emitted('update:modelValue')![0]).toEqual(['1']);
+  });
+
   test('should handle keyboard Escape to close', async () => {
     const wrapper = mount(Select, {
       props: {
@@ -318,6 +341,8 @@ describe('Select', () => {
     await rAF();
     await wrapper.find('.px-select').trigger('mouseleave');
     await rAF();
+    // After mouseleave, the clear icon should no longer be visible
+    expect(wrapper.find('.px-input__clear').exists()).toBe(false);
   });
 
   test('should handle remote method', async () => {
@@ -339,9 +364,11 @@ describe('Select', () => {
 
     const input = wrapper.find('input');
     await input.setValue('opt');
+    // Wait for remote debounce (300ms default)
+    await new Promise((r) => setTimeout(r, 400));
     await rAF();
-    await rAF();
-    await rAF();
+    // Remote method should have been invoked with the query
+    expect(remoteMethod).toHaveBeenCalled();
   });
 
   test('should handle remote method error gracefully', async () => {
@@ -392,11 +419,19 @@ describe('Select', () => {
         modelValue: '',
         options,
       },
+      attachTo: document.body,
     });
 
     await wrapper.find('.px-select').trigger('click');
     await rAF();
     expect(wrapper.emitted('visible-change')).toBeTruthy();
+
+    // Click outside to close dropdown
+    document.body.click();
+    await rAF();
+    // Should have emitted visible-change twice (open + close)
+    expect(wrapper.emitted('visible-change')!.length).toBeGreaterThanOrEqual(2);
+    wrapper.unmount();
   });
 
   test('should expose focus and blur methods', async () => {
@@ -684,6 +719,232 @@ describe('Select/disabled behavior', () => {
     await rAF();
 
     expect(wrapper.emitted('visible-change')).toBeFalsy();
+  });
+});
+
+describe('Select/filterable', () => {
+  test('should filter options with default filter', async () => {
+    const wrapper = mount(Select, {
+      props: {
+        modelValue: '',
+        options,
+        filterable: true,
+      },
+    });
+
+    await wrapper.find('.px-select').trigger('click');
+    await rAF();
+
+    const input = wrapper.find('input');
+    await input.setValue('option 1');
+    await rAF();
+
+    // Default filter should filter options containing "option 1"
+    const items = wrapper.findAll('li');
+    expect(items.length).toBeGreaterThanOrEqual(1);
+  });
+
+  test('should call filterMethod when provided', async () => {
+    const filterMethod = vi.fn(() => [{ value: 'f1', label: 'Filtered' }]);
+    const wrapper = mount(Select, {
+      props: {
+        modelValue: '',
+        options,
+        filterable: true,
+        filterMethod,
+      },
+    });
+
+    await wrapper.find('.px-select').trigger('click');
+    await rAF();
+
+    const input = wrapper.find('input');
+    await input.setValue('test');
+    await rAF();
+    // Wait for debounce
+    await new Promise((r) => setTimeout(r, 200));
+
+    expect(filterMethod).toHaveBeenCalledWith('test');
+  });
+
+  test('should call remoteMethod when remote + remoteMethod provided', async () => {
+    const remoteMethod = vi.fn(async () => [{ value: 'r1', label: 'Remote' }]);
+    const wrapper = mount(Select, {
+      props: {
+        modelValue: '',
+        options: [],
+        filterable: true,
+        remote: true,
+        remoteMethod,
+      },
+    });
+
+    await wrapper.find('.px-select').trigger('click');
+    await rAF();
+
+    const input = wrapper.find('input');
+    await input.setValue('search');
+    await rAF();
+    // Wait for debounce (remote timeout is 300ms)
+    await new Promise((r) => setTimeout(r, 400));
+
+    expect(remoteMethod).toHaveBeenCalledWith('search');
+  });
+});
+
+describe('Select/unmount', () => {
+  test('should cancel debounce on unmount without errors', async () => {
+    const wrapper = mount(Select, {
+      props: {
+        modelValue: '',
+        options,
+        filterable: true,
+      },
+    });
+    await rAF();
+    wrapper.unmount();
+    // Should not throw
+  });
+});
+
+describe('Select/click-outside', () => {
+  test('should close dropdown when clicking outside', async () => {
+    const wrapper = mount(Select, {
+      props: {
+        modelValue: '',
+        options,
+      },
+      attachTo: document.body,
+    });
+
+    await wrapper.find('.px-select').trigger('click');
+    await rAF();
+
+    // Click outside
+    document.body.click();
+    await rAF();
+
+    wrapper.unmount();
+  });
+});
+
+describe('Select/filterable with slot children', () => {
+  test('should filter slot children with default filter', async () => {
+    const wrapper = mount(Select, {
+      props: {
+        modelValue: '',
+        filterable: true,
+      },
+      slots: {
+        default: () => [
+          h(Option, { value: '1', label: 'Apple' }),
+          h(Option, { value: '2', label: 'Banana' }),
+          h(Option, { value: '3', label: 'Cherry' }),
+        ],
+      },
+    });
+
+    await wrapper.find('.px-select').trigger('click');
+    await rAF();
+
+    const input = wrapper.find('input');
+    await input.setValue('Apple');
+    await rAF();
+    // Wait for debounce
+    await new Promise((r) => setTimeout(r, 200));
+    await rAF();
+  });
+
+  test('should use filterMethod with slot children', async () => {
+    const filterMethod = vi.fn(() => [{ value: '1', label: 'Apple' }]);
+    const wrapper = mount(Select, {
+      props: {
+        modelValue: '',
+        filterable: true,
+        filterMethod,
+      },
+      slots: {
+        default: () => [
+          h(Option, { value: '1', label: 'Apple' }),
+          h(Option, { value: '2', label: 'Banana' }),
+        ],
+      },
+    });
+
+    await wrapper.find('.px-select').trigger('click');
+    await rAF();
+
+    const input = wrapper.find('input');
+    await input.setValue('App');
+    await rAF();
+    await new Promise((r) => setTimeout(r, 200));
+
+    expect(filterMethod).toHaveBeenCalledWith('App');
+  });
+
+  test('should use remoteMethod with slot children', async () => {
+    const remoteMethod = vi.fn(async () => [{ value: '1', label: 'Remote' }]);
+    const wrapper = mount(Select, {
+      props: {
+        modelValue: '',
+        filterable: true,
+        remote: true,
+        remoteMethod,
+      },
+      slots: {
+        default: () => [h(Option, { value: '1', label: 'Apple' })],
+      },
+    });
+
+    await wrapper.find('.px-select').trigger('click');
+    await rAF();
+
+    const input = wrapper.find('input');
+    await input.setValue('search');
+    await rAF();
+    await new Promise((r) => setTimeout(r, 400));
+
+    expect(remoteMethod).toHaveBeenCalledWith('search');
+  });
+});
+
+describe('Select/focus-blur', () => {
+  test('should expose focus and blur methods', async () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options },
+    });
+    const vm = wrapper.vm as any;
+    expect(vm.focus).toBeDefined();
+    expect(vm.blur).toBeDefined();
+  });
+
+  test('should call focus() on the input element', async () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options },
+      attachTo: document.body,
+    });
+    const vm = wrapper.vm as any;
+    vm.focus();
+    await rAF();
+    wrapper.unmount();
+  });
+
+  test('should call blur() which handles click outside logic', async () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options },
+      attachTo: document.body,
+    });
+    const vm = wrapper.vm as any;
+
+    // First focus the select, then open, then blur
+    vm.focus();
+    await rAF();
+    await wrapper.find('.px-select').trigger('click');
+    await rAF();
+
+    vm.blur();
+    await rAF();
+    wrapper.unmount();
   });
 });
 

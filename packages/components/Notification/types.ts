@@ -29,7 +29,7 @@ export interface NotificationProps {
   icon?: string;
   onClick?(): void;
   onClose?(): void;
-  onDestory(): void;
+  onDestroy(): void;
 }
 export interface NotificationInstance {
   id: string;
@@ -44,7 +44,7 @@ export interface NotificationCompInstance {
   bottomOffset: Ref<number>;
 }
 
-export type CreateNotificationProps = Omit<NotificationProps, 'onDestory' | 'id' | 'zIndex'>;
+export type CreateNotificationProps = Omit<NotificationProps, 'onDestroy' | 'id' | 'zIndex'>;
 
 export interface NotificationHandler {
   close(): void;

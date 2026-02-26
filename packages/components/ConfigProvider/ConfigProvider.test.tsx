@@ -199,4 +199,27 @@ describe('ConfigProvider hooks', () => {
     const result = provideGlobalConfig({}, app);
     expect(result).toBeTruthy();
   });
+
+  it('provideGlobalConfig should update context when config ref changes', async () => {
+    const { nextTick, ref } = await import('vue');
+    let result: any = null;
+    const configRef = ref({ locale: { name: 'en', el: {} } });
+
+    const Child = defineComponent({
+      setup() {
+        result = provideGlobalConfig(configRef);
+        return () => h('div');
+      },
+    });
+
+    mount(Child);
+    expect(result).toBeTruthy();
+
+    // Update config ref
+    configRef.value = { locale: { name: 'fr', el: { test: 'val' } } };
+    await nextTick();
+
+    // Context should have been updated
+    expect(result.value).toBeTruthy();
+  });
 });

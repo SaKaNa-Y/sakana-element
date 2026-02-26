@@ -1,5 +1,5 @@
 import { rAF } from '@sakana-element/utils';
-import { afterEach, describe, expect, test } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 import { closeAll, notification } from './methods';
 
 function getTopValue(element: Element) {
@@ -17,7 +17,7 @@ describe('Notification', () => {
   });
 
   test('notification() function', async () => {
-    const handler = notification({ message: 'hello notify', duration: 0 });
+    const handler = notification({ title: 'Test', message: 'hello notify', duration: 0 });
     await rAF();
     expect(document.querySelector('.px-notification')).toBeTruthy();
     handler.close();
@@ -27,8 +27,8 @@ describe('Notification', () => {
   });
 
   test('call notification() function more than once', async () => {
-    notification({ message: 'hello notify', duration: 0 });
-    notification({ message: 'hello notify', duration: 0 });
+    notification({ title: 'Test', message: 'hello notify', duration: 0 });
+    notification({ title: 'Test', message: 'hello notify', duration: 0 });
     await rAF();
     expect(document.querySelectorAll('.px-notification').length).toBe(2);
     notification.closeAll();
@@ -38,8 +38,8 @@ describe('Notification', () => {
   });
 
   test('notification offset', async () => {
-    notification({ message: 'hello msg', duration: 0, offset: 100 });
-    notification({ message: 'hello msg', duration: 0, offset: 50 });
+    notification({ title: 'Test', message: 'hello msg', duration: 0, offset: 100 });
+    notification({ title: 'Test', message: 'hello msg', duration: 0, offset: 50 });
     await rAF();
     const elements = document.querySelectorAll('.px-notification');
     expect(elements.length).toBe(2);
@@ -59,7 +59,7 @@ describe('Notification', () => {
   });
 
   test('notification type shortcuts', async () => {
-    const handler = (notification as any).success('success notify');
+    const handler = notification.success!('success notify');
     await rAF();
     expect(document.querySelector('.px-notification')).toBeTruthy();
     handler.close();
@@ -68,14 +68,17 @@ describe('Notification', () => {
   });
 
   test('closeAll with specific type', async () => {
-    notification({ message: 'info', duration: 0, type: 'info' });
-    notification({ message: 'success', duration: 0, type: 'success' });
+    notification({ title: 'Test', message: 'info', duration: 0, type: 'info' });
+    notification({ title: 'Test', message: 'success', duration: 0, type: 'success' });
     await rAF();
     expect(document.querySelectorAll('.px-notification').length).toBe(2);
 
     closeAll('info');
     await rAF();
     await rAF();
+    const remaining = document.querySelectorAll('.px-notification');
+    expect(remaining.length).toBe(1);
+    expect(remaining[0].textContent).toContain('success');
   });
 
   test('notification with title', async () => {
@@ -94,6 +97,7 @@ describe('Notification', () => {
 
   test('notification with custom position', async () => {
     const handler = notification({
+      title: 'Test',
       message: 'bottom-right',
       duration: 0,
       position: 'bottom-right',
@@ -103,5 +107,50 @@ describe('Notification', () => {
     handler.close();
     await rAF();
     await rAF();
+  });
+
+  test('should clear timer on mouseenter', async () => {
+    notification({ title: 'Test', message: 'hover test', duration: 5000 });
+    await rAF();
+    const el = document.querySelector('.px-notification') as HTMLElement;
+    expect(el).toBeTruthy();
+
+    el.dispatchEvent(new MouseEvent('mouseenter'));
+    await rAF();
+    expect(document.querySelector('.px-notification')).toBeTruthy();
+
+    el.dispatchEvent(new MouseEvent('mouseleave'));
+    await rAF();
+  });
+
+  test('should invoke onClick callback when clicked', async () => {
+    const onClick = vi.fn();
+    notification({ title: 'Test', message: 'click test', duration: 0, onClick });
+    await rAF();
+    const el = document.querySelector('.px-notification') as HTMLElement;
+    expect(el).toBeTruthy();
+
+    el.click();
+    await rAF();
+    expect(onClick).toHaveBeenCalled();
+  });
+
+  test('notification with all position variants', async () => {
+    const positions = ['top-right', 'top-left', 'bottom-right', 'bottom-left'] as const;
+    for (const position of positions) {
+      const handler = notification({
+        title: 'Test',
+        message: `msg-${position}`,
+        duration: 0,
+        position,
+      });
+      await rAF();
+      const el = document.querySelector('.px-notification');
+      expect(el).toBeTruthy();
+      handler.close();
+      await rAF();
+      await rAF();
+      document.querySelectorAll('.px-notification').forEach((e) => e.remove());
+    }
   });
 });

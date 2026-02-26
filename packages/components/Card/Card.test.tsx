@@ -264,6 +264,16 @@ describe('Card custom color', () => {
     expect(style).toContain('--px-card-bg-color: transparent');
     expect(style).toContain('--px-card-border-color: transparent');
   });
+
+  it('should use dash template when color + dash', () => {
+    const wrapper = mount(Card, {
+      props: { color: '#8B5CF6', dash: true },
+      slots: { default: 'Body' },
+    });
+    const style = wrapper.find('.px-card').attributes('style');
+    expect(style).toContain('--px-card-bg-color');
+    expect(style).toContain('--px-card-border-color');
+  });
 });
 
 describe('Card/index', () => {

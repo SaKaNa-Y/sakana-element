@@ -18,7 +18,7 @@ function createLoading(opts: LoadingOptionsResolved) {
   const afterLeaveFlag = ref(false);
   const handleAfterLeave = () => {
     if (!afterLeaveFlag.value) return;
-    destory();
+    destroy();
   };
 
   const data = reactive({
@@ -28,7 +28,7 @@ function createLoading(opts: LoadingOptionsResolved) {
 
   const setText = (text: string) => (data.text = text);
 
-  const destory = () => {
+  const destroy = () => {
     const target = data.parent;
     subtLoadingNumb(target);
     if (getLoadingNumb(target)) return;

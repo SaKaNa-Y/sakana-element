@@ -30,4 +30,21 @@ describe('hooks/useClickOutside', () => {
     await document.body.click();
     expect(handler).toHaveBeenCalledOnce();
   });
+
+  it('should not call handler when elementRef is undefined', async () => {
+    const target = ref<HTMLElement | undefined>(undefined);
+    const handler = vi.fn();
+
+    mount(
+      defineComponent({
+        setup() {
+          useClickOutside(target, handler);
+          return () => <div>no ref</div>;
+        },
+      }),
+    );
+
+    await document.body.click();
+    expect(handler).not.toHaveBeenCalled();
+  });
 });

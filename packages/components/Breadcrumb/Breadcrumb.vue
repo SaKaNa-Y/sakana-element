@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { provide, useSlots } from 'vue';
+import { provide } from 'vue';
 import { BREADCRUMB_CTX_KEY } from './constants';
 import type { BreadcrumbProps } from './types';
 
@@ -11,7 +11,10 @@ const props = withDefaults(defineProps<BreadcrumbProps>(), {
   separator: '/',
 });
 
-const slots = useSlots();
+const slots = defineSlots<{
+  default?(_: {}): any;
+  separator?(_: {}): any;
+}>();
 
 provide(BREADCRUMB_CTX_KEY, {
   separator: props.separator,

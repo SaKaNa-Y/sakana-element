@@ -1,6 +1,6 @@
 import { withInstall } from '@sakana-element/utils';
 import { mount } from '@vue/test-utils';
-import { beforeEach, describe, expect, it, test, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, test, vi } from 'vitest';
 import { PxDropdown, PxDropdownItem } from '.';
 import Dropdown from './Dropdown.vue';
 import DropdownItem from './DropdownItem.vue';
@@ -38,6 +38,9 @@ describe('Dropdown.vue', () => {
   beforeEach(() => {
     vi.useFakeTimers();
     vi.clearAllMocks();
+  });
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it('should render slots correctly', () => {
@@ -150,6 +153,69 @@ describe('Dropdown.vue', () => {
     const vm = wrapper.vm as any;
     expect(vm.open).toBeDefined();
     expect(vm.close).toBeDefined();
+  });
+
+  it('should call open() and close() exposed methods', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        items: [{ label: 'Item 1', command: 'a' }],
+      },
+      slots: {
+        default: () => <button>Trigger</button>,
+      },
+    });
+
+    const vm = wrapper.vm as any;
+    vm.open();
+    await vi.runAllTimers();
+    vm.close();
+    await vi.runAllTimers();
+  });
+
+  it('should toggle dropdown when splitButton arrow is clicked', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        splitButton: true,
+        items: [{ label: 'Item 1', command: 'a' }],
+      },
+      slots: {
+        default: () => <span>Action</span>,
+      },
+    });
+
+    // Find the arrow button (second button in the group)
+    const buttons = wrapper.findAll('button');
+    const arrowButton = buttons[buttons.length - 1];
+    await arrowButton.trigger('click');
+    await vi.runAllTimers();
+  });
+
+  it('should close dropdown via click-outside when splitButton is true', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        splitButton: true,
+        items: [{ label: 'Item 1', command: 'a' }],
+      },
+      slots: {
+        default: () => <span>Action</span>,
+      },
+      attachTo: document.body,
+    });
+
+    // Open the dropdown via arrow click
+    const buttons = wrapper.findAll('button');
+    const arrowButton = buttons[buttons.length - 1];
+    await arrowButton.trigger('click');
+    await vi.runAllTimers();
+
+    // Click outside to close
+    document.body.click();
+    await vi.runAllTimers();
+
+    wrapper.unmount();
   });
 
   it('should render disabled state', () => {

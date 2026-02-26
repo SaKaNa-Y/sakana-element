@@ -1,6 +1,6 @@
 import { withInstall } from '@sakana-element/utils';
 import { mount } from '@vue/test-utils';
-import { beforeEach, describe, expect, it, test, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, test, vi } from 'vitest';
 import { PxTooltip } from '.';
 
 import Tooltip from './Tooltip.vue';
@@ -40,6 +40,9 @@ describe('Tooltip.vue', () => {
     //每个测试用例执行前执行
     vi.useFakeTimers(); //使用虚拟计时器，可以控制计时器，快进时间
     vi.clearAllMocks(); //清除所有模拟函数
+  });
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   test('basic tooltip', async () => {
@@ -217,6 +220,43 @@ describe('Tooltip.vue', () => {
 
     await vi.runAllTimers();
     expect(wrapper.find('.px-tooltip__popper').exists()).toBeTruthy();
+  });
+
+  test('toggle() should show and hide', async () => {
+    const wrapper = mount(Tooltip, {
+      props: { trigger: 'click', content: 'toggle test' },
+    });
+
+    const vm = wrapper.vm as any;
+    // Toggle to show
+    vm.toggle();
+    await vi.runAllTimers();
+    expect(wrapper.find('.px-tooltip__popper').exists()).toBeTruthy();
+
+    // Toggle to hide
+    vm.toggle();
+    await vi.runAllTimers();
+    expect(wrapper.find('.px-tooltip__popper').exists()).toBeFalsy();
+  });
+
+  test('should cleanup old virtualRef listeners when virtualRef changes', async () => {
+    const virtualRef1 = document.createElement('div');
+    const virtualRef2 = document.createElement('div');
+    const wrapper = mount(Tooltip, {
+      props: { virtualTriggering: true, virtualRef: virtualRef1 },
+    });
+    await vi.runAllTimers();
+
+    // Change virtualRef
+    await wrapper.setProps({ virtualRef: virtualRef2 });
+    await vi.runAllTimers();
+
+    // Old ref events should be cleaned up, new ref should work
+    virtualRef2.dispatchEvent(new Event('mouseenter'));
+    await vi.runAllTimers();
+    expect(wrapper.find('.px-tooltip__popper').exists()).toBeTruthy();
+
+    wrapper.unmount();
   });
 
   test('click-outside disabled when trigger prop is hover or manual mode', async () => {

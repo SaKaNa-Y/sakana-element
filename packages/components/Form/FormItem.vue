@@ -291,6 +291,7 @@ defineExpose<FormItemInstance>({
     class="px-form-item"
     :class="{
       'is-error': validateStatus === 'error',
+      'is-success': validateStatus === 'success',
       'is-disabled': isDisabled,
       'is-required': isRequired,
       'asterisk-left': ctx?.requiredAsteriskPosition === 'left',

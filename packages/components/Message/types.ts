@@ -33,7 +33,7 @@ export interface MessageProps {
   offset?: number;
   zIndex: number;
   transitionName?: string;
-  onDestory(): void;
+  onDestroy(): void;
 }
 
 export type MessageOptions = Partial<Omit<MessageProps, 'id'>>;
@@ -52,5 +52,5 @@ export interface MessageCompInstance {
   bottomOffset: Ref<number>;
 }
 
-//CreateMessageProps是MessageProps类型，去掉onDestory、id、zIndex属性
-export type CreateMessageProps = Omit<MessageProps, 'onDestory' | 'id' | 'zIndex'>;
+//CreateMessageProps是MessageProps类型，去掉onDestroy、id、zIndex属性
+export type CreateMessageProps = Omit<MessageProps, 'onDestroy' | 'id' | 'zIndex'>;

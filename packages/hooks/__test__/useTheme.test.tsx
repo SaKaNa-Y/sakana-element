@@ -144,5 +144,47 @@ describe('hooks/useTheme', () => {
       mockMql._trigger(true);
       expect(isDark.value).toBe(true);
     });
+
+    it('should not react to matchMedia changes when not in system mode', () => {
+      const { isDark, setTheme } = useTheme();
+      setTheme('light');
+      mockMql._trigger(true);
+      expect(isDark.value).toBe(false);
+    });
+  });
+
+  describe('legacy addListener fallback', () => {
+    it('should use addListener when addEventListener is unavailable', async () => {
+      vi.resetModules();
+      document.documentElement.classList.remove('px-dark');
+      localStorage.clear();
+      const legacyHandlers: ChangeHandler[] = [];
+      const legacyMql = {
+        matches: false,
+        addEventListener: undefined as any,
+        removeEventListener: undefined as any,
+        addListener: vi.fn((_handler: ChangeHandler) => {
+          legacyHandlers.push(_handler);
+        }),
+        removeListener: vi.fn(),
+        _trigger(newMatches: boolean) {
+          this.matches = newMatches;
+          legacyHandlers.forEach((h) => h({ matches: newMatches }));
+        },
+      };
+      vi.stubGlobal(
+        'matchMedia',
+        vi.fn(() => legacyMql),
+      );
+      const mod = await import('../useTheme');
+      const localUseTheme = mod.useTheme;
+
+      const { isDark, theme } = localUseTheme();
+      expect(theme.value).toBe('system');
+      expect(legacyMql.addListener).toHaveBeenCalled();
+
+      legacyMql._trigger(true);
+      expect(isDark.value).toBe(true);
+    });
   });
 });

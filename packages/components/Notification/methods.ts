@@ -4,6 +4,7 @@ import { h, isVNode, render, shallowReactive } from 'vue';
 import NotificationConstructor from './Notification.vue';
 import type {
   CreateNotificationProps,
+  Notification,
   NotificationFn,
   NotificationHandler,
   NotificationInstance,
@@ -23,6 +24,7 @@ each(notificationPosition, (position) => {
 const { nextZIndex } = useZIndex();
 
 export const notificationDefaults = {
+  title: '',
   type: 'info',
   duration: 3000,
   offset: 20,
@@ -44,7 +46,7 @@ const createNotification = (props: CreateNotificationProps): NotificationInstanc
   const container = document.createElement('div');
   const instances = getInstancesByPosition(props.position || 'top-right');
 
-  const destory = () => {
+  const destroy = () => {
     const idx = findIndex(instances, { id });
     if (idx === -1) return;
 
@@ -56,7 +58,7 @@ const createNotification = (props: CreateNotificationProps): NotificationInstanc
     ...props,
     id,
     zIndex: nextZIndex(),
-    onDestory: destory,
+    onDestroy: destroy,
   };
   const vnode = h(NotificationConstructor, _props);
 

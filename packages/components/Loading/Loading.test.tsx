@@ -321,6 +321,31 @@ describe('Loading directive', () => {
 
     wrapper.unmount();
   });
+
+  it('should create loading instance when value changes from false to true', async () => {
+    const loading = ref(false);
+    const Comp = defineComponent({
+      directives: { loading: vLoading },
+      setup() {
+        return () => (
+          <div v-loading={loading.value} style="width:100px;height:100px">
+            Content
+          </div>
+        );
+      },
+    });
+    const wrapper = mount(Comp, { attachTo: document.body });
+    await nextTick();
+    await rAF();
+    expect(wrapper.element.querySelector('.px-loading')).toBeFalsy();
+
+    loading.value = true;
+    await nextTick();
+    await rAF();
+    expect(wrapper.element.querySelector('.px-loading')).toBeTruthy();
+
+    wrapper.unmount();
+  });
 });
 
 describe('Loading/index', () => {

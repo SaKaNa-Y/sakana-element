@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {
+  type ColorTemplate,
   createColorPalette,
   resolveColorVars,
   SIMPLE_COLOR_TEMPLATES,
@@ -40,7 +41,10 @@ const customColorStyle = computed(() => {
       : props.dash
         ? 'dash'
         : 'default';
-  const templates = { ...SIMPLE_COLOR_TEMPLATES, ghost: GHOST_TEMPLATE };
+  const templates: Record<string, ColorTemplate> = {
+    ...SIMPLE_COLOR_TEMPLATES,
+    ghost: GHOST_TEMPLATE,
+  };
   return resolveColorVars(createColorPalette(props.color), 'px-card', templates[variant]);
 });
 </script>

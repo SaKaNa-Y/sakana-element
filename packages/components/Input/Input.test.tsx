@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import Input from './Input.vue';
 import { PxInput } from './index';
 
@@ -203,6 +203,55 @@ describe('Input.vue', () => {
     expect(vm.blur).toBeDefined();
     expect(vm.select).toBeDefined();
     expect(vm.clear).toBeDefined();
+  });
+
+  test('blur() should blur the input element', async () => {
+    const wrapper = mount(Input, {
+      props: { modelValue: 'test', type: 'text' },
+      attachTo: document.body,
+    });
+    const input = wrapper.find('input').element;
+    const blurSpy = vi.spyOn(input, 'blur');
+    const vm = wrapper.vm as any;
+    vm.blur();
+    expect(blurSpy).toHaveBeenCalled();
+    wrapper.unmount();
+  });
+
+  test('select() should select text in the input element', async () => {
+    const wrapper = mount(Input, {
+      props: { modelValue: 'test', type: 'text' },
+      attachTo: document.body,
+    });
+    const input = wrapper.find('input').element;
+    const selectSpy = vi.spyOn(input, 'select');
+    const vm = wrapper.vm as any;
+    vm.select();
+    expect(selectSpy).toHaveBeenCalled();
+    wrapper.unmount();
+  });
+
+  test('textarea type should render textarea element and handle events', async () => {
+    const wrapper = mount(Input, {
+      props: {
+        modelValue: 'hello',
+        type: 'textarea',
+        'onUpdate:modelValue': (e: any) => wrapper.setProps({ modelValue: e }),
+      },
+    });
+    expect(wrapper.find('textarea').exists()).toBeTruthy();
+    expect(wrapper.classes()).toContain('px-input--textarea');
+
+    const textarea = wrapper.find('textarea');
+    await textarea.trigger('focus');
+    expect(wrapper.emitted()).toHaveProperty('focus');
+
+    await textarea.setValue('world');
+    expect(wrapper.emitted()).toHaveProperty('input');
+    expect(wrapper.emitted()).toHaveProperty('change');
+
+    await textarea.trigger('blur');
+    expect(wrapper.emitted()).toHaveProperty('blur');
   });
 
   test('should handle autofocus', () => {

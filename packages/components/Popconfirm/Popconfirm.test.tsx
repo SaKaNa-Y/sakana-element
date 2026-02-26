@@ -1,7 +1,7 @@
 import { withInstall } from '@sakana-element/utils';
 import { mount } from '@vue/test-utils';
 import { each, get } from 'lodash-es';
-import { beforeEach, describe, expect, it, test, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, test, vi } from 'vitest';
 import { PxPopconfirm } from '.';
 import PopConfirm from './Popconfirm.vue';
 import type { PopconfirmProps } from './types';
@@ -53,6 +53,9 @@ describe('Popconfirm.vue', () => {
     vi.useFakeTimers();
     vi.clearAllMocks();
   });
+  afterEach(() => {
+    vi.useRealTimers();
+  });
 
   it('should accept all props', () => {
     const wrapper = mount(PopConfirm, {
@@ -74,6 +77,18 @@ describe('Popconfirm.vue', () => {
     });
 
     expect(wrapper.text()).toContain(slotContent);
+  });
+
+  it('should render reference slot as trigger', () => {
+    const wrapper = mount(PopConfirm, {
+      props,
+      slots: {
+        reference: '<button id="ref-trigger">Reference</button>',
+      },
+    });
+
+    expect(wrapper.find('#ref-trigger').exists()).toBeTruthy();
+    expect(wrapper.text()).toContain('Reference');
   });
 
   test('popconfirm emits', async () => {

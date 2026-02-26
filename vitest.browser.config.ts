@@ -30,6 +30,7 @@ export default defineConfig({
         'packages/components/**/types.ts',
         'packages/components/**/style.css',
         'packages/components/Icon/icons/*.ts',
+        'packages/components/index.ts',
       ],
     },
   },

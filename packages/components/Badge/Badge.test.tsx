@@ -169,6 +169,36 @@ describe('Badge.vue', () => {
     expect(wrapper.findComponent(Icon).exists()).toBe(false);
   });
 
+  it('should render icon with xs size when badge size is small', () => {
+    const wrapper = mount(Badge, {
+      props: { icon: 'heart', size: 'small' },
+      slots: { default: 'Badge' },
+    });
+    const icon = wrapper.findComponent(Icon);
+    expect(icon.exists()).toBe(true);
+    expect(icon.props('size')).toBe('xs');
+  });
+
+  it('should render icon with sm size when badge size is default', () => {
+    const wrapper = mount(Badge, {
+      props: { icon: 'heart', size: 'default' },
+      slots: { default: 'Badge' },
+    });
+    const icon = wrapper.findComponent(Icon);
+    expect(icon.exists()).toBe(true);
+    expect(icon.props('size')).toBe('sm');
+  });
+
+  it('should render icon with sm size when badge size is large', () => {
+    const wrapper = mount(Badge, {
+      props: { icon: 'heart', size: 'large' },
+      slots: { default: 'Badge' },
+    });
+    const icon = wrapper.findComponent(Icon);
+    expect(icon.exists()).toBe(true);
+    expect(icon.props('size')).toBe('sm');
+  });
+
   // Empty badge class
   it('should have is-empty class when no slot content', () => {
     const wrapper = mount(Badge);

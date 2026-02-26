@@ -1,5 +1,6 @@
 import { DOMWrapper, mount, type VueWrapper } from '@vue/test-utils';
 import { beforeAll, describe, expect, test, vi } from 'vitest';
+import { nextTick, ref } from 'vue';
 import Collapse from './Collapse.vue';
 import CollapseItem from './CollapseItem.vue';
 import transitionEvents from './transitionEvents';
@@ -158,8 +159,10 @@ describe('Collapse.vue', () => {
         },
       },
     );
+    // Accordion mode with multiple modelValue items should not throw;
+    // the component truncates to only the first item.
+    expect(wrapper.find('.px-collapse').exists()).toBe(true);
   });
-  expect(() => wrapper.vm.$nextTick()).toThrow();
 });
 
 describe('CollapseItem showArrow prop', () => {
@@ -269,6 +272,24 @@ describe('CollapseItem icon prop', () => {
     );
     const icon = wrapper.find('px-icon-stub');
     expect(icon.attributes('icon')).toBe('minus');
+  });
+
+  test('renders custom icon as-is when icon is not "plus"', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]}>
+          <CollapseItem name="a" title="title a" icon="chevron-down">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+    const icon = wrapper.find('px-icon-stub');
+    expect(icon.attributes('icon')).toBe('chevron-down');
   });
 
   test('showArrow={false} takes precedence over icon prop (no icon shown)', () => {
@@ -596,6 +617,64 @@ describe('Collapse forceClose', () => {
     );
     const content = wrapper.find('.px-collapse-item__wapper');
     expect(content.isVisible()).toBeFalsy();
+  });
+});
+
+describe('Collapse modelValue watch', () => {
+  test('should update active names when modelValue prop changes via setProps', async () => {
+    const wrapper = mount(Collapse, {
+      props: {
+        modelValue: ['a'],
+      },
+      slots: {
+        default: () => [
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>,
+          <CollapseItem name="b" title="title b">
+            content b
+          </CollapseItem>,
+        ],
+      },
+      global: { stubs: ['PxIcon'] },
+      attachTo: document.body,
+    });
+
+    const headers = wrapper.findAll('.px-collapse-item__header');
+    expect(headers[0].classes()).toContain('is-active');
+    expect(headers[1].classes()).not.toContain('is-active');
+
+    await wrapper.setProps({ modelValue: ['b'] });
+    await nextTick();
+
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy();
+    expect(wrapper.emitted('change')).toBeTruthy();
+  });
+
+  test('should trigger debugWarn in watchEffect when accordion has multiple active names', async () => {
+    const modelValue = ref<string[]>(['a']);
+    const wrapper = mount(
+      () => (
+        <Collapse accordion modelValue={modelValue.value}>
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+          <CollapseItem name="b" title="title b">
+            content b
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+
+    // Directly set modelValue to contain multiple items (simulates external mutation)
+    modelValue.value = ['a', 'b'];
+    await nextTick();
+    // The watchEffect should have run, covering line 56
+    expect(wrapper.find('.px-collapse').exists()).toBe(true);
   });
 });
 

@@ -43,7 +43,7 @@ function handleFocus() {
   }
 }
 
-function handleFocusout(e: FocusEvent) {
+function handleFocusout(_e: FocusEvent) {
   if (props.disabled) return;
   if (props.forceOpen || props.forceClose) return;
   if (!isFocusMode.value) return;

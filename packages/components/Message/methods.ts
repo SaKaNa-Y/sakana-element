@@ -44,7 +44,7 @@ const createMessage = (props: CreateMessageProps): MessageInstance => {
   const container = document.createElement('div'); //创建div作为消息的容器
 
   //销毁实例的函数
-  const destory = () => {
+  const destroy = () => {
     const idx = findIndex(instances, { id }); //找与当前 id 匹配的消息实例在 instances 数组中的索引
     if (idx === -1) return; //如果找不到，则返回
 
@@ -57,7 +57,7 @@ const createMessage = (props: CreateMessageProps): MessageInstance => {
     ...props,
     id,
     zIndex: nextZIndex(),
-    onDestory: destory,
+    onDestroy: destroy,
   };
   const vnode = h(MessageConstructor, _props); //创建虚拟节点，将_props作为props传递给MessageConstructor
 

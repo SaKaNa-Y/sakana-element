@@ -16,13 +16,7 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
-    exclude: [
-      '**/node_modules/**',
-      '**/dist/**',
-      '**/true/coverage/**',
-      '**/coverage/**',
-      '**/packages/components/**',
-    ],
+    exclude: ['**/node_modules/**', '**/dist/**', '**/coverage/**', '**/packages/components/**'],
     setupFiles: [resolve(__dirname, './vitest.setup.ts')],
   },
 });

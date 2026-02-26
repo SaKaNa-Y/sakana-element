@@ -77,7 +77,7 @@ defineExpose<NotificationCompInstance>({
 <template>
   <transition
     :name="`px-notification-${transitionName}`"
-    @after-leave="!visible && onDestory()"
+    @after-leave="!visible && onDestroy()"
     @enter="boxHeight = notifyRef!.getBoundingClientRect().height"
   >
     <div

@@ -77,14 +77,47 @@ describe('Message', () => {
     closeAll('info');
     await rAF();
     await rAF();
+    const remaining = document.querySelectorAll('.px-message');
+    expect(remaining.length).toBe(1);
+    expect(remaining[0].textContent).toContain('success msg');
   });
 
   test('message.closeAll should work', async () => {
     message({ message: 'msg1', duration: 0 });
     message({ message: 'msg2', duration: 0 });
     await rAF();
+    expect(document.querySelectorAll('.px-message').length).toBe(2);
     message.closeAll!();
     await rAF();
     await rAF();
+    expect(document.querySelectorAll('.px-message').length).toBe(0);
+  });
+
+  test('should clear timer on mouseenter and restart on mouseleave', async () => {
+    message({ message: 'hover test', duration: 5000 });
+    await rAF();
+    const el = document.querySelector('.px-message') as HTMLElement;
+    expect(el).toBeTruthy();
+
+    // Mouseenter should prevent auto-close
+    el.dispatchEvent(new MouseEvent('mouseenter'));
+    await rAF();
+    // Message should still be visible
+    expect(document.querySelector('.px-message')).toBeTruthy();
+
+    // Mouseleave should restart timer
+    el.dispatchEvent(new MouseEvent('mouseleave'));
+    await rAF();
+  });
+
+  test('should close on Escape key', async () => {
+    message({ message: 'escape test', duration: 0 });
+    await rAF();
+    expect(document.querySelector('.px-message')).toBeTruthy();
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { code: 'Escape' }));
+    await rAF();
+    await rAF();
+    expect(document.querySelector('.px-message')).toBeFalsy();
   });
 });

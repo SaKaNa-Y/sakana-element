@@ -299,6 +299,14 @@ describe('FileInput.vue', () => {
       expect((wrapper.vm as any).clear).toBeDefined();
       expect(typeof (wrapper.vm as any).clear).toBe('function');
     });
+
+    test('open() should trigger native input click', () => {
+      const wrapper = mount(FileInput);
+      const input = wrapper.find<HTMLInputElement>('input[type="file"]');
+      const clickSpy = vi.spyOn(input.element, 'click');
+      (wrapper.vm as any).open();
+      expect(clickSpy).toHaveBeenCalled();
+    });
   });
 
   // --- Trigger click ---

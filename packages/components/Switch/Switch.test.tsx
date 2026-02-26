@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { PxSwitch } from './index';
 import Switch from './Switch.vue';
 import type { SwitchType } from './types';
@@ -9,7 +9,7 @@ describe('Switch.vue', () => {
     const wrapper = mount(Switch, {
       props: { modelValue: false },
     });
-    expect(wrapper.find('.px-switch')).toBeTruthy();
+    expect(wrapper.find('.px-switch').exists()).toBe(true);
   });
 
   it('should handle click event and toggle the checked state', async () => {
@@ -108,6 +108,19 @@ describe('Switch.vue', () => {
     const vm = wrapper.vm as any;
     expect(vm.focus).toBeDefined();
     expect(vm.checked).toBe(true);
+  });
+
+  it('should call focus() on the input element', () => {
+    const wrapper = mount(Switch, {
+      props: { modelValue: false },
+      attachTo: document.body,
+    });
+    const input = wrapper.find('input').element;
+    const focusSpy = vi.spyOn(input, 'focus');
+    const vm = wrapper.vm as any;
+    vm.focus();
+    expect(focusSpy).toHaveBeenCalled();
+    wrapper.unmount();
   });
 
   it('should handle enter keydown', async () => {

@@ -100,8 +100,6 @@ export function provideGlobalConfig(
   provideFn(configProviderContextKey, context);
   provideFn(i18nSymbol, i18n);
 
-  //如果app存在，则使用app的use方法，否则使用i18n.value的use方法
-  if (app) app.use(i18n.value);
   //如果global为true，或者globalConfig.value不存在，则将context.value赋值给globalConfig.value
   if (global || !globalConfig.value) globalConfig.value = context.value;
 

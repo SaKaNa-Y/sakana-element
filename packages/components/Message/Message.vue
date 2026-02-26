@@ -74,7 +74,7 @@ defineExpose<MessageCompInstance>({
   <Transition
     :name="transitionName"
     @enter="boxHeight = messageRef!.getBoundingClientRect().height"
-    @after-leave="!visible && onDestory()"
+    @after-leave="!visible && onDestroy()"
   >
     <div
       ref="messageRef"

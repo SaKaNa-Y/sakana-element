@@ -70,6 +70,15 @@ describe('Link.vue', () => {
     expect(wrapper.emitted('click')).toBeUndefined();
   });
 
+  it('should emit click event when clicked and not disabled', async () => {
+    const wrapper = mount(Link, {
+      slots: { default: 'Link' },
+    });
+    await wrapper.trigger('click');
+    expect(wrapper.emitted('click')).toBeTruthy();
+    expect(wrapper.emitted('click')!.length).toBe(1);
+  });
+
   it('should set href and target attributes', () => {
     const wrapper = mount(Link, {
       props: { href: 'https://example.com', target: '_blank' },

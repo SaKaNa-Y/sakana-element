@@ -136,4 +136,50 @@ describe('hooks/useSystemTheme', () => {
     await nextTick();
     expect(result!.prefers.value).toBe('light');
   });
+
+  it('should use legacy addListener/removeListener when addEventListener is unavailable', async () => {
+    vi.resetModules();
+    const legacyHandlers: ChangeHandler[] = [];
+    const legacyMql = {
+      matches: false,
+      addEventListener: undefined as any,
+      removeEventListener: undefined as any,
+      addListener: vi.fn((_handler: ChangeHandler) => {
+        legacyHandlers.push(_handler);
+      }),
+      removeListener: vi.fn((_handler: ChangeHandler) => {
+        const i = legacyHandlers.indexOf(_handler);
+        if (i >= 0) legacyHandlers.splice(i, 1);
+      }),
+      _trigger(newMatches: boolean) {
+        legacyHandlers.forEach((h) => h({ matches: newMatches }));
+      },
+    };
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => legacyMql),
+    );
+    const mod = await import('../useSystemTheme');
+    const localUseSystemTheme = mod.useSystemTheme;
+
+    let result: ReturnType<typeof localUseSystemTheme>;
+    const wrapper = mount(
+      defineComponent({
+        setup() {
+          result = localUseSystemTheme();
+          return () => <div />;
+        },
+      }),
+    );
+
+    expect(legacyMql.addListener).toHaveBeenCalledOnce();
+    expect(result!.prefersDark.value).toBe(false);
+
+    legacyMql._trigger(true);
+    await nextTick();
+    expect(result!.prefersDark.value).toBe(true);
+
+    wrapper.unmount();
+    expect(legacyMql.removeListener).toHaveBeenCalledOnce();
+  });
 });

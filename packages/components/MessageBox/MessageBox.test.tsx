@@ -226,6 +226,39 @@ describe('MessageBox Component', () => {
     expect(beforeClose).toHaveBeenCalled();
   });
 
+  it('should handle Enter keydown on confirm button', async () => {
+    const doAction = vi.fn();
+    MessageBox({
+      title: 'Test',
+      message: 'msg',
+      showConfirmButton: true,
+    }).then((action) => doAction(action));
+    await rAF();
+
+    const confirmBtn = document.querySelector('.px-message-box__confirm-btn') as HTMLButtonElement;
+    expect(confirmBtn).toBeTruthy();
+    confirmBtn.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await rAF();
+    expect(doAction).toHaveBeenCalledWith('confirm');
+  });
+
+  it('should handle Enter keydown on cancel button', async () => {
+    const doAction = vi.fn();
+    MessageBox({
+      title: 'Test',
+      message: 'msg',
+      showConfirmButton: true,
+      showCancelButton: true,
+    }).catch((action) => doAction(action));
+    await rAF();
+
+    const cancelBtn = document.querySelector('.px-message-box__cancel-btn') as HTMLButtonElement;
+    expect(cancelBtn).toBeTruthy();
+    cancelBtn.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    await rAF();
+    expect(doAction).toHaveBeenCalledWith('cancel');
+  });
+
   it('should render close icon inside the close button', async () => {
     MessageBox({
       title: 'Close Icon Test',
@@ -293,6 +326,30 @@ describe('MessageBox factory methods', () => {
     MessageBox.close();
     await rAF();
     await rAF();
+  });
+
+  it('MessageBox.confirm with options object as title', async () => {
+    MessageBox.confirm('Confirm message', { title: 'Custom Confirm' });
+    await rAF();
+    MessageBox.close();
+  });
+
+  it('MessageBox.confirm without title', async () => {
+    MessageBox.confirm('Confirm message');
+    await rAF();
+    MessageBox.close();
+  });
+
+  it('MessageBox.prompt with options object as title', async () => {
+    MessageBox.prompt('Prompt message', { title: 'Custom Prompt' });
+    await rAF();
+    MessageBox.close();
+  });
+
+  it('MessageBox.prompt without title', async () => {
+    MessageBox.prompt('Prompt message');
+    await rAF();
+    MessageBox.close();
   });
 });
 

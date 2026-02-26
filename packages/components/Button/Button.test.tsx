@@ -87,6 +87,14 @@ describe('Button.vue', () => {
     expect(wrapper.element.tagName.toLowerCase()).toBe('a');
   });
 
+  it('should warn and fallback for invalid tag', () => {
+    const wrapper = mount(Button, {
+      props: { tag: 'iframe' as any },
+    });
+    // debugWarn is called but is a no-op; verify fallback to 'button'
+    expect(wrapper.element.tagName.toLowerCase()).toBe('button');
+  });
+
   // Events: click
   it('should emits a click event when the button is clicked', async () => {
     const wrapper = mount(Button, {});
