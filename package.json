@@ -74,7 +74,7 @@
     "vite": "^6.4.1",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.0.18",
-    "vue-tsc": "^2.2.12",
+    "vue-tsc": "^3.2.4",
     "vue3-i18n": "^1.1.5"
   },
   "dependencies": {
