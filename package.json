@@ -18,6 +18,7 @@
     "build:dev": "cross-env NODE_ENV=development pnpm --filter sakana-element build:watch",
     "changed": "dotenv lerna version --conventional-commits --create-release github --yes",
     "changed:patch": "dotenv lerna version patch --conventional-commits --create-release github --yes",
+    "changed:minor": "dotenv lerna version minor --conventional-commits --create-release github --yes",
     "changed:major": "dotenv lerna version major --conventional-commits --create-release github --yes",
     "release": "lerna publish from-package --yes",
     "lint": "biome lint packages libs",
