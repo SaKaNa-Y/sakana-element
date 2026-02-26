@@ -16,6 +16,7 @@ export * from './Loading';
 export * from './Message';
 export * from './MessageBox';
 export * from './Notification';
+export * from './Pixelate';
 export * from './Popconfirm';
 export * from './Select';
 export * from './Switch';

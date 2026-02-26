@@ -1,0 +1,9 @@
+.px-pixelate {
+  display: inline-block;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.px-pixelate canvas {
+  display: block;
+}

@@ -72,6 +72,10 @@ const getDataItems = (lang: 'zh' | 'en') => [
     text: lang === 'zh' ? 'Card 卡片' : 'Card',
     link: `/${lang}/components/card`,
   },
+  {
+    text: lang === 'zh' ? 'Pixelate 像素化' : 'Pixelate',
+    link: `/${lang}/components/pixelate`,
+  },
 ];
 
 const getNavigationItems = (lang: 'zh' | 'en') => [
