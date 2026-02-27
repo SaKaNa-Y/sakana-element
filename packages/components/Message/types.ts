@@ -33,10 +33,16 @@ export interface MessageProps {
   offset?: number;
   zIndex: number;
   transitionName?: string;
+  plain?: boolean;
+  ghost?: boolean;
+  icon?: string;
+  showTimer?: boolean;
   onDestroy(): void;
 }
 
-export type MessageOptions = Partial<Omit<MessageProps, 'id'>>;
+export type MessageOptions = Partial<Omit<MessageProps, 'id'>> & {
+  max?: number;
+};
 export type MessageParams = string | VNode | MessageOptions;
 
 export interface MessageInstance {

@@ -1,0 +1,204 @@
+/* Progress Variables */
+.px-progress {
+  --px-progress-height: 14px;
+  --px-progress-fill-color: var(--px-color-primary);
+  --px-progress-fill-border-color: var(--px-color-primary-dark);
+  --px-progress-track-bg-color: var(--px-fill-color-blank);
+  --px-progress-track-border-color: var(--px-border-color-dark);
+  --px-progress-text-color: var(--px-text-color-primary);
+  --px-progress-shadow-color: var(--px-color-primary-dark);
+  --px-progress-text-size: var(--px-font-size-small);
+  --px-progress-text-gap: 10px;
+}
+
+/* Base Progress Styles */
+.px-progress {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  line-height: 1;
+  font-family: var(--px-font-family);
+}
+
+/* Track — the outer container */
+.px-progress__track {
+  flex: 1;
+  height: var(--px-progress-height);
+  position: relative;
+  background: transparent;
+  border: none;
+  overflow: hidden;
+  padding: 2px;
+  box-sizing: border-box;
+
+  /* Clip all children (including fill bar) to the pixel-art border shape */
+  clip-path: polygon(
+    0 2px, 2px 2px, 2px 0,
+    calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+    100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+    2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+  );
+
+  /* Pixel shadow via drop-shadow */
+  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-progress-shadow-color));
+
+  /* Border layer — filled with border color, clipped to pixel shape */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-progress-track-border-color);
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0,
+      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+    z-index: 0;
+  }
+
+  /* Fill layer — inset by border width, filled with bg color */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-progress-track-bg-color);
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0,
+      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+    z-index: 0;
+  }
+}
+
+/* Fill bar — the colored inner bar */
+.px-progress__fill {
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  background: var(--px-progress-fill-color);
+  transition: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  box-sizing: border-box;
+}
+
+/* Inner text */
+.px-progress__inner-text {
+  padding: 0 4px;
+  font-size: 10px;
+  font-family: var(--px-font-family);
+  color: var(--px-color-white);
+  white-space: nowrap;
+  line-height: var(--px-progress-height);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* External text */
+.px-progress__text {
+  flex-shrink: 0;
+  margin-left: var(--px-progress-text-gap);
+  font-size: var(--px-progress-text-size);
+  font-family: var(--px-font-family);
+  color: var(--px-progress-text-color);
+  white-space: nowrap;
+  min-width: 36px;
+}
+
+/* ─── Type variants ─── */
+@each $val in primary, success, info, warning, danger {
+  .px-progress--$(val) {
+    --px-progress-fill-color: var(--px-color-$(val));
+    --px-progress-fill-border-color: var(--px-color-$(val)-dark);
+    --px-progress-shadow-color: var(--px-color-$(val)-dark);
+    --px-progress-text-color: var(--px-color-$(val)-dark);
+  }
+}
+
+/* ─── Status overrides (override type) ─── */
+.px-progress--success.px-progress--success {
+  --px-progress-fill-color: var(--px-color-success);
+  --px-progress-fill-border-color: var(--px-color-success-dark);
+  --px-progress-shadow-color: var(--px-color-success-dark);
+  --px-progress-text-color: var(--px-color-success-dark);
+}
+
+.px-progress--warning.px-progress--warning {
+  --px-progress-fill-color: var(--px-color-warning);
+  --px-progress-fill-border-color: var(--px-color-warning-dark);
+  --px-progress-shadow-color: var(--px-color-warning-dark);
+  --px-progress-text-color: var(--px-color-warning-dark);
+}
+
+.px-progress--danger.px-progress--danger {
+  --px-progress-fill-color: var(--px-color-danger);
+  --px-progress-fill-border-color: var(--px-color-danger-dark);
+  --px-progress-shadow-color: var(--px-color-danger-dark);
+  --px-progress-text-color: var(--px-color-danger-dark);
+}
+
+/* ─── Size variants ─── */
+.px-progress--large {
+  --px-progress-height: 20px;
+  --px-progress-text-size: var(--px-font-size-base);
+}
+
+.px-progress--small {
+  --px-progress-height: 8px;
+  --px-progress-text-size: var(--px-font-size-extra-small);
+}
+
+/* ─── Striped variant ─── */
+.px-progress--striped .px-progress__fill {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 4px,
+    rgba(255, 255, 255, 0.25) 4px,
+    rgba(255, 255, 255, 0.25) 8px
+  );
+  background-size: 16px 16px;
+  background-color: var(--px-progress-fill-color);
+}
+
+/* Striped flow animation */
+.px-progress.is-striped-flow .px-progress__fill {
+  animation: px-progress-striped-flow 0.6s steps(4) infinite;
+}
+
+@keyframes px-progress-striped-flow {
+  0% { background-position: 0 0; }
+  100% { background-position: 16px 0; }
+}
+
+/* ─── Checkered variant ─── */
+.px-progress--checkered .px-progress__fill {
+  background-image:
+    linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.2) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.2) 75%);
+  background-size: 4px 4px;
+  background-position: 0 0, 0 2px, 2px -2px, -2px 0px;
+  background-color: var(--px-progress-fill-color);
+}
+
+/* ─── Indeterminate animation ─── */
+.px-progress.is-indeterminate .px-progress__fill {
+  width: 30% !important;
+  animation: px-progress-indeterminate 1.2s steps(8) infinite;
+}
+
+@keyframes px-progress-indeterminate {
+  0% { margin-left: 0; }
+  50% { margin-left: 70%; }
+  100% { margin-left: 0; }
+}
+
+/* ─── Text inside ─── */
+.px-progress.is-text-inside {
+  --px-progress-height: 20px;
+}

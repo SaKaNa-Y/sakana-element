@@ -76,6 +76,10 @@ const getDataItems = (lang: 'zh' | 'en') => [
     text: lang === 'zh' ? 'Pixelate 像素化' : 'Pixelate',
     link: `/${lang}/components/pixelate`,
   },
+  {
+    text: lang === 'zh' ? 'Progress 进度条' : 'Progress',
+    link: `/${lang}/components/progress`,
+  },
 ];
 
 const getNavigationItems = (lang: 'zh' | 'en') => [

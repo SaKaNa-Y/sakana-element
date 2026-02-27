@@ -48,6 +48,56 @@ export const messageApi: ApiSection[] = [
         default: '20',
         desc: { zh: '距离窗口顶部的偏移量', en: 'Offset from top of window' },
       },
+      {
+        name: 'plain',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: {
+          zh: '是否使用朴素样式（浅色背景，彩色文字）',
+          en: 'Whether to use plain style (lighter bg, colored text)',
+        },
+      },
+      {
+        name: 'ghost',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: {
+          zh: '是否使用幽灵样式（透明背景，仅显示边框）',
+          en: 'Whether to use ghost style (transparent bg, border only)',
+        },
+      },
+      {
+        name: 'icon',
+        category: 'content',
+        type: 'string',
+        default: '—',
+        desc: {
+          zh: '自定义图标名称，覆盖默认类型图标',
+          en: 'Custom icon name, overrides default type icon',
+        },
+      },
+      {
+        name: 'showTimer',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'true',
+        desc: {
+          zh: '是否显示持续时间进度条',
+          en: 'Whether to show duration progress bar',
+        },
+      },
+      {
+        name: 'max',
+        category: 'behavior',
+        type: 'number',
+        default: '—',
+        desc: {
+          zh: '最多可同时显示的消息数量，超出时关闭最早的消息',
+          en: 'Max visible messages, oldest closed when exceeded',
+        },
+      },
     ],
   },
   {

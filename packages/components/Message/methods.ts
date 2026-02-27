@@ -90,6 +90,16 @@ export function getLastBottomOffset(this: MessageProps) {
 
 export const message: MessageFn & Partial<Message> = (options = {}) => {
   const normalized = normalizedOptions(options);
+
+  // Enforce max count: destroy oldest messages exceeding the limit
+  const rawOpts = !options || isVNode(options) || isString(options) ? {} : options;
+  const max = (rawOpts as { max?: number }).max;
+  if (max && max > 0) {
+    while (instances.length >= max) {
+      instances[0].props.onDestroy();
+    }
+  }
+
   const instance = createMessage(normalized);
 
   return instance.handler;
@@ -105,6 +115,22 @@ export function closeAll(type?: MessageType) {
     instance.handler.close(); //关闭实例
   });
 }
+
+/** Forcefully unmount all message instances, bypassing CSS transitions.
+ *  Useful in tests where transition timing is unreliable. */
+export function destroyAll() {
+  while (instances.length) {
+    instances[0].props.onDestroy();
+  }
+}
+
+// Single global Escape listener — closes the most recent message.
+// Avoids per-instance listeners that leak when CSS transitions delay unmounting.
+document.addEventListener('keydown', (e: KeyboardEvent) => {
+  if (e.code === 'Escape' && instances.length) {
+    instances[instances.length - 1].handler.close();
+  }
+});
 
 each(messageTypes, (type) => {
   set(message, type, (opts: MessageParams) => {

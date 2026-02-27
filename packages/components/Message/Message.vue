@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useEventListener, useOffset } from '@sakana-element/hooks';
+import { useOffset } from '@sakana-element/hooks';
 import { addUnit, RenderVnode, typeIconMap } from '@sakana-element/utils';
 import { bind, delay } from 'lodash-es';
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import PxIcon from '../Icon/Icon.vue';
 import { getLastBottomOffset } from './methods';
 import type { MessageCompInstance, MessageProps } from './types';
@@ -14,6 +14,7 @@ const props = withDefaults(defineProps<MessageProps>(), {
   duration: 3000,
   offset: 10,
   transitionName: 'fade-up',
+  showTimer: true,
 });
 
 const visible = ref(false);
@@ -27,7 +28,7 @@ const { topOffset, bottomOffset } = useOffset({
   boxHeight,
 });
 
-const iconName = computed(() => typeIconMap.get(props.type) ?? 'circle-info');
+const iconName = computed(() => props.icon ?? typeIconMap.get(props.type) ?? 'circle-info');
 
 const customStyle = computed(() => ({
   top: addUnit(topOffset.value),
@@ -35,7 +36,7 @@ const customStyle = computed(() => ({
 }));
 
 let timer: number;
-function startTimmer() {
+function startTimer() {
   if (props.duration === 0) return;
   timer = delay(close, props.duration);
 }
@@ -45,6 +46,7 @@ function clearTimer() {
 }
 
 function close() {
+  clearTimer();
   visible.value = false;
 }
 
@@ -52,16 +54,13 @@ watch(visible, (val) => {
   if (!val) boxHeight.value = -props.offset; // 使得退出的动画更加流畅
 });
 
-useEventListener(document, 'keydown', (e: Event) => {
-  const { code } = e as KeyboardEvent;
-  if (code === 'Escape') close();
-});
-
 onMounted(() => {
   //组件渲染后，显示组件，并设置定时器
   visible.value = true;
-  startTimmer();
+  startTimer();
 });
+
+onBeforeUnmount(() => clearTimer());
 
 defineExpose<MessageCompInstance>({
   close,
@@ -83,13 +82,15 @@ defineExpose<MessageCompInstance>({
         [`px-message--${type}`]: type,
         'is-close': showClose,
         'text-center': center,
+        'is-plain': plain,
+        'is-ghost': ghost,
       }"
       :style="customStyle"
       v-show="visible"
       role="alert"
       :aria-live="type === 'danger' || type === 'warning' ? 'assertive' : 'polite'"
       @mouseenter="clearTimer"
-      @mouseleave="startTimmer"
+      @mouseleave="startTimer"
     >
       <px-icon class="px-message__icon" :icon="iconName" />
       <div class="px-message__content">
@@ -100,6 +101,11 @@ defineExpose<MessageCompInstance>({
       <div class="px-message__close" v-if="showClose">
         <px-icon icon="close" @click.stop="close" />
       </div>
+      <div
+        v-if="showTimer && duration > 0"
+        class="px-message__timer"
+        :style="{ animationDuration: `${duration}ms` }"
+      />
     </div>
   </Transition>
 </template>

@@ -18,6 +18,7 @@ export * from './MessageBox';
 export * from './Notification';
 export * from './Pixelate';
 export * from './Popconfirm';
+export * from './Progress';
 export * from './Select';
 export * from './Switch';
 export * from './Tooltip';
