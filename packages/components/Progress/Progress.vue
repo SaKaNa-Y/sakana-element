@@ -2,7 +2,7 @@
 import { createColorPalette, resolveColorVars } from '@sakana-element/utils';
 import { computed } from 'vue';
 import { PROGRESS_COLOR_TEMPLATE } from './constants';
-import type { ProgressInstance, ProgressProps } from './types';
+import type { ProgressProps } from './types';
 
 defineOptions({ name: 'PxProgress' });
 
@@ -60,7 +60,7 @@ const displayText = computed(() => {
 
 const statusClass = computed(() => (props.status ? `px-progress--${props.status}` : ''));
 
-defineExpose<ProgressInstance>({ clampedPercentage });
+defineExpose({ clampedPercentage });
 </script>
 
 <template>
