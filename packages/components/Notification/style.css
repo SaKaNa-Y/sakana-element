@@ -107,6 +107,76 @@
   --px-notification-shadow-color: var(--px-color-danger-dark);
 }
 
+/* ─── Plain variant ─── */
+.px-notification.is-plain {
+  --px-notification-shadow-color: var(--px-border-color-light);
+  background-color: var(--px-fill-color-blank);
+}
+
+@each $val in info, success, warning, danger {
+  .px-notification--$(val).is-plain {
+    background-color: var(--px-color-$(val)-light-9);
+    --px-notification-border-color: var(--px-color-$(val)-light-5, var(--px-color-$(val)));
+    --px-notification-icon-color: var(--px-color-$(val));
+    --px-notification-title-color: var(--px-color-$(val)-dark);
+    --px-notification-content-color: var(--px-color-$(val));
+    --px-notification-shadow-color: var(--px-color-$(val)-light-5, var(--px-color-$(val)));
+  }
+}
+
+.px-notification--error.is-plain {
+  background-color: var(--px-color-danger-light-9);
+  --px-notification-border-color: var(--px-color-danger-light-5, var(--px-color-danger));
+  --px-notification-icon-color: var(--px-color-danger);
+  --px-notification-title-color: var(--px-color-danger-dark);
+  --px-notification-content-color: var(--px-color-danger);
+  --px-notification-shadow-color: var(--px-color-danger-light-5, var(--px-color-danger));
+}
+
+/* ─── Ghost variant ─── */
+.px-notification.is-ghost {
+  background-color: var(--px-fill-color-blank);
+  --px-notification-shadow-color: transparent;
+}
+
+@each $val in info, success, warning, danger {
+  .px-notification--$(val).is-ghost {
+    background-color: var(--px-fill-color-blank);
+    --px-notification-border-color: var(--px-color-$(val));
+    --px-notification-icon-color: var(--px-color-$(val));
+    --px-notification-title-color: var(--px-color-$(val)-dark);
+    --px-notification-content-color: var(--px-color-$(val));
+    --px-notification-shadow-color: transparent;
+  }
+}
+
+.px-notification--error.is-ghost {
+  background-color: var(--px-fill-color-blank);
+  --px-notification-border-color: var(--px-color-danger);
+  --px-notification-icon-color: var(--px-color-danger);
+  --px-notification-title-color: var(--px-color-danger-dark);
+  --px-notification-content-color: var(--px-color-danger);
+  --px-notification-shadow-color: transparent;
+}
+
+/* ─── Timer bar ─── */
+.px-notification__timer {
+  position: absolute;
+  bottom: 2px;
+  left: 4px;
+  right: 4px;
+  height: 2px;
+  background: var(--px-notification-icon-color, var(--px-text-color-secondary));
+  opacity: 0.5;
+  animation: px-notification-timer linear forwards;
+  transform-origin: left;
+}
+
+@keyframes px-notification-timer {
+  0% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+
 /* Animation */
 .px-notification-fade-enter-from {
   &.right {

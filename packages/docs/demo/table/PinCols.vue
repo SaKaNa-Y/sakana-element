@@ -1,0 +1,46 @@
+<template>
+  <px-table pin-cols style="max-width: 400px">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>HP</th>
+          <th>MP</th>
+          <th>STR</th>
+          <th>DEX</th>
+          <th>INT</th>
+          <th>LUK</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Sakana</td>
+          <td>120</td>
+          <td>40</td>
+          <td>15</td>
+          <td>10</td>
+          <td>8</td>
+          <td>12</td>
+        </tr>
+        <tr>
+          <td>Pixel</td>
+          <td>80</td>
+          <td>100</td>
+          <td>6</td>
+          <td>12</td>
+          <td>18</td>
+          <td>9</td>
+        </tr>
+        <tr>
+          <td>Retro</td>
+          <td>100</td>
+          <td>60</td>
+          <td>12</td>
+          <td>16</td>
+          <td>10</td>
+          <td>14</td>
+        </tr>
+      </tbody>
+    </table>
+  </px-table>
+</template>

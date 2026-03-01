@@ -29,6 +29,7 @@ import {
   PxProgress,
   PxSelect,
   PxSwitch,
+  PxTable,
   PxTooltip,
 } from '@sakana-element/components';
 import type { Plugin } from 'vue';
@@ -58,6 +59,7 @@ export default [
   PxLoading,
   PxLoadingIndicator,
   PxSwitch,
+  PxTable,
   PxSelect,
   PxOption,
   PxPixelate,

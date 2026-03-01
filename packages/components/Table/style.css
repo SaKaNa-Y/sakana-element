@@ -1,0 +1,208 @@
+/* ─── Table Variables ─── */
+.px-table {
+  --px-table-padding-y: 10px;
+  --px-table-padding-x: 14px;
+  --px-table-border-color: var(--px-border-color);
+  --px-table-bg-color: var(--px-bg-color-overlay);
+  --px-table-header-bg-color: var(--px-bg-color);
+  --px-table-row-hover-color: var(--px-fill-color-light);
+  --px-table-zebra-color: var(--px-fill-color);
+  --px-table-font-size: var(--px-font-size-base);
+  --px-table-shadow-color: var(--px-shadow-color);
+}
+
+/* ─── Base Table Styles — Pixel Game Aesthetic ─── */
+.px-table {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--px-font-family);
+  font-size: var(--px-table-font-size);
+  color: var(--px-text-color-primary);
+  background: transparent;
+  border: none;
+  box-sizing: border-box;
+  overflow: hidden;
+  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-table-shadow-color));
+
+  /* Border layer — filled with border color, clipped to pixel shape */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-table-border-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    z-index: 0;
+  }
+
+  /* Fill layer — inset by border width, filled with bg color */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-table-bg-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    z-index: 0;
+  }
+}
+
+/* ─── Inner Scroll Wrapper ─── */
+.px-table__inner {
+  position: relative;
+  z-index: 1;
+  overflow: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+
+  & table {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0;
+    overflow-x: visible;
+  }
+
+  & th,
+  & td {
+    padding: var(--px-table-padding-y) var(--px-table-padding-x);
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: var(--px-border-width) solid var(--px-table-border-color);
+  }
+
+  & th {
+    font-weight: 600;
+    background-color: var(--px-table-header-bg-color);
+    color: var(--px-text-color-primary);
+  }
+
+  & thead th {
+    border-bottom: calc(var(--px-border-width) * 2) solid var(--px-table-border-color);
+  }
+
+  & tbody tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+/* ─── Size Variants ─── */
+.px-table--xs {
+  --px-table-padding-y: 4px;
+  --px-table-padding-x: 8px;
+  --px-table-font-size: var(--px-font-size-extra-small);
+}
+
+.px-table--sm {
+  --px-table-padding-y: 6px;
+  --px-table-padding-x: 10px;
+  --px-table-font-size: var(--px-font-size-small);
+}
+
+.px-table--md {
+  --px-table-padding-y: 10px;
+  --px-table-padding-x: 14px;
+  --px-table-font-size: var(--px-font-size-base);
+}
+
+.px-table--lg {
+  --px-table-padding-y: 14px;
+  --px-table-padding-x: 18px;
+  --px-table-font-size: var(--px-font-size-large);
+}
+
+.px-table--xl {
+  --px-table-padding-y: 18px;
+  --px-table-padding-x: 22px;
+  --px-table-font-size: var(--px-font-size-extra-large);
+}
+
+/* ─── Zebra Stripes ─── */
+.px-table.is-zebra tbody tr:nth-child(even) {
+  background-color: var(--px-table-zebra-color);
+}
+
+/* ─── Hover Highlight ─── */
+.px-table.is-hover tbody tr:hover {
+  background-color: var(--px-table-row-hover-color);
+}
+
+/* ─── Full Borders ─── */
+.px-table.is-border {
+  & th,
+  & td {
+    border: var(--px-border-width) solid var(--px-table-border-color);
+  }
+}
+
+/* ─── Pin Rows (Sticky Header/Footer) ─── */
+.px-table.is-pin-rows {
+  & thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: var(--px-table-header-bg-color);
+  }
+
+  & tfoot th,
+  & tfoot td {
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    background-color: var(--px-table-header-bg-color);
+  }
+}
+
+/* ─── Pin Cols (Sticky First Column) ─── */
+.px-table.is-pin-cols {
+  & th:first-child,
+  & td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background-color: var(--px-table-bg-color);
+  }
+
+  & thead th:first-child {
+    background-color: var(--px-table-header-bg-color);
+  }
+}
+
+/* ─── Pin Rows + Cols intersection ─── */
+.px-table.is-pin-rows.is-pin-cols {
+  & thead th:first-child {
+    z-index: 3;
+  }
+
+  & tfoot th:first-child,
+  & tfoot td:first-child {
+    z-index: 3;
+  }
+}
+
+/* ─── Hide Header ─── */
+.px-table.is-hide-header thead {
+  display: none;
+}
+
+/* ─── Color Type Variants ─── */
+@each $val in primary, success, info, warning, danger {
+  .px-table--$(val) {
+    --px-table-border-color: var(--px-color-$(val));
+    --px-table-shadow-color: var(--px-color-$(val)-dark);
+    --px-table-header-bg-color: var(--px-color-$(val)-light-9);
+  }
+}

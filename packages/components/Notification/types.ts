@@ -1,11 +1,8 @@
 import type { ComponentInternalInstance, Ref, VNode } from 'vue';
 
-//样式类型
-export const notificationTypes = ['info', 'success', 'warning', 'danger'] as const;
-//表示属于notificationTypes的类型中的一个,number是索引
+export const notificationTypes = ['info', 'success', 'warning', 'danger', 'error'] as const;
 export type NotificationType = (typeof notificationTypes)[number];
 
-//位置类型
 export const notificationPosition = [
   'top-right',
   'top-left',
@@ -14,7 +11,6 @@ export const notificationPosition = [
 ] as const;
 export type NotificationPosition = (typeof notificationPosition)[number];
 
-//通知组件的props
 export interface NotificationProps {
   title: string;
   id: string;
@@ -27,6 +23,9 @@ export interface NotificationProps {
   offset?: number;
   transitionName?: string;
   icon?: string;
+  plain?: boolean;
+  ghost?: boolean;
+  showTimer?: boolean;
   onClick?(): void;
   onClose?(): void;
   onDestroy(): void;
@@ -50,7 +49,9 @@ export interface NotificationHandler {
   close(): void;
 }
 
-export type NotificationOptions = Partial<Omit<NotificationProps, 'id'>>;
+export type NotificationOptions = Partial<Omit<NotificationProps, 'id'>> & {
+  max?: number;
+};
 export type NotificationParams = string | VNode | NotificationOptions;
 
 export type NotificationFn = {
@@ -65,4 +66,5 @@ export interface Notification extends NotificationFn {
   warning: NotificationTypeFn;
   info: NotificationTypeFn;
   danger: NotificationTypeFn;
+  error: NotificationTypeFn;
 }

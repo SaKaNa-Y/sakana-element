@@ -1,0 +1,35 @@
+<template>
+  <px-table zebra>
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Potion</td>
+          <td>5</td>
+          <td>50g</td>
+        </tr>
+        <tr>
+          <td>Ether</td>
+          <td>3</td>
+          <td>100g</td>
+        </tr>
+        <tr>
+          <td>Phoenix Down</td>
+          <td>1</td>
+          <td>300g</td>
+        </tr>
+        <tr>
+          <td>Elixir</td>
+          <td>2</td>
+          <td>500g</td>
+        </tr>
+      </tbody>
+    </table>
+  </px-table>
+</template>

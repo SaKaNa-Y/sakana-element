@@ -1,0 +1,30 @@
+<template>
+  <px-table hover>
+    <table>
+      <thead>
+        <tr>
+          <th>Player</th>
+          <th>Score</th>
+          <th>Rank</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Alice</td>
+          <td>9800</td>
+          <td>#1</td>
+        </tr>
+        <tr>
+          <td>Bob</td>
+          <td>8500</td>
+          <td>#2</td>
+        </tr>
+        <tr>
+          <td>Carol</td>
+          <td>7200</td>
+          <td>#3</td>
+        </tr>
+      </tbody>
+    </table>
+  </px-table>
+</template>

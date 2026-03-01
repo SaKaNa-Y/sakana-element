@@ -38,16 +38,16 @@ const getFormItems = (lang: 'zh' | 'en') => [
     link: `/${lang}/components/input`,
   },
   {
+    text: lang === 'zh' ? 'Switch 开关' : 'Switch',
+    link: `/${lang}/components/switch`,
+  },
+  {
     text: lang === 'zh' ? 'Select 选择器' : 'Select',
     link: `/${lang}/components/select`,
   },
   {
     text: lang === 'zh' ? 'FileInput 文件输入' : 'FileInput',
     link: `/${lang}/components/file-input`,
-  },
-  {
-    text: lang === 'zh' ? 'Switch 开关' : 'Switch',
-    link: `/${lang}/components/switch`,
   },
   {
     text: lang === 'zh' ? 'Form 表单' : 'Form',
@@ -57,39 +57,43 @@ const getFormItems = (lang: 'zh' | 'en') => [
 
 const getDataItems = (lang: 'zh' | 'en') => [
   {
-    text: lang === 'zh' ? 'Avatar 头像' : 'Avatar',
-    link: `/${lang}/components/avatar`,
-  },
-  {
-    text: lang === 'zh' ? 'Collapse 折叠面板' : 'Collapse',
-    link: `/${lang}/components/collapse`,
-  },
-  {
     text: lang === 'zh' ? 'Badge 徽章' : 'Badge',
     link: `/${lang}/components/badge`,
+  },
+  {
+    text: lang === 'zh' ? 'Avatar 头像' : 'Avatar',
+    link: `/${lang}/components/avatar`,
   },
   {
     text: lang === 'zh' ? 'Card 卡片' : 'Card',
     link: `/${lang}/components/card`,
   },
   {
-    text: lang === 'zh' ? 'Pixelate 像素化' : 'Pixelate',
-    link: `/${lang}/components/pixelate`,
-  },
-  {
     text: lang === 'zh' ? 'Progress 进度条' : 'Progress',
     link: `/${lang}/components/progress`,
+  },
+  {
+    text: lang === 'zh' ? 'Table 表格' : 'Table',
+    link: `/${lang}/components/table`,
+  },
+  {
+    text: lang === 'zh' ? 'Collapse 折叠面板' : 'Collapse',
+    link: `/${lang}/components/collapse`,
+  },
+  {
+    text: lang === 'zh' ? 'Pixelate 像素化' : 'Pixelate',
+    link: `/${lang}/components/pixelate`,
   },
 ];
 
 const getNavigationItems = (lang: 'zh' | 'en') => [
   {
-    text: lang === 'zh' ? 'Breadcrumb 面包屑' : 'Breadcrumb',
-    link: `/${lang}/components/breadcrumb`,
-  },
-  {
     text: lang === 'zh' ? 'Link 链接' : 'Link',
     link: `/${lang}/components/link`,
+  },
+  {
+    text: lang === 'zh' ? 'Breadcrumb 面包屑' : 'Breadcrumb',
+    link: `/${lang}/components/breadcrumb`,
   },
 ];
 
@@ -97,6 +101,10 @@ const getFeedbackItems = (lang: 'zh' | 'en') => [
   {
     text: lang === 'zh' ? 'Alert 提示' : 'Alert',
     link: `/${lang}/components/alert`,
+  },
+  {
+    text: lang === 'zh' ? 'Tooltip 文字提示' : 'Tooltip',
+    link: `/${lang}/components/tooltip`,
   },
   {
     text: lang === 'zh' ? 'Message 消息' : 'Message',
@@ -107,20 +115,16 @@ const getFeedbackItems = (lang: 'zh' | 'en') => [
     link: `/${lang}/components/notification`,
   },
   {
+    text: lang === 'zh' ? 'Popconfirm 气泡确认框' : 'Popconfirm',
+    link: `/${lang}/components/popconfirm`,
+  },
+  {
     text: lang === 'zh' ? 'MessageBox 消息弹框' : 'MessageBox',
     link: `/${lang}/components/message-box`,
   },
   {
     text: lang === 'zh' ? 'Loading 加载' : 'Loading',
     link: `/${lang}/components/loading`,
-  },
-  {
-    text: lang === 'zh' ? 'Tooltip 文字提示' : 'Tooltip',
-    link: `/${lang}/components/tooltip`,
-  },
-  {
-    text: lang === 'zh' ? 'Popconfirm 气泡确认框' : 'Popconfirm',
-    link: `/${lang}/components/popconfirm`,
   },
   {
     text: lang === 'zh' ? 'Dropdown 下拉菜单' : 'Dropdown',

@@ -1,0 +1,34 @@
+<template>
+  <px-table border>
+    <table>
+      <thead>
+        <tr>
+          <th>Stat</th>
+          <th>Base</th>
+          <th>Bonus</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>STR</td>
+          <td>10</td>
+          <td>+3</td>
+          <td>13</td>
+        </tr>
+        <tr>
+          <td>DEX</td>
+          <td>14</td>
+          <td>+2</td>
+          <td>16</td>
+        </tr>
+        <tr>
+          <td>INT</td>
+          <td>8</td>
+          <td>+5</td>
+          <td>13</td>
+        </tr>
+      </tbody>
+    </table>
+  </px-table>
+</template>

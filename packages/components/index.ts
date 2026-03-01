@@ -21,4 +21,5 @@ export * from './Popconfirm';
 export * from './Progress';
 export * from './Select';
 export * from './Switch';
+export * from './Table';
 export * from './Tooltip';

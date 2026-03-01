@@ -14,14 +14,14 @@ export const notificationApi: ApiSection[] = [
       {
         name: 'type',
         category: 'style',
-        type: "'success' | 'warning' | 'info' | 'danger'",
+        type: "'success' | 'warning' | 'info' | 'danger' | 'error'",
         desc: { zh: '通知类型', en: 'Notification type' },
       },
       {
         name: 'duration',
         category: 'behavior',
         type: 'number',
-        default: '4500',
+        default: '3000',
         desc: {
           zh: '显示时间（毫秒），设为 0 则不会自动关闭',
           en: 'Display duration (ms), 0 for persistent',
@@ -45,7 +45,7 @@ export const notificationApi: ApiSection[] = [
         name: 'offset',
         category: 'style',
         type: 'number',
-        default: '16',
+        default: '20',
         desc: { zh: '距离窗口边缘的偏移量', en: 'Offset from window edge' },
       },
       {
@@ -53,6 +53,45 @@ export const notificationApi: ApiSection[] = [
         category: 'content',
         type: 'string',
         desc: { zh: '自定义图标', en: 'Custom icon' },
+      },
+      {
+        name: 'plain',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: {
+          zh: '朴素模式（浅色背景，彩色文字）',
+          en: 'Plain variant (light background, colored text)',
+        },
+      },
+      {
+        name: 'ghost',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: {
+          zh: '幽灵模式（透明背景，仅边框）',
+          en: 'Ghost variant (transparent background, border only)',
+        },
+      },
+      {
+        name: 'showTimer',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'true',
+        desc: {
+          zh: '是否显示计时进度条',
+          en: 'Whether to show the duration timer bar',
+        },
+      },
+      {
+        name: 'max',
+        category: 'behavior',
+        type: 'number',
+        desc: {
+          zh: '同一位置最大可见数量',
+          en: 'Max visible notifications per position',
+        },
       },
       {
         name: 'onClick',
@@ -102,9 +141,15 @@ export const notificationApi: ApiSection[] = [
         desc: { zh: '显示危险通知', en: 'Show danger notification' },
       },
       {
+        name: 'PxNotification.error',
+        category: 'method',
+        type: '(options: NotificationOptions) => NotificationHandler',
+        desc: { zh: '显示错误通知', en: 'Show error notification' },
+      },
+      {
         name: 'PxNotification.closeAll',
         category: 'method',
-        type: '() => void',
+        type: '(type?: NotificationType) => void',
         desc: { zh: '关闭所有通知', en: 'Close all notifications' },
       },
     ],

@@ -14,13 +14,12 @@ import type {
 } from './types';
 import { notificationPosition, notificationTypes } from './types';
 
-//instancesMap是NotificationInstance的数组类型里面的值只能是position的值
 const instancesMap: Map<NotificationProps['position'], NotificationInstance[]> = new Map();
 
-//遍历notificationPosition,将position作为key,shallowReactive([])作为value,存入instancesMap
 each(notificationPosition, (position) => {
   instancesMap.set(position, shallowReactive([]));
 });
+
 const { nextZIndex } = useZIndex();
 
 export const notificationDefaults = {
@@ -31,6 +30,7 @@ export const notificationDefaults = {
   position: 'top-right',
   transitionName: 'fade',
   showClose: true,
+  showTimer: true,
 } as const;
 
 const normalizedOptions = (opts: NotificationParams): CreateNotificationProps => {
@@ -62,7 +62,6 @@ const createNotification = (props: CreateNotificationProps): NotificationInstanc
   };
   const vnode = h(NotificationConstructor, _props);
 
-  //render函数是渲染vnode,并将其挂载到container上
   render(vnode, container);
   document.body.appendChild(container.firstElementChild!);
 
@@ -83,13 +82,24 @@ const createNotification = (props: CreateNotificationProps): NotificationInstanc
 
 export const notification: NotificationFn & Partial<Notification> = (options = {}) => {
   const normalized = normalizedOptions(options);
+
+  // Enforce max count per-position: destroy oldest instances exceeding the limit
+  const rawOpts = !options || isVNode(options) || isString(options) ? {} : options;
+  const max = (rawOpts as { max?: number }).max;
+  const position = normalized.position || 'top-right';
+  if (max && max > 0) {
+    const instances = getInstancesByPosition(position);
+    while (instances.length >= max) {
+      instances[0].props.onDestroy();
+    }
+  }
+
   const instance = createNotification(normalized);
 
   return instance.handler;
 };
 
 export function closeAll(type?: NotificationType) {
-  //each函数是遍历instances数组,并执行instance.handler.close()
   instancesMap.forEach((instances) => {
     each(instances, (instance) => {
       if (type) {
@@ -101,7 +111,15 @@ export function closeAll(type?: NotificationType) {
   });
 }
 
-//获取最后一个bottomOffset
+/** Forcefully unmount all notification instances, bypassing CSS transitions. */
+export function destroyAll() {
+  instancesMap.forEach((instances) => {
+    while (instances.length) {
+      instances[0].props.onDestroy();
+    }
+  });
+}
+
 export function getLastBottomOffset(this: NotificationProps) {
   const instances = getInstancesByPosition(this.position || 'top-right');
   const idx = findIndex(instances, { id: this.id });
@@ -111,13 +129,27 @@ export function getLastBottomOffset(this: NotificationProps) {
   return get(instances, [idx - 1, 'vm', 'exposed', 'bottomOffset', 'value']);
 }
 
+// Global Escape listener — closes the most recent notification (highest zIndex across all positions).
+document.addEventListener('keydown', (e: KeyboardEvent) => {
+  if (e.code === 'Escape') {
+    let latest: NotificationInstance | null = null;
+    instancesMap.forEach((instances) => {
+      if (instances.length) {
+        const last = instances[instances.length - 1];
+        if (!latest || last.props.zIndex > latest.props.zIndex) latest = last;
+      }
+    });
+    latest?.handler.close();
+  }
+});
+
 each(notificationTypes, (type) => {
-  //set函数是设置notification的type属性,type属性是notification的类型
   set(notification, type, (opts: NotificationParams) => {
     const normalized = normalizedOptions(opts);
     return notification({ ...normalized, type });
   });
 });
+
 notification.closeAll = closeAll;
 
 export default notification as Notification;

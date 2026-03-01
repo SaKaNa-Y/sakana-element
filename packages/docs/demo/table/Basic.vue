@@ -1,0 +1,30 @@
+<template>
+  <px-table>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Class</th>
+          <th>Level</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Sakana</td>
+          <td>Warrior</td>
+          <td>12</td>
+        </tr>
+        <tr>
+          <td>Pixel</td>
+          <td>Mage</td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td>Retro</td>
+          <td>Archer</td>
+          <td>15</td>
+        </tr>
+      </tbody>
+    </table>
+  </px-table>
+</template>
