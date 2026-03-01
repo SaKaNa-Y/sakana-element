@@ -1,21 +1,27 @@
 # Sakana Element
 
 [![npm version](https://img.shields.io/npm/v/sakana-element.svg)](https://www.npmjs.com/package/sakana-element)
+[![npm downloads](https://img.shields.io/npm/dm/sakana-element.svg)](https://www.npmjs.com/package/sakana-element)
 [![license](https://img.shields.io/npm/l/sakana-element.svg)](https://github.com/yu859/sakana-element/blob/master/LICENSE)
 
 A Vue 3 + TypeScript component library with pixel art design aesthetic.
 
 像素风格的 Vue 3 + TypeScript 组件库。
 
+**[Documentation / 文档](https://sakana-element-docs.vercel.app)** | **[GitHub](https://github.com/yu859/sakana-element)** | **[npm](https://www.npmjs.com/package/sakana-element)**
+
 ---
 
 ## Features / 特性
 
-- 🎮 **Pixel Art Design** — Unique retro pixel aesthetic using CSS Houdini Paint Worklets / 独特的像素复古风格
-- 🧩 **Vue 3 + TypeScript** — Full Composition API & type safety / 完整的组合式 API 和类型安全
-- 🌙 **Dark Mode** — Built-in dark theme support / 内置暗色主题
-- 🌐 **i18n** — Bilingual (EN/ZH) internationalization / 双语国际化支持
-- 📦 **Tree-shakable** — ES module build with per-component chunks / ES 模块构建，支持按需引入
+- 🎨 **CSS Houdini Pixel Rendering** — Pixel borders and shadows drawn natively via CSS Paint API worklets / CSS Houdini Paint Worklet 原生绘制像素边框和阴影
+- 🧩 **25 Components** — Buttons, forms, tables, cards, notifications, and more, each with pixel-art styling / 25 个像素风格组件，涵盖按钮、表单、表格、卡片、通知等
+- ⭐ **486 Pixel Icons** — Full pixelarticons set bundled with flip, rotation, and animation support / 内置 486 个像素图标，支持翻转、旋转和动画
+- 🌙 **Catppuccin Dark Mode** — One-class theme toggle with system preference auto-detection / Catppuccin 配色暗色模式，支持系统偏好自动检测
+- 🔧 **Vue 3 + TypeScript** — Full Composition API & type safety with IntelliSense / 完整的组合式 API 和类型安全
+- 📦 **Tree-Shakable** — ES module build with per-component chunks / ES 模块构建，按组件分包，按需引入
+- 🌐 **5 Locales** — EN, ZH-CN, ZH-TW, JA, KO internationalization built in / 内置英、简中、繁中、日、韩五种语言
+- 📖 **190+ Live Demos** — Bilingual documentation with interactive examples / 中英双语文档，190+ 个交互式示例
 
 ## Install / 安装
 
@@ -39,30 +45,86 @@ createApp(App).use(SakanaElement).mount('#app')
 
 ## Components / 组件
 
+### Basic / 基础
+
 | Component | Description / 描述 |
 |-----------|-------------------|
-| `PxButton` | Button / 按钮 |
-| `PxIcon` | Icon / 图标 (486 built-in pixelarticons) |
-| `PxInput` | Input / 输入框 |
-| `PxLink` | Link / 链接 |
-| `PxSelect` | Select / 选择器 |
-| `PxFileInput` | FileInput / 文件输入 |
-| `PxSwitch` | Switch / 开关 |
-| `PxForm` | Form / 表单 |
-| `PxAvatar` | Avatar / 头像 |
-| `PxBadge` | Badge / 徽章 |
-| `PxCard` | Card / 卡片 |
-| `PxCollapse` | Collapse / 折叠面板 |
-| `PxBreadcrumb` | Breadcrumb / 面包屑 |
-| `PxDropdown` | Dropdown / 下拉菜单 |
-| `PxAlert` | Alert / 警告提示 |
-| `PxMessage` | Message / 消息提示 |
-| `PxMessageBox` | MessageBox / 消息弹框 |
-| `PxNotification` | Notification / 通知 |
-| `PxLoading` | Loading / 加载 |
-| `PxTooltip` | Tooltip / 文字提示 |
-| `PxPopconfirm` | Popconfirm / 气泡确认框 |
-| `PxConfigProvider` | ConfigProvider / 全局配置 |
+| `PxButton` | Button with 8+ style variants / 按钮（8+ 种风格变体） |
+| `PxIcon` | 486 built-in pixel icons / 486 个内置像素图标 |
+
+### Form / 表单
+
+| Component | Description / 描述 |
+|-----------|-------------------|
+| `PxInput` | Text, password, textarea, date, and more / 输入框（多种类型） |
+| `PxSwitch` | Toggle switch / 开关 |
+| `PxSelect` | Dropdown select with filtering / 选择器（支持搜索过滤） |
+| `PxFileInput` | File upload input / 文件输入 |
+| `PxForm` | Form layout with validation / 表单（支持验证） |
+
+### Data Display / 数据展示
+
+| Component | Description / 描述 |
+|-----------|-------------------|
+| `PxBadge` | Status badge / 徽章 |
+| `PxAvatar` | User avatar / 头像 |
+| `PxCard` | Card with staircase corners / 卡片（阶梯角） |
+| `PxProgress` | Progress bar with pixel chunks / 进度条（像素分块） |
+| `PxTable` | Data table / 数据表格 |
+| `PxCollapse` | Accordion collapse / 折叠面板 |
+| `PxPixelate` | Image pixelation effect / 图片像素化 |
+
+### Navigation / 导航
+
+| Component | Description / 描述 |
+|-----------|-------------------|
+| `PxLink` | Hyperlink / 链接 |
+| `PxBreadcrumb` | Breadcrumb trail / 面包屑 |
+
+### Feedback / 反馈
+
+| Component | Description / 描述 |
+|-----------|-------------------|
+| `PxAlert` | Alert message / 警告提示 |
+| `PxTooltip` | Tooltip popup / 文字提示 |
+| `PxMessage` | Toast message / 消息提示 |
+| `PxNotification` | Notification panel / 通知 |
+| `PxPopconfirm` | Popover confirm / 气泡确认框 |
+| `PxMessageBox` | Modal dialog / 消息弹框 |
+| `PxLoading` | Loading overlay / 加载 |
+| `PxDropdown` | Dropdown menu / 下拉菜单 |
+
+### Config / 配置
+
+| Component | Description / 描述 |
+|-----------|-------------------|
+| `PxConfigProvider` | Global config provider / 全局配置 |
+
+## Composition Hooks / 组合式函数
+
+| Hook | Description / 描述 |
+|------|-------------------|
+| `useTheme` | Reactive theme state (light / dark / system) / 响应式主题状态 |
+| `useSystemTheme` | Detect OS color scheme preference / 检测系统配色偏好 |
+
+```ts
+import { useTheme } from 'sakana-element'
+
+const { theme, toggleTheme, setTheme } = useTheme()
+
+toggleTheme()        // Toggle between dark and light
+setTheme('dark')     // Force dark mode
+setTheme('system')   // Follow system preference
+```
+
+## CSS Houdini Paint Worklets
+
+Sakana Element uses [CSS Houdini Paint API](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Painting_API) worklets to render pixel borders and shadows programmatically. These are registered automatically when you install the library — no extra configuration needed.
+
+Sakana Element 使用 CSS Houdini Paint API Worklet 以编程方式绘制像素边框和阴影。安装组件库后自动注册，无需额外配置。
+
+- `pixel-border` — Draws authentic stepped pixel borders via `--px-border-color`, `--px-border-width`, `--px-border-pixel-size`
+- `pixel-shadow` — Creates pixelated drop shadows via `--px-shadow-color`, `--px-shadow-offset`, `--px-border-pixel-size`
 
 ## Icons / 图标
 
@@ -141,7 +203,7 @@ packages/
 ├── hooks       — Reusable composition functions
 ├── utils       — Shared utilities
 ├── theme       — CSS theme & Houdini Paint Worklets
-├── locale      — i18n support
+├── locale      — i18n support (EN, ZH-CN, ZH-TW, JA, KO)
 ├── docs        — VitePress documentation
 └── play        — Storybook playground
 ```
