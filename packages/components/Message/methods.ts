@@ -1,6 +1,7 @@
 import { useId, useZIndex } from '@sakana-element/hooks';
+import { createLazyEscapeClose, destroyAllInstances, enforceMaxCount } from '@sakana-element/utils';
 import { each, findIndex, get, isString, set } from 'lodash-es';
-import { h, isVNode, render, shallowReactive } from 'vue'; //h是创建虚拟节点，render是渲染函数，shallowReactive是浅响应式
+import { h, isVNode, render, shallowReactive } from 'vue';
 import MessageConstructor from './Message.vue';
 import type {
   CreateMessageProps,
@@ -8,17 +9,20 @@ import type {
   MessageFn,
   MessageHandler,
   MessageInstance,
+  MessageOptions,
   MessageParams,
   MessageProps,
   MessageType,
 } from './types';
 import { messageTypes } from './types';
 
-//ref是对基本和复杂类型不管什么变化都响应，shallowRef是全部变化才响应，reactive是对复杂类型不管什么变化都响应，shallowReactive是只有最外层复杂类型变化才响应
-//ref可以基本和复杂类型响应式，reactive是复杂深响应式，shallowReactive是复杂浅响应式
-//MessageInstance[]是MessageInstance类型的数组，shallowReactive是浅响应式，shallowReactive([])是创建一个浅响应式的空数组
 const instances: MessageInstance[] = shallowReactive([]);
 const { nextZIndex } = useZIndex();
+
+// Lazy Escape listener — only active when at least one message exists.
+const escapeClose = createLazyEscapeClose(() =>
+  instances.length ? instances[instances.length - 1] : undefined,
+);
 
 export const messageDefaults = {
   type: 'info',
@@ -27,30 +31,27 @@ export const messageDefaults = {
   transitionName: 'fade-up',
 };
 
-//opts是MessageParams类型，MessageParams是string | VNode | MessageOptions，返回值是CreateMessageProps类型
 const normalizedOptions = (opts: MessageParams): CreateMessageProps => {
-  //result意思是opts如果为空，或者opts是VNode，或者opts是string，则result为{message:opts}，否则result为opts
   const result =
     !opts || isVNode(opts) || isString(opts)
       ? {
           message: opts,
         }
       : opts;
-  return { ...messageDefaults, ...result } as CreateMessageProps; //解构赋值，将messageDefaults和result的属性合并到一起
+  return { ...messageDefaults, ...result } as CreateMessageProps;
 };
 
 const createMessage = (props: CreateMessageProps): MessageInstance => {
   const id = useId().value;
-  const container = document.createElement('div'); //创建div作为消息的容器
+  const container = document.createElement('div');
 
-  //销毁实例的函数
   const destroy = () => {
-    const idx = findIndex(instances, { id }); //找与当前 id 匹配的消息实例在 instances 数组中的索引
-    if (idx === -1) return; //如果找不到，则返回
+    const idx = findIndex(instances, { id });
+    if (idx === -1) return;
 
-    instances.splice(idx, 1); //从 instances 数组中删除该消息实例
-    //render是渲染函数，将null渲染到container中，即销毁消息实例
-    render(null, container); //销毁消息实例
+    instances.splice(idx, 1);
+    render(null, container);
+    escapeClose.unregister();
   };
 
   const _props: MessageProps = {
@@ -59,13 +60,13 @@ const createMessage = (props: CreateMessageProps): MessageInstance => {
     zIndex: nextZIndex(),
     onDestroy: destroy,
   };
-  const vnode = h(MessageConstructor, _props); //创建虚拟节点，将_props作为props传递给MessageConstructor
+  const vnode = h(MessageConstructor, _props);
 
-  render(vnode, container); //渲染虚拟节点到容器中
+  render(vnode, container);
 
-  document.body.appendChild(container.firstElementChild!); //将容器中的第一个元素添加到body中，主要是为了少一个div，因为container本身有div，相当于少一层div
+  document.body.appendChild(container.firstElementChild!);
 
-  const vm = vnode.component!; //获取虚拟节点的组件实例，！表示一定有组件实例
+  const vm = vnode.component!;
   const handler: MessageHandler = {
     close: () => vm.exposed!.close(),
   };
@@ -77,6 +78,7 @@ const createMessage = (props: CreateMessageProps): MessageInstance => {
     handler,
   };
   instances.push(instance);
+  escapeClose.register();
 
   return instance;
 };
@@ -93,11 +95,9 @@ export const message: MessageFn & Partial<Message> = (options = {}) => {
 
   // Enforce max count: destroy oldest messages exceeding the limit
   const rawOpts = !options || isVNode(options) || isString(options) ? {} : options;
-  const max = (rawOpts as { max?: number }).max;
+  const max = (rawOpts as MessageOptions).max;
   if (max && max > 0) {
-    while (instances.length >= max) {
-      instances[0].props.onDestroy();
-    }
+    enforceMaxCount(instances, max);
   }
 
   const instance = createMessage(normalized);
@@ -105,32 +105,20 @@ export const message: MessageFn & Partial<Message> = (options = {}) => {
   return instance.handler;
 };
 
-//关闭所有消息
 export function closeAll(type?: MessageType) {
   each(instances, (instance) => {
     if (type) {
-      instance.props.type === type && instance.handler.close(); //如果实例的props的type与type相同，则关闭实例
+      instance.props.type === type && instance.handler.close();
       return;
     }
-    instance.handler.close(); //关闭实例
+    instance.handler.close();
   });
 }
 
-/** Forcefully unmount all message instances, bypassing CSS transitions.
- *  Useful in tests where transition timing is unreliable. */
+/** Forcefully unmount all message instances, bypassing CSS transitions. */
 export function destroyAll() {
-  while (instances.length) {
-    instances[0].props.onDestroy();
-  }
+  destroyAllInstances(instances);
 }
-
-// Single global Escape listener — closes the most recent message.
-// Avoids per-instance listeners that leak when CSS transitions delay unmounting.
-document.addEventListener('keydown', (e: KeyboardEvent) => {
-  if (e.code === 'Escape' && instances.length) {
-    instances[instances.length - 1].handler.close();
-  }
-});
 
 each(messageTypes, (type) => {
   set(message, type, (opts: MessageParams) => {

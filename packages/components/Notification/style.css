@@ -92,19 +92,21 @@
   }
 }
 
+/* Map error type to danger color palette so @each loops handle both */
+.px-notification--error {
+  --px-color-error: var(--px-color-danger);
+  --px-color-error-dark: var(--px-color-danger-dark);
+  --px-color-error-light-5: var(--px-color-danger-light-5);
+  --px-color-error-light-9: var(--px-color-danger-light-9);
+}
+
 /* Type variants with colored shadows */
-@each $val in info, success, warning, danger {
+@each $val in info, success, warning, danger, error {
   .px-notification--$(val) {
     --px-notification-icon-color: var(--px-color-$(val));
     --px-notification-border-color: var(--px-color-$(val));
     --px-notification-shadow-color: var(--px-color-$(val)-dark);
   }
-}
-
-.px-notification--error {
-  --px-notification-icon-color: var(--px-color-danger);
-  --px-notification-border-color: var(--px-color-danger);
-  --px-notification-shadow-color: var(--px-color-danger-dark);
 }
 
 /* ─── Plain variant ─── */
@@ -113,7 +115,7 @@
   background-color: var(--px-fill-color-blank);
 }
 
-@each $val in info, success, warning, danger {
+@each $val in info, success, warning, danger, error {
   .px-notification--$(val).is-plain {
     background-color: var(--px-color-$(val)-light-9);
     --px-notification-border-color: var(--px-color-$(val)-light-5, var(--px-color-$(val)));
@@ -124,22 +126,13 @@
   }
 }
 
-.px-notification--error.is-plain {
-  background-color: var(--px-color-danger-light-9);
-  --px-notification-border-color: var(--px-color-danger-light-5, var(--px-color-danger));
-  --px-notification-icon-color: var(--px-color-danger);
-  --px-notification-title-color: var(--px-color-danger-dark);
-  --px-notification-content-color: var(--px-color-danger);
-  --px-notification-shadow-color: var(--px-color-danger-light-5, var(--px-color-danger));
-}
-
 /* ─── Ghost variant ─── */
 .px-notification.is-ghost {
   background-color: var(--px-fill-color-blank);
   --px-notification-shadow-color: transparent;
 }
 
-@each $val in info, success, warning, danger {
+@each $val in info, success, warning, danger, error {
   .px-notification--$(val).is-ghost {
     background-color: var(--px-fill-color-blank);
     --px-notification-border-color: var(--px-color-$(val));
@@ -148,15 +141,6 @@
     --px-notification-content-color: var(--px-color-$(val));
     --px-notification-shadow-color: transparent;
   }
-}
-
-.px-notification--error.is-ghost {
-  background-color: var(--px-fill-color-blank);
-  --px-notification-border-color: var(--px-color-danger);
-  --px-notification-icon-color: var(--px-color-danger);
-  --px-notification-title-color: var(--px-color-danger-dark);
-  --px-notification-content-color: var(--px-color-danger);
-  --px-notification-shadow-color: transparent;
 }
 
 /* ─── Timer bar ─── */
@@ -170,6 +154,11 @@
   opacity: 0.5;
   animation: px-notification-timer linear forwards;
   transform-origin: left;
+}
+
+/* Pause timer bar animation when notification is hovered (matches JS timer pause) */
+.px-notification:hover .px-notification__timer {
+  animation-play-state: paused;
 }
 
 @keyframes px-notification-timer {

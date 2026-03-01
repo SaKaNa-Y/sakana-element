@@ -116,8 +116,16 @@
   }
 }
 
+/* Map error type to danger color palette so @each loops handle both */
+.px-message--error {
+  --px-color-error: var(--px-color-danger);
+  --px-color-error-dark: var(--px-color-danger-dark);
+  --px-color-error-light-5: var(--px-color-danger-light-5);
+  --px-color-error-light-9: var(--px-color-danger-light-9);
+}
+
 /* Type variants with pixel styling */
-@each $val in info, success, warning, danger {
+@each $val in info, success, warning, danger, error {
   .px-message--$(val) {
     --px-message-bg-color: var(--px-color-$(val)-light-9);
     --px-message-border-color: var(--px-color-$(val));
@@ -134,22 +142,6 @@
   }
 }
 
-/* Error variant (alias for danger) */
-.px-message--error {
-  --px-message-bg-color: var(--px-color-danger-light-9);
-  --px-message-border-color: var(--px-color-danger);
-  --px-message-text-color: var(--px-color-danger-dark);
-  --px-message-shadow-color: var(--px-color-danger-dark);
-
-  .px-message__close .px-icon {
-    color: var(--px-color-danger);
-
-    &:hover {
-      color: var(--px-color-danger-dark);
-    }
-  }
-}
-
 /* ─── Plain variant ─── */
 .px-message.is-plain {
   --px-message-bg-color: var(--px-fill-color-blank);
@@ -157,20 +149,13 @@
   --px-message-shadow-color: var(--px-border-color-light);
 }
 
-@each $val in info, success, warning, danger {
+@each $val in info, success, warning, danger, error {
   .px-message--$(val).is-plain {
     --px-message-bg-color: var(--px-color-$(val)-light-9);
     --px-message-border-color: var(--px-color-$(val)-light-5, var(--px-color-$(val)));
     --px-message-text-color: var(--px-color-$(val));
     --px-message-shadow-color: var(--px-color-$(val)-light-5, var(--px-color-$(val)));
   }
-}
-
-.px-message--error.is-plain {
-  --px-message-bg-color: var(--px-color-danger-light-9);
-  --px-message-border-color: var(--px-color-danger-light-5, var(--px-color-danger));
-  --px-message-text-color: var(--px-color-danger);
-  --px-message-shadow-color: var(--px-color-danger-light-5, var(--px-color-danger));
 }
 
 /* ─── Ghost variant ─── */
@@ -180,7 +165,7 @@
   filter: none;
 }
 
-@each $val in info, success, warning, danger {
+@each $val in info, success, warning, danger, error {
   .px-message--$(val).is-ghost {
     --px-message-bg-color: var(--px-fill-color-blank);
     --px-message-border-color: var(--px-color-$(val));
@@ -188,14 +173,6 @@
     --px-message-shadow-color: transparent;
     filter: none;
   }
-}
-
-.px-message--error.is-ghost {
-  --px-message-bg-color: var(--px-fill-color-blank);
-  --px-message-border-color: var(--px-color-danger);
-  --px-message-text-color: var(--px-color-danger);
-  --px-message-shadow-color: transparent;
-  filter: none;
 }
 
 /* ─── Timer bar ─── */
@@ -209,6 +186,11 @@
   opacity: 0.5;
   animation: px-message-timer linear forwards;
   transform-origin: left;
+}
+
+/* Pause timer bar animation when message is hovered (matches JS timer pause) */
+.px-message:hover .px-message__timer {
+  animation-play-state: paused;
 }
 
 @keyframes px-message-timer {

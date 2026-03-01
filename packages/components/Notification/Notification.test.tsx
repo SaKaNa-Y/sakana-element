@@ -1,12 +1,17 @@
 import { rAF } from '@sakana-element/utils';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { closeAll, destroyAll, notification } from './methods';
+import type { NotificationOptions } from './types';
 
 function getTopValue(element: Element) {
   const styles = window.getComputedStyle(element);
   const topValue = styles.getPropertyValue('top');
   return Number.parseFloat(topValue);
 }
+
+/** Wrapper that disables CSS transitions for stable test timing. */
+const testNotify = (opts: NotificationOptions = {}) =>
+  notification({ transitionName: '', ...opts });
 
 describe('Notification', () => {
   afterEach(async () => {
@@ -16,11 +21,10 @@ describe('Notification', () => {
   });
 
   test('notification() function', async () => {
-    const handler = notification({
+    const handler = testNotify({
       title: 'Test',
       message: 'hello notify',
       duration: 0,
-      transitionName: '',
     });
     await rAF();
     expect(document.querySelector('.px-notification')).toBeTruthy();
@@ -31,8 +35,8 @@ describe('Notification', () => {
   });
 
   test('call notification() function more than once', async () => {
-    notification({ title: 'Test', message: 'hello notify', duration: 0, transitionName: '' });
-    notification({ title: 'Test', message: 'hello notify', duration: 0, transitionName: '' });
+    testNotify({ title: 'Test', message: 'hello notify', duration: 0 });
+    testNotify({ title: 'Test', message: 'hello notify', duration: 0 });
     await rAF();
     expect(document.querySelectorAll('.px-notification').length).toBe(2);
     notification.closeAll();
@@ -42,19 +46,17 @@ describe('Notification', () => {
   });
 
   test('notification offset', async () => {
-    notification({
+    testNotify({
       title: 'Test',
       message: 'hello msg',
       duration: 0,
       offset: 100,
-      transitionName: '',
     });
-    notification({
+    testNotify({
       title: 'Test',
       message: 'hello msg',
       duration: 0,
       offset: 50,
-      transitionName: '',
     });
     await rAF();
     const elements = document.querySelectorAll('.px-notification');
@@ -84,19 +86,17 @@ describe('Notification', () => {
   });
 
   test('closeAll with specific type', async () => {
-    notification({
+    testNotify({
       title: 'Test',
       message: 'info',
       duration: 0,
       type: 'info',
-      transitionName: '',
     });
-    notification({
+    testNotify({
       title: 'Test',
       message: 'success',
       duration: 0,
       type: 'success',
-      transitionName: '',
     });
     await rAF();
     expect(document.querySelectorAll('.px-notification').length).toBe(2);
@@ -110,11 +110,10 @@ describe('Notification', () => {
   });
 
   test('notification with title', async () => {
-    const handler = notification({
+    const handler = testNotify({
       title: 'Title',
       message: 'Content',
       duration: 0,
-      transitionName: '',
     });
     await rAF();
     const titleEl = document.querySelector('.px-notification__title');
@@ -125,12 +124,11 @@ describe('Notification', () => {
   });
 
   test('notification with custom position', async () => {
-    const handler = notification({
+    const handler = testNotify({
       title: 'Test',
       message: 'bottom-right',
       duration: 0,
       position: 'bottom-right',
-      transitionName: '',
     });
     await rAF();
     expect(document.querySelector('.px-notification')).toBeTruthy();
@@ -140,11 +138,10 @@ describe('Notification', () => {
   });
 
   test('should clear timer on mouseenter', async () => {
-    notification({
+    testNotify({
       title: 'Test',
       message: 'hover test',
       duration: 5000,
-      transitionName: '',
     });
     await rAF();
     const el = document.querySelector('.px-notification') as HTMLElement;
@@ -160,12 +157,11 @@ describe('Notification', () => {
 
   test('should invoke onClick callback when clicked', async () => {
     const onClick = vi.fn();
-    notification({
+    testNotify({
       title: 'Test',
       message: 'click test',
       duration: 0,
       onClick,
-      transitionName: '',
     });
     await rAF();
     const el = document.querySelector('.px-notification') as HTMLElement;
@@ -179,12 +175,11 @@ describe('Notification', () => {
   test('notification with all position variants', async () => {
     const positions = ['top-right', 'top-left', 'bottom-right', 'bottom-left'] as const;
     for (const position of positions) {
-      const handler = notification({
+      const handler = testNotify({
         title: 'Test',
         message: `msg-${position}`,
         duration: 0,
         position,
-        transitionName: '',
       });
       await rAF();
       const el = document.querySelector('.px-notification');
@@ -210,13 +205,12 @@ describe('Notification', () => {
   });
 
   test('plain variant adds is-plain class', async () => {
-    notification({
+    testNotify({
       title: 'Test',
       message: 'plain',
       duration: 0,
       plain: true,
       type: 'success',
-      transitionName: '',
     });
     await rAF();
     const el = document.querySelector('.px-notification');
@@ -224,13 +218,12 @@ describe('Notification', () => {
   });
 
   test('ghost variant adds is-ghost class', async () => {
-    notification({
+    testNotify({
       title: 'Test',
       message: 'ghost',
       duration: 0,
       ghost: true,
       type: 'warning',
-      transitionName: '',
     });
     await rAF();
     const el = document.querySelector('.px-notification');
@@ -238,11 +231,10 @@ describe('Notification', () => {
   });
 
   test('timer bar is rendered by default when duration > 0', async () => {
-    notification({
+    testNotify({
       title: 'Test',
       message: 'timer',
       duration: 5000,
-      transitionName: '',
     });
     await rAF();
     const timer = document.querySelector('.px-notification__timer');
@@ -250,12 +242,11 @@ describe('Notification', () => {
   });
 
   test('timer bar is not rendered when showTimer is false', async () => {
-    notification({
+    testNotify({
       title: 'Test',
       message: 'no timer',
       duration: 5000,
       showTimer: false,
-      transitionName: '',
     });
     await rAF();
     const timer = document.querySelector('.px-notification__timer');
@@ -263,11 +254,10 @@ describe('Notification', () => {
   });
 
   test('timer bar is not rendered when duration is 0', async () => {
-    notification({
+    testNotify({
       title: 'Test',
       message: 'no timer',
       duration: 0,
-      transitionName: '',
     });
     await rAF();
     const timer = document.querySelector('.px-notification__timer');
@@ -275,45 +265,17 @@ describe('Notification', () => {
   });
 
   test('max option limits visible notifications per position', async () => {
-    notification({
-      title: 'Test',
-      message: 'msg1',
-      duration: 0,
-      max: 2,
-      transitionName: '',
-    });
-    notification({
-      title: 'Test',
-      message: 'msg2',
-      duration: 0,
-      max: 2,
-      transitionName: '',
-    });
-    notification({
-      title: 'Test',
-      message: 'msg3',
-      duration: 0,
-      max: 2,
-      transitionName: '',
-    });
+    testNotify({ title: 'Test', message: 'msg1', duration: 0, max: 2 });
+    testNotify({ title: 'Test', message: 'msg2', duration: 0, max: 2 });
+    testNotify({ title: 'Test', message: 'msg3', duration: 0, max: 2 });
     await rAF();
     const els = document.querySelectorAll('.px-notification');
     expect(els.length).toBe(2);
   });
 
   test('Escape key closes the most recent notification', async () => {
-    notification({
-      title: 'Test',
-      message: 'first',
-      duration: 0,
-      transitionName: '',
-    });
-    notification({
-      title: 'Test',
-      message: 'second',
-      duration: 0,
-      transitionName: '',
-    });
+    testNotify({ title: 'Test', message: 'first', duration: 0 });
+    testNotify({ title: 'Test', message: 'second', duration: 0 });
     await rAF();
     expect(document.querySelectorAll('.px-notification').length).toBe(2);
 
@@ -324,19 +286,8 @@ describe('Notification', () => {
   });
 
   test('destroyAll removes all notifications immediately', async () => {
-    notification({
-      title: 'Test',
-      message: 'a',
-      duration: 0,
-      transitionName: '',
-    });
-    notification({
-      title: 'Test',
-      message: 'b',
-      duration: 0,
-      position: 'bottom-left',
-      transitionName: '',
-    });
+    testNotify({ title: 'Test', message: 'a', duration: 0 });
+    testNotify({ title: 'Test', message: 'b', duration: 0, position: 'bottom-left' });
     await rAF();
     expect(document.querySelectorAll('.px-notification').length).toBe(2);
 
@@ -346,13 +297,12 @@ describe('Notification', () => {
   });
 
   test('custom icon overrides default type icon', async () => {
-    notification({
+    testNotify({
       title: 'Test',
       message: 'custom icon',
       duration: 0,
       type: 'success',
       icon: 'star',
-      transitionName: '',
     });
     await rAF();
     const el = document.querySelector('.px-notification');

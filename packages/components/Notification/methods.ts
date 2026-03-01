@@ -1,4 +1,9 @@
 import { useId, useZIndex } from '@sakana-element/hooks';
+import {
+  createLazyEscapeClose,
+  destroyAllInstancesMap,
+  enforceMaxCount,
+} from '@sakana-element/utils';
 import { each, findIndex, get, isString, set } from 'lodash-es';
 import { h, isVNode, render, shallowReactive } from 'vue';
 import NotificationConstructor from './Notification.vue';
@@ -8,6 +13,7 @@ import type {
   NotificationFn,
   NotificationHandler,
   NotificationInstance,
+  NotificationOptions,
   NotificationParams,
   NotificationProps,
   NotificationType,
@@ -21,6 +27,18 @@ each(notificationPosition, (position) => {
 });
 
 const { nextZIndex } = useZIndex();
+
+// Lazy Escape listener — only active when at least one notification exists.
+const escapeClose = createLazyEscapeClose(() => {
+  let latest: NotificationInstance | undefined;
+  instancesMap.forEach((instances) => {
+    if (instances.length) {
+      const last = instances[instances.length - 1];
+      if (!latest || last.props.zIndex > latest.props.zIndex) latest = last;
+    }
+  });
+  return latest;
+});
 
 export const notificationDefaults = {
   title: '',
@@ -52,6 +70,7 @@ const createNotification = (props: CreateNotificationProps): NotificationInstanc
 
     instances.splice(idx, 1);
     render(null, container);
+    escapeClose.unregister();
   };
 
   const _props: NotificationProps = {
@@ -77,6 +96,7 @@ const createNotification = (props: CreateNotificationProps): NotificationInstanc
     handler,
   };
   instances.push(instance);
+  escapeClose.register();
   return instance;
 };
 
@@ -85,13 +105,10 @@ export const notification: NotificationFn & Partial<Notification> = (options = {
 
   // Enforce max count per-position: destroy oldest instances exceeding the limit
   const rawOpts = !options || isVNode(options) || isString(options) ? {} : options;
-  const max = (rawOpts as { max?: number }).max;
+  const max = (rawOpts as NotificationOptions).max;
   const position = normalized.position || 'top-right';
   if (max && max > 0) {
-    const instances = getInstancesByPosition(position);
-    while (instances.length >= max) {
-      instances[0].props.onDestroy();
-    }
+    enforceMaxCount(getInstancesByPosition(position), max);
   }
 
   const instance = createNotification(normalized);
@@ -113,11 +130,7 @@ export function closeAll(type?: NotificationType) {
 
 /** Forcefully unmount all notification instances, bypassing CSS transitions. */
 export function destroyAll() {
-  instancesMap.forEach((instances) => {
-    while (instances.length) {
-      instances[0].props.onDestroy();
-    }
-  });
+  destroyAllInstancesMap(instancesMap);
 }
 
 export function getLastBottomOffset(this: NotificationProps) {
@@ -128,20 +141,6 @@ export function getLastBottomOffset(this: NotificationProps) {
 
   return get(instances, [idx - 1, 'vm', 'exposed', 'bottomOffset', 'value']);
 }
-
-// Global Escape listener — closes the most recent notification (highest zIndex across all positions).
-document.addEventListener('keydown', (e: KeyboardEvent) => {
-  if (e.code === 'Escape') {
-    let latest: NotificationInstance | null = null;
-    instancesMap.forEach((instances) => {
-      if (instances.length) {
-        const last = instances[instances.length - 1];
-        if (!latest || last.props.zIndex > latest.props.zIndex) latest = last;
-      }
-    });
-    latest?.handler.close();
-  }
-});
 
 each(notificationTypes, (type) => {
   set(notification, type, (opts: NotificationParams) => {
