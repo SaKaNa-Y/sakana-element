@@ -7,6 +7,10 @@
   --px-card-header-border-color: var(--px-border-color-light);
   --px-card-footer-border-color: var(--px-border-color-light);
   --px-card-padding: 16px;
+
+  /* Beveled inset for 3D raised-panel depth */
+  --px-card-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.35);
+  --px-card-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.08);
 }
 
 /* Base Card Styles - Pixel Game Aesthetic */
@@ -23,33 +27,34 @@
   overflow: hidden;
   transition: none;
 
-  /* Border layer — filled with border color, clipped to pixel shape */
+  /* Border layer — 3-step staircase clip (8px corners) */
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     background: var(--px-card-border-color);
     clip-path: polygon(
-      0 2px, 2px 2px, 2px 0,
-      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
-      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
-      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+      0 8px, 2px 8px, 2px 4px, 4px 4px, 4px 2px, 8px 2px, 8px 0,
+      calc(100% - 8px) 0, calc(100% - 8px) 2px, calc(100% - 4px) 2px, calc(100% - 4px) 4px, calc(100% - 2px) 4px, calc(100% - 2px) 8px, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 2px) calc(100% - 8px), calc(100% - 2px) calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) calc(100% - 2px), calc(100% - 8px) calc(100% - 2px), calc(100% - 8px) 100%,
+      8px 100%, 8px calc(100% - 2px), 4px calc(100% - 2px), 4px calc(100% - 4px), 2px calc(100% - 4px), 2px calc(100% - 8px), 0 calc(100% - 8px)
     );
     z-index: 0;
   }
 
-  /* Fill layer — inset by border width, filled with bg color */
+  /* Fill layer — 4px inset, 2-step staircase (double staircase effect), beveled */
   &::after {
     content: '';
     position: absolute;
-    inset: 2px;
+    inset: 4px;
     background: var(--px-card-bg-color);
     clip-path: polygon(
-      0 2px, 2px 2px, 2px 0,
-      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
-      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
-      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
     );
+    box-shadow: var(--px-card-inset-highlight), var(--px-card-inset-shadow);
     z-index: 0;
   }
 }
@@ -59,8 +64,25 @@
   position: relative;
   z-index: 1;
   padding: var(--px-card-padding);
-  border-bottom: 2px solid var(--px-card-header-border-color);
+  border-bottom: none;
   font-weight: 600;
+
+  /* Pixel-dashed divider at bottom */
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 4px;
+    right: 4px;
+    height: 2px;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--px-card-header-border-color) 0px,
+      var(--px-card-header-border-color) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+  }
 }
 
 .px-card__body {
@@ -74,7 +96,24 @@
   position: relative;
   z-index: 1;
   padding: var(--px-card-padding);
-  border-top: 2px solid var(--px-card-footer-border-color);
+  border-top: none;
+
+  /* Pixel-dashed divider at top */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 4px;
+    right: 4px;
+    height: 2px;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--px-card-footer-border-color) 0px,
+      var(--px-card-footer-border-color) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+  }
 }
 
 /* Shadow variants */
@@ -94,17 +133,18 @@
   filter: none;
 }
 
-/* Hoverable interaction */
+/* Hoverable interaction — pixel-style diagonal lift/press */
 .px-card.is-hoverable {
   cursor: pointer;
 
   &:hover {
-    transform: translateY(-4px);
-    filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-card-shadow-color));
+    transform: translate(-2px, -2px);
+    filter: drop-shadow(5px 5px 0px var(--px-card-shadow-color));
   }
 
   &:active {
-    transform: translateY(0);
+    transform: translate(1px, 1px);
+    filter: drop-shadow(1px 1px 0px var(--px-card-shadow-color));
   }
 }
 
@@ -133,12 +173,16 @@
     --px-card-text-color: var(--px-text-color-primary);
     --px-card-header-border-color: var(--px-color-$(val));
     --px-card-footer-border-color: var(--px-color-$(val));
+    --px-card-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.4);
+    --px-card-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.1);
   }
 
   .px-card--$(val).is-outline {
     --px-card-bg-color: transparent;
     --px-card-border-color: var(--px-color-$(val));
     --px-card-text-color: var(--px-color-$(val));
+    --px-card-inset-highlight: none;
+    --px-card-inset-shadow: none;
   }
 
   .px-card--$(val).is-dash {
@@ -152,32 +196,54 @@
     --px-card-border-color: transparent;
     --px-card-shadow-color: transparent;
     --px-card-text-color: var(--px-color-$(val));
+    --px-card-inset-highlight: none;
+    --px-card-inset-shadow: none;
   }
 }
 
-/* Outline variant */
+/* Outline variant — pixel-cornered wireframe, no fill, no bevel */
 .px-card.is-outline {
-  border: 2px solid var(--px-card-border-color);
   filter: none;
 
-  &::before { display: none; }
+  &::before {
+    background:
+      /* Top edge */
+      linear-gradient(var(--px-card-border-color), var(--px-card-border-color)) 0 0 / 100% 4px no-repeat,
+      /* Bottom edge */
+      linear-gradient(var(--px-card-border-color), var(--px-card-border-color)) 0 100% / 100% 4px no-repeat,
+      /* Left edge */
+      linear-gradient(var(--px-card-border-color), var(--px-card-border-color)) 0 0 / 4px 100% no-repeat,
+      /* Right edge */
+      linear-gradient(var(--px-card-border-color), var(--px-card-border-color)) 100% 0 / 4px 100% no-repeat;
+    /* clip-path inherited from base → pixel staircase corners preserved */
+  }
+
   &::after {
-    clip-path: none;
-    inset: 0;
-    background: var(--px-card-bg-color);
+    background: transparent;
+    box-shadow: none;
   }
 }
 
-/* Dash variant */
+/* Dash variant — pixel-art dashed border via repeating gradients */
 .px-card.is-dash {
-  border: 2px dashed var(--px-card-border-color);
   filter: none;
 
-  &::before { display: none; }
+  &::before {
+    background:
+      /* Top edge */
+      repeating-linear-gradient(to right, var(--px-card-border-color) 0 8px, transparent 8px 16px) 0 0 / 100% 4px no-repeat,
+      /* Bottom edge */
+      repeating-linear-gradient(to right, var(--px-card-border-color) 0 8px, transparent 8px 16px) 0 100% / 100% 4px no-repeat,
+      /* Left edge */
+      repeating-linear-gradient(to bottom, var(--px-card-border-color) 0 8px, transparent 8px 16px) 0 0 / 4px 100% no-repeat,
+      /* Right edge */
+      repeating-linear-gradient(to bottom, var(--px-card-border-color) 0 8px, transparent 8px 16px) 100% 0 / 4px 100% no-repeat;
+    /* Inherits clip-path from base → pixel corners on dashes */
+  }
+
   &::after {
-    clip-path: none;
-    inset: 0;
-    background: var(--px-card-bg-color);
+    background: transparent;
+    box-shadow: none;
   }
 }
 
