@@ -9,6 +9,14 @@
   --px-progress-shadow-color: var(--px-color-primary-dark);
   --px-progress-text-size: var(--px-font-size-small);
   --px-progress-text-gap: 10px;
+
+  /* Pixel-art chunked fill */
+  --px-progress-chunk-width: 8px;
+  --px-progress-chunk-gap: 2px;
+
+  /* Beveled 3D depth on fill bar */
+  --px-progress-fill-highlight: inset 1px 1px 0 0 rgba(255, 255, 255, 0.35);
+  --px-progress-fill-shadow: inset -1px -1px 0 0 rgba(0, 0, 0, 0.15);
 }
 
 /* Base Progress Styles */
@@ -57,12 +65,30 @@
     z-index: 0;
   }
 
-  /* Fill layer — inset by border width, filled with bg color */
+  /* Fill layer — recessed pixel container with subtle grid texture */
   &::after {
     content: '';
     position: absolute;
     inset: 2px;
-    background: var(--px-progress-track-bg-color);
+    background:
+      /* Simulated inset shadow — top edge darker */
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.10) 0, transparent 2px),
+      /* Simulated inset shadow — left edge darker */
+      linear-gradient(to right, rgba(0, 0, 0, 0.10) 0, transparent 2px),
+      /* Simulated inset shadow — bottom edge lighter */
+      linear-gradient(to top, rgba(255, 255, 255, 0.06) 0, transparent 2px),
+      /* Simulated inset shadow — right edge lighter */
+      linear-gradient(to left, rgba(255, 255, 255, 0.06) 0, transparent 2px),
+      /* Subtle vertical pixel-dot pattern */
+      repeating-linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.04) 0,
+        rgba(0, 0, 0, 0.04) 2px,
+        transparent 2px,
+        transparent 4px
+      ),
+      /* Base track color */
+      var(--px-progress-track-bg-color);
     clip-path: polygon(
       0 2px, 2px 2px, 2px 0,
       calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
@@ -73,17 +99,30 @@
   }
 }
 
-/* Fill bar — the colored inner bar */
+/* Fill bar — chunked pixel-block inner bar */
 .px-progress__fill {
   height: 100%;
   position: relative;
   z-index: 1;
-  background: var(--px-progress-fill-color);
   transition: none;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   box-sizing: border-box;
+
+  /* Segmented chunked fill using repeating gradient */
+  background: repeating-linear-gradient(
+    to right,
+    var(--px-progress-fill-color) 0,
+    var(--px-progress-fill-color) var(--px-progress-chunk-width),
+    transparent var(--px-progress-chunk-width),
+    transparent calc(var(--px-progress-chunk-width) + var(--px-progress-chunk-gap))
+  );
+
+  /* Beveled 3D depth — raised-panel highlight/shadow */
+  box-shadow:
+    var(--px-progress-fill-highlight),
+    var(--px-progress-fill-shadow);
 }
 
 /* Inner text */
@@ -94,7 +133,7 @@
   color: var(--px-color-white);
   white-space: nowrap;
   line-height: var(--px-progress-height);
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
 }
 
 /* External text */
@@ -144,24 +183,35 @@
 .px-progress--large {
   --px-progress-height: 20px;
   --px-progress-text-size: var(--px-font-size-base);
+  --px-progress-chunk-width: 10px;
 }
 
 .px-progress--small {
   --px-progress-height: 8px;
   --px-progress-text-size: var(--px-font-size-extra-small);
+  --px-progress-chunk-width: 6px;
 }
 
 /* ─── Striped variant ─── */
 .px-progress--striped .px-progress__fill {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent,
-    transparent 4px,
-    rgba(255, 255, 255, 0.25) 4px,
-    rgba(255, 255, 255, 0.25) 8px
-  );
-  background-size: 16px 16px;
-  background-color: var(--px-progress-fill-color);
+  background:
+    /* Diagonal stripe overlay (top layer) */
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 4px,
+      rgba(255, 255, 255, 0.25) 4px,
+      rgba(255, 255, 255, 0.25) 8px
+    ),
+    /* Chunked fill underneath (bottom layer) */
+    repeating-linear-gradient(
+      to right,
+      var(--px-progress-fill-color) 0,
+      var(--px-progress-fill-color) var(--px-progress-chunk-width),
+      transparent var(--px-progress-chunk-width),
+      transparent calc(var(--px-progress-chunk-width) + var(--px-progress-chunk-gap))
+    );
+  background-size: 16px 16px, auto;
 }
 
 /* Striped flow animation */
@@ -170,26 +220,36 @@
 }
 
 @keyframes px-progress-striped-flow {
-  0% { background-position: 0 0; }
-  100% { background-position: 16px 0; }
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 16px 0, 0 0; }
 }
 
 /* ─── Checkered variant ─── */
 .px-progress--checkered .px-progress__fill {
-  background-image:
+  background:
+    /* Checkerboard overlay (4 gradient layers) */
     linear-gradient(45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%),
     linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%),
     linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.2) 75%),
-    linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.2) 75%);
-  background-size: 4px 4px;
-  background-position: 0 0, 0 2px, 2px -2px, -2px 0px;
-  background-color: var(--px-progress-fill-color);
+    linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.2) 75%),
+    /* Chunked fill (bottom layer) */
+    repeating-linear-gradient(
+      to right,
+      var(--px-progress-fill-color) 0,
+      var(--px-progress-fill-color) var(--px-progress-chunk-width),
+      transparent var(--px-progress-chunk-width),
+      transparent calc(var(--px-progress-chunk-width) + var(--px-progress-chunk-gap))
+    );
+  background-size: 4px 4px, 4px 4px, 4px 4px, 4px 4px, auto;
+  background-position: 0 0, 0 2px, 2px -2px, -2px 0px, 0 0;
 }
 
 /* ─── Indeterminate animation ─── */
 .px-progress.is-indeterminate .px-progress__fill {
   width: 30% !important;
-  animation: px-progress-indeterminate 1.2s steps(8) infinite;
+  animation:
+    px-progress-indeterminate 1.2s steps(8) infinite,
+    px-progress-chunk-pulse 0.6s steps(2) infinite;
 }
 
 @keyframes px-progress-indeterminate {
@@ -198,7 +258,13 @@
   100% { margin-left: 0; }
 }
 
+@keyframes px-progress-chunk-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
 /* ─── Text inside ─── */
 .px-progress.is-text-inside {
   --px-progress-height: 20px;
+  --px-progress-chunk-width: 10px;
 }
