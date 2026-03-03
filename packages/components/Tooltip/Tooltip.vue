@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { createPopper, type Instance } from '@popperjs/core';
 import { useClickOutside, useId } from '@sakana-element/hooks';
+import { addUnit } from '@sakana-element/utils';
 import { bind, type DebouncedFunc, debounce } from 'lodash-es';
 import { computed, onUnmounted, type Ref, ref, watch, watchEffect } from 'vue';
 import type { TooltipEmits, TooltipInstance, TooltipProps } from './types';
@@ -18,6 +19,8 @@ const props = withDefaults(defineProps<TooltipProps>(), {
   transition: 'fade',
   showTimeout: 0,
   hideTimeout: 200,
+  effect: 'dark',
+  enterable: true,
 });
 
 const emits = defineEmits<TooltipEmits>(); //定义子组件向父组件发送什么类型的事件
@@ -55,6 +58,11 @@ const popperOptions = computed(() => ({
 const openDelay = computed(() => (props.trigger === 'hover' ? props.showTimeout : 0));
 const closeDelay = computed(() => (props.trigger === 'hover' ? props.hideTimeout : 0));
 
+const maxWidthStyle = computed(() => {
+  if (!props.maxWidth) return {};
+  return { maxWidth: addUnit(props.maxWidth) };
+});
+
 let openDebounce: DebouncedFunc<() => void> | void;
 let closeDebounce: DebouncedFunc<() => void> | void;
 
@@ -87,7 +95,9 @@ function attachEvents() {
   if (props.trigger === 'hover') {
     events.value.mouseenter = openFinal;
     outerEvents.value.mouseleave = closeFinal;
-    dropdownEvents.value.mouseenter = openFinal;
+    if (props.enterable) {
+      dropdownEvents.value.mouseenter = openFinal;
+    }
     return;
   }
   if (props.trigger === 'click') {
@@ -196,7 +206,12 @@ defineExpose<TooltipInstance>({
 </script>
 
 <template>
-  <div class="px-tooltip" ref="containerNode" v-on="outerEvents">
+  <div
+    class="px-tooltip"
+    :class="[`px-tooltip--${effect}`, type && `px-tooltip--${type}`]"
+    ref="containerNode"
+    v-on="outerEvents"
+  >
     <div
       class="px-tooltip__trigger"
       ref="_triggerNode"
@@ -215,12 +230,13 @@ defineExpose<TooltipInstance>({
         v-on="dropdownEvents"
         v-if="visible"
         :id="tooltipId"
+        :style="maxWidthStyle"
         role="tooltip"
       >
         <slot name="content">
           {{ content }}
         </slot>
-        <div id="arrow" data-popper-arrow></div>
+        <div v-if="showArrow" class="px-tooltip__arrow" data-popper-arrow></div>
       </div>
     </transition>
   </div>

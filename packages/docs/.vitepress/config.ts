@@ -86,6 +86,13 @@ const getDataItems = (lang: 'zh' | 'en') => [
   },
 ];
 
+const getLayoutItems = (lang: 'zh' | 'en') => [
+  {
+    text: lang === 'zh' ? 'Drawer 抽屉' : 'Drawer',
+    link: `/${lang}/components/drawer`,
+  },
+];
+
 const getNavigationItems = (lang: 'zh' | 'en') => [
   {
     text: lang === 'zh' ? 'Link 链接' : 'Link',
@@ -152,6 +159,11 @@ const getSidebar = (lang: 'zh' | 'en') => [
     text: lang === 'zh' ? '数据展示' : 'Data Display',
     collapsed: false,
     items: getDataItems(lang),
+  },
+  {
+    text: lang === 'zh' ? '布局组件' : 'Layout',
+    collapsed: false,
+    items: getLayoutItems(lang),
   },
   {
     text: lang === 'zh' ? '导航组件' : 'Navigation',

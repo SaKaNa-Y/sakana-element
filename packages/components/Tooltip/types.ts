@@ -1,6 +1,9 @@
 //@popperjs/core用于处理元素位置计算，Placement是定义出现位置，Options是Popper.js的配置选项
 import type { Options, Placement } from '@popperjs/core';
 
+export type TooltipEffect = 'dark' | 'light';
+export type TooltipType = 'primary' | 'success' | 'warning' | 'danger' | 'info';
+
 export interface TooltipProps {
   content?: string;
   trigger?: 'hover' | 'click' | 'contextmenu';
@@ -13,6 +16,11 @@ export interface TooltipProps {
   hideTimeout?: number;
   virtualRef?: HTMLElement | undefined;
   virtualTriggering?: boolean;
+  effect?: TooltipEffect;
+  type?: TooltipType;
+  enterable?: boolean;
+  maxWidth?: string | number;
+  showArrow?: boolean;
 }
 
 export interface TooltipEmits {

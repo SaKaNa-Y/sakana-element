@@ -11,6 +11,19 @@ export const tooltipApi: ApiSection[] = [
         desc: { zh: '显示的内容', en: 'Display content' },
       },
       {
+        name: 'effect',
+        category: 'style',
+        type: "'dark' | 'light'",
+        default: "'dark'",
+        desc: { zh: '主题风格', en: 'Theme effect' },
+      },
+      {
+        name: 'type',
+        category: 'color',
+        type: "'primary' | 'success' | 'warning' | 'danger' | 'info'",
+        desc: { zh: '主题颜色', en: 'Theme color' },
+      },
+      {
         name: 'placement',
         category: 'behavior',
         type: "'top' | 'top-start' | 'top-end' | 'bottom' | 'bottom-start' | 'bottom-end' | 'left' | 'left-start' | 'left-end' | 'right' | 'right-start' | 'right-end'",
@@ -39,6 +52,32 @@ export const tooltipApi: ApiSection[] = [
         desc: { zh: '手动控制模式', en: 'Manual control mode' },
       },
       {
+        name: 'enterable',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'true',
+        desc: {
+          zh: '鼠标是否可进入到 tooltip 中',
+          en: 'Whether the mouse can enter the tooltip',
+        },
+      },
+      {
+        name: 'maxWidth',
+        category: 'style',
+        type: 'string | number',
+        desc: {
+          zh: '最大宽度，超出后自动换行',
+          en: 'Max width; text wraps when exceeded',
+        },
+      },
+      {
+        name: 'showArrow',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: { zh: '是否显示箭头', en: 'Whether to show arrow' },
+      },
+      {
         name: 'showTimeout',
         category: 'behavior',
         type: 'number',
@@ -60,6 +99,25 @@ export const tooltipApi: ApiSection[] = [
         desc: { zh: '动画名称', en: 'Transition name' },
       },
       {
+        name: 'virtualTriggering',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'false',
+        desc: {
+          zh: '是否使用虚拟触发节点',
+          en: 'Whether to use a virtual trigger element',
+        },
+      },
+      {
+        name: 'virtualRef',
+        category: 'behavior',
+        type: 'HTMLElement',
+        desc: {
+          zh: '虚拟触发节点的引用',
+          en: 'Reference to the virtual trigger element',
+        },
+      },
+      {
         name: 'popperOptions',
         category: 'behavior',
         type: 'object',
@@ -75,6 +133,12 @@ export const tooltipApi: ApiSection[] = [
         category: 'event',
         type: '(visible: boolean) => void',
         desc: { zh: '可见性改变时触发', en: 'Triggered when visibility changes' },
+      },
+      {
+        name: 'click-outside',
+        category: 'event',
+        type: '() => void',
+        desc: { zh: '点击外部区域时触发', en: 'Triggered when clicking outside' },
       },
     ],
   },
@@ -103,6 +167,12 @@ export const tooltipApi: ApiSection[] = [
         category: 'expose',
         type: '() => void',
         desc: { zh: '隐藏 Tooltip', en: 'Hide Tooltip' },
+      },
+      {
+        name: 'toggle',
+        category: 'expose',
+        type: '() => void',
+        desc: { zh: '切换 Tooltip 显示/隐藏', en: 'Toggle Tooltip visibility' },
       },
     ],
   },

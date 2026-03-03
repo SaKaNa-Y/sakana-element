@@ -1,0 +1,222 @@
+/* Drawer Variables */
+.px-drawer {
+  position: relative;
+  display: block;
+}
+
+.px-drawer__content {
+  position: relative;
+  z-index: 0;
+}
+
+/* Overlay backdrop */
+.px-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* Sidebar panel — pixel-art style
+   Variables defined here (not on .px-drawer) because
+   <Teleport to="body"> moves this node out of .px-drawer
+   in the DOM, breaking CSS custom-property inheritance. */
+.px-drawer__sidebar {
+  --px-drawer-bg-color: var(--px-bg-color);
+  --px-drawer-border-color: var(--px-border-color);
+  --px-drawer-shadow-color: var(--px-shadow-color);
+  --px-drawer-text-color: var(--px-text-color-primary);
+  --px-drawer-header-border-color: var(--px-border-color-light);
+  --px-drawer-padding: 16px;
+  --px-drawer-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.35);
+  --px-drawer-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.08);
+
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  background: transparent;
+  color: var(--px-drawer-text-color);
+  font-family: var(--px-font-family);
+  font-size: var(--px-font-size-base);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  /* Pixel shadow */
+  filter: drop-shadow(
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-drawer-shadow-color)
+  );
+}
+
+/* Left placement — inner edge is the right side */
+.px-drawer__sidebar--left {
+  left: 0;
+
+  /* Border layer — staircase only on right (inner) edge */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-drawer-border-color);
+    clip-path: polygon(
+      0 0,
+      calc(100% - 8px) 0,
+      calc(100% - 8px) 2px,
+      calc(100% - 4px) 2px,
+      calc(100% - 4px) 4px,
+      calc(100% - 2px) 4px,
+      calc(100% - 2px) 8px,
+      100% 8px,
+      100% calc(100% - 8px),
+      calc(100% - 2px) calc(100% - 8px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 4px) calc(100% - 4px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 8px) calc(100% - 2px),
+      calc(100% - 8px) 100%,
+      0 100%
+    );
+    z-index: 0;
+  }
+
+  /* Fill layer — inset with bevel */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 0;
+    right: 4px;
+    bottom: 4px;
+    background: var(--px-drawer-bg-color);
+    clip-path: polygon(
+      0 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 4px) 100%,
+      0 100%
+    );
+    box-shadow: var(--px-drawer-inset-highlight), var(--px-drawer-inset-shadow);
+    z-index: 0;
+  }
+}
+
+/* Right placement — inner edge is the left side */
+.px-drawer__sidebar--right {
+  right: 0;
+
+  /* Border layer — staircase only on left (inner) edge */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-drawer-border-color);
+    clip-path: polygon(
+      0 8px,
+      2px 8px,
+      2px 4px,
+      4px 4px,
+      4px 2px,
+      8px 2px,
+      8px 0,
+      100% 0,
+      100% 100%,
+      8px 100%,
+      8px calc(100% - 2px),
+      4px calc(100% - 2px),
+      4px calc(100% - 4px),
+      2px calc(100% - 4px),
+      2px calc(100% - 8px),
+      0 calc(100% - 8px)
+    );
+    z-index: 0;
+  }
+
+  /* Fill layer — inset with bevel */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 0;
+    bottom: 4px;
+    background: var(--px-drawer-bg-color);
+    clip-path: polygon(
+      0 4px,
+      2px 4px,
+      2px 2px,
+      4px 2px,
+      4px 0,
+      100% 0,
+      100% 100%,
+      4px 100%,
+      4px calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px calc(100% - 4px),
+      0 calc(100% - 4px)
+    );
+    box-shadow: var(--px-drawer-inset-highlight), var(--px-drawer-inset-shadow);
+    z-index: 0;
+  }
+}
+
+/* Header with pixel-dashed divider */
+.px-drawer__header {
+  position: relative;
+  z-index: 1;
+  padding: var(--px-drawer-padding);
+  font-weight: 600;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 4px;
+    right: 4px;
+    height: 2px;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--px-drawer-header-border-color) 0px,
+      var(--px-drawer-header-border-color) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+  }
+}
+
+.px-drawer__body {
+  position: relative;
+  z-index: 1;
+  padding: var(--px-drawer-padding);
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* Slide transitions — pixel-feel with steps(12)
+   steps(4) was too coarse (75 px jumps for a 300 px drawer).
+   steps(12) gives ~25 px jumps — still visibly discrete but not jarring. */
+.px-drawer-slide-left-enter-active,
+.px-drawer-slide-left-leave-active {
+  transition: transform 0.25s steps(12);
+}
+
+.px-drawer-slide-left-enter-from,
+.px-drawer-slide-left-leave-to {
+  transform: translateX(-100%);
+}
+
+.px-drawer-slide-right-enter-active,
+.px-drawer-slide-right-leave-active {
+  transition: transform 0.25s steps(12);
+}
+
+.px-drawer-slide-right-enter-from,
+.px-drawer-slide-right-leave-to {
+  transform: translateX(100%);
+}

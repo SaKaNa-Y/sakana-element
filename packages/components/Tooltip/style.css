@@ -73,7 +73,7 @@
       z-index: -1;
     }
 
-    /* Fill layer — inset by border width, filled with bg color */
+    /* Fill layer — inset by border width, filled with bg color, beveled */
     &::after {
       content: "";
       position: absolute;
@@ -101,12 +101,75 @@
         2px calc(100% - 4px),
         0 calc(100% - 4px)
       );
+      box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.35), inset -2px -2px 0 rgba(0, 0, 0, 0.08);
       z-index: -1;
     }
 
-    /* Hide arrow for pixel style - pixel boxes don't need arrows */
-    #arrow {
-      display: none;
+    /* Pixel arrow — base */
+    .px-tooltip__arrow {
+      position: absolute;
+      background: var(--px-popover-border-color);
+      z-index: 1;
+    }
+
+    /* Top placement → arrow points down at bottom edge */
+    &[data-popper-placement^='top'] .px-tooltip__arrow {
+      bottom: -6px;
+      width: 10px;
+      height: 6px;
+      clip-path: polygon(
+        0 0, 10px 0,
+        10px 2px, 8px 2px,
+        8px 4px, 6px 4px,
+        6px 6px, 4px 6px,
+        4px 4px, 2px 4px,
+        2px 2px, 0 2px
+      );
+    }
+
+    /* Bottom placement → arrow points up at top edge */
+    &[data-popper-placement^='bottom'] .px-tooltip__arrow {
+      top: -6px;
+      width: 10px;
+      height: 6px;
+      clip-path: polygon(
+        4px 0, 6px 0,
+        6px 2px, 8px 2px,
+        8px 4px, 10px 4px,
+        10px 6px, 0 6px,
+        0 4px, 2px 4px,
+        2px 2px, 4px 2px
+      );
+    }
+
+    /* Left placement → arrow points right at right edge */
+    &[data-popper-placement^='left'] .px-tooltip__arrow {
+      right: -6px;
+      width: 6px;
+      height: 10px;
+      clip-path: polygon(
+        0 0, 2px 0,
+        2px 2px, 4px 2px,
+        4px 4px, 6px 4px,
+        6px 6px, 4px 6px,
+        4px 8px, 2px 8px,
+        2px 10px, 0 10px
+      );
+    }
+
+    /* Right placement → arrow points left at left edge */
+    &[data-popper-placement^='right'] .px-tooltip__arrow {
+      left: -6px;
+      width: 6px;
+      height: 10px;
+      clip-path: polygon(
+        6px 0, 6px 10px,
+        4px 10px, 4px 8px,
+        2px 8px, 2px 6px,
+        0 6px, 0 4px,
+        2px 4px, 2px 2px,
+        4px 2px, 4px 0
+      );
     }
   }
 }
@@ -118,5 +181,38 @@
     --px-popover-border-color: var(--px-text-color-primary);
     --px-popover-shadow-color: rgba(0, 0, 0, 0.4);
     color: var(--px-bg-color);
+
+    &::after {
+      box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.15), inset -2px -2px 0 rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+/* Light tooltip variant */
+.px-tooltip--light {
+  .px-tooltip__popper {
+    --px-popover-bg-color: var(--px-bg-color);
+    --px-popover-border-color: var(--px-border-color);
+    color: var(--px-text-color-primary);
+  }
+}
+
+/* Type variants — themed colors */
+@each $val in primary, success, info, warning, danger {
+  .px-tooltip--$(val) {
+    .px-tooltip__popper {
+      --px-popover-bg-color: var(--px-color-$(val));
+      --px-popover-border-color: var(--px-color-$(val)-dark);
+      --px-popover-shadow-color: var(--px-color-$(val)-dark);
+      color: #fff;
+    }
+  }
+
+  .px-tooltip--$(val).px-tooltip--light {
+    .px-tooltip__popper {
+      --px-popover-bg-color: var(--px-color-$(val)-light-9);
+      --px-popover-border-color: var(--px-color-$(val));
+      color: var(--px-color-$(val));
+    }
   }
 }

@@ -6,6 +6,7 @@ export * from './Button';
 export * from './Card';
 export * from './Collapse';
 export * from './ConfigProvider';
+export * from './Drawer';
 export * from './Dropdown';
 export * from './FileInput';
 export * from './Form';
