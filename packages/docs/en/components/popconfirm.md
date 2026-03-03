@@ -28,6 +28,30 @@ Customize button text and icon.
 demo-preview=../../demo/popconfirm/Custom.vue
 :::
 
+## Placement
+
+Use `placement` to set the pop-up position.
+
+::: preview
+demo-preview=../../demo/popconfirm/Placement.vue
+:::
+
+## Arrow
+
+Set `show-arrow` to display a pixel-art arrow pointing to the trigger.
+
+::: preview
+demo-preview=../../demo/popconfirm/Arrow.vue
+:::
+
+## Effect
+
+Use `effect` to switch between dark and light themes.
+
+::: preview
+demo-preview=../../demo/popconfirm/Effect.vue
+:::
+
 ## Hide Icon
 
 Set `hide-icon` to hide the icon.
@@ -36,3 +60,10 @@ Set `hide-icon` to hide the icon.
 demo-preview=../../demo/popconfirm/HideIcon.vue
 :::
 
+## Disabled
+
+Set `disabled` to prevent the popconfirm from showing.
+
+::: preview
+demo-preview=../../demo/popconfirm/Disabled.vue
+:::

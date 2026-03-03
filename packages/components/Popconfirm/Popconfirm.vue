@@ -42,41 +42,47 @@ function cancel(e: MouseEvent) {
 </script>
 
 <template>
-  <px-tooltip ref="tooltipRef" trigger="click" :hide-timeout="hideAfter">
+  <px-tooltip
+    ref="tooltipRef"
+    trigger="click"
+    :hide-timeout="hideAfter"
+    :disabled="disabled"
+    :placement="placement"
+    :show-arrow="showArrow"
+    :effect="effect"
+  >
     <template #content>
       <div class="px-popconfirm" role="alertdialog" :style="style">
         <div class="px-popconfirm__main">
           <px-icon v-if="!hideIcon && icon" :icon="icon" :color="iconColor" />
           {{ title }}
         </div>
-      </div>
 
-      <div class="px-popconfirm__action">
-        <px-button
-          class="px-popconfirm__cancel"
-          size="small"
-          :type="cancelButtonType"
-          @click="cancel"
-        >
-          {{ cancelButtonText || locale.t('popconfirm.cancelButtonText') }}
-        </px-button>
-        <px-button
-          class="px-popconfirm__confirm"
-          size="small"
-          :type="confirmButtonType"
-          @click="confirm"
-        >
-          {{ confirmButtonText || locale.t('popconfirm.confirmButtonText') }}
-        </px-button>
+        <div class="px-popconfirm__action">
+          <px-button
+            class="px-popconfirm__cancel"
+            size="small"
+            :type="cancelButtonType"
+            @click="cancel"
+          >
+            {{ cancelButtonText || locale.t('popconfirm.cancelButtonText') }}
+          </px-button>
+          <px-button
+            class="px-popconfirm__confirm"
+            size="small"
+            :type="confirmButtonType"
+            @click="confirm"
+          >
+            {{ confirmButtonText || locale.t('popconfirm.confirmButtonText') }}
+          </px-button>
+        </div>
       </div>
     </template>
 
-    <template v-if="$slots.default" #default>
-      <slot name="default"></slot>
-    </template>
-
-    <template v-if="$slots.reference" #default>
-      <slot name="reference"></slot>
+    <template #default>
+      <slot name="reference">
+        <slot></slot>
+      </slot>
     </template>
   </px-tooltip>
 </template>

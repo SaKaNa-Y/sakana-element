@@ -128,4 +128,53 @@ describe('Popconfirm.vue', () => {
     expect(wrapper.find('.px-popconfirm').exists()).toBeFalsy();
     expect(onCancel).toBeCalled();
   });
+
+  test('disabled prop should prevent popconfirm from showing', async () => {
+    const wrapper = mount(() => (
+      <div>
+        <PopConfirm title="Test Title" disabled={true} onConfirm={onConfirm}>
+          <button id="trigger">trigger</button>
+        </PopConfirm>
+      </div>
+    ));
+
+    const triggerNode = wrapper.find('#trigger');
+    expect(triggerNode.exists()).toBeTruthy();
+
+    triggerNode.trigger('click');
+    await vi.runAllTimers();
+
+    expect(wrapper.find('.px-popconfirm').exists()).toBeFalsy();
+  });
+
+  test('should accept placement prop', () => {
+    const wrapper = mount(PopConfirm, {
+      props: {
+        ...props,
+        placement: 'top',
+      },
+    });
+
+    expect(wrapper.props('placement')).toBe('top');
+  });
+
+  test('action buttons should be inside popconfirm wrapper', async () => {
+    const wrapper = mount(() => (
+      <div>
+        <PopConfirm title="Test Title" onConfirm={onConfirm}>
+          <button id="trigger">trigger</button>
+        </PopConfirm>
+      </div>
+    ));
+
+    const triggerNode = wrapper.find('#trigger');
+    triggerNode.trigger('click');
+    await vi.runAllTimers();
+
+    const popconfirmEl = wrapper.find('.px-popconfirm');
+    expect(popconfirmEl.exists()).toBeTruthy();
+
+    const actionEl = popconfirmEl.find('.px-popconfirm__action');
+    expect(actionEl.exists()).toBeTruthy();
+  });
 });

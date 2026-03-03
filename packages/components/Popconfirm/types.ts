@@ -1,6 +1,8 @@
 import type { ButtonType } from '../Button';
+import type { TooltipProps } from '../Tooltip/types';
 
-export interface PopconfirmProps {
+export interface PopconfirmProps
+  extends Pick<TooltipProps, 'disabled' | 'placement' | 'showArrow' | 'effect'> {
   title: string;
   confirmButtonText?: string;
   cancelButtonText?: string;
