@@ -47,10 +47,11 @@
     position: relative;
     transition: none;
 
-    /* Hover effect - Pixel highlight */
+    /* Hover effect - Pixel highlight with subtle bevel */
     &:hover {
       background-color: var(--px-dropdown-menuItem-hover-fill);
       color: var(--px-dropdown-menuItem-hover-color);
+      box-shadow: inset 1px 1px 0 0 rgba(255, 255, 255, 0.12), inset -1px -1px 0 0 rgba(0, 0, 0, 0.03);
 
       /* Pixel cursor indicator */
       &::before {
@@ -99,9 +100,16 @@
     }
   }
 
-  /* Divider - Pixel style dashed line */
+  /* Divider - Pixel-dashed gradient line */
   .divided-placeholder {
     margin: 6px 8px;
-    border-top: 2px dashed var(--px-dropdown-menuItem-divided-color);
+    height: 2px;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--px-dropdown-menuItem-divided-color) 0px,
+      var(--px-dropdown-menuItem-divided-color) 6px,
+      transparent 6px,
+      transparent 12px
+    );
   }
 }

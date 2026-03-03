@@ -29,6 +29,23 @@
     gap: 8px;
     margin-top: 12px;
     padding-top: 12px;
-    border-top: var(--px-border-width-thin) dashed var(--px-border-color-lighter);
+    position: relative;
+
+    /* Pixel-dashed divider */
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-image: repeating-linear-gradient(
+        to right,
+        var(--px-border-color-lighter) 0px,
+        var(--px-border-color-lighter) 6px,
+        transparent 6px,
+        transparent 12px
+      );
+    }
   }
 }

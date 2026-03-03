@@ -10,6 +10,11 @@
   --px-message-box-close-size: var(--px-font-size-base);
   --px-message-box-border-color: var(--px-border-color);
   --px-message-box-shadow-color: var(--px-shadow-color);
+  --px-message-box-divider-color: var(--px-border-color-light);
+
+  /* Beveled inset for 3D raised-panel depth */
+  --px-message-box-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.35);
+  --px-message-box-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.08);
 }
 
 /* Overlay */
@@ -41,7 +46,6 @@
   width: 100%;
   padding: var(--px-message-box-padding-primary);
   vertical-align: middle;
-  background-color: var(--px-bg-color);
   font-size: var(--px-message-box-font-size);
   font-family: var(--px-font-family);
   text-align: left;
@@ -50,14 +54,47 @@
   box-sizing: border-box;
   overflow-wrap: break-word;
 
-  /* Pixel-style border */
-  border: var(--px-border-width) solid var(--px-message-box-border-color);
+  /* Remove traditional styling — pseudo-elements handle visuals */
+  background: transparent;
+  border: none;
   border-radius: 0;
 
-  /* Pixel shadow */
-  box-shadow:
-    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-message-box-shadow-color),
-    var(--px-box-shadow-inset-light);
+  /* Pixel shadow via drop-shadow (respects clip-path shape) */
+  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-message-box-shadow-color));
+
+  /* No smooth transitions for pixel feel */
+  transition: none;
+
+  /* Border layer — 3-step staircase clip (8px corners) */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-message-box-border-color);
+    clip-path: polygon(
+      0 8px, 2px 8px, 2px 4px, 4px 4px, 4px 2px, 8px 2px, 8px 0,
+      calc(100% - 8px) 0, calc(100% - 8px) 2px, calc(100% - 4px) 2px, calc(100% - 4px) 4px, calc(100% - 2px) 4px, calc(100% - 2px) 8px, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 2px) calc(100% - 8px), calc(100% - 2px) calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) calc(100% - 2px), calc(100% - 8px) calc(100% - 2px), calc(100% - 8px) 100%,
+      8px 100%, 8px calc(100% - 2px), 4px calc(100% - 2px), 4px calc(100% - 4px), 2px calc(100% - 4px), 2px calc(100% - 8px), 0 calc(100% - 8px)
+    );
+    z-index: 0;
+  }
+
+  /* Fill layer — 4px inset, 2-step staircase chamfer, beveled */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: var(--px-bg-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    box-shadow: var(--px-message-box-inset-highlight), var(--px-message-box-inset-shadow);
+    z-index: 0;
+  }
 
   &:focus {
     outline: none !important;
@@ -89,8 +126,9 @@
   }
 
   .px-message-box__header {
+    position: relative;
+    z-index: 1;
     padding-bottom: var(--px-message-box-padding-primary);
-    border-bottom: var(--px-border-width-thin) dashed var(--px-message-box-border-color);
 
     .px-message-box__title {
       color: var(--px-message-box-title-color);
@@ -100,19 +138,34 @@
       line-height: var(--px-message-box-font-line-height);
     }
 
+    /* Pixel-dashed divider at bottom */
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-image: repeating-linear-gradient(
+        to right,
+        var(--px-message-box-divider-color) 0px,
+        var(--px-message-box-divider-color) 6px,
+        transparent 6px,
+        transparent 12px
+      );
+    }
+
     .px-message-box__header-btn {
       position: absolute;
-      top: 8px;
-      right: 8px;
-      padding: 4px;
-      width: 28px;
-      height: 28px;
-      border: var(--px-border-width-thin) solid var(--px-border-color);
+      top: 14px;
+      right: 14px;
+      padding: 0;
+      border: none;
       outline: none;
-      background: var(--px-fill-color-blank);
+      background: transparent;
       font-size: var(--px-message-box-close-size);
       cursor: pointer;
-      box-shadow: 2px 2px 0 0 var(--px-shadow-color);
+      z-index: 1;
       transition: none;
       display: flex;
       align-items: center;
@@ -123,19 +176,18 @@
         font-size: inherit;
       }
 
-      &:hover {
-        background: var(--px-fill-color-light);
-        transform: translate(-1px, -1px);
-        box-shadow: 3px 3px 0 0 var(--px-shadow-color);
+      .px-icon {
+        cursor: pointer;
+        transition: none;
 
-        i {
+        &:hover {
           color: var(--px-color-danger);
+          transform: translate(-1px, -1px);
         }
-      }
 
-      &:active {
-        transform: translate(1px, 1px);
-        box-shadow: 1px 1px 0 0 var(--px-shadow-color);
+        &:active {
+          transform: translate(1px, 1px);
+        }
       }
     }
 
@@ -145,6 +197,8 @@
   }
 
   .px-message-box__content {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -164,10 +218,14 @@
   }
 
   .px-message-box__input {
+    position: relative;
+    z-index: 1;
     padding-top: 12px;
   }
 
   .px-message-box__footer {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;

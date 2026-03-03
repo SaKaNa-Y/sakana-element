@@ -7,6 +7,7 @@
   --px-loading-font-size: var(--px-font-size-base);
   --px-loading-z-index: 20000;
   --px-loading-bg-color: rgba(255, 255, 255, 0.8);
+  --px-loading-dot-color: rgba(0, 0, 0, 0.02);
 }
 
 /* Base Loading Styles - Pixel Game Loading */
@@ -25,7 +26,15 @@
     height: var(--px-loading-mask-size);
     width: var(--px-loading-mask-size);
     z-index: var(--px-loading-z-index);
-    background: var(--px-loading-bg-color);
+    background:
+      repeating-linear-gradient(
+        to right,
+        var(--px-loading-dot-color) 0px,
+        var(--px-loading-dot-color) 2px,
+        transparent 2px,
+        transparent 4px
+      ),
+      var(--px-loading-bg-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -49,6 +58,7 @@
       font-family: var(--px-font-family);
       color: var(--px-text-color-primary);
       letter-spacing: 1px;
+      animation: px-loading-text-pulse 1.5s steps(2) infinite;
     }
 
     i {
@@ -69,6 +79,19 @@
   }
 }
 
+/* Pixel-style text pulse */
+@keyframes px-loading-text-pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 /* Parent element states */
 .px-loading-parent--relative {
   position: relative !important;
@@ -81,4 +104,5 @@
 /* Dark mode loading */
 .px-dark .px-loading {
   --px-loading-bg-color: rgba(30, 30, 46, 0.85);
+  --px-loading-dot-color: rgba(255, 255, 255, 0.02);
 }
