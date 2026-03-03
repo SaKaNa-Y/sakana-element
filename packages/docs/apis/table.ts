@@ -67,6 +67,27 @@ export const tableApi: ApiSection[] = [
         default: 'true',
         desc: { zh: '是否显示表头', en: 'Whether to show table header' },
       },
+      {
+        name: 'outline',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: { zh: '线框边框（无填充）', en: 'Wireframe border (no fill)' },
+      },
+      {
+        name: 'ghost',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: { zh: '无边框无阴影', en: 'No border, no shadow' },
+      },
+      {
+        name: 'hoverable',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'false',
+        desc: { zh: '悬停时抬起效果', en: 'Lift effect on hover' },
+      },
     ],
   },
   {

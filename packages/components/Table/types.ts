@@ -13,6 +13,9 @@ export interface TableProps {
   pinCols?: boolean;
   size?: TableSize;
   showHeader?: boolean;
+  outline?: boolean;
+  ghost?: boolean;
+  hoverable?: boolean;
 }
 
 export interface TableInstance {

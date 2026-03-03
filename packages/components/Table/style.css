@@ -9,6 +9,25 @@
   --px-table-zebra-color: var(--px-fill-color);
   --px-table-font-size: var(--px-font-size-base);
   --px-table-shadow-color: var(--px-shadow-color);
+
+  /* Pixel-art interior styling */
+  --px-table-divider-color: var(--px-border-color-light);
+  --px-table-header-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.35);
+  --px-table-header-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.08);
+  --px-table-footer-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.2);
+  --px-table-footer-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.05);
+  --px-table-hover-overlay: rgba(0, 0, 0, 0.04);
+  --px-table-body-dot-color: rgba(0, 0, 0, 0.03);
+
+  /* Body cell subtle bevel */
+  --px-table-cell-highlight: inset 1px 1px 0 0 rgba(255, 255, 255, 0.12);
+  --px-table-cell-shadow: inset -1px -1px 0 0 rgba(0, 0, 0, 0.03);
+
+  /* Reduced bevel for outline variant */
+  --px-table-reduced-highlight: inset 1px 1px 0 0 rgba(255, 255, 255, 0.15);
+  --px-table-reduced-shadow: inset -1px -1px 0 0 rgba(0, 0, 0, 0.04);
+  --px-table-reduced-footer-highlight: inset 1px 1px 0 0 rgba(255, 255, 255, 0.10);
+  --px-table-reduced-footer-shadow: inset -1px -1px 0 0 rgba(0, 0, 0, 0.03);
 }
 
 /* ─── Base Table Styles — Pixel Game Aesthetic ─── */
@@ -23,6 +42,7 @@
   background: transparent;
   border: none;
   box-sizing: border-box;
+  transition: none;
   overflow: hidden;
   filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-table-shadow-color));
 
@@ -81,21 +101,182 @@
     padding: var(--px-table-padding-y) var(--px-table-padding-x);
     text-align: left;
     vertical-align: middle;
-    border-bottom: var(--px-border-width) solid var(--px-table-border-color);
+    border-bottom: none;
+    position: relative;
   }
 
+  /* Header cells — beveled 3D raised panel with dot-grid texture */
   & th {
     font-weight: 600;
-    background-color: var(--px-table-header-bg-color);
     color: var(--px-text-color-primary);
+    background:
+      repeating-linear-gradient(
+        to right,
+        var(--px-table-body-dot-color) 0,
+        var(--px-table-body-dot-color) 2px,
+        transparent 2px,
+        transparent 4px
+      ),
+      var(--px-table-header-bg-color);
+    box-shadow:
+      var(--px-table-header-highlight),
+      var(--px-table-header-shadow);
   }
 
-  & thead th {
-    border-bottom: calc(var(--px-border-width) * 2) solid var(--px-table-border-color);
+  /* Pixel-dashed divider under thead */
+  & thead th::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(var(--px-border-width) * 2);
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--px-table-border-color) 0px,
+      var(--px-table-border-color) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+    pointer-events: none;
   }
 
-  & tbody tr:last-child td {
-    border-bottom: none;
+  /* Subtle pixel-dot grid + bevel on body cells */
+  & tbody td {
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--px-table-body-dot-color) 0,
+      var(--px-table-body-dot-color) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+    box-shadow:
+      var(--px-table-cell-highlight),
+      var(--px-table-cell-shadow);
+  }
+
+  /* Pixel-dashed row divider on body cells */
+  & tbody td::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--px-border-width);
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--px-table-divider-color) 0px,
+      var(--px-table-divider-color) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+    pointer-events: none;
+  }
+
+  /* Remove divider from last body row */
+  & tbody tr:last-child td::after {
+    display: none;
+  }
+
+  /* Footer cells — lighter beveled panel with dot-grid texture */
+  & tfoot th,
+  & tfoot td {
+    font-weight: 600;
+    background:
+      repeating-linear-gradient(
+        to right,
+        var(--px-table-body-dot-color) 0,
+        var(--px-table-body-dot-color) 2px,
+        transparent 2px,
+        transparent 4px
+      ),
+      var(--px-table-header-bg-color);
+    box-shadow:
+      var(--px-table-footer-highlight),
+      var(--px-table-footer-shadow);
+  }
+
+  /* Pixel-dashed divider at top of footer */
+  & tfoot tr:first-child th::before,
+  & tfoot tr:first-child td::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: calc(var(--px-border-width) * 2);
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--px-table-border-color) 0px,
+      var(--px-table-border-color) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+    pointer-events: none;
+  }
+}
+
+/* ─── Caption ─── */
+.px-table__inner table caption {
+  padding: var(--px-table-padding-y) var(--px-table-padding-x);
+  font-weight: 600;
+  text-align: center;
+  position: relative;
+  caption-side: top;
+
+  /* Pixel-dashed bottom divider (same pattern as thead divider) */
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(var(--px-border-width) * 2);
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--px-table-border-color) 0px,
+      var(--px-table-border-color) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+    pointer-events: none;
+  }
+}
+
+/* ─── Pixel-Art Scrollbar ─── */
+.px-table__inner {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--px-table-border-color) var(--px-fill-color-lighter);
+
+  /* Webkit (Chrome, Safari, Edge) */
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background:
+      repeating-linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.03) 0,
+        rgba(0, 0, 0, 0.03) 2px,
+        transparent 2px,
+        transparent 4px
+      ),
+      var(--px-fill-color-lighter);
+    box-shadow: inset 1px 1px 0 0 rgba(0, 0, 0, 0.06), inset -1px -1px 0 0 rgba(255, 255, 255, 0.3);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--px-table-border-color);
+    box-shadow:
+      inset 1px 1px 0 0 rgba(255, 255, 255, 0.3),
+      inset -1px -1px 0 0 rgba(0, 0, 0, 0.15);
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: var(--px-fill-color-lighter);
   }
 }
 
@@ -130,22 +311,106 @@
   --px-table-font-size: var(--px-font-size-extra-large);
 }
 
-/* ─── Zebra Stripes ─── */
-.px-table.is-zebra tbody tr:nth-child(even) {
-  background-color: var(--px-table-zebra-color);
+/* ─── Zebra Stripes — Checkerboard Texture ─── */
+.px-table.is-zebra tbody tr:nth-child(even) td {
+  background:
+    linear-gradient(45deg, var(--px-table-hover-overlay) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--px-table-hover-overlay) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--px-table-hover-overlay) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--px-table-hover-overlay) 75%),
+    var(--px-table-zebra-color);
+  background-size: 4px 4px, 4px 4px, 4px 4px, 4px 4px, auto;
+  background-position: 0 0, 0 2px, 2px -2px, -2px 0, 0 0;
 }
 
-/* ─── Hover Highlight ─── */
-.px-table.is-hover tbody tr:hover {
-  background-color: var(--px-table-row-hover-color);
+/* ─── Hover Highlight — Diagonal Stripe Overlay ─── */
+.px-table.is-hover tbody tr:hover td {
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 4px,
+      rgba(255, 255, 255, 0.18) 4px,
+      rgba(255, 255, 255, 0.18) 8px
+    ),
+    var(--px-table-row-hover-color);
 }
 
-/* ─── Full Borders ─── */
+/* ─── Full Borders — Pixel-Dashed Cell Outlines ─── */
 .px-table.is-border {
   & th,
   & td {
-    border: var(--px-border-width) solid var(--px-table-border-color);
+    border: none;
+    background-image:
+      /* Bottom edge — horizontal dashes */
+      repeating-linear-gradient(
+        to right,
+        var(--px-table-border-color) 0 6px,
+        transparent 6px 12px
+      ),
+      /* Right edge — vertical dashes */
+      repeating-linear-gradient(
+        to bottom,
+        var(--px-table-border-color) 0 6px,
+        transparent 6px 12px
+      );
+    background-size:
+      100% var(--px-border-width),
+      var(--px-border-width) 100%;
+    background-position: 0 100%, 100% 0;
+    background-repeat: no-repeat;
   }
+
+  /* Header cells: keep bevel, layer border dashes on top of header bg */
+  & thead th {
+    background:
+      /* Dashed border edges (bottom + right only) */
+      repeating-linear-gradient(to right, var(--px-table-border-color) 0 6px, transparent 6px 12px) 0 100% / 100% var(--px-border-width) no-repeat,
+      repeating-linear-gradient(to bottom, var(--px-table-border-color) 0 6px, transparent 6px 12px) 100% 0 / var(--px-border-width) 100% no-repeat,
+      /* Dot texture */
+      repeating-linear-gradient(to right, var(--px-table-body-dot-color) 0 2px, transparent 2px 4px),
+      /* Base header color */
+      var(--px-table-header-bg-color);
+  }
+
+  /* Footer cells: keep bevel, layer border dashes on top of footer bg */
+  & tfoot th,
+  & tfoot td {
+    background:
+      repeating-linear-gradient(to right, var(--px-table-border-color) 0 6px, transparent 6px 12px) 0 100% / 100% var(--px-border-width) no-repeat,
+      repeating-linear-gradient(to bottom, var(--px-table-border-color) 0 6px, transparent 6px 12px) 100% 0 / var(--px-border-width) 100% no-repeat,
+      repeating-linear-gradient(to right, var(--px-table-body-dot-color) 0 2px, transparent 2px 4px),
+      var(--px-table-header-bg-color);
+  }
+
+  /* Disable pseudo-element dividers — border grid replaces them */
+  & tbody td::after,
+  & thead th::after,
+  & tfoot tr:first-child th::before,
+  & tfoot tr:first-child td::before {
+    display: none;
+  }
+}
+
+/* is-border + zebra: layer dashed borders on top of checkerboard texture */
+.px-table.is-border.is-zebra tbody tr:nth-child(even) td {
+  background:
+    repeating-linear-gradient(to right, var(--px-table-border-color) 0 6px, transparent 6px 12px) 0 100% / 100% var(--px-border-width) no-repeat,
+    repeating-linear-gradient(to bottom, var(--px-table-border-color) 0 6px, transparent 6px 12px) 100% 0 / var(--px-border-width) 100% no-repeat,
+    linear-gradient(45deg, var(--px-table-hover-overlay) 25%, transparent 25%) 0 0 / 4px 4px,
+    linear-gradient(-45deg, var(--px-table-hover-overlay) 25%, transparent 25%) 0 2px / 4px 4px,
+    linear-gradient(45deg, transparent 75%, var(--px-table-hover-overlay) 75%) 2px -2px / 4px 4px,
+    linear-gradient(-45deg, transparent 75%, var(--px-table-hover-overlay) 75%) -2px 0 / 4px 4px,
+    var(--px-table-zebra-color);
+}
+
+/* is-border + hover: layer dashed borders on top of striped hover */
+.px-table.is-border.is-hover tbody tr:hover td {
+  background:
+    repeating-linear-gradient(to right, var(--px-table-border-color) 0 6px, transparent 6px 12px) 0 100% / 100% var(--px-border-width) no-repeat,
+    repeating-linear-gradient(to bottom, var(--px-table-border-color) 0 6px, transparent 6px 12px) 100% 0 / var(--px-border-width) 100% no-repeat,
+    repeating-linear-gradient(-45deg, transparent, transparent 4px, rgba(255, 255, 255, 0.18) 4px, rgba(255, 255, 255, 0.18) 8px),
+    var(--px-table-row-hover-color);
 }
 
 /* ─── Pin Rows (Sticky Header/Footer) ─── */
@@ -154,7 +419,6 @@
     position: sticky;
     top: 0;
     z-index: 2;
-    background-color: var(--px-table-header-bg-color);
   }
 
   & tfoot th,
@@ -162,7 +426,6 @@
     position: sticky;
     bottom: 0;
     z-index: 2;
-    background-color: var(--px-table-header-bg-color);
   }
 }
 
@@ -173,11 +436,28 @@
     position: sticky;
     left: 0;
     z-index: 1;
-    background-color: var(--px-table-bg-color);
+    /* Layer dot-grid texture on top of solid bg to prevent texture loss */
+    background:
+      repeating-linear-gradient(
+        to right,
+        var(--px-table-body-dot-color) 0,
+        var(--px-table-body-dot-color) 2px,
+        transparent 2px,
+        transparent 4px
+      ),
+      var(--px-table-bg-color);
   }
 
   & thead th:first-child {
-    background-color: var(--px-table-header-bg-color);
+    background:
+      repeating-linear-gradient(
+        to right,
+        var(--px-table-body-dot-color) 0,
+        var(--px-table-body-dot-color) 2px,
+        transparent 2px,
+        transparent 4px
+      ),
+      var(--px-table-header-bg-color);
   }
 }
 
@@ -204,5 +484,150 @@
     --px-table-border-color: var(--px-color-$(val));
     --px-table-shadow-color: var(--px-color-$(val)-dark);
     --px-table-header-bg-color: var(--px-color-$(val)-light-9);
+    --px-table-divider-color: var(--px-color-$(val)-light-5);
+    --px-table-header-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.4);
+    --px-table-header-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .px-table--$(val).is-outline {
+    --px-table-bg-color: transparent;
+    --px-table-border-color: var(--px-color-$(val));
+    --px-table-header-highlight: none;
+    --px-table-header-shadow: none;
+    --px-table-cell-highlight: none;
+    --px-table-cell-shadow: none;
+  }
+
+  .px-table--$(val).is-ghost {
+    --px-table-bg-color: transparent;
+    --px-table-border-color: transparent;
+    --px-table-shadow-color: transparent;
+    --px-table-header-highlight: none;
+    --px-table-header-shadow: none;
+    --px-table-cell-highlight: none;
+    --px-table-cell-shadow: none;
+  }
+}
+
+/* ─── Outline Variant — pixel-cornered wireframe, transparent fill ─── */
+.px-table.is-outline {
+  filter: none;
+
+  &::before {
+    background:
+      /* Top edge */
+      linear-gradient(var(--px-table-border-color), var(--px-table-border-color)) 0 0 / 100% 2px no-repeat,
+      /* Bottom edge */
+      linear-gradient(var(--px-table-border-color), var(--px-table-border-color)) 0 100% / 100% 2px no-repeat,
+      /* Left edge */
+      linear-gradient(var(--px-table-border-color), var(--px-table-border-color)) 0 0 / 2px 100% no-repeat,
+      /* Right edge */
+      linear-gradient(var(--px-table-border-color), var(--px-table-border-color)) 100% 0 / 2px 100% no-repeat;
+    /* clip-path inherited from base → pixel staircase corners preserved */
+  }
+
+  &::after {
+    background: transparent;
+    box-shadow: none;
+  }
+
+}
+
+/* ─── Shared Reduced Bevel for Outline ─── */
+.px-table.is-outline {
+  & .px-table__inner th {
+    box-shadow:
+      var(--px-table-reduced-highlight),
+      var(--px-table-reduced-shadow);
+  }
+
+  & .px-table__inner tfoot th,
+  & .px-table__inner tfoot td {
+    box-shadow:
+      var(--px-table-reduced-footer-highlight),
+      var(--px-table-reduced-footer-shadow);
+  }
+}
+
+/* ─── Ghost Variant — no border, no shadow, content-only ─── */
+.px-table.is-ghost {
+  filter: none;
+
+  &::before, &::after { display: none; }
+}
+
+/* ─── Hoverable — pixel-style diagonal lift/press on container ─── */
+.px-table.is-hoverable {
+  cursor: pointer;
+
+  &:hover {
+    transform: translate(-2px, -2px);
+    filter: drop-shadow(5px 5px 0px var(--px-table-shadow-color));
+  }
+
+  &:active {
+    transform: translate(1px, 1px);
+    filter: drop-shadow(1px 1px 0px var(--px-table-shadow-color));
+  }
+}
+
+/* ─── Dark Mode ─── */
+.px-dark .px-table,
+.dark .px-table {
+  /* Invert bevel: reduce highlight, increase shadow for dark backgrounds */
+  --px-table-header-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.10);
+  --px-table-header-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.25);
+  --px-table-footer-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.06);
+  --px-table-footer-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.18);
+  --px-table-cell-highlight: inset 1px 1px 0 0 rgba(255, 255, 255, 0.05);
+  --px-table-cell-shadow: inset -1px -1px 0 0 rgba(0, 0, 0, 0.10);
+
+  /* Light-on-dark textures */
+  --px-table-hover-overlay: rgba(255, 255, 255, 0.04);
+  --px-table-body-dot-color: rgba(255, 255, 255, 0.03);
+
+  /* Reduced bevel (outline) — adjusted for dark backgrounds */
+  --px-table-reduced-highlight: inset 1px 1px 0 0 rgba(255, 255, 255, 0.08);
+  --px-table-reduced-shadow: inset -1px -1px 0 0 rgba(0, 0, 0, 0.12);
+  --px-table-reduced-footer-highlight: inset 1px 1px 0 0 rgba(255, 255, 255, 0.05);
+  --px-table-reduced-footer-shadow: inset -1px -1px 0 0 rgba(0, 0, 0, 0.10);
+}
+
+/* Dark mode scrollbar */
+.px-dark .px-table .px-table__inner,
+.dark .px-table .px-table__inner {
+  scrollbar-color: var(--px-border-color-lighter) var(--px-fill-color-dark);
+
+  &::-webkit-scrollbar-track {
+    background:
+      repeating-linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.03) 0,
+        rgba(255, 255, 255, 0.03) 2px,
+        transparent 2px,
+        transparent 4px
+      ),
+      var(--px-fill-color-dark);
+    box-shadow: inset 1px 1px 0 0 rgba(0, 0, 0, 0.15), inset -1px -1px 0 0 rgba(255, 255, 255, 0.05);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--px-border-color-lighter);
+    box-shadow:
+      inset 1px 1px 0 0 rgba(255, 255, 255, 0.12),
+      inset -1px -1px 0 0 rgba(0, 0, 0, 0.25);
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: var(--px-fill-color-dark);
+  }
+}
+
+/* Dark mode color type bevel overrides */
+@each $val in primary, success, info, warning, danger {
+  .px-dark .px-table--$(val),
+  .dark .px-table--$(val) {
+    --px-table-header-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.12);
+    --px-table-header-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.20);
   }
 }

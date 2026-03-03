@@ -1,6 +1,6 @@
 ---
 title: Table | Sakana Element
-description: Pixel-style table wrapper component with zebra stripes, hover highlight, borders, sticky rows/columns, and multiple sizes for Vue 3.
+description: Pixel-style table wrapper component with zebra stripes, hover highlight, borders, outline/ghost variants, hoverable interaction, sticky rows/columns, and multiple sizes for Vue 3.
 ---
 
 <script setup>
@@ -74,6 +74,30 @@ Use `pin-cols` with a fixed `max-width` to pin the first column while scrolling 
 
 ::: preview
 demo-preview=../../demo/table/PinCols.vue
+:::
+
+## Outline
+
+Use `outline` to render a wireframe border with no fill. Combines with `type` for colored outlines.
+
+::: preview
+demo-preview=../../demo/table/Outline.vue
+:::
+
+## Ghost
+
+Use `ghost` to remove the border and shadow entirely, keeping only the internal table styling.
+
+::: preview
+demo-preview=../../demo/table/Ghost.vue
+:::
+
+## Hoverable
+
+Use `hoverable` to add a pixel-style lift effect on hover and press-down on click.
+
+::: preview
+demo-preview=../../demo/table/Hoverable.vue
 :::
 
 ## Combined Features

@@ -187,4 +187,82 @@ describe('Table', () => {
     expect(PxTable.install).toBeDefined();
     expect(typeof PxTable.install).toBe('function');
   });
+
+  // ─── Style Variants ───
+  test('applies is-outline class when outline is true', () => {
+    const wrapper = mount(Table, {
+      props: { outline: true },
+      slots: { default: basicTable },
+    });
+    expect(wrapper.classes()).toContain('is-outline');
+  });
+
+  test('applies is-ghost class when ghost is true', () => {
+    const wrapper = mount(Table, {
+      props: { ghost: true },
+      slots: { default: basicTable },
+    });
+    expect(wrapper.classes()).toContain('is-ghost');
+  });
+
+  test('applies is-hoverable class when hoverable is true', () => {
+    const wrapper = mount(Table, {
+      props: { hoverable: true },
+      slots: { default: basicTable },
+    });
+    expect(wrapper.classes()).toContain('is-hoverable');
+  });
+
+  test('style variant classes default to false', () => {
+    const wrapper = mount(Table, { slots: { default: basicTable } });
+    const classes = wrapper.classes();
+    expect(classes).not.toContain('is-outline');
+    expect(classes).not.toContain('is-ghost');
+    expect(classes).not.toContain('is-hoverable');
+  });
+
+  test('combines type with outline', () => {
+    const wrapper = mount(Table, {
+      props: { type: 'primary', outline: true },
+      slots: { default: basicTable },
+    });
+    expect(wrapper.classes()).toContain('px-table--primary');
+    expect(wrapper.classes()).toContain('is-outline');
+  });
+
+  test('combines type with ghost', () => {
+    const wrapper = mount(Table, {
+      props: { type: 'danger', ghost: true },
+      slots: { default: basicTable },
+    });
+    expect(wrapper.classes()).toContain('px-table--danger');
+    expect(wrapper.classes()).toContain('is-ghost');
+  });
+
+  test('all features combined including new variants', () => {
+    const wrapper = mount(Table, {
+      props: {
+        zebra: true,
+        hover: true,
+        border: true,
+        pinRows: true,
+        pinCols: true,
+        size: 'lg',
+        type: 'primary',
+        outline: true,
+        hoverable: true,
+      },
+      slots: { default: basicTable },
+    });
+    const classes = wrapper.classes();
+    expect(classes).toContain('px-table--lg');
+    expect(classes).toContain('px-table--primary');
+    expect(classes).toContain('is-zebra');
+    expect(classes).toContain('is-hover');
+    expect(classes).toContain('is-border');
+    expect(classes).toContain('is-pin-rows');
+    expect(classes).toContain('is-pin-cols');
+    expect(classes).toContain('is-outline');
+    expect(classes).toContain('is-hoverable');
+  });
 });

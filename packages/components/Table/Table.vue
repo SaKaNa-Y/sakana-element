@@ -21,6 +21,9 @@ const tableClass = computed(() => ({
   'is-pin-rows': props.pinRows,
   'is-pin-cols': props.pinCols,
   'is-hide-header': !props.showHeader,
+  'is-outline': props.outline,
+  'is-ghost': props.ghost,
+  'is-hoverable': props.hoverable,
 }));
 </script>
 

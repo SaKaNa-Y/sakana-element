@@ -1,6 +1,6 @@
 ---
 title: Table 表格 | Sakana Element 像素组件库
-description: Sakana Element 像素风格表格组件，支持斑马纹、悬停高亮、全边框、固定行列和多种尺寸。
+description: Sakana Element 像素风格表格组件，支持斑马纹、悬停高亮、全边框、线框/幽灵变体、悬停抬起、固定行列和多种尺寸。
 ---
 
 <script setup>
@@ -74,6 +74,30 @@ demo-preview=../../demo/table/PinRows.vue
 
 ::: preview
 demo-preview=../../demo/table/PinCols.vue
+:::
+
+## 线框
+
+使用 `outline` 渲染无填充的线框边框。可与 `type` 组合使用彩色线框。
+
+::: preview
+demo-preview=../../demo/table/Outline.vue
+:::
+
+## 幽灵模式
+
+使用 `ghost` 移除边框和阴影，仅保留表格内部样式。
+
+::: preview
+demo-preview=../../demo/table/Ghost.vue
+:::
+
+## 悬停抬起
+
+使用 `hoverable` 添加像素风格的悬停抬起和点击下压效果。
+
+::: preview
+demo-preview=../../demo/table/Hoverable.vue
 :::
 
 ## 组合使用
