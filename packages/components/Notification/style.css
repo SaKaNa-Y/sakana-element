@@ -3,6 +3,7 @@
   --px-notification-width: 330px;
   --px-notification-padding: 14px 20px;
   --px-notification-border-color: var(--px-border-color);
+  --px-notification-bg-color: var(--px-bg-color-overlay);
   --px-notification-icon-size: 24px;
   --px-notification-close-font-size: var(--px-font-size-base);
   --px-notification-content-font-size: var(--px-font-size-base);
@@ -12,32 +13,65 @@
   --px-notification-close-color: var(--px-text-color-secondary);
   --px-notification-close-hover-color: var(--px-text-color-primary);
   --px-notification-shadow-color: var(--px-shadow-color);
+  --px-notification-divider-color: var(--px-border-color-light);
+
+  /* Beveled inset for 3D raised-panel depth */
+  --px-notification-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.35);
+  --px-notification-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.08);
 }
 
-/* Base Notification Styles - Pixel Game Style */
+/* Base Notification Styles - Pixel Game Aesthetic */
 .px-notification {
   display: flex;
   width: var(--px-notification-width);
   padding: var(--px-notification-padding);
   box-sizing: border-box;
   position: fixed;
-  background-color: var(--px-bg-color-overlay);
   overflow-wrap: anywhere;
   overflow: hidden;
   z-index: 9999;
   font-family: var(--px-font-family);
 
-  /* Pixel-style border */
-  border: var(--px-border-width) solid var(--px-notification-border-color);
-  border-radius: 0;
+  /* Remove traditional styling — pseudo-elements handle visuals */
+  background: transparent;
+  border: none;
 
-  /* Pixel shadow */
-  box-shadow:
-    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0 0 var(--px-notification-shadow-color),
-    var(--px-box-shadow-inset-light);
+  /* Pixel shadow via drop-shadow (respects clip-path shape) */
+  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-notification-shadow-color));
 
-  /* No smooth transitions */
+  /* No smooth transitions for pixel feel */
   transition: none;
+
+  /* Border layer — 3-step staircase clip (8px corners) */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-notification-border-color);
+    clip-path: polygon(
+      0 8px, 2px 8px, 2px 4px, 4px 4px, 4px 2px, 8px 2px, 8px 0,
+      calc(100% - 8px) 0, calc(100% - 8px) 2px, calc(100% - 4px) 2px, calc(100% - 4px) 4px, calc(100% - 2px) 4px, calc(100% - 2px) 8px, 100% 8px,
+      100% calc(100% - 8px), calc(100% - 2px) calc(100% - 8px), calc(100% - 2px) calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) calc(100% - 2px), calc(100% - 8px) calc(100% - 2px), calc(100% - 8px) 100%,
+      8px 100%, 8px calc(100% - 2px), 4px calc(100% - 2px), 4px calc(100% - 4px), 2px calc(100% - 4px), 2px calc(100% - 8px), 0 calc(100% - 8px)
+    );
+    z-index: 0;
+  }
+
+  /* Fill layer — 4px inset, 2-step staircase chamfer, beveled */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: var(--px-notification-bg-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    box-shadow: var(--px-notification-inset-highlight), var(--px-notification-inset-shadow);
+    z-index: 0;
+  }
 
   &.right {
     right: 16px;
@@ -48,11 +82,15 @@
   }
 
   .px-notification__text {
+    position: relative;
+    z-index: 1;
     margin: 0 10px;
     flex: 1;
   }
 
   .px-notification__icon {
+    position: relative;
+    z-index: 1;
     height: var(--px-notification-icon-size);
     width: var(--px-notification-icon-size);
     font-size: var(--px-notification-icon-size);
@@ -61,15 +99,37 @@
   }
 
   .px-notification__title {
+    position: relative;
+    z-index: 1;
     font-weight: 500;
     font-size: var(--px-notification-title-font-size);
     font-family: var(--px-font-family);
     line-height: var(--px-notification-icon-size);
     color: var(--px-notification-title-color);
     margin: 0;
+    padding-bottom: 8px;
+
+    /* Pixel-dashed divider at bottom */
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-image: repeating-linear-gradient(
+        to right,
+        var(--px-notification-divider-color) 0px,
+        var(--px-notification-divider-color) 6px,
+        transparent 6px,
+        transparent 12px
+      );
+    }
   }
 
   .px-notification__content {
+    position: relative;
+    z-index: 1;
     font-size: var(--px-notification-content-font-size);
     font-family: var(--px-font-family);
     line-height: 1.5;
@@ -85,9 +145,21 @@
     cursor: pointer;
     color: var(--px-notification-close-color);
     font-size: var(--px-notification-close-font-size);
+    z-index: 1;
+    transition: none;
 
-    &:hover {
-      color: var(--px-notification-close-hover-color);
+    .px-icon {
+      cursor: pointer;
+      transition: none;
+
+      &:hover {
+        color: var(--px-notification-close-hover-color);
+        transform: translate(-1px, -1px);
+      }
+
+      &:active {
+        transform: translate(1px, 1px);
+      }
     }
   }
 }
@@ -100,56 +172,63 @@
   --px-color-error-light-9: var(--px-color-danger-light-9);
 }
 
-/* Type variants with colored shadows */
+/* Type variants with colored borders and shadows */
 @each $val in info, success, warning, danger, error {
   .px-notification--$(val) {
     --px-notification-icon-color: var(--px-color-$(val));
     --px-notification-border-color: var(--px-color-$(val));
     --px-notification-shadow-color: var(--px-color-$(val)-dark);
+    --px-notification-divider-color: var(--px-color-$(val)-light-5, var(--px-color-$(val)));
   }
 }
 
 /* ─── Plain variant ─── */
 .px-notification.is-plain {
   --px-notification-shadow-color: var(--px-border-color-light);
-  background-color: var(--px-fill-color-blank);
+  --px-notification-bg-color: var(--px-fill-color-blank);
 }
 
 @each $val in info, success, warning, danger, error {
   .px-notification--$(val).is-plain {
-    background-color: var(--px-color-$(val)-light-9);
+    --px-notification-bg-color: var(--px-color-$(val)-light-9);
     --px-notification-border-color: var(--px-color-$(val)-light-5, var(--px-color-$(val)));
     --px-notification-icon-color: var(--px-color-$(val));
     --px-notification-title-color: var(--px-color-$(val)-dark);
     --px-notification-content-color: var(--px-color-$(val));
     --px-notification-shadow-color: var(--px-color-$(val)-light-5, var(--px-color-$(val)));
+    --px-notification-divider-color: var(--px-color-$(val)-light-5, var(--px-color-$(val)));
   }
 }
 
 /* ─── Ghost variant ─── */
 .px-notification.is-ghost {
-  background-color: var(--px-fill-color-blank);
+  --px-notification-bg-color: var(--px-fill-color-blank);
   --px-notification-shadow-color: transparent;
+  filter: none;
+
+  &::before, &::after { display: none; }
 }
 
 @each $val in info, success, warning, danger, error {
   .px-notification--$(val).is-ghost {
-    background-color: var(--px-fill-color-blank);
+    --px-notification-bg-color: var(--px-fill-color-blank);
     --px-notification-border-color: var(--px-color-$(val));
     --px-notification-icon-color: var(--px-color-$(val));
     --px-notification-title-color: var(--px-color-$(val)-dark);
     --px-notification-content-color: var(--px-color-$(val));
     --px-notification-shadow-color: transparent;
+    filter: none;
   }
 }
 
 /* ─── Timer bar ─── */
 .px-notification__timer {
   position: absolute;
-  bottom: 2px;
-  left: 4px;
-  right: 4px;
+  bottom: 4px;
+  left: 8px;
+  right: 8px;
   height: 2px;
+  z-index: 1;
   background: var(--px-notification-icon-color, var(--px-text-color-secondary));
   opacity: 0.5;
   animation: px-notification-timer linear forwards;
