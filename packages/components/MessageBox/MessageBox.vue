@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { useId, useLocale, useZIndex } from '@sakana-element/hooks';
-import { typeIconMap } from '@sakana-element/utils';
+import {
+  useDraggable,
+  useEventListener,
+  useFocusTrap,
+  useId,
+  useLocale,
+  useZIndex,
+} from '@sakana-element/hooks';
+import { RenderVnode, typeIconMap } from '@sakana-element/utils';
 import { isFunction, isNil } from 'lodash-es';
-import { computed, nextTick, type Ref, reactive, ref, watch } from 'vue';
+import { computed, nextTick, reactive, ref, watch } from 'vue';
 import PxButton from '../Button/Button.vue';
 import PxIcon from '../Icon/Icon.vue';
 import PxInput from '../Input/Input.vue';
@@ -24,14 +31,20 @@ const props = withDefaults(defineProps<MessageBoxProps>(), {
   boxType: '',
   inputValue: '',
   showConfirmButton: true,
+  closeOnPressEscape: true,
+  closeOnHashChange: true,
+  distinguishCancelAndClose: true,
+  draggable: false,
 });
 
 const locale = useLocale();
 const { doAction } = props;
 const { nextZIndex } = useZIndex();
 
+const rootRef = ref<HTMLElement>();
 const headerRef = ref<HTMLElement>();
 const inputRef = ref<InputInstance>();
+const confirmBtnRef = ref<InstanceType<typeof PxButton>>();
 const inputId = useId();
 const msgboxTitleId = `msgbox-title-${useId().value}`;
 
@@ -41,30 +54,87 @@ const state = reactive({
   zIndex: nextZIndex(),
 });
 
+const isVisible = computed(() => props.visible?.value ?? false);
 const hasMessage = computed(() => !!state.message);
 const iconComponent = computed(() => state.icon ?? typeIconMap.get(state.type ?? ''));
+
+// Computed style merging customStyle + width
+const boxStyle = computed(() => ({
+  ...state.customStyle,
+  ...(state.width
+    ? {
+        '--px-message-box-width':
+          typeof state.width === 'number' ? `${state.width}px` : state.width,
+      }
+    : {}),
+}));
+
+// Input validation state
+const validationError = ref('');
+
+function validate(): boolean {
+  if (!state.inputSchema) return true;
+  const result = state.inputSchema.safeParse(state.inputValue ?? '');
+  if (!result.success) {
+    validationError.value =
+      state.inputErrorMessage ??
+      result.error.issues[0]?.message ??
+      locale.value.t('messagebox.error');
+    return false;
+  }
+  validationError.value = '';
+  return true;
+}
+
+// Focus trap
+const { activate: activateFocusTrap, deactivate: deactivateFocusTrap } = useFocusTrap(rootRef);
+
+// Draggable
+const { reset: resetDrag } = useDraggable(
+  computed(() => (state.draggable ? rootRef.value : undefined)),
+  computed(() => (state.draggable ? headerRef.value : undefined)),
+  { constrainToViewport: true },
+);
 
 watch(
   //监听深层响应式数据
   () => props.visible?.value,
   (val) => {
-    if (val) state.zIndex = nextZIndex();
-    if (props.boxType !== 'prompt') return;
-
-    if (!val) return;
-
-    //nextTick 是 Vue 的异步更新机制，它会在下一个 DOM 更新周期中执行回调函数。
-    // 在 Vue 的虚拟 DOM 更新机制中，DOM 的更新是异步的，
-    // 所以当我们需要获取到最新的 DOM 元素时，需要使用 nextTick 来等待 DOM 更新完成。
-    nextTick(() => {
-      inputRef.value?.focus();
-    });
+    if (val) {
+      state.zIndex = nextZIndex();
+      resetDrag();
+      nextTick(() => {
+        if (props.boxType === 'prompt') {
+          inputRef.value?.focus();
+        } else {
+          confirmBtnRef.value?.$el?.focus();
+        }
+        activateFocusTrap();
+      });
+    } else {
+      deactivateFocusTrap();
+      validationError.value = '';
+    }
   },
 );
 
+// ESC key handler
+useEventListener(document, 'keydown', (e: Event) => {
+  if (state.closeOnPressEscape && isVisible.value && (e as KeyboardEvent).key === 'Escape') {
+    handleClose();
+  }
+});
+
+// Hash change handler
+useEventListener(window, 'hashchange', () => {
+  if (state.closeOnHashChange && isVisible.value) {
+    handleClose();
+  }
+});
+
 // 点击遮罩层
 function handleWrapperClick() {
-  props.closeOnClickModal && handleAction('close'); //前面是true则执行handleAction('close')
+  props.closeOnClickModal && handleClose();
 }
 
 // 输入框回车
@@ -76,20 +146,55 @@ function handleInputEnter(e: KeyboardEvent) {
 
 // 点击按钮
 function handleAction(action: MessageBoxAction) {
-  // 判断beforeClose是否是函数如果是则执行beforeClose(action, state, () => doAction(action, state.inputValue))
-  isFunction(props.beforeClose)
-    ? props.beforeClose(action, state, () => doAction(action, state.inputValue)) //beforeClose是函数则执行beforeClose(action, state, () => doAction(action, state.inputValue))
-    : doAction(action, state.inputValue);
+  // Validate input in prompt mode before confirming
+  if (action === 'confirm' && state.showInput && !validate()) return;
+
+  if (isFunction(props.beforeClose)) {
+    // Only show loading on confirm/cancel buttons, not on 'close' (ESC / X / overlay)
+    const actionLoadingKey =
+      action === 'confirm'
+        ? 'confirmButtonLoading'
+        : action === 'cancel'
+          ? 'cancelButtonLoading'
+          : undefined;
+
+    if (actionLoadingKey) state[actionLoadingKey] = true;
+
+    let result: void | Promise<void>;
+    try {
+      result = props.beforeClose(action, state, () => {
+        if (actionLoadingKey) state[actionLoadingKey] = false;
+        doAction(action, state.inputValue);
+      });
+    } catch {
+      if (actionLoadingKey) state[actionLoadingKey] = false;
+      return;
+    }
+
+    // If beforeClose returns a Promise, auto-manage loading on rejection
+    if (result instanceof Promise) {
+      result.catch(() => {
+        if (actionLoadingKey) state[actionLoadingKey] = false;
+      });
+    }
+  } else {
+    doAction(action, state.inputValue);
+  }
 }
 
 function handleClose() {
-  handleAction('close');
+  handleAction(state.distinguishCancelAndClose === false ? 'cancel' : 'close');
 }
 </script>
 
 <template>
   <transition name="fade-in-linear" @after-leave="destroy">
-    <px-overlay v-show="(visible as Ref).value" :z-index="state.zIndex" mask>
+    <px-overlay
+      v-show="isVisible"
+      :z-index="state.zIndex"
+      :overlay-class="state.overlayClass"
+      mask
+    >
       <div
         role="dialog"
         aria-modal="true"
@@ -103,15 +208,18 @@ function handleClose() {
             'px-message-box',
             {
               'is-center': state.center,
+              'is-draggable': state.draggable,
             },
+            state.type ? `px-message-box--${state.type}` : '',
+            state.customClass,
           ]"
+          :style="boxStyle"
           @click.stop
         >
           <div
             v-if="!isNil(state.title)"
             ref="headerRef"
             class="px-message-box__header"
-            :class="{ 'show-close': state.showClose }"
           >
             <div class="px-message-box__title" :id="msgboxTitleId">
               <px-icon
@@ -158,28 +266,37 @@ function handleClose() {
               :type="state.inputType"
               @keyup.enter="handleInputEnter"
             />
+            <div v-if="validationError" class="px-message-box__error">
+              {{ validationError }}
+            </div>
           </div>
           <div class="px-message-box__footer">
-            <px-button
-              v-if="state.showCancelButton"
-              class="px-message-box__footer-btn px-message-box__cancel-btn"
-              :type="state.cancelButtonType"
-              :round="state.roundButton"
-              :loading="state.cancelButtonLoading"
-              @click="handleAction('cancel')"
-              @keydown.prevent.enter="handleAction('cancel')"
-              >{{ state.cancelButtonText || locale.t('messagebox.cancel') }}</px-button
-            >
-            <px-button
-              v-show="state.showConfirmButton"
-              class="px-message-box__footer-btn px-message-box__confirm-btn"
-              :type="state.confirmButtonType ?? 'primary'"
-              :round="state.roundButton"
-              :loading="state.confirmButtonLoading"
-              @click="handleAction('confirm')"
-              @keydown.prevent.enter="handleAction('confirm')"
-              >{{ state.confirmButtonText || locale.t('messagebox.confirm') }}</px-button
-            >
+            <template v-if="state.footer">
+              <render-vnode :vNode="state.footer" />
+            </template>
+            <template v-else>
+              <px-button
+                v-if="state.showCancelButton"
+                class="px-message-box__footer-btn px-message-box__cancel-btn"
+                :type="state.cancelButtonType"
+                :round="state.roundButton"
+                :loading="state.cancelButtonLoading"
+                @click="handleAction('cancel')"
+                @keydown.prevent.enter="handleAction('cancel')"
+                >{{ state.cancelButtonText || locale.t('messagebox.cancel') }}</px-button
+              >
+              <px-button
+                ref="confirmBtnRef"
+                v-show="state.showConfirmButton"
+                class="px-message-box__footer-btn px-message-box__confirm-btn"
+                :type="state.confirmButtonType ?? 'primary'"
+                :round="state.roundButton"
+                :loading="state.confirmButtonLoading"
+                @click="handleAction('confirm')"
+                @keydown.prevent.enter="handleAction('confirm')"
+                >{{ state.confirmButtonText || locale.t('messagebox.confirm') }}</px-button
+              >
+            </template>
           </div>
         </div>
       </div>

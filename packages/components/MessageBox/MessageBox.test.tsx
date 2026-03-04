@@ -1,6 +1,6 @@
 import { rAF } from '@sakana-element/utils';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { createApp } from 'vue';
+import { createApp, h } from 'vue';
 import { PxMessageBox } from './index';
 import MessageBox from './methods';
 import type { MessageBoxType } from './types';
@@ -370,5 +370,279 @@ describe('MessageBox/index', () => {
     expect(app.config.globalProperties.$alert).toBeDefined();
     expect(app.config.globalProperties.$confirm).toBeDefined();
     expect(app.config.globalProperties.$prompt).toBeDefined();
+  });
+});
+
+describe('MessageBox new features', () => {
+  afterEach(async () => {
+    MessageBox.close();
+    await rAF();
+    await rAF();
+    document.querySelectorAll('.px-message-box').forEach((el) => el.remove());
+    document.querySelectorAll('.px-overlay').forEach((el) => el.remove());
+  });
+
+  // Feature: customClass
+  it('should apply customClass to the root element', async () => {
+    MessageBox({
+      title: 'Custom',
+      message: 'msg',
+      customClass: 'my-custom-class',
+    });
+    await rAF();
+    const el = document.querySelector('.px-message-box.my-custom-class');
+    expect(el).toBeTruthy();
+  });
+
+  // Feature: customStyle
+  it('should apply customStyle to the root element', async () => {
+    MessageBox({
+      title: 'Style',
+      message: 'msg',
+      customStyle: { backgroundColor: 'red' },
+    });
+    await rAF();
+    const el = document.querySelector('.px-message-box') as HTMLElement;
+    expect(el.style.backgroundColor).toBe('red');
+  });
+
+  // Feature: width
+  it('should apply width as CSS variable', async () => {
+    MessageBox({
+      title: 'Width',
+      message: 'msg',
+      width: 600,
+    });
+    await rAF();
+    const el = document.querySelector('.px-message-box') as HTMLElement;
+    expect(el.style.getPropertyValue('--px-message-box-width')).toBe('600px');
+  });
+
+  it('should apply string width as CSS variable', async () => {
+    MessageBox({
+      title: 'Width',
+      message: 'msg',
+      width: '50%',
+    });
+    await rAF();
+    const el = document.querySelector('.px-message-box') as HTMLElement;
+    expect(el.style.getPropertyValue('--px-message-box-width')).toBe('50%');
+  });
+
+  // Feature: closeOnPressEscape
+  it('should close on Escape key press by default', async () => {
+    const doAction = vi.fn();
+    MessageBox({
+      title: 'ESC',
+      message: 'msg',
+    }).catch((action) => doAction(action));
+    await rAF();
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    await rAF();
+    expect(doAction).toHaveBeenCalledWith('close');
+  });
+
+  it('should not close on Escape when closeOnPressEscape is false', async () => {
+    const doAction = vi.fn();
+    MessageBox({
+      title: 'ESC',
+      message: 'msg',
+      closeOnPressEscape: false,
+    }).catch((action) => doAction(action));
+    await rAF();
+
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    await rAF();
+    expect(doAction).not.toHaveBeenCalled();
+  });
+
+  // Feature: type-colored borders
+  (['info', 'success', 'warning', 'danger'] as const).forEach((type) => {
+    it(`should apply ${type} type class`, async () => {
+      MessageBox({ title: type, message: 'msg', type });
+      await rAF();
+      expect(document.querySelector(`.px-message-box.px-message-box--${type}`)).toBeTruthy();
+    });
+  });
+
+  // Feature: distinguishCancelAndClose
+  it('should send close action by default when close button clicked', async () => {
+    const doAction = vi.fn();
+    MessageBox({
+      title: 'Test',
+      message: 'msg',
+      showClose: true,
+      distinguishCancelAndClose: true,
+    }).catch((action) => doAction(action));
+    await rAF();
+
+    const closeBtn = document.querySelector('.px-message-box__header-btn') as HTMLButtonElement;
+    closeBtn.click();
+    await rAF();
+    expect(doAction).toHaveBeenCalledWith('close');
+  });
+
+  it('should send cancel action on close when distinguishCancelAndClose is false', async () => {
+    const doAction = vi.fn();
+    MessageBox({
+      title: 'Test',
+      message: 'msg',
+      showClose: true,
+      distinguishCancelAndClose: false,
+    }).catch((action) => doAction(action));
+    await rAF();
+
+    const closeBtn = document.querySelector('.px-message-box__header-btn') as HTMLButtonElement;
+    closeBtn.click();
+    await rAF();
+    expect(doAction).toHaveBeenCalledWith('cancel');
+  });
+
+  it('should send cancel on overlay click when distinguishCancelAndClose is false', async () => {
+    const doAction = vi.fn();
+    MessageBox({
+      title: 'Test',
+      message: 'msg',
+      closeOnClickModal: true,
+      distinguishCancelAndClose: false,
+    }).catch((action) => doAction(action));
+    await rAF();
+
+    const overlay = document.querySelector('.px-overlay-message-box') as HTMLElement;
+    overlay.click();
+    await rAF();
+    expect(doAction).toHaveBeenCalledWith('cancel');
+  });
+
+  // Feature: draggable
+  it('should add is-draggable class when draggable is true', async () => {
+    MessageBox({
+      title: 'Drag',
+      message: 'msg',
+      draggable: true,
+    });
+    await rAF();
+    expect(document.querySelector('.px-message-box.is-draggable')).toBeTruthy();
+  });
+
+  it('should not add is-draggable class by default', async () => {
+    MessageBox({
+      title: 'No Drag',
+      message: 'msg',
+    });
+    await rAF();
+    expect(document.querySelector('.px-message-box.is-draggable')).toBeFalsy();
+  });
+
+  // Feature: beforeClose auto-loading
+  it('should set loading state when beforeClose is async', async () => {
+    let resolveFn: (() => void) | undefined;
+    const beforeClose = vi.fn((_action: string, _state: any, done: () => void) => {
+      return new Promise<void>((resolve) => {
+        resolveFn = () => {
+          done();
+          resolve();
+        };
+      });
+    });
+
+    MessageBox({
+      title: 'Test',
+      message: 'msg',
+      beforeClose,
+      showConfirmButton: true,
+    });
+    await rAF();
+
+    const confirmBtn = document.querySelector('.px-message-box__confirm-btn') as HTMLButtonElement;
+    confirmBtn.click();
+    await rAF();
+
+    expect(beforeClose).toHaveBeenCalled();
+    // Resolve the promise
+    resolveFn?.();
+    await rAF();
+  });
+
+  // Feature: footer VNode
+  it('should render custom footer VNode', async () => {
+    MessageBox({
+      title: 'Footer',
+      message: 'msg',
+      footer: h('div', { class: 'custom-footer' }, 'Custom Footer'),
+    });
+    await rAF();
+    const footer = document.querySelector('.px-message-box__footer .custom-footer');
+    expect(footer).toBeTruthy();
+    expect(footer?.textContent).toBe('Custom Footer');
+  });
+
+  it('should render footer render function', async () => {
+    MessageBox({
+      title: 'Footer Fn',
+      message: 'msg',
+      footer: () => h('span', { class: 'fn-footer' }, 'Render Footer'),
+    });
+    await rAF();
+    const footer = document.querySelector('.px-message-box__footer .fn-footer');
+    expect(footer).toBeTruthy();
+    expect(footer?.textContent).toBe('Render Footer');
+  });
+
+  it('should hide default buttons when footer is provided', async () => {
+    MessageBox({
+      title: 'Footer',
+      message: 'msg',
+      showConfirmButton: true,
+      showCancelButton: true,
+      footer: h('button', { class: 'my-btn' }, 'OK'),
+    });
+    await rAF();
+    expect(document.querySelector('.px-message-box__confirm-btn')).toBeFalsy();
+    expect(document.querySelector('.px-message-box__cancel-btn')).toBeFalsy();
+    expect(document.querySelector('.my-btn')).toBeTruthy();
+  });
+
+  // Feature: close button alignment (flex header)
+  it('should render header without show-close class (removed padding hack)', async () => {
+    MessageBox({
+      title: 'Aligned',
+      message: 'msg',
+      showClose: true,
+    });
+    await rAF();
+    const header = document.querySelector('.px-message-box__header');
+    expect(header).toBeTruthy();
+    // The show-close class should no longer be present
+    expect(header?.classList.contains('show-close')).toBe(false);
+  });
+
+  // Feature: closeOnHashChange
+  it('should close on hash change by default', async () => {
+    const doAction = vi.fn();
+    MessageBox({
+      title: 'Hash',
+      message: 'msg',
+    }).catch((action) => doAction(action));
+    await rAF();
+
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    await rAF();
+    expect(doAction).toHaveBeenCalledWith('close');
+  });
+
+  it('should not close on hash change when closeOnHashChange is false', async () => {
+    const doAction = vi.fn();
+    MessageBox({
+      title: 'Hash',
+      message: 'msg',
+      closeOnHashChange: false,
+    }).catch((action) => doAction(action));
+    await rAF();
+
+    window.dispatchEvent(new HashChangeEvent('hashchange'));
+    await rAF();
+    expect(doAction).not.toHaveBeenCalled();
   });
 });

@@ -6,6 +6,6 @@
 import { PxMessageBox } from 'sakana-element';
 
 const showAlert = () => {
-  PxMessageBox.alert('This is an alert message', 'Alert');
+  PxMessageBox.alert('This is an alert message', 'Alert').catch(() => {});
 };
 </script>

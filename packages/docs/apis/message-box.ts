@@ -121,10 +121,114 @@ export const messageBoxApi: ApiSection[] = [
       {
         name: 'beforeClose',
         category: 'behavior',
-        type: '(action: MessageBoxAction, instance: MessageBoxOptions, done: () => void) => void',
+        type: '(action: MessageBoxAction, instance: MessageBoxOptions, done: () => void) => void | Promise<void>',
         desc: {
-          zh: '关闭前的回调，调用 done 关闭弹框',
-          en: 'Callback before closing; call done to close',
+          zh: '关闭前的回调，调用 done 关闭弹框；若返回 Promise，按钮自动显示加载状态',
+          en: 'Callback before closing; call done to close. If a Promise is returned, the button automatically shows a loading spinner',
+        },
+      },
+      {
+        name: 'customClass',
+        category: 'style',
+        type: 'string',
+        desc: {
+          zh: '自定义对话框根元素的类名',
+          en: 'Custom class name applied to dialog root',
+        },
+      },
+      {
+        name: 'customStyle',
+        category: 'style',
+        type: 'CSSProperties',
+        desc: {
+          zh: '自定义对话框根元素的内联样式',
+          en: 'Custom inline styles applied to dialog root',
+        },
+      },
+      {
+        name: 'width',
+        category: 'style',
+        type: 'string | number',
+        default: '420',
+        desc: {
+          zh: '自定义对话框宽度（数字为 px，字符串为 CSS 值）',
+          en: 'Custom dialog width (number = px, or CSS string)',
+        },
+      },
+      {
+        name: 'closeOnPressEscape',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'true',
+        desc: {
+          zh: '是否可通过按 Escape 键关闭',
+          en: 'Whether to close on Escape key press',
+        },
+      },
+      {
+        name: 'closeOnHashChange',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'true',
+        desc: {
+          zh: '是否在 URL hash 变化时关闭',
+          en: 'Whether to close on URL hash change',
+        },
+      },
+      {
+        name: 'inputSchema',
+        category: 'behavior',
+        type: 'ZodType',
+        desc: {
+          zh: '输入框的 Zod 验证 schema',
+          en: 'Zod validation schema for prompt input',
+        },
+      },
+      {
+        name: 'inputErrorMessage',
+        category: 'content',
+        type: 'string',
+        desc: {
+          zh: '验证失败时的自定义错误提示',
+          en: 'Custom error message when input validation fails',
+        },
+      },
+      {
+        name: 'distinguishCancelAndClose',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'true',
+        desc: {
+          zh: '关闭按钮是否触发 "close" 而非 "cancel"',
+          en: 'Whether close button fires "close" instead of "cancel"',
+        },
+      },
+      {
+        name: 'overlayClass',
+        category: 'style',
+        type: 'string | string[] | Record<string, boolean>',
+        desc: {
+          zh: '自定义遮罩层的类名',
+          en: 'Custom class for the overlay backdrop',
+        },
+      },
+      {
+        name: 'draggable',
+        category: 'behavior',
+        type: 'boolean',
+        default: 'false',
+        desc: {
+          zh: '是否可通过拖拽标题栏移动对话框',
+          en: 'Whether the dialog is draggable by its header',
+        },
+      },
+      {
+        name: 'footer',
+        category: 'content',
+        type: 'VNode | (() => VNode)',
+        desc: {
+          zh: '自定义底部内容，替换默认按钮',
+          en: 'Custom footer VNode or render function replacing default buttons',
         },
       },
     ],

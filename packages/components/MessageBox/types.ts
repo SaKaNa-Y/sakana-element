@@ -1,4 +1,5 @@
-import { type Ref, type VNode } from 'vue';
+import { type CSSProperties, type Ref, type VNode } from 'vue';
+import type { ZodType } from 'zod';
 import { type ButtonType } from '../Button/types';
 import { type MessageType } from '../Message/types';
 
@@ -45,7 +46,40 @@ export interface MessageBoxOptions {
   inputType?: 'text' | 'textarea' | 'password' | 'number';
 
   buttonSize?: 'default' | 'small' | 'large';
-  beforeClose?: (action: MessageBoxAction, instance: MessageBoxOptions, done: () => void) => void;
+  beforeClose?: (
+    action: MessageBoxAction,
+    instance: MessageBoxOptions,
+    done: () => void,
+  ) => void | Promise<void>;
+
+  // Feature: customClass + customStyle
+  customClass?: string;
+  customStyle?: CSSProperties;
+
+  // Feature: width
+  width?: string | number;
+
+  // Feature: closeOnPressEscape
+  closeOnPressEscape?: boolean;
+
+  // Feature: input validation (Zod)
+  inputSchema?: ZodType;
+  inputErrorMessage?: string;
+
+  // Feature: distinguishCancelAndClose
+  distinguishCancelAndClose?: boolean;
+
+  // Feature: overlay customization
+  overlayClass?: string | string[] | Record<string, boolean>;
+
+  // Feature: close on hash change
+  closeOnHashChange?: boolean;
+
+  // Feature: draggable
+  draggable?: boolean;
+
+  // Feature: footer VNode / render function
+  footer?: VNode | (() => VNode);
 }
 
 export interface MessageBoxProps extends MessageBoxOptions {

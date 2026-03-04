@@ -98,10 +98,13 @@ function MessageBox(options: MessageBoxOptions | string | VNode): Promise<Messag
   } else {
     callback = options.callback;
   }
-  return new Promise((resolve, reject) => {
+  const promise = new Promise<MessageBoxData>((resolve, reject) => {
     const instance = createMessage(options);
     messageInstanceMap.set(instance, { options, callback, resolve, reject });
   });
+  // Prevent "Uncaught (in promise)" when consumers omit .catch()
+  promise.catch(() => void 0);
+  return promise;
 }
 
 const MESSAGE_BOX_VARIANTS = ['alert', 'confirm', 'prompt'] as const;

@@ -12,6 +12,6 @@ const showCenter = () => {
     type: 'warning',
     center: true,
     showCancelButton: true,
-  });
+  }).catch(() => {});
 };
 </script>
