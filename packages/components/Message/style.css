@@ -10,6 +10,10 @@
   --px-message-close-hover-color: var(--px-text-color-primary);
   --px-message-icon-size: 16px;
   --px-message-icon-margin: 10px;
+
+  /* Beveled inset for 3D raised-panel depth */
+  --px-message-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.35);
+  --px-message-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.08);
 }
 
 /* Base Message Styles - Pixel Game Notification */
@@ -63,6 +67,7 @@
       100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
       4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
     );
+    box-shadow: var(--px-message-inset-highlight), var(--px-message-inset-shadow);
     z-index: -1;
   }
 

@@ -58,6 +58,34 @@ export const dropdownApi: ApiSection[] = [
         default: 'false',
         desc: { zh: '是否禁用', en: 'Whether disabled' },
       },
+      {
+        name: 'maxHeight',
+        category: 'style',
+        type: 'number | string',
+        desc: {
+          zh: '菜单最大高度，超出后可滚动',
+          en: 'Max menu height, scrollable when exceeded',
+        },
+      },
+      {
+        name: 'showArrow',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: {
+          zh: '是否显示指向触发器的像素箭头',
+          en: 'Whether to show pixel arrow pointing to trigger',
+        },
+      },
+      {
+        name: 'hoverColor',
+        category: 'style',
+        type: 'string',
+        desc: {
+          zh: '自定义菜单项悬停背景色',
+          en: 'Custom hover background color for menu items',
+        },
+      },
     ],
   },
   {
@@ -156,6 +184,53 @@ export const dropdownItemApi: ApiSection[] = [
         type: 'boolean',
         default: 'false',
         desc: { zh: '是否显示分割线', en: 'Whether to show divider' },
+      },
+      {
+        name: 'icon',
+        category: 'content',
+        component: 'DropdownItem',
+        type: 'string',
+        desc: { zh: '菜单项图标名称', en: 'Menu item icon name' },
+      },
+    ],
+  },
+];
+
+export const dropdownKeyboardApi: ApiSection[] = [
+  {
+    title: { zh: '键盘操作', en: 'Keyboard' },
+    items: [
+      {
+        name: '↑ / ↓',
+        category: 'behavior',
+        desc: {
+          zh: '在菜单项之间移动焦点（跳过禁用项）',
+          en: 'Move focus between items (skip disabled)',
+        },
+      },
+      {
+        name: 'Enter / Space',
+        category: 'behavior',
+        desc: {
+          zh: '选择当前聚焦的菜单项',
+          en: 'Select the focused item',
+        },
+      },
+      {
+        name: 'Escape',
+        category: 'behavior',
+        desc: {
+          zh: '关闭菜单并返回焦点到触发器',
+          en: 'Close menu and return focus to trigger',
+        },
+      },
+      {
+        name: 'Home / End',
+        category: 'behavior',
+        desc: {
+          zh: '跳到第一个/最后一个可用菜单项',
+          en: 'Jump to first/last enabled item',
+        },
       },
     ],
   },

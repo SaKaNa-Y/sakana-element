@@ -9,6 +9,7 @@ export interface DropdownItemProps {
   label: string | VNode; //VNode 是 Vue 的虚拟节点类型允许使用h函数，label是显示的文本
   disabled?: boolean; //禁用
   divided?: boolean; //分割线
+  icon?: string; //菜单项图标名称
 }
 
 export interface DropdownProps extends TooltipProps {
@@ -17,6 +18,8 @@ export interface DropdownProps extends TooltipProps {
   items?: DropdownItemProps[];
   hideOnClick?: boolean;
   splitButton?: boolean;
+  maxHeight?: number | string;
+  hoverColor?: string;
 }
 
 export interface DropdownEmits {

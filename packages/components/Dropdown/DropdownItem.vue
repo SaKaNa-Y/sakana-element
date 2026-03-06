@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useId } from '@sakana-element/hooks';
 import { computed, inject } from 'vue';
+import PxIcon from '../Icon/Icon.vue';
 import { DROPDOWN_CTX_KEY } from './constants';
 
 import type { DropdownItemProps } from './types';
@@ -28,7 +29,8 @@ function handleClick() {
   <li v-if="divided" role="separator" class="divided-placeholder"></li>
   <li
     role="menuitem"
-    :id="`dropdown-item-${command ?? useId().value}`"
+    tabindex="-1"
+    :id="`dropdown-item-${command}`"
     :class="{
       'px-dropdown__item': true,
       ['px-dropdown__item--' + size]: size,
@@ -36,7 +38,10 @@ function handleClick() {
       'is-divided': divided,
     }"
     @click="handleClick"
+    @keydown.enter.prevent="handleClick"
+    @keydown.space.prevent="handleClick"
   >
+    <px-icon v-if="icon" :icon="icon" class="px-dropdown__item-icon" />
     <slot>
       {{ label }}
     </slot>

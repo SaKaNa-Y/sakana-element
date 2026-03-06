@@ -16,6 +16,7 @@ import type {
   DropdownItemProps,
   DropdownProps,
 } from './types';
+import useDropdownKeyboard from './useDropdownKeyboard';
 
 defineOptions({
   name: 'PxDropdown',
@@ -30,11 +31,41 @@ const slots = defineSlots(); //控制所有插槽
 
 const tooltipRef = ref<TooltipInstance>();
 const dropdownRef = ref<HTMLElement>();
+const menuRef = ref<HTMLElement>();
 const isOpen = ref(false);
 
-const tooltipProps = computed(
-  () => omit(props, ['items', 'hideOnClick', 'size', 'type', 'splitButton']), //排除这些属性
-);
+const tooltipProps = computed(() => ({
+  ...omit(props, [
+    'items',
+    'hideOnClick',
+    'size',
+    'type',
+    'splitButton',
+    'maxHeight',
+    'hoverColor',
+  ]),
+  // When showArrow is true, use 9px offset to leave room for arrow; otherwise 0 to eliminate hover gap
+  popperOptions: {
+    ...props.popperOptions,
+    modifiers: [
+      { name: 'offset', options: { offset: [0, props.showArrow ? 9 : 0] } },
+      ...(props.popperOptions?.modifiers ?? []),
+    ],
+  },
+}));
+
+const menuStyle = computed(() => {
+  const style: Record<string, string> = {};
+  if (props.maxHeight) {
+    const val = typeof props.maxHeight === 'number' ? `${props.maxHeight}px` : props.maxHeight;
+    style.maxHeight = val;
+    style.overflowY = 'auto';
+  }
+  if (props.hoverColor) {
+    style['--px-dropdown-menuItem-hover-fill'] = props.hoverColor;
+  }
+  return Object.keys(style).length ? style : undefined;
+});
 
 function handleItemClick(e: DropdownItemProps) {
   props.hideOnClick && tooltipRef.value?.hide();
@@ -53,6 +84,14 @@ useClickOutside(dropdownRef, () => {
   }
 });
 
+// Keyboard navigation
+useDropdownKeyboard({
+  menuRef,
+  triggerRef: dropdownRef,
+  isOpen,
+  close: () => tooltipRef.value?.hide(),
+});
+
 (typeof TEST === 'undefined' || !TEST) && useDisabledStyle();
 provide<DropdownContext>(DROPDOWN_CTX_KEY, {
   handleItemClick,
@@ -66,7 +105,7 @@ defineExpose<DropdownInstance>({
 </script>
 
 <template>
-  <div ref="dropdownRef" class="px-dropdown" :class="{ 'is-disabled': props.disabled }" aria-haspopup="true" :aria-expanded="isOpen">
+  <div ref="dropdownRef" class="px-dropdown" :class="{ 'is-disabled': props.disabled }" aria-haspopup="true" :aria-expanded="isOpen" tabindex="0">
     <px-tooltip
       ref="tooltipRef"
       v-bind="tooltipProps"
@@ -87,7 +126,7 @@ defineExpose<DropdownInstance>({
       <slot name="default" v-else></slot>
 
       <template #content>
-        <div class="px-dropdown__menu" role="menu">
+        <div ref="menuRef" class="px-dropdown__menu" role="menu" tabindex="-1" :style="menuStyle">
           <slot name="dropdown">
             <template v-for="item in items" :key="item.command">
               <dropdown-item v-bind="item" />

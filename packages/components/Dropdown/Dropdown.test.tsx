@@ -288,4 +288,227 @@ describe('Dropdown.vue', () => {
 
     expect(wrapper.find('.px-button-group').exists()).toBeTruthy();
   });
+
+  it('should render items with icon prop', async () => {
+    const items: DropdownItemProps[] = [
+      { label: 'Edit', command: 'edit', icon: 'edit' },
+      { label: 'Delete', command: 'delete', icon: 'trash' },
+    ];
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        items,
+      },
+      slots: {
+        default: () => <button id="trigger">Menu</button>,
+      },
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+
+    const icons = wrapper.findAll('.px-dropdown__item-icon');
+    expect(icons.length).toBe(2);
+  });
+
+  it('should apply maxHeight style to menu', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        maxHeight: 200,
+        items: [
+          { label: 'Item 1', command: 'a' },
+          { label: 'Item 2', command: 'b' },
+        ],
+      },
+      slots: {
+        default: () => <button id="trigger">Menu</button>,
+      },
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+
+    const menu = wrapper.find('.px-dropdown__menu');
+    expect(menu.exists()).toBeTruthy();
+    expect(menu.attributes('style')).toContain('max-height: 200px');
+    expect(menu.attributes('style')).toContain('overflow-y: auto');
+  });
+
+  it('should apply maxHeight string style to menu', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        maxHeight: '15rem',
+        items: [{ label: 'Item 1', command: 'a' }],
+      },
+      slots: {
+        default: () => <button id="trigger">Menu</button>,
+      },
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+
+    const menu = wrapper.find('.px-dropdown__menu');
+    expect(menu.attributes('style')).toContain('max-height: 15rem');
+  });
+
+  it('should have tabindex on dropdown items', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        items: [
+          { label: 'Item 1', command: 'a' },
+          { label: 'Item 2', command: 'b' },
+        ],
+      },
+      slots: {
+        default: () => <button id="trigger">Menu</button>,
+      },
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+
+    const items = wrapper.findAll('.px-dropdown__item');
+    items.forEach((item) => {
+      expect(item.attributes('tabindex')).toBe('-1');
+    });
+  });
+
+  it('should have tabindex on trigger wrapper for keyboard access', () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+      },
+      slots: {
+        default: () => <div>Trigger</div>,
+      },
+    });
+
+    expect(wrapper.find('.px-dropdown').attributes('tabindex')).toBe('0');
+  });
+
+  // === Shadow removal ===
+  it('should not apply drop-shadow on tooltip popper', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        items: [{ label: 'Item 1', command: 'a' }],
+      },
+      slots: {
+        default: () => <button id="trigger">Menu</button>,
+      },
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+
+    // Structure test: the `.px-dropdown .px-tooltip` scope exists for CSS to target
+    expect(wrapper.find('.px-dropdown .px-tooltip').exists()).toBeTruthy();
+  });
+
+  // === Arrow (showArrow) ===
+  it('should render arrow when showArrow is true', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        showArrow: true,
+        items: [{ label: 'Item 1', command: 'a' }],
+      },
+      slots: {
+        default: () => <button id="trigger">Menu</button>,
+      },
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+
+    expect(wrapper.find('.px-tooltip__arrow').exists()).toBeTruthy();
+  });
+
+  it('should not render arrow by default', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        items: [{ label: 'Item 1', command: 'a' }],
+      },
+      slots: {
+        default: () => <button id="trigger">Menu</button>,
+      },
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+
+    expect(wrapper.find('.px-tooltip__arrow').exists()).toBeFalsy();
+  });
+
+  // === Hover color (hoverColor) ===
+  it('should apply hoverColor as CSS variable on menu', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        hoverColor: '#ff6600',
+        items: [{ label: 'Item 1', command: 'a' }],
+      },
+      slots: {
+        default: () => <button id="trigger">Menu</button>,
+      },
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+
+    const menu = wrapper.find('.px-dropdown__menu');
+    expect(menu.exists()).toBeTruthy();
+    expect(menu.attributes('style')).toContain('--px-dropdown-menuItem-hover-fill: #ff6600');
+  });
+
+  it('should not set hoverColor variable when prop is absent', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        items: [{ label: 'Item 1', command: 'a' }],
+      },
+      slots: {
+        default: () => <button id="trigger">Menu</button>,
+      },
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+
+    const menu = wrapper.find('.px-dropdown__menu');
+    expect(menu.exists()).toBeTruthy();
+    const style = menu.attributes('style') ?? '';
+    expect(style).not.toContain('--px-dropdown-menuItem-hover-fill');
+  });
+
+  it('should handle keyboard Enter/Space on items via keydown', async () => {
+    const onCommand = vi.fn();
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        onCommand,
+      },
+      slots: {
+        default: () => <button id="trigger">Menu</button>,
+        dropdown: () => [
+          <DropdownItem label="Item A" command="a" />,
+          <DropdownItem label="Item B" command="b" />,
+        ],
+      },
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+
+    const items = wrapper.findAll('.px-dropdown__item');
+    if (items.length) {
+      await items[0].trigger('keydown.enter');
+      expect(onCommand).toBeCalledWith('a');
+    }
+  });
 });

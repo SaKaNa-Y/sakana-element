@@ -1,10 +1,16 @@
 /* Dropdown Variables */
 .px-dropdown .px-dropdown__menu {
-  --px-dropdown-menuItem-hover-fill: var(--px-hover-bg-color);
-  --px-dropdown-menuItem-hover-color: var(--px-hover-text-color);
+  --px-dropdown-menuItem-hover-fill: var(--px-color-primary);
+  --px-dropdown-menuItem-hover-color: #fff;
   --px-dropdown-menuItem-disabled-color: var(--px-text-color-disabled);
-  --px-dropdown-menuItem-divided-color: var(--px-border-color-dark);
+  --px-dropdown-menuItem-divided-color: var(--px-border-color-lighter);
   --px-dropdown-shadow-color: var(--px-shadow-color-dark);
+  --px-dropdown-border-color: var(--px-border-color);
+  --px-dropdown-bg-color: var(--px-bg-color);
+
+  /* Beveled inset for 3D raised-panel depth */
+  --px-dropdown-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.6);
+  --px-dropdown-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.25);
 }
 
 /* Base Dropdown Styles - Pixel Game Menu */
@@ -12,8 +18,31 @@
   display: inline-block;
   font-family: var(--px-font-family);
 
+  outline: none;
+
   .px-tooltip {
-    --px-popover-padding: 4px 0;
+    /* 6px vertical clears staircase corners; 4px horizontal matches border inset */
+    --px-popover-padding: 6px 4px;
+    --px-popover-border-color: transparent;
+    --px-popover-shadow-color: transparent;
+    --px-shadow-offset-x: 0px;
+    --px-shadow-offset-y: 0px;
+
+    .px-tooltip__popper {
+      filter: none;
+    }
+
+    /* Remove staircase border layer from popup */
+    .px-tooltip__popper::before {
+      display: none;
+    }
+
+    /* Enhanced pixel-art bevel on fill layer */
+    .px-tooltip__popper::after {
+      box-shadow:
+        inset 2px 2px 0 0 rgba(255, 255, 255, 0.6),
+        inset -2px -2px 0 0 rgba(0, 0, 0, 0.15);
+    }
   }
 
   /* Disabled state */
@@ -28,7 +57,25 @@
   list-style-type: none;
   margin: 0;
   padding: 4px 0;
-  background: var(--px-bg-color);
+  background: var(--px-dropdown-bg-color);
+  position: relative;
+  outline: none;
+
+  /* Pixel-art scrollbar */
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--px-fill-color-light);
+    border-left: 2px solid var(--px-dropdown-border-color);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--px-fill-color-darker, var(--px-border-color));
+    border: 2px solid var(--px-dropdown-border-color);
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--px-dropdown-menuItem-hover-fill);
+  }
 
   /* Menu items - Pixel RPG menu style */
   .px-dropdown__item {
@@ -36,8 +83,8 @@
     align-items: center;
     white-space: nowrap;
     list-style: none;
-    line-height: 1.5;
-    padding: 8px 16px;
+    line-height: 22px;
+    padding: 8px 16px 8px 22px;
     margin: 0;
     font-size: var(--px-font-size-base);
     font-family: var(--px-font-family);
@@ -46,20 +93,68 @@
     outline: none;
     position: relative;
     transition: none;
+    z-index: 1;
 
-    /* Hover effect - Pixel highlight with subtle bevel */
-    &:hover {
-      background-color: var(--px-dropdown-menuItem-hover-fill);
+    /* Item icon */
+    .px-dropdown__item-icon {
+      margin-right: 8px;
+      font-size: var(--px-font-size-base);
+      width: 16px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Pixel arrow indicator — right-pointing staircase triangle */
+    &::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 8px;
+      background: var(--px-dropdown-menuItem-hover-color);
+      clip-path: polygon(
+        0 0, 2px 0,
+        2px 2px, 4px 2px,
+        4px 4px, 6px 4px,
+        6px 4px, 4px 4px,
+        4px 6px, 2px 6px,
+        2px 8px, 0 8px
+      );
+      opacity: 0;
+      z-index: 2;
+    }
+
+    /* Background highlight layer — full width selection bar */
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      z-index: -1;
+    }
+
+    /* Hover & focus effect - Pixel highlight with beveled 3D bar */
+    &:hover,
+    &:focus {
       color: var(--px-dropdown-menuItem-hover-color);
-      box-shadow: inset 1px 1px 0 0 rgba(255, 255, 255, 0.12), inset -1px -1px 0 0 rgba(0, 0, 0, 0.03);
 
-      /* Pixel cursor indicator */
       &::before {
-        content: ">";
-        position: absolute;
-        left: 6px;
-        color: var(--px-dropdown-menuItem-hover-color);
-        font-weight: bold;
+        opacity: 1;
+      }
+
+      &::after {
+        background-color: var(--px-dropdown-menuItem-hover-fill);
+        box-shadow: var(--px-dropdown-inset-highlight), var(--px-dropdown-inset-shadow);
+      }
+    }
+
+    /* Active/pressed - reversed bevel for "pressed in" feel */
+    &:active:not(.is-disabled) {
+      &::after {
+        box-shadow: var(--px-dropdown-inset-shadow), var(--px-dropdown-inset-highlight);
       }
     }
 
@@ -67,42 +162,102 @@
     &.is-disabled {
       color: var(--px-dropdown-menuItem-disabled-color);
       cursor: not-allowed;
-      background-image: none;
+      opacity: 0.55;
 
-      &:hover {
-        background-color: transparent;
+      &::before {
+        opacity: 0 !important;
+      }
 
-        &::before {
-          content: none;
+      &:hover,
+      &:focus {
+        color: var(--px-dropdown-menuItem-disabled-color);
+
+        &::after {
+          background-color: transparent;
+          box-shadow: none;
         }
       }
     }
   }
 
+  /* First item — top staircase corners on highlight layer */
+  .px-dropdown__item:first-child {
+    &::after {
+      top: 2px;
+      clip-path: polygon(
+        0 2px, 2px 2px, 2px 0, 4px 0,
+        calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, 100% 2px,
+        100% 100%,
+        0 100%
+      );
+    }
+  }
+
+  /* Last item — bottom staircase corners on highlight layer */
+  .px-dropdown__item:last-child {
+    &::after {
+      bottom: 2px;
+      clip-path: polygon(
+        0 0,
+        100% 0,
+        100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%, calc(100% - 4px) 100%,
+        4px 100%, 4px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+      );
+    }
+  }
+
+  /* Single item — both top and bottom staircase corners */
+  .px-dropdown__item:first-child:last-child {
+    &::after {
+      top: 2px;
+      bottom: 2px;
+      clip-path: polygon(
+        0 2px, 2px 2px, 2px 0, 4px 0,
+        calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, 100% 2px,
+        100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%, calc(100% - 4px) 100%,
+        4px 100%, 4px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+      );
+    }
+  }
+
   /* Size variants */
   .px-dropdown__item--large {
-    padding: 10px 20px;
-    line-height: 1.5;
+    padding: 10px 20px 10px 26px;
+    line-height: 26px;
     font-size: var(--px-font-size-large);
 
-    &:hover::before {
-      left: 8px;
+    &::before {
+      left: 10px;
+      width: 8px;
+      height: 12px;
+      clip-path: polygon(
+        0 0, 2px 0,
+        2px 2px, 4px 2px,
+        4px 4px, 6px 4px,
+        6px 6px, 8px 6px,
+        8px 6px, 6px 6px,
+        6px 8px, 4px 8px,
+        4px 10px, 2px 10px,
+        2px 12px, 0 12px
+      );
     }
   }
 
   .px-dropdown__item--small {
-    padding: 4px 12px;
-    line-height: 1.4;
+    padding: 5px 12px 5px 18px;
+    line-height: 18px;
     font-size: var(--px-font-size-small);
 
-    &:hover::before {
-      left: 4px;
+    &::before {
+      left: 6px;
+      width: 4px;
+      height: 6px;
     }
   }
 
   /* Divider - Pixel-dashed gradient line */
   .divided-placeholder {
-    margin: 6px 8px;
+    margin: 4px 6px;
     height: 2px;
     background-image: repeating-linear-gradient(
       to right,

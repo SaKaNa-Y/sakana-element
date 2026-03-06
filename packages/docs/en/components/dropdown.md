@@ -4,7 +4,7 @@ description: Pixel-style dropdown menu component with multi-level support and cu
 ---
 
 <script setup>
-import { dropdownApi, dropdownItemApi } from '../../apis/dropdown'
+import { dropdownApi, dropdownItemApi, dropdownKeyboardApi } from '../../apis/dropdown'
 </script>
 
 # Dropdown
@@ -12,7 +12,7 @@ import { dropdownApi, dropdownItemApi } from '../../apis/dropdown'
 Toggleable menu for displaying lists of links and actions.
 
 
-<ApiTable :sections="[...dropdownApi, ...dropdownItemApi]" lang="en" />
+<ApiTable :sections="[...dropdownApi, ...dropdownItemApi, ...dropdownKeyboardApi]" lang="en" />
 
 ## Basic Usage
 
@@ -44,5 +44,45 @@ Use `disabled` attribute to disable certain items.
 
 ::: preview
 demo-preview=../../demo/dropdown/Disabled.vue
+:::
+
+## Icon Items
+
+Use `icon` property on items to show pixel icons alongside labels.
+
+::: preview
+demo-preview=../../demo/dropdown/Icon.vue
+:::
+
+## Max Height
+
+Use `max-height` to limit the menu height when there are many items.
+
+::: preview
+demo-preview=../../demo/dropdown/MaxHeight.vue
+:::
+
+## Arrow
+
+Use `show-arrow` to display a pixel-art arrow pointing from the dropdown panel to the trigger.
+
+::: preview
+demo-preview=../../demo/dropdown/Arrow.vue
+:::
+
+## Custom Hover Color
+
+Use `hover-color` to customize the background color of menu items on hover.
+
+::: preview
+demo-preview=../../demo/dropdown/HoverColor.vue
+:::
+
+## Keyboard Navigation
+
+The dropdown supports full keyboard navigation. Press Arrow keys to move between items, Enter to select, and Escape to close.
+
+::: preview
+demo-preview=../../demo/dropdown/Keyboard.vue
 :::
 
