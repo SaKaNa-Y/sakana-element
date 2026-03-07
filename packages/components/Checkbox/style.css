@@ -1,0 +1,245 @@
+/* Checkbox Variables */
+.px-checkbox {
+  --px-checkbox-size: 18px;
+  --px-checkbox-checked-color: var(--px-color-primary);
+  --px-checkbox-checked-border-color: var(--px-color-primary-dark);
+  --px-checkbox-border-color: var(--px-border-color);
+  --px-checkbox-bg-color: var(--px-fill-color-blank);
+  --px-checkbox-shadow-color: var(--px-shadow-color);
+}
+
+/* Base Checkbox Styles */
+.px-checkbox {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--px-font-size-base);
+  font-family: var(--px-font-family);
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+
+  /* Disabled state */
+  &.is-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    .px-checkbox__inner {
+      cursor: not-allowed;
+    }
+  }
+
+  /* Checked & Indeterminate shared styles */
+  &.is-checked,
+  &.is-indeterminate {
+    .px-checkbox__inner {
+      &::before {
+        background: var(--px-checkbox-checked-border-color);
+      }
+      &::after {
+        background: var(--px-checkbox-checked-color);
+      }
+
+      .px-checkbox__tick {
+        opacity: 1;
+      }
+    }
+  }
+
+  /* Checked state */
+  &.is-checked {
+    .px-checkbox__input {
+      filter: drop-shadow(
+        var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-checkbox-checked-border-color)
+      );
+    }
+  }
+
+  /* Indeterminate state */
+  &.is-indeterminate {
+    .px-checkbox__inner .px-checkbox__tick {
+      /* Override checkmark with a pixel-art horizontal dash */
+      clip-path: none;
+      position: absolute;
+      width: 8px;
+      height: 2px;
+      background: var(--px-fill-color-blank);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .px-checkbox__input {
+      filter: none;
+    }
+  }
+}
+
+/* Size variants */
+.px-checkbox--large {
+  --px-checkbox-size: 22px;
+  font-size: var(--px-font-size-base);
+
+  .px-checkbox__tick {
+    width: 12px;
+    height: 12px;
+  }
+
+  &.is-indeterminate .px-checkbox__inner .px-checkbox__tick {
+    width: 10px;
+    height: 2px;
+  }
+}
+
+.px-checkbox--small {
+  --px-checkbox-size: 14px;
+  font-size: var(--px-font-size-small);
+
+  .px-checkbox__input {
+    filter: drop-shadow(2px 2px 0px var(--px-checkbox-shadow-color));
+  }
+
+  .px-checkbox__tick {
+    width: 8px;
+    height: 8px;
+  }
+
+  &.is-checked .px-checkbox__input {
+    filter: drop-shadow(2px 2px 0px var(--px-checkbox-checked-border-color));
+  }
+
+  &.is-indeterminate .px-checkbox__input {
+    filter: none;
+  }
+
+  &.is-indeterminate .px-checkbox__inner .px-checkbox__tick {
+    width: 6px;
+    height: 2px;
+  }
+}
+
+/* Hidden native input */
+.px-checkbox__original {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  margin: 0;
+  outline: none;
+
+  &:focus-visible ~ .px-checkbox__inner {
+    outline: 2px dashed var(--px-checkbox-checked-color);
+    outline-offset: 2px;
+  }
+}
+
+/* Input wrapper */
+.px-checkbox__input {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  /* Pixel shadow via drop-shadow */
+  filter: drop-shadow(
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-checkbox-shadow-color)
+  );
+}
+
+/* The pixel-art checkbox box */
+.px-checkbox__inner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--px-checkbox-size);
+  height: var(--px-checkbox-size);
+  box-sizing: border-box;
+  background: transparent;
+
+  --px-checkbox-pixel-corners: polygon(
+    0 2px,
+    2px 2px,
+    2px 0,
+    calc(100% - 2px) 0,
+    calc(100% - 2px) 2px,
+    100% 2px,
+    100% calc(100% - 2px),
+    calc(100% - 2px) calc(100% - 2px),
+    calc(100% - 2px) 100%,
+    2px 100%,
+    2px calc(100% - 2px),
+    0 calc(100% - 2px)
+  );
+
+  /* Border layer - pixel shape */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--px-checkbox-border-color);
+    clip-path: var(--px-checkbox-pixel-corners);
+    z-index: 0;
+  }
+
+  /* Fill layer - pixel shape */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: var(--px-checkbox-bg-color);
+    clip-path: var(--px-checkbox-pixel-corners);
+    z-index: 0;
+  }
+}
+
+/* Pixel checkmark */
+.px-checkbox__tick {
+  position: relative;
+  z-index: 1;
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  /* Pixel-art checkmark (✓) via clip-path */
+  clip-path: polygon(
+    15% 50%,
+    35% 70%,
+    85% 20%,
+    85% 40%,
+    35% 90%,
+    15% 70%
+  );
+  background: var(--px-fill-color-blank);
+}
+
+/* Label */
+.px-checkbox__label {
+  padding-left: 8px;
+  font-family: var(--px-font-family);
+  font-size: inherit;
+  line-height: 1.2;
+  color: var(--px-text-color-primary);
+}
+
+/* Type variants */
+@each $val in primary, success, info, warning, danger {
+  .px-checkbox--$(val) {
+    --px-checkbox-checked-color: var(--px-color-$(val));
+    --px-checkbox-checked-border-color: var(--px-color-$(val)-dark);
+  }
+
+  .px-checkbox--$(val).is-checked .px-checkbox__input {
+    filter: drop-shadow(
+      var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-color-$(val)-dark)
+    );
+  }
+}
+
+/* Checkbox Group */
+.px-checkbox-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
