@@ -47,10 +47,31 @@
 
 a.px-breadcrumb__link {
   cursor: pointer;
-  border-bottom: 2px solid transparent;
+  background-image: none;
+  background-repeat: no-repeat;
+  background-position: bottom 0 left 0;
+  background-size: 100% 2px;
+  padding-bottom: 2px;
+  transition: none;
 
   &:hover:not(.is-disabled) {
-    border-bottom: 2px solid var(--px-breadcrumb-link-color);
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--px-breadcrumb-link-color) 0px,
+      var(--px-breadcrumb-link-color) 4px,
+      transparent 4px,
+      transparent 8px
+    );
+    transform: translate(-1px, -1px);
+  }
+
+  &:active:not(.is-disabled) {
+    transform: translate(1px, 1px);
+  }
+
+  &:focus-visible:not(.is-disabled) {
+    outline: 2px dashed var(--px-color-primary);
+    outline-offset: 2px;
   }
 }
 
@@ -83,4 +104,6 @@ a.px-breadcrumb__link {
   margin: 0 8px;
   color: var(--px-breadcrumb-separator-color);
   font-weight: 400;
+  font-family: var(--px-font-family);
+  image-rendering: pixelated;
 }

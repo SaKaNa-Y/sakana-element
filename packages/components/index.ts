@@ -12,6 +12,7 @@ export * from './Dropdown';
 export * from './FileInput';
 export * from './Form';
 export * from './Icon';
+export * from './Indicator';
 export * from './Input';
 export * from './Link';
 export * from './Loading';

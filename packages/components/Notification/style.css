@@ -211,13 +211,9 @@
 
 @each $val in info, success, warning, danger, error {
   .px-notification--$(val).is-ghost {
-    --px-notification-bg-color: var(--px-fill-color-blank);
-    --px-notification-border-color: var(--px-color-$(val));
     --px-notification-icon-color: var(--px-color-$(val));
     --px-notification-title-color: var(--px-color-$(val)-dark);
     --px-notification-content-color: var(--px-color-$(val));
-    --px-notification-shadow-color: transparent;
-    filter: none;
   }
 }
 
@@ -243,6 +239,12 @@
 @keyframes px-notification-timer {
   0% { transform: scaleX(1); }
   100% { transform: scaleX(0); }
+}
+
+/* Dark mode — invert bevel highlights */
+.px-dark .px-notification {
+  --px-notification-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.10);
+  --px-notification-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.25);
 }
 
 /* Animation */

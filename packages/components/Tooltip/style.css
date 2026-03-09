@@ -1,10 +1,10 @@
 /* Tooltip Variables */
 .px-tooltip {
-  --px-popover-bg-color: var(--px-bg-color);
-  --px-popover-font-size: var(--px-font-size-base);
-  --px-popover-border-color: var(--px-border-color-dark);
-  --px-popover-padding: 10px 14px;
-  --px-popover-shadow-color: var(--px-shadow-color);
+  --px-tooltip-bg-color: var(--px-bg-color);
+  --px-tooltip-font-size: var(--px-font-size-base);
+  --px-tooltip-border-color: var(--px-border-color-dark);
+  --px-tooltip-padding: 10px 14px;
+  --px-tooltip-shadow-color: var(--px-shadow-color);
   display: inline-block;
 }
 
@@ -24,10 +24,10 @@
   /* Popper container - Pixel style box */
   .px-tooltip__popper {
     background: transparent;
-    padding: var(--px-popover-padding);
+    padding: var(--px-tooltip-padding);
     color: var(--px-text-color-primary);
     line-height: 1.5;
-    font-size: var(--px-popover-font-size);
+    font-size: var(--px-tooltip-font-size);
     font-family: var(--px-font-family);
     word-break: break-all;
     box-sizing: border-box;
@@ -39,7 +39,7 @@
 
     /* Pixel shadow via drop-shadow (respects clip-path shape) */
     filter: drop-shadow(
-      var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-popover-shadow-color)
+      var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-tooltip-shadow-color)
     );
 
     /* Border layer — filled with border color, clipped to pixel shape */
@@ -47,7 +47,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: var(--px-popover-border-color);
+      background: var(--px-tooltip-border-color);
       clip-path: polygon(
         0 4px,
         2px 4px,
@@ -78,7 +78,7 @@
       content: "";
       position: absolute;
       inset: 2px;
-      background: var(--px-popover-bg-color);
+      background: var(--px-tooltip-bg-color);
       clip-path: polygon(
         0 4px,
         2px 4px,
@@ -108,7 +108,7 @@
     /* Pixel arrow — base */
     .px-tooltip__arrow {
       position: absolute;
-      background: var(--px-popover-border-color);
+      background: var(--px-tooltip-border-color);
       z-index: 1;
     }
 
@@ -177,9 +177,9 @@
 /* Dark tooltip variant */
 .px-tooltip--dark {
   .px-tooltip__popper {
-    --px-popover-bg-color: var(--px-text-color-primary);
-    --px-popover-border-color: var(--px-text-color-primary);
-    --px-popover-shadow-color: rgba(0, 0, 0, 0.4);
+    --px-tooltip-bg-color: var(--px-text-color-primary);
+    --px-tooltip-border-color: var(--px-text-color-primary);
+    --px-tooltip-shadow-color: rgba(0, 0, 0, 0.4);
     color: var(--px-bg-color);
 
     &::after {
@@ -191,8 +191,8 @@
 /* Light tooltip variant */
 .px-tooltip--light {
   .px-tooltip__popper {
-    --px-popover-bg-color: var(--px-bg-color);
-    --px-popover-border-color: var(--px-border-color);
+    --px-tooltip-bg-color: var(--px-bg-color);
+    --px-tooltip-border-color: var(--px-border-color);
     color: var(--px-text-color-primary);
   }
 }
@@ -201,17 +201,17 @@
 @each $val in primary, success, info, warning, danger {
   .px-tooltip--$(val) {
     .px-tooltip__popper {
-      --px-popover-bg-color: var(--px-color-$(val));
-      --px-popover-border-color: var(--px-color-$(val)-dark);
-      --px-popover-shadow-color: var(--px-color-$(val)-dark);
+      --px-tooltip-bg-color: var(--px-color-$(val));
+      --px-tooltip-border-color: var(--px-color-$(val)-dark);
+      --px-tooltip-shadow-color: var(--px-color-$(val)-dark);
       color: #fff;
     }
   }
 
   .px-tooltip--$(val).px-tooltip--light {
     .px-tooltip__popper {
-      --px-popover-bg-color: var(--px-color-$(val)-light-9);
-      --px-popover-border-color: var(--px-color-$(val));
+      --px-tooltip-bg-color: var(--px-color-$(val)-light-9);
+      --px-tooltip-border-color: var(--px-color-$(val));
       color: var(--px-color-$(val));
     }
   }

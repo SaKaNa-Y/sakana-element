@@ -16,19 +16,40 @@
   text-decoration: none;
   transition: none;
 
-  &:hover {
-    color: var(--px-link-hover-color);
+  &.is-underline {
+    text-decoration: none;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--px-link-text-color) 0px,
+      var(--px-link-text-color) 4px,
+      transparent 4px,
+      transparent 8px
+    );
+    background-repeat: no-repeat;
+    background-position: bottom 0 left 0;
+    background-size: 100% 2px;
+    padding-bottom: 2px;
   }
 
-  &.is-underline {
-    text-decoration: underline;
-    text-underline-offset: 3px;
+  &:hover {
+    color: var(--px-link-hover-color);
+    transform: translate(-1px, -1px);
+  }
+
+  &:focus-visible {
+    outline: 2px dashed var(--px-color-primary);
+    outline-offset: 2px;
+  }
+
+  &:active {
+    transform: translate(1px, 1px);
   }
 
   &.is-disabled {
     opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;
+    outline: none;
   }
 }
 

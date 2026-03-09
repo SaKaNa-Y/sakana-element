@@ -36,11 +36,6 @@ const customColorStyle = computed(() => {
     :style="customColorStyle"
   >
     <slot />
-    <span
-      v-if="status"
-      class="px-avatar__indicator"
-      :class="`is-${status}`"
-    />
   </span>
 </template>
 

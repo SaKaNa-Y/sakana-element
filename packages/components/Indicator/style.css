@@ -1,0 +1,153 @@
+/* Indicator Variables */
+.px-indicator {
+  --px-indicator-bg-color: var(--px-color-primary);
+  --px-indicator-border-color: var(--px-color-primary-dark);
+  --px-indicator-shadow-color: var(--px-color-primary-dark);
+  --px-indicator-dot-size: 10px;
+  --px-indicator-offset-x: 0px;
+  --px-indicator-offset-y: 0px;
+}
+
+/* Base Container */
+.px-indicator {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+
+  &.is-inline {
+    display: inline-flex;
+  }
+}
+
+/* Indicator Item — absolutely positioned overlay */
+.px-indicator__item {
+  position: absolute;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  pointer-events: auto;
+  transition: none;
+}
+
+/* ─── Shared 9-position grid for item & ping ─── */
+
+.px-indicator__item--top-start,
+.px-indicator__item--top-center,
+.px-indicator__item--top-end,
+.px-indicator__ping--top-start,
+.px-indicator__ping--top-center,
+.px-indicator__ping--top-end {
+  top: 0;
+  --px-indicator-ty: -50%;
+}
+
+.px-indicator__item--middle-start,
+.px-indicator__item--middle-center,
+.px-indicator__item--middle-end,
+.px-indicator__ping--middle-start,
+.px-indicator__ping--middle-center,
+.px-indicator__ping--middle-end {
+  top: 50%;
+  --px-indicator-ty: -50%;
+}
+
+.px-indicator__item--bottom-start,
+.px-indicator__item--bottom-center,
+.px-indicator__item--bottom-end,
+.px-indicator__ping--bottom-start,
+.px-indicator__ping--bottom-center,
+.px-indicator__ping--bottom-end {
+  bottom: 0;
+  --px-indicator-ty: 50%;
+}
+
+.px-indicator__item--top-start,
+.px-indicator__item--middle-start,
+.px-indicator__item--bottom-start,
+.px-indicator__ping--top-start,
+.px-indicator__ping--middle-start,
+.px-indicator__ping--bottom-start {
+  left: 0;
+  --px-indicator-tx: -50%;
+}
+
+.px-indicator__item--top-center,
+.px-indicator__item--middle-center,
+.px-indicator__item--bottom-center,
+.px-indicator__ping--top-center,
+.px-indicator__ping--middle-center,
+.px-indicator__ping--bottom-center {
+  left: 50%;
+  --px-indicator-tx: -50%;
+}
+
+.px-indicator__item--top-end,
+.px-indicator__item--middle-end,
+.px-indicator__item--bottom-end,
+.px-indicator__ping--top-end,
+.px-indicator__ping--middle-end,
+.px-indicator__ping--bottom-end {
+  right: 0;
+  --px-indicator-tx: 50%;
+}
+
+/* Apply transform with offset */
+.px-indicator__item,
+.px-indicator__ping {
+  transform: translate(
+    calc(var(--px-indicator-tx, 0%) + var(--px-indicator-offset-x)),
+    calc(var(--px-indicator-ty, 0%) + var(--px-indicator-offset-y))
+  );
+}
+
+/* ─── Shared pixel staircase clip-path ─── */
+.px-indicator__item.is-dot,
+.px-indicator__ping {
+  width: var(--px-indicator-dot-size);
+  height: var(--px-indicator-dot-size);
+  background: var(--px-indicator-bg-color);
+  clip-path: polygon(
+    0 2px, 2px 2px, 2px 0,
+    calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+    100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+    2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+  );
+}
+
+/* ─── Dot mode ─── */
+.px-indicator__item.is-dot {
+  border: none;
+  filter: drop-shadow(1px 1px 0px var(--px-indicator-shadow-color));
+}
+
+/* ─── Processing ping animation ─── */
+.px-indicator__ping {
+  position: absolute;
+  z-index: 0;
+  opacity: 0.75;
+  pointer-events: none;
+  animation: px-indicator-ping 1.5s steps(4, end) infinite;
+}
+
+@keyframes px-indicator-ping {
+  0% {
+    scale: 1;
+    opacity: 0.75;
+  }
+  75%, 100% {
+    scale: 2;
+    opacity: 0;
+  }
+}
+
+/* ─── Type color variants ─── */
+@each $val in primary, success, info, warning, danger {
+  .px-indicator__item--$(val),
+  .px-indicator__ping--$(val) {
+    --px-indicator-bg-color: var(--px-color-$(val));
+    --px-indicator-border-color: var(--px-color-$(val)-dark);
+    --px-indicator-shadow-color: var(--px-color-$(val)-dark);
+  }
+}

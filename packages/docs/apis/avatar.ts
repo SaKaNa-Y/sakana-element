@@ -31,12 +31,6 @@ export const avatarApi: ApiSection[] = [
         type: 'string',
         desc: { zh: '自定义十六进制背景颜色', en: 'Custom hex background color' },
       },
-      {
-        name: 'status',
-        category: 'state',
-        type: "'online' | 'offline'",
-        desc: { zh: '状态指示器（不设置则隐藏）', en: 'Status indicator (hidden when not set)' },
-      },
     ],
   },
   {

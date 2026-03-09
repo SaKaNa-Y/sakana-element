@@ -65,6 +65,10 @@ const getDataItems = (lang: 'zh' | 'en') => [
     link: `/${lang}/components/badge`,
   },
   {
+    text: lang === 'zh' ? 'Indicator 指示器' : 'Indicator',
+    link: `/${lang}/components/indicator`,
+  },
+  {
     text: lang === 'zh' ? 'Avatar 头像' : 'Avatar',
     link: `/${lang}/components/avatar`,
   },

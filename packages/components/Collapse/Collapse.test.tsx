@@ -1,5 +1,5 @@
 import { DOMWrapper, mount, type VueWrapper } from '@vue/test-utils';
-import { beforeAll, describe, expect, test, vi } from 'vitest';
+import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { nextTick, ref } from 'vue';
 import Collapse from './Collapse.vue';
 import CollapseItem from './CollapseItem.vue';
@@ -17,7 +17,8 @@ let firstHeader: DOMWrapper<Element>,
   disabledContent: DOMWrapper<Element>;
 
 describe('Collapse.vue', () => {
-  beforeAll(() => {
+  beforeEach(() => {
+    onChange.mockClear();
     wrapper = mount(
       () => (
         <Collapse modelValue={['a']} {...{ onChange }}>
@@ -75,12 +76,14 @@ describe('Collapse.vue', () => {
     expect(firstContent.isVisible()).toBeFalsy();
     await secondHeader.trigger('click');
     expect(secondHeader.classes()).toContain('is-active');
-    expect(secondHeader.isVisible()).toBeTruthy();
+    expect(secondContent.isVisible()).toBeTruthy();
     expect(firstHeader.classes()).not.toContain('is-active');
     expect(firstContent.isVisible()).toBeFalsy();
   });
 
-  test('发送正确的事件', () => {
+  test('发送正确的事件', async () => {
+    await firstHeader.trigger('click');
+    await secondHeader.trigger('click');
     expect(onChange).toHaveBeenCalledTimes(2);
     expect(onChange).toHaveBeenCalledWith([]);
     expect(onChange).toHaveBeenLastCalledWith(['b']);
@@ -96,10 +99,33 @@ describe('Collapse.vue', () => {
   });
 
   test('modelValue 变更', async () => {
-    wrapper.setValue(['b'], 'modelValue');
-    await wrapper.vm.$nextTick();
-    expect(secondHeader.classes()).toContain('is-active');
-    expect(firstHeader.classes()).not.toContain('is-active');
+    const modelValue = ref<string[]>(['a']);
+    const w = mount(
+      () => (
+        <Collapse modelValue={modelValue.value} {...{ onChange }}>
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+          <CollapseItem name="b" title="title b">
+            content b
+          </CollapseItem>
+          <CollapseItem name="c" title="title c" disabled>
+            content c
+          </CollapseItem>
+        </Collapse>
+      ),
+      {
+        global: { stubs: ['PxIcon'] },
+        attachTo: document.body,
+      },
+    );
+
+    modelValue.value = ['b'];
+    await nextTick();
+
+    const h = w.findAll('.px-collapse-item__header');
+    expect(h[1].classes()).toContain('is-active');
+    expect(h[0].classes()).not.toContain('is-active');
   });
 
   test('手风琴模式', async () => {

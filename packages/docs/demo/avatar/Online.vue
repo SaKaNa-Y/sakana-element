@@ -1,7 +1,11 @@
 <template>
   <div class="demo-avatar">
-    <px-avatar status="online">AB</px-avatar>
-    <px-avatar status="offline">JD</px-avatar>
+    <px-indicator type="success" :offset="[-4, 4]">
+      <px-avatar>AB</px-avatar>
+    </px-indicator>
+    <px-indicator type="info" :offset="[-4, 4]">
+      <px-avatar>JD</px-avatar>
+    </px-indicator>
     <px-avatar>Px</px-avatar>
   </div>
 </template>

@@ -22,9 +22,9 @@
 
   .px-tooltip {
     /* 6px vertical clears staircase corners; 4px horizontal matches border inset */
-    --px-popover-padding: 6px 4px;
-    --px-popover-border-color: transparent;
-    --px-popover-shadow-color: transparent;
+    --px-tooltip-padding: 6px 4px;
+    --px-tooltip-border-color: transparent;
+    --px-tooltip-shadow-color: transparent;
     --px-shadow-offset-x: 0px;
     --px-shadow-offset-y: 0px;
 

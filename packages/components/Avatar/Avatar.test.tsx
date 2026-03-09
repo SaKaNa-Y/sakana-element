@@ -98,34 +98,6 @@ describe('Avatar.vue', () => {
     expect(style).not.toContain('--px-avatar-bg-color');
   });
 
-  // Status indicator
-  it('should show online indicator when status is online', () => {
-    const wrapper = mount(Avatar, {
-      props: { status: 'online' },
-      slots: { default: 'AB' },
-    });
-    const indicator = wrapper.find('.px-avatar__indicator');
-    expect(indicator.exists()).toBe(true);
-    expect(indicator.classes()).toContain('is-online');
-  });
-
-  it('should show offline indicator when status is offline', () => {
-    const wrapper = mount(Avatar, {
-      props: { status: 'offline' },
-      slots: { default: 'AB' },
-    });
-    const indicator = wrapper.find('.px-avatar__indicator');
-    expect(indicator.exists()).toBe(true);
-    expect(indicator.classes()).toContain('is-offline');
-  });
-
-  it('should not show indicator when status prop is not set', () => {
-    const wrapper = mount(Avatar, {
-      slots: { default: 'AB' },
-    });
-    expect(wrapper.find('.px-avatar__indicator').exists()).toBe(false);
-  });
-
   // Combination test
   it('should apply size + shape + border classes together', () => {
     const wrapper = mount(Avatar, {
