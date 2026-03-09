@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.3.0 (2026-03-09)
+
+* feat(checkbox): add PxCheckbox and PxCheckboxGroup components ([ac9c7e5](https://github.com/yu859/sakana-element/commit/ac9c7e5))
+* feat(components): add PxDivider and PxRadio components ([2c9ab95](https://github.com/yu859/sakana-element/commit/2c9ab95))
+* feat(indicator): add PxIndicator component and extract status dot from Avatar ([401f37f](https://github.com/yu859/sakana-element/commit/401f37f))
+* feat(pixelate,select): add PxPixelate component and fix Select arrow centering ([d8717e1](https://github.com/yu859/sakana-element/commit/d8717e1))
+* feat(tooltip, drawer): enhance Tooltip variants and add Drawer component ([d0d527c](https://github.com/yu859/sakana-element/commit/d0d527c))
+* fix(message,progress): fix test regressions, typo, and docs inconsistencies ([2a18196](https://github.com/yu859/sakana-element/commit/2a18196))
+* docs: rewrite landing pages and READMEs with full feature coverage ([bd6adfd](https://github.com/yu859/sakana-element/commit/bd6adfd))
+* fix(table): fix full-width layout and enhance pixel border style ([2bd50ca](https://github.com/yu859/sakana-element/commit/2bd50ca))
+
 ## 2.2.0 (2026-02-26)
 
 * feat(card,form,loading): add card variants, migrate form to zod, add LoadingIndicator ([d6bef4c](https://github.com/yu859/sakana-element/commit/d6bef4c))

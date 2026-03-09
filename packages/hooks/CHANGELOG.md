@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.3.0 (2026-03-09)
+
+* feat(messagebox): add draggable, focus trap, input validation, and enhanced close controls ([0c7532a](https://github.com/yu859/sakana-element/commit/0c7532a))
+
 ## 2.2.0 (2026-02-26)
 
 * fix: fix typos, suppress test warnings, and improve test coverage ([37d5fbe](https://github.com/yu859/sakana-element/commit/37d5fbe))
