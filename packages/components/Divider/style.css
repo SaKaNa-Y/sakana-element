@@ -1,0 +1,161 @@
+/* Divider Variables */
+.px-divider {
+  --px-divider-line-color: var(--px-border-color);
+  --px-divider-text-color: var(--px-text-color-regular);
+}
+
+/* Base Divider – Horizontal */
+.px-divider {
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+  font-family: var(--px-font-family);
+  font-size: var(--px-font-size-small);
+  color: var(--px-divider-text-color);
+
+  &::before,
+  &::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    /* Pixel-textured line: 2px on / 2px off */
+    background: repeating-linear-gradient(
+      to right,
+      var(--px-divider-line-color) 0px,
+      var(--px-divider-line-color) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+  }
+
+  /* Vertical mode */
+  &.is-vertical {
+    display: inline-flex;
+    flex-direction: column;
+    height: 1em;
+    margin: 0 8px;
+    vertical-align: middle;
+
+    &::before,
+    &::after {
+      flex: 1;
+      width: 2px;
+      height: auto;
+      /* Vertical pixel-textured line */
+      background: repeating-linear-gradient(
+        to bottom,
+        var(--px-divider-line-color) 0px,
+        var(--px-divider-line-color) 2px,
+        transparent 2px,
+        transparent 4px
+      );
+    }
+  }
+}
+
+/* Content text – pixel-art badge styling */
+.px-divider__text {
+  position: relative;
+  padding: 2px 12px;
+  white-space: nowrap;
+  line-height: 1;
+
+  /* Pixel-corner border behind text */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--px-divider-line-color);
+    opacity: 0.15;
+    clip-path: polygon(
+      0 2px,
+      2px 2px,
+      2px 0,
+      calc(100% - 2px) 0,
+      calc(100% - 2px) 2px,
+      100% 2px,
+      100% calc(100% - 2px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 2px) 100%,
+      2px 100%,
+      2px calc(100% - 2px),
+      0 calc(100% - 2px)
+    );
+    z-index: -1;
+  }
+}
+
+/* Content position */
+.px-divider--left {
+  &::before {
+    flex: 0 0 5%;
+  }
+}
+
+.px-divider--right {
+  &::after {
+    flex: 0 0 5%;
+  }
+}
+
+/* Border style – dashed (pixel pattern) */
+.px-divider--dashed {
+  &::before,
+  &::after {
+    background: repeating-linear-gradient(
+      to right,
+      var(--px-divider-line-color) 0px,
+      var(--px-divider-line-color) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+  }
+
+  &.is-vertical {
+    &::before,
+    &::after {
+      background: repeating-linear-gradient(
+        to bottom,
+        var(--px-divider-line-color) 0px,
+        var(--px-divider-line-color) 6px,
+        transparent 6px,
+        transparent 12px
+      );
+    }
+  }
+}
+
+/* Border style – dotted (pixel pattern) */
+.px-divider--dotted {
+  &::before,
+  &::after {
+    background: repeating-linear-gradient(
+      to right,
+      var(--px-divider-line-color) 0px,
+      var(--px-divider-line-color) 2px,
+      transparent 2px,
+      transparent 6px
+    );
+  }
+
+  &.is-vertical {
+    &::before,
+    &::after {
+      background: repeating-linear-gradient(
+        to bottom,
+        var(--px-divider-line-color) 0px,
+        var(--px-divider-line-color) 2px,
+        transparent 2px,
+        transparent 6px
+      );
+    }
+  }
+}
+
+/* Type variants */
+@each $val in primary, success, info, warning, danger {
+  .px-divider--$(val) {
+    --px-divider-line-color: var(--px-color-$(val));
+    --px-divider-text-color: var(--px-color-$(val));
+  }
+}

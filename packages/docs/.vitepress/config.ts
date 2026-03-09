@@ -42,6 +42,10 @@ const getFormItems = (lang: 'zh' | 'en') => [
     link: `/${lang}/components/checkbox`,
   },
   {
+    text: lang === 'zh' ? 'Radio 单选框' : 'Radio',
+    link: `/${lang}/components/radio`,
+  },
+  {
     text: lang === 'zh' ? 'Switch 开关' : 'Switch',
     link: `/${lang}/components/switch`,
   },
@@ -95,6 +99,10 @@ const getDataItems = (lang: 'zh' | 'en') => [
 ];
 
 const getLayoutItems = (lang: 'zh' | 'en') => [
+  {
+    text: lang === 'zh' ? 'Divider 分割线' : 'Divider',
+    link: `/${lang}/components/divider`,
+  },
   {
     text: lang === 'zh' ? 'Drawer 抽屉' : 'Drawer',
     link: `/${lang}/components/drawer`,

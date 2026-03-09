@@ -1,0 +1,210 @@
+/* Radio Variables */
+.px-radio {
+  --px-radio-size: 18px;
+  --px-radio-checked-color: var(--px-color-primary);
+  --px-radio-checked-border-color: var(--px-color-primary-dark);
+  --px-radio-border-color: var(--px-border-color);
+  --px-radio-bg-color: var(--px-fill-color-blank);
+  --px-radio-shadow-color: var(--px-shadow-color);
+}
+
+/* Base Radio Styles */
+.px-radio {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--px-font-size-base);
+  font-family: var(--px-font-family);
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+
+  /* Disabled state */
+  &.is-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    .px-radio__inner {
+      cursor: not-allowed;
+    }
+  }
+
+  /* Checked state */
+  &.is-checked {
+    .px-radio__inner {
+      &::before {
+        background: var(--px-radio-checked-border-color);
+      }
+      &::after {
+        background: var(--px-radio-checked-color);
+      }
+
+      .px-radio__dot {
+        opacity: 1;
+      }
+    }
+
+    .px-radio__input {
+      filter: drop-shadow(
+        var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-radio-checked-border-color)
+      );
+    }
+  }
+}
+
+/* Size variants */
+.px-radio--large {
+  --px-radio-size: 22px;
+  font-size: var(--px-font-size-base);
+
+  .px-radio__dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+.px-radio--small {
+  --px-radio-size: 14px;
+  font-size: var(--px-font-size-small);
+
+  .px-radio__input {
+    filter: drop-shadow(2px 2px 0px var(--px-radio-shadow-color));
+  }
+
+  .px-radio__dot {
+    width: 4px;
+    height: 4px;
+  }
+
+  &.is-checked .px-radio__input {
+    filter: drop-shadow(2px 2px 0px var(--px-radio-checked-border-color));
+  }
+}
+
+/* Hidden native input */
+.px-radio__original {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  margin: 0;
+  outline: none;
+
+  &:focus-visible ~ .px-radio__inner {
+    outline: 2px dashed var(--px-radio-checked-color);
+    outline-offset: 2px;
+  }
+}
+
+/* Input wrapper */
+.px-radio__input {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  /* Pixel shadow via drop-shadow */
+  filter: drop-shadow(
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-radio-shadow-color)
+  );
+}
+
+/* The pixel-art radio — diamond shape with 2px stepped edges */
+.px-radio__inner {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--px-radio-size);
+  height: var(--px-radio-size);
+  box-sizing: border-box;
+  background: transparent;
+
+  /* Pixel diamond clip-path: 2px staircase steps */
+  --px-radio-pixel-shape: polygon(
+    /* Top point */
+    calc(50% - 2px) 0,
+    calc(50% + 2px) 0,
+    /* Top-right stepped edge */
+    calc(100% - 4px) calc(50% - 4px),
+    calc(100% - 2px) calc(50% - 2px),
+    100% calc(50% - 2px),
+    100% calc(50% + 2px),
+    calc(100% - 2px) calc(50% + 2px),
+    calc(100% - 4px) calc(50% + 4px),
+    /* Bottom point */
+    calc(50% + 2px) 100%,
+    calc(50% - 2px) 100%,
+    /* Bottom-left stepped edge */
+    4px calc(50% + 4px),
+    2px calc(50% + 2px),
+    0 calc(50% + 2px),
+    0 calc(50% - 2px),
+    2px calc(50% - 2px),
+    4px calc(50% - 4px)
+  );
+
+  /* Border layer – pixel diamond */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--px-radio-border-color);
+    clip-path: var(--px-radio-pixel-shape);
+    z-index: 0;
+  }
+
+  /* Fill layer – pixel diamond */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: var(--px-radio-bg-color);
+    clip-path: var(--px-radio-pixel-shape);
+    z-index: 0;
+  }
+}
+
+/* Pixel dot indicator — small diamond */
+.px-radio__dot {
+  position: relative;
+  z-index: 1;
+  width: 6px;
+  height: 6px;
+  opacity: 0;
+  background: var(--px-fill-color-blank);
+  /* Simple 4-point diamond at small size */
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+}
+
+/* Label */
+.px-radio__label {
+  padding-left: 8px;
+  font-family: var(--px-font-family);
+  font-size: inherit;
+  line-height: 1.2;
+  color: var(--px-text-color-primary);
+}
+
+/* Type variants */
+@each $val in primary, success, info, warning, danger {
+  .px-radio--$(val) {
+    --px-radio-checked-color: var(--px-color-$(val));
+    --px-radio-checked-border-color: var(--px-color-$(val)-dark);
+  }
+
+  .px-radio--$(val).is-checked .px-radio__input {
+    filter: drop-shadow(
+      var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-color-$(val)-dark)
+    );
+  }
+}
+
+/* Radio Group */
+.px-radio-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
