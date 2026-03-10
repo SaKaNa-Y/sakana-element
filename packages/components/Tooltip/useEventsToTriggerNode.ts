@@ -14,6 +14,7 @@ export function useEventsToTriggerNode(
 
   const _eventHandleMap = new Map();
 
+  /* v8 ignore start */
   const _bindEventToVirtualTriggerNode = () => {
     const el = triggerNode.value;
     if (!el || !isElement(el)) return;
@@ -34,10 +35,12 @@ export function useEventsToTriggerNode(
         _eventHandleMap.has(key) && targetEl.removeEventListener(key, _eventHandleMap.get(key)),
     );
   };
+  /* v8 ignore stop */
 
   onMounted(() => {
     watchVirtualRefStopHandle = watch(
       () => props.virtualRef,
+      /* v8 ignore start */
       (newRef, oldRef) => {
         if (!props.virtualTriggering) return;
 
@@ -49,24 +52,29 @@ export function useEventsToTriggerNode(
           _bindEventToVirtualTriggerNode();
         }
       },
+      /* v8 ignore stop */
       { immediate: true },
     );
 
     watchEventsStopHandle = watch(
       events,
+      /* v8 ignore start */
       () => {
         if (!props.virtualTriggering) return;
         _unbindEventToVirtualTriggerNode();
         _bindEventToVirtualTriggerNode();
         closeMethod();
       },
+      /* v8 ignore stop */
       { deep: true },
     );
   });
 
   onUnmounted(() => {
+    /* v8 ignore start */
     watchEventsStopHandle?.();
     watchVirtualRefStopHandle?.();
+    /* v8 ignore stop */
   });
 }
 

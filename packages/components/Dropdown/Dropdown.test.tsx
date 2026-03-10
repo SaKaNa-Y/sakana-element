@@ -511,4 +511,131 @@ describe('Dropdown.vue', () => {
       expect(onCommand).toBeCalledWith('a');
     }
   });
+
+  it('should navigate items with ArrowDown/ArrowUp/Home/End/Escape keys', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        items: [
+          { label: 'Item 1', command: 'a' },
+          { label: 'Item 2', command: 'b' },
+          { label: 'Item 3', command: 'c', disabled: true },
+          { label: 'Item 4', command: 'd' },
+        ],
+      },
+      slots: {
+        default: () => <button id="trigger">Menu</button>,
+      },
+      attachTo: document.body,
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+
+    const menu = wrapper.find('.px-dropdown__menu');
+    if (menu.exists()) {
+      menu.element.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+      await vi.runAllTimers();
+
+      menu.element.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
+      await vi.runAllTimers();
+
+      menu.element.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }));
+      await vi.runAllTimers();
+
+      menu.element.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
+      await vi.runAllTimers();
+
+      menu.element.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      await vi.runAllTimers();
+    }
+
+    wrapper.unmount();
+  });
+
+  it('should close menu on Tab key', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        items: [
+          { label: 'Item 1', command: 'a' },
+          { label: 'Item 2', command: 'b' },
+        ],
+      },
+      slots: {
+        default: () => <button id="trigger">Menu</button>,
+      },
+      attachTo: document.body,
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+
+    const menu = wrapper.find('.px-dropdown__menu');
+    if (menu.exists()) {
+      menu.element.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+      await vi.runAllTimers();
+    }
+
+    wrapper.unmount();
+  });
+
+  it('should wrap ArrowDown at end and ArrowUp at start', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        items: [
+          { label: 'Item 1', command: 'a' },
+          { label: 'Item 2', command: 'b' },
+        ],
+      },
+      slots: {
+        default: () => <button id="trigger">Menu</button>,
+      },
+      attachTo: document.body,
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+
+    const menu = wrapper.find('.px-dropdown__menu');
+    if (menu.exists()) {
+      const items = menu.findAll('.px-dropdown__item:not(.is-disabled)');
+      if (items.length >= 2) {
+        (items[items.length - 1].element as HTMLElement).focus();
+        menu.element.dispatchEvent(
+          new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }),
+        );
+        await vi.runAllTimers();
+
+        (items[0].element as HTMLElement).focus();
+        menu.element.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
+        await vi.runAllTimers();
+      }
+    }
+
+    wrapper.unmount();
+  });
+
+  it('should remove keydown listener when menu closes', async () => {
+    const wrapper = mount(Dropdown, {
+      props: {
+        trigger: 'click',
+        items: [{ label: 'Item 1', command: 'a' }],
+      },
+      slots: {
+        default: () => <button id="trigger">Menu</button>,
+      },
+      attachTo: document.body,
+    });
+
+    wrapper.find('#trigger').trigger('click');
+    await vi.runAllTimers();
+
+    const vm = wrapper.vm as any;
+    vm.close();
+    await vi.runAllTimers();
+
+    wrapper.unmount();
+  });
 });

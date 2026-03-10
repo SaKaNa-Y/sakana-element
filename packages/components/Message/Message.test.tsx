@@ -179,6 +179,26 @@ describe('Message', () => {
     expect(document.querySelectorAll('.px-message').length).toBeLessThanOrEqual(2);
   });
 
+  test('message with empty string should not render vnode', async () => {
+    message({ message: '', duration: 0, transitionName: '' });
+    await rAF();
+    const el = document.querySelector('.px-message');
+    expect(el).toBeTruthy();
+    const content = el?.querySelector('.px-message__content');
+    expect(content?.children.length).toBe(0);
+  });
+
+  test('calling handler.close() twice should not throw', async () => {
+    const handler = message({ message: 'double close', duration: 0, transitionName: '' });
+    await rAF();
+    handler.close();
+    await rAF();
+    await rAF();
+    expect(() => handler.close()).not.toThrow();
+    await rAF();
+    await rAF();
+  });
+
   test('type shortcuts warning', async () => {
     message.warning!({ message: 'w', duration: 0, transitionName: '' });
     await rAF();

@@ -319,6 +319,35 @@ describe('FileInput.vue', () => {
   });
 });
 
+describe('FileInput edge cases', () => {
+  test('change event with null files emits null', async () => {
+    const wrapper = mount(FileInput);
+    const input = wrapper.find<HTMLInputElement>('input[type="file"]');
+    // Simulate change event where target.files is null (line 48: target.files ?? null)
+    Object.defineProperty(input.element, 'files', {
+      value: null,
+      writable: false,
+      configurable: true,
+    });
+    await input.trigger('change');
+    expect(wrapper.emitted('update:modelValue')).toBeTruthy();
+    expect(wrapper.emitted('update:modelValue')![0][0]).toBeNull();
+  });
+
+  test('exposed clear() resets input value', async () => {
+    const wrapper = mount(FileInput);
+    const file = new File(['content'], 'test.txt', { type: 'text/plain' });
+    await selectFiles(wrapper, [file]);
+    expect(wrapper.find('.px-file-input__name').text()).toBe('test.txt');
+
+    // Call exposed clear() method (line 60-64)
+    (wrapper.vm as any).clear();
+    await wrapper.vm.$nextTick();
+    expect(wrapper.find('.px-file-input__name').text()).toBe('No file chosen');
+    expect(wrapper.emitted('clear')).toBeTruthy();
+  });
+});
+
 describe('FileInput/index', () => {
   test('should be exported with withInstall()', () => {
     expect(PxFileInput.install).toBeDefined();

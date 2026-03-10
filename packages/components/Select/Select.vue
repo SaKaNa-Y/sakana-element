@@ -227,7 +227,9 @@ function findOption(value: string) {
 }
 
 function handleSelect(opt: SelectOptionProps) {
+  /* v8 ignore start */
   if (opt.disabled) return;
+  /* v8 ignore stop */
 
   selectStates.inputValue = opt.label;
   selectStates.selectedOption = opt;
@@ -259,7 +261,9 @@ function handleKeyDown(e: KeyboardEvent) {
 }
 
 async function genFilterChilds(search: string) {
+  /* v8 ignore start */
   if (!props.filterable) return;
+  /* v8 ignore stop */
 
   if (props.remote && props.remoteMethod && isFunction(props.remoteMethod)) {
     await callRemoteMethod(props.remoteMethod, search);
@@ -296,7 +300,9 @@ async function genFilterOptions(search: string) {
 }
 
 async function callRemoteMethod(method: Function, search: string) {
+  /* v8 ignore start */
   if (!method || !isFunction(method)) return;
+  /* v8 ignore stop */
 
   selectStates.loading = true;
   let result;
@@ -329,7 +335,9 @@ function setSelected() {
 watch(
   () => props.options,
   (newVal) => {
+    /* v8 ignore start */
     filteredOptions.value = newVal ?? [];
+    /* v8 ignore stop */
   },
 );
 

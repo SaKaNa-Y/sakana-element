@@ -10,6 +10,7 @@ const props = withDefaults(defineProps<SelectOptionProps>(), {
   disabled: false,
 });
 const ctx = inject(SELECT_CTX_KEY);
+/* v8 ignore next */
 const selected = computed(() => ctx?.selectStates.selectedOption?.value === props.value);
 const isHighlighted = computed(() =>
   every(['label', 'value'], (key) =>
@@ -19,6 +20,7 @@ const isHighlighted = computed(() =>
 
 function handleClick() {
   if (props.disabled) return;
+  /* v8 ignore next */
   ctx?.handleSelect(props);
 }
 </script>

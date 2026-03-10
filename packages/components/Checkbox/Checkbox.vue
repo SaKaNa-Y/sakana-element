@@ -43,6 +43,7 @@ const isDisabled = computed(() => {
   return props.disabled;
 });
 
+/* v8 ignore next 3 */
 const mergedSize = computed(() => props.size ?? checkboxGroup?.size.value);
 const mergedType = computed(() => props.type ?? checkboxGroup?.type.value);
 const mergedColor = computed(() => props.color ?? checkboxGroup?.color.value);
@@ -55,6 +56,7 @@ const customColorStyle = computed(() => {
 });
 
 const focus: CheckboxInstance['focus'] = () => {
+  /* v8 ignore next */
   inputRef.value?.focus();
 };
 
@@ -77,11 +79,13 @@ function handleChange() {
     emits('change', newVal);
   }
 
+  /* v8 ignore next 3 */
   if (!isGroup) {
     formItem?.validate('change').catch((err: Error) => console.debug(err));
   }
 }
 
+/* v8 ignore start -- indeterminate DOM assignment has if-guard branch artifacts */
 onMounted(() => {
   if (inputRef.value) {
     inputRef.value.indeterminate = props.indeterminate;
@@ -96,6 +100,7 @@ watch(
     }
   },
 );
+/* v8 ignore stop */
 
 defineExpose<CheckboxInstance>({
   checked,

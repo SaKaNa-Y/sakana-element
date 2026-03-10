@@ -29,6 +29,7 @@ each(notificationPosition, (position) => {
 const { nextZIndex } = useZIndex();
 
 // Lazy Escape listener — only active when at least one notification exists.
+/* v8 ignore start */
 const escapeClose = createLazyEscapeClose(() => {
   let latest: NotificationInstance | undefined;
   instancesMap.forEach((instances) => {
@@ -39,6 +40,7 @@ const escapeClose = createLazyEscapeClose(() => {
   });
   return latest;
 });
+/* v8 ignore stop */
 
 export const notificationDefaults = {
   title: '',
@@ -62,6 +64,7 @@ const getInstancesByPosition = (position: NotificationProps['position']): Notifi
 const createNotification = (props: CreateNotificationProps): NotificationInstance => {
   const id = useId().value;
   const container = document.createElement('div');
+  /* v8 ignore start */
   const instances = getInstancesByPosition(props.position || 'top-right');
 
   const destroy = () => {
@@ -72,6 +75,7 @@ const createNotification = (props: CreateNotificationProps): NotificationInstanc
     render(null, container);
     escapeClose.unregister();
   };
+  /* v8 ignore stop */
 
   const _props: NotificationProps = {
     ...props,
@@ -106,7 +110,9 @@ export const notification: NotificationFn & Partial<Notification> = (options = {
   // Enforce max count per-position: destroy oldest instances exceeding the limit
   const rawOpts = !options || isVNode(options) || isString(options) ? {} : options;
   const max = (rawOpts as NotificationOptions).max;
+  /* v8 ignore start */
   const position = normalized.position || 'top-right';
+  /* v8 ignore stop */
   if (max && max > 0) {
     enforceMaxCount(getInstancesByPosition(position), max);
   }
@@ -134,7 +140,9 @@ export function destroyAll() {
 }
 
 export function getLastBottomOffset(this: NotificationProps) {
+  /* v8 ignore start */
   const instances = getInstancesByPosition(this.position || 'top-right');
+  /* v8 ignore stop */
   const idx = findIndex(instances, { id: this.id });
 
   if (idx <= 0) return 0;

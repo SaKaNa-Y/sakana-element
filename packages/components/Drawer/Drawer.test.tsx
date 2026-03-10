@@ -340,6 +340,37 @@ describe('Drawer.vue', () => {
     wrapper.unmount();
   });
 
+  it('should not emit when open() called while already open', async () => {
+    const wrapper = mount(Drawer, {
+      props: { modelValue: true },
+      slots: { default: 'Content', sidebar: 'Sidebar' },
+      attachTo: document.body,
+    });
+    await vi.runAllTimers();
+    await nextTick();
+
+    (wrapper.vm as any).open();
+    await vi.runAllTimers();
+
+    expect(wrapper.emitted('update:modelValue')).toBeFalsy();
+    wrapper.unmount();
+  });
+
+  it('should not emit when close() called while already closed', async () => {
+    const wrapper = mount(Drawer, {
+      props: { modelValue: false },
+      slots: { default: 'Content', sidebar: 'Sidebar' },
+      attachTo: document.body,
+    });
+    await vi.runAllTimers();
+
+    (wrapper.vm as any).close();
+    await vi.runAllTimers();
+
+    expect(wrapper.emitted('update:modelValue')).toBeFalsy();
+    wrapper.unmount();
+  });
+
   // Title header
   it('should render header with title when title prop is set', async () => {
     const wrapper = mount(Drawer, {

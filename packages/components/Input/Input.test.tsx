@@ -385,6 +385,41 @@ describe('Input.vue', () => {
   });
 });
 
+describe('Input textarea ref fallback', () => {
+  test('should focus textarea when type is textarea', async () => {
+    const wrapper = mount(Input, {
+      props: { modelValue: '', type: 'textarea' },
+      attachTo: document.body,
+    });
+    const vm = wrapper.vm as any;
+    await vm.focus();
+    const textarea = wrapper.find('textarea');
+    expect(textarea.exists()).toBe(true);
+    wrapper.unmount();
+  });
+
+  test('should blur textarea when type is textarea', async () => {
+    const wrapper = mount(Input, {
+      props: { modelValue: '', type: 'textarea' },
+      attachTo: document.body,
+    });
+    const vm = wrapper.vm as any;
+    await vm.focus();
+    vm.blur();
+    wrapper.unmount();
+  });
+
+  test('should select textarea when type is textarea', async () => {
+    const wrapper = mount(Input, {
+      props: { modelValue: 'hello', type: 'textarea' },
+      attachTo: document.body,
+    });
+    const vm = wrapper.vm as any;
+    vm.select();
+    wrapper.unmount();
+  });
+});
+
 describe('Input/index', () => {
   test('should be exported with withInstall()', () => {
     expect(PxInput.install).toBeDefined();

@@ -242,6 +242,24 @@ describe('Loading', () => {
     target.remove();
   });
 
+  it('should not render spinner when spinner is false', async () => {
+    const instance = Loading({ spinner: false });
+    await rAF();
+    const el = document.querySelector('.px-loading');
+    expect(el?.querySelector('.px-loading-indicator')).toBeFalsy();
+    instance.close();
+    await rAF();
+    await rAF();
+  });
+
+  it('should support beforeClose option', async () => {
+    const instance = Loading({ beforeClose: () => true });
+    await rAF();
+    instance.close();
+    await rAF();
+    await rAF();
+  });
+
   it('should support visible option', async () => {
     const instance = Loading({ visible: true });
     await nextTick();
@@ -318,6 +336,32 @@ describe('Loading directive', () => {
     await nextTick();
     await rAF();
     await rAF();
+
+    wrapper.unmount();
+  });
+
+  it('should be no-op when v-loading value stays the same', async () => {
+    const loading = ref(true);
+    const Comp = defineComponent({
+      directives: { loading: vLoading },
+      setup() {
+        return () => (
+          <div v-loading={loading.value} style="width:100px;height:100px">
+            Content
+          </div>
+        );
+      },
+    });
+    const wrapper = mount(Comp, { attachTo: document.body });
+    await nextTick();
+    await rAF();
+    expect(wrapper.element.querySelector('.px-loading')).toBeTruthy();
+
+    // Re-render with same value — should be no-op (oldValue === value guard at line 50)
+    loading.value = true;
+    await nextTick();
+    await rAF();
+    expect(wrapper.element.querySelector('.px-loading')).toBeTruthy();
 
     wrapper.unmount();
   });

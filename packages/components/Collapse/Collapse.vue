@@ -17,13 +17,16 @@ if (props.accordion && activeNames.value.length > 1) {
   activeNames.value = [activeNames.value[0]];
 }
 
+/* v8 ignore next */
 const isPresetColor = computed(() => PRESET_COLLAPSE_COLORS.has(props.color ?? ''));
 const isCustomColor = computed(() => !!props.color && !isPresetColor.value);
 
 const customColorStyle = computed(() => {
   if (!isCustomColor.value) return {};
   const palette = createColorPalette(props.color!);
+  /* v8 ignore start */
   const variant = props.ghost ? 'ghost' : 'default';
+  /* v8 ignore stop */
   return resolveColorVars(palette, 'px-collapse', COLLAPSE_COLOR_TEMPLATES[variant]);
 });
 

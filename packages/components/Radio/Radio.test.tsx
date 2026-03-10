@@ -278,6 +278,33 @@ describe('RadioGroup.vue', () => {
   });
 });
 
+describe('RadioGroup changeEvent coverage', () => {
+  it('should trigger group changeEvent when clicking unselected radio in group', async () => {
+    const wrapper = mount(RadioGroup, {
+      props: { modelValue: 'a' },
+      slots: {
+        default: () => [<Radio value="a" label="A" />, <Radio value="b" label="B" />],
+      },
+    });
+    const radios = wrapper.findAll('.px-radio');
+    // Click 'b' — triggers the isGroup branch in handleChange and calls radioGroup.changeEvent
+    await radios[1].trigger('click');
+    expect(wrapper.emitted()['update:modelValue'][0]).toEqual(['b']);
+    expect(wrapper.emitted().change[0]).toEqual(['b']);
+  });
+
+  it('should inherit name from group', () => {
+    const wrapper = mount(RadioGroup, {
+      props: { modelValue: 'a', name: 'test-radio-group' },
+      slots: {
+        default: () => [<Radio value="a" label="A" />],
+      },
+    });
+    const input = wrapper.find('input[type="radio"]');
+    expect(input.attributes('name')).toBe('test-radio-group');
+  });
+});
+
 describe('Radio/index', () => {
   it('PxRadio should be exported with withInstall()', () => {
     expect(PxRadio.install).toBeDefined();

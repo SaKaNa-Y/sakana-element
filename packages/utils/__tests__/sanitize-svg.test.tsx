@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { sanitizeSvg } from '../sanitize-svg';
 
@@ -66,5 +66,17 @@ describe('sanitizeSvg', () => {
     expect(result).toContain('g');
     expect(result).toContain('rect');
     expect(result).toContain('circle');
+  });
+
+  it('should return empty string when DOMParser is undefined', () => {
+    const original = globalThis.DOMParser;
+    vi.stubGlobal('DOMParser', undefined);
+    expect(sanitizeSvg('<svg><rect/></svg>')).toBe('');
+    vi.stubGlobal('DOMParser', original);
+  });
+
+  it('should return empty string for malformed XML (parsererror)', () => {
+    const result = sanitizeSvg('<svg><<<<not valid xml');
+    expect(result).toBe('');
   });
 });

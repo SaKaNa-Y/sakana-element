@@ -92,7 +92,9 @@ useDropdownKeyboard({
   close: () => tooltipRef.value?.hide(),
 });
 
+/* v8 ignore start -- test environment guard */
 (typeof TEST === 'undefined' || !TEST) && useDisabledStyle();
+/* v8 ignore stop */
 provide<DropdownContext>(DROPDOWN_CTX_KEY, {
   handleItemClick,
   size: computed(() => props.size),

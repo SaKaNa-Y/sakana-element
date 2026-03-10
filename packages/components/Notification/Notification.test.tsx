@@ -308,4 +308,71 @@ describe('Notification', () => {
     const el = document.querySelector('.px-notification');
     expect(el).toBeTruthy();
   });
+
+  test('showClose=false hides close button', async () => {
+    testNotify({
+      title: 'Test',
+      message: 'no close btn',
+      duration: 0,
+      showClose: false,
+    });
+    await rAF();
+    const el = document.querySelector('.px-notification');
+    expect(el).toBeTruthy();
+    expect(el?.querySelector('.px-notification__close')).toBeFalsy();
+    expect(el?.classList.contains('show-close')).toBe(false);
+  });
+
+  test('iconName defaults to circle-info without type/icon', async () => {
+    testNotify({
+      title: 'Test',
+      message: 'default icon',
+      duration: 0,
+    });
+    await rAF();
+    const el = document.querySelector('.px-notification');
+    expect(el?.querySelector('.px-notification__icon')).toBeTruthy();
+  });
+
+  test('notification without message does not render vnode', async () => {
+    testNotify({
+      title: 'Only title',
+      duration: 0,
+    });
+    await rAF();
+    const el = document.querySelector('.px-notification');
+    expect(el).toBeTruthy();
+    expect(el?.querySelector('.px-notification__title')?.textContent).toContain('Only title');
+  });
+
+  test('max count per-position with bottom-left', async () => {
+    testNotify({ title: 'T', message: '1', duration: 0, max: 2, position: 'bottom-left' });
+    testNotify({ title: 'T', message: '2', duration: 0, max: 2, position: 'bottom-left' });
+    testNotify({ title: 'T', message: '3', duration: 0, max: 2, position: 'bottom-left' });
+    await rAF();
+    const els = document.querySelectorAll('.px-notification');
+    expect(els.length).toBeLessThanOrEqual(2);
+  });
+
+  test('multiple notifications at different positions', async () => {
+    testNotify({ title: 'T', message: 'tr', duration: 0, position: 'top-right' });
+    testNotify({ title: 'T', message: 'bl', duration: 0, position: 'bottom-left' });
+    await rAF();
+    expect(document.querySelectorAll('.px-notification').length).toBe(2);
+  });
+
+  test('double close should not throw', async () => {
+    const handler = testNotify({ title: 'T', message: 'double', duration: 0 });
+    await rAF();
+    handler.close();
+    await rAF();
+    await rAF();
+    expect(() => handler.close()).not.toThrow();
+  });
+
+  test('getLastBottomOffset returns 0 for first notification', async () => {
+    testNotify({ title: 'T', message: 'first', duration: 0, position: 'top-left' });
+    await rAF();
+    expect(document.querySelector('.px-notification')).toBeTruthy();
+  });
 });

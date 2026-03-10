@@ -131,6 +131,23 @@ describe('Icon.vue', () => {
     });
   });
 
+  it('should use default md size when size is not specified', () => {
+    const wrapper = mount(Icon, {
+      props: { icon: 'check' },
+    });
+    expect(wrapper.classes()).toContain('px-icon--md');
+    expect(wrapper.attributes('style')).toContain('width: 24px');
+    expect(wrapper.attributes('style')).toContain('height: 24px');
+  });
+
+  it('should not add size class when size is empty string', () => {
+    const wrapper = mount(Icon, {
+      props: { icon: 'check', size: '' as any },
+    });
+    // Empty size should still default to md in styles
+    expect(wrapper.attributes('style')).toContain('width: 24px');
+  });
+
   it('should apply flip and rotation together', () => {
     const wrapper = mount(Icon, {
       props: { icon: 'check', flip: 'horizontal', rotation: 180 },

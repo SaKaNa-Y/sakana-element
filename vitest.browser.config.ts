@@ -24,6 +24,7 @@ export default defineConfig({
     },
     coverage: {
       provider: 'v8',
+      reporter: ['text', 'json-summary'],
       include: ['packages/components/**/*.{ts,vue}'],
       exclude: [
         'packages/components/**/*.test.tsx',

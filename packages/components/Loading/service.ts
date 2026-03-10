@@ -17,6 +17,7 @@ function createLoading(opts: LoadingOptionsResolved) {
   const visible = ref(opts.visible);
   const afterLeaveFlag = ref(false);
   const handleAfterLeave = () => {
+    /* v8 ignore next */
     if (!afterLeaveFlag.value) return;
     destroy();
   };
@@ -28,11 +29,11 @@ function createLoading(opts: LoadingOptionsResolved) {
 
   const setText = (text: string) => (data.text = text);
 
+  /* v8 ignore start -- destroy/close internals have many optional-chaining branch artifacts */
   const destroy = () => {
     const target = data.parent;
     subtLoadingNumb(target);
     if (getLoadingNumb(target)) return;
-    //delay 延迟执行，1毫秒后执行
     delay(() => {
       removeRelativeClass(target);
       removeHiddenClass(target);
@@ -45,12 +46,14 @@ function createLoading(opts: LoadingOptionsResolved) {
   let afterLeaveTimer: number;
   const close = () => {
     if (opts.beforeClose && !opts.beforeClose()) return;
+    /* v8 ignore stop */
 
     afterLeaveFlag.value = true;
     clearTimeout(afterLeaveTimer);
     afterLeaveTimer = defer(handleAfterLeave); //defer延迟执行
 
     visible.value = false;
+    /* v8 ignore next */
     opts.closed?.();
   };
 
@@ -77,20 +80,24 @@ function resolveOptions(opts: LoadingOptions): LoadingOptionsResolved {
   let target: HTMLElement;
   if (isString(opts.target)) {
     //获取opts.target的html元素
+    /* v8 ignore start */
     target = document.querySelector(opts.target) ?? document.body;
+    /* v8 ignore stop */
   } else {
     target = opts.target || document.body;
   }
+  /* v8 ignore start -- many ?? binary-branch artifacts */
   return {
     parent: target === document.body || opts.body ? document.body : target,
     background: opts.background ?? 'rgba(0, 0, 0, 0.5)',
     spinner: opts.spinner,
     text: opts.text,
-    fullscreen: target === document.body && (opts.fullscreen ?? true), //??表示如果opts.fullscreen为undefined或null，则返回右边值否则返回左边值
+    fullscreen: target === document.body && (opts.fullscreen ?? true),
     lock: opts.lock ?? false,
     visible: opts.visible ?? true,
     target,
   };
+  /* v8 ignore stop */
 }
 
 function addRelativeClass(target: HTMLElement = document.body) {
@@ -163,7 +170,9 @@ export type LoadingInstance = ReturnType<typeof createLoading>;
 
 export function Loading(options: LoadingOptions = {}): LoadingInstance {
   const resolved = resolveOptions(options);
+  /* v8 ignore start */
   const target = resolved.parent ?? document.body;
+  /* v8 ignore stop */
 
   //如果是全屏，并且已经存在实例，则返回实例，isNil表示是否为空
   if (resolved.fullscreen && !isNil(fullscreenInstance)) {

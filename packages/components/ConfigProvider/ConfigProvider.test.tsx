@@ -150,6 +150,12 @@ describe('ConfigProvider hooks', () => {
     expect(localeVal).toBeTruthy();
   });
 
+  it('useGlobalConfig should return globalConfig fallback when called outside component', () => {
+    // Call useGlobalConfig without a component instance — it falls back to globalConfig
+    const config = useGlobalConfig();
+    expect(config).toBeDefined();
+  });
+
   it('provideGlobalConfig should return undefined outside setup', () => {
     // Called outside setup context with no app - should warn and return undefined
     const result = provideGlobalConfig({});
@@ -198,6 +204,30 @@ describe('ConfigProvider hooks', () => {
     const app = createApp({ render: () => null });
     const result = provideGlobalConfig({}, app);
     expect(result).toBeTruthy();
+  });
+
+  it('safeMerge should reject __proto__ key in config merge', () => {
+    const app = createApp({ render: () => null });
+    const maliciousConfig = JSON.parse('{"__proto__": {"polluted": true}}');
+    const result = provideGlobalConfig(maliciousConfig, app);
+    expect(result).toBeTruthy();
+    // Prototype should NOT be polluted
+    expect(({} as any).polluted).toBeUndefined();
+  });
+
+  it('provideGlobalConfig with custom locale should use custom locale name', () => {
+    const app = createApp({ render: () => null });
+    const result = provideGlobalConfig(
+      {
+        locale: {
+          name: 'zh-cn',
+          el: { test: { key: 'value' } },
+        },
+      },
+      app,
+    );
+    expect(result).toBeTruthy();
+    expect(result?.value?.locale?.name).toBe('zh-cn');
   });
 
   it('provideGlobalConfig should update context when config ref changes', async () => {

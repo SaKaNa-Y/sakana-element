@@ -1,6 +1,7 @@
 import { rAF } from '@sakana-element/utils';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createApp, h } from 'vue';
+import { z } from 'zod';
 import { PxMessageBox } from './index';
 import MessageBox from './methods';
 import type { MessageBoxType } from './types';
@@ -602,6 +603,77 @@ describe('MessageBox new features', () => {
     expect(document.querySelector('.px-message-box__confirm-btn')).toBeFalsy();
     expect(document.querySelector('.px-message-box__cancel-btn')).toBeFalsy();
     expect(document.querySelector('.my-btn')).toBeTruthy();
+  });
+
+  // Feature: inputSchema validation (Zod)
+  it('should show validation error when inputSchema fails', async () => {
+    const doAction = vi.fn();
+    MessageBox({
+      title: 'Validate',
+      message: 'Enter email',
+      boxType: 'prompt',
+      showInput: true,
+      inputSchema: z.string().email('Invalid email'),
+    }).then((res) => doAction(res));
+    await rAF();
+
+    const input = document.querySelector('input') as HTMLInputElement;
+    input.value = 'not-an-email';
+    input.dispatchEvent(new Event('input'));
+
+    const confirmBtn = document.querySelector('.px-message-box__confirm-btn') as HTMLButtonElement;
+    confirmBtn.click();
+    await rAF();
+
+    // Should show validation error, not confirm
+    const errorEl = document.querySelector('.px-message-box__error');
+    expect(errorEl).toBeTruthy();
+    expect(doAction).not.toHaveBeenCalled();
+  });
+
+  // Feature: beforeClose that throws
+  it('should reset loading when beforeClose throws', async () => {
+    const beforeClose = vi.fn((_action: string) => {
+      throw new Error('fail');
+    });
+
+    MessageBox({
+      title: 'Test',
+      message: 'msg',
+      beforeClose,
+      showConfirmButton: true,
+    });
+    await rAF();
+
+    const confirmBtn = document.querySelector('.px-message-box__confirm-btn') as HTMLButtonElement;
+    confirmBtn.click();
+    await rAF();
+
+    expect(beforeClose).toHaveBeenCalled();
+    // Dialog should still be open
+    expect(document.querySelector('.px-message-box')).toBeTruthy();
+  });
+
+  // Feature: beforeClose returning rejected Promise
+  it('should reset loading when beforeClose returns rejected Promise', async () => {
+    const beforeClose = vi.fn(() => {
+      return Promise.reject(new Error('rejected'));
+    });
+
+    MessageBox({
+      title: 'Test',
+      message: 'msg',
+      beforeClose,
+      showConfirmButton: true,
+    });
+    await rAF();
+
+    const confirmBtn = document.querySelector('.px-message-box__confirm-btn') as HTMLButtonElement;
+    confirmBtn.click();
+    await rAF();
+    await rAF();
+
+    expect(beforeClose).toHaveBeenCalled();
   });
 
   // Feature: close button alignment (flex header)

@@ -92,6 +92,19 @@ describe('hooks/useDisabledStyle', () => {
     expect(btn.text()).toBe('click');
   });
 
+  it('should handle restoration when node not in nodePropsMap (disabled=false first)', async () => {
+    // When disabled goes from false to false (or component starts disabled=false),
+    // the restoration branch encounters nodes not in nodePropsMap — it should just skip them
+    const wrapper = mount(TestWrapper, {
+      props: { disabled: false },
+      slots: { default: () => <button>click</button> },
+    });
+    // Toggling false → false should not throw
+    await wrapper.setProps({ disabled: false });
+    await nextTick();
+    expect(wrapper.find('button').exists()).toBe(true);
+  });
+
   it('should not throw when toggling disabled multiple times', async () => {
     const wrapper = mount(TestWrapper, {
       props: { disabled: false },

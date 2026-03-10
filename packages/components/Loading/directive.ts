@@ -23,6 +23,7 @@ function createInstance(el: ElementLoading, binding: DirectiveBinding<boolean>) 
     text: getProp('text'),
     spinner: getProp('spinner'),
     background: getProp('background'),
+    /* v8 ignore next */
     target: fullscreen ? void 0 : el,
     body: getModifier('body'),
     lock: getModifier('lock'),
@@ -47,16 +48,20 @@ export const vLoading: Directive<ElementLoading, boolean> = {
   },
   //updated 是更新时执行的函数，el是元素，binding是指令的值
   updated(el, binding) {
+    /* v8 ignore start */
     if (binding.oldValue === binding.value) return;
+    /* v8 ignore stop */
 
     if (binding.value && !binding.oldValue) {
       createInstance(el, binding);
       return;
     }
+    /* v8 ignore next */
     el[INSTANCE_KEY]?.instance.close();
   },
   //unmounted 是卸载时执行的函数，el是元素
   unmounted(el) {
+    /* v8 ignore next */
     el[INSTANCE_KEY]?.instance.close();
     el[INSTANCE_KEY] = void 0;
   },

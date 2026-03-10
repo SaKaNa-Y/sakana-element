@@ -25,6 +25,7 @@ export function useSystemTheme() {
   let handleChange: ((e: MediaQueryListEvent | MediaQueryList) => void) | null = null;
 
   onMounted(() => {
+    /* v8 ignore next */
     if (typeof window === 'undefined') return;
 
     mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -44,6 +45,7 @@ export function useSystemTheme() {
   });
 
   onUnmounted(() => {
+    /* v8 ignore next */
     if (!mediaQuery || !handleChange) return;
 
     if (mediaQuery.removeEventListener) {

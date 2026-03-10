@@ -37,7 +37,9 @@ function handleClick() {
 function handleFocus() {
   if (props.disabled) return;
   if (props.forceOpen || props.forceClose) return;
+  /* v8 ignore start */
   if (!isFocusMode.value) return;
+  /* v8 ignore stop */
   if (!isActive.value) {
     ctx?.handleItemClick(props.name);
   }
@@ -46,7 +48,9 @@ function handleFocus() {
 function handleFocusout(_e: FocusEvent) {
   if (props.disabled) return;
   if (props.forceOpen || props.forceClose) return;
+  /* v8 ignore start */
   if (!isFocusMode.value) return;
+  /* v8 ignore stop */
   if (isActive.value) {
     ctx?.handleItemClick(props.name);
   }

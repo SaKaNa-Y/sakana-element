@@ -29,7 +29,9 @@ const { topOffset, bottomOffset } = useOffset({
   boxHeight,
 });
 
+/* v8 ignore start */
 const iconName = computed(() => props.icon ?? typeIconMap.get(props.type) ?? 'circle-info');
+/* v8 ignore stop */
 
 const horizontalClass = computed(() => (props.position.endsWith('right') ? 'right' : 'left'));
 

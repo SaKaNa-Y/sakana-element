@@ -153,6 +153,29 @@ describe('hooks/useTheme', () => {
     });
   });
 
+  describe('SSR guards', () => {
+    it('setTheme when localStorage is undefined should not throw', async () => {
+      vi.resetModules();
+      document.documentElement.classList.remove('px-dark');
+      localStorage.clear();
+      mockMql = createMockMediaQuery(false);
+      vi.stubGlobal(
+        'matchMedia',
+        vi.fn(() => mockMql),
+      );
+      const mod = await import('../useTheme');
+      const { setTheme } = mod.useTheme();
+
+      const origLS = globalThis.localStorage;
+      // @ts-expect-error simulate no localStorage
+      delete globalThis.localStorage;
+
+      expect(() => setTheme('dark')).not.toThrow();
+
+      globalThis.localStorage = origLS;
+    });
+  });
+
   describe('legacy addListener fallback', () => {
     it('should use addListener when addEventListener is unavailable', async () => {
       vi.resetModules();

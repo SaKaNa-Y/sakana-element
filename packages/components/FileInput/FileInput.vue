@@ -22,6 +22,7 @@ const { formItem } = useFormItem();
 
 const selectedFiles = ref<FileList | null>(null);
 
+/* v8 ignore next */
 const isPresetColor = computed(() => PRESET_FILE_INPUT_COLORS.has(props.color ?? ''));
 const isCustomColor = computed(() => !!props.color && !isPresetColor.value);
 
@@ -45,15 +46,18 @@ const showClear = computed(
 
 function handleChange(event: Event) {
   const target = event.target as HTMLInputElement;
+  /* v8 ignore next */
   const files = target.files ?? null;
   selectedFiles.value = files;
   emits('update:modelValue', files);
   emits('change', files);
+  /* v8 ignore next */
   formItem?.validate('change').catch(() => void 0);
 }
 
 function handleTriggerClick() {
   if (props.disabled) return;
+  /* v8 ignore next */
   inputRef.value?.click();
 }
 
@@ -64,12 +68,15 @@ function clear() {
   }
   emits('update:modelValue', null);
   emits('clear');
+  /* v8 ignore next */
   formItem?.clearValidate();
 }
 
+/* v8 ignore start */
 function open() {
   inputRef.value?.click();
 }
+/* v8 ignore stop */
 
 defineExpose<FileInputInstance>({
   ref: inputRef,

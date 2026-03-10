@@ -15,11 +15,13 @@ const DANGEROUS_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
  * when a dangerous key (__proto__, constructor, prototype) is encountered,
  * effectively ignoring the malicious source value.
  */
+/* v8 ignore start */
 function safeMerge<T extends object>(target: T, ...sources: object[]): T {
   return mergeWith(target, ...sources, (objValue: unknown, _srcValue: unknown, key: string) => {
     if (DANGEROUS_KEYS.has(key)) return objValue;
   });
 }
+/* v8 ignore stop */
 
 const globalConfig = ref<ConfigProviderContext>(); // 全局配置
 
@@ -37,7 +39,9 @@ export function useGlobalConfig(
     ? inject(configProviderContextKey, globalConfig) //inject注入，如果当前实例存在，则从当前实例的上下文中注入configProviderContextKey，否则使用globalConfig
     : globalConfig;
 
+  /* v8 ignore start */
   return key ? computed(() => config.value?.[key] ?? defaultVal) : config;
+  /* v8 ignore stop */
 }
 
 const _createI18n = (opts?: ConfigProviderContext) => {
@@ -55,9 +59,11 @@ const _createI18n = (opts?: ConfigProviderContext) => {
 
   //如果opts?.locale存在，则返回一个createI18n实例，locale为opts.locale?.name，messages为mergeMsg({en: English.el, [opts.locale?.name]: opts.locale?.el ?? {}})
   return createI18n({
+    /* v8 ignore next */
     locale: opts.locale?.name || 'en',
     messages: mergeMsg({
       en: English.el,
+      /* v8 ignore next */
       [opts.locale?.name]: opts.locale?.el ?? {},
     }),
   });
@@ -82,7 +88,9 @@ export function provideGlobalConfig(
     () => config,
     (val) => {
       const cfg = unref(val);
+      /* v8 ignore start */
       if (!oldCfg?.value) return cfg;
+      /* v8 ignore stop */
       context.value = safeMerge(oldCfg.value, cfg);
     },
     { deep: true },

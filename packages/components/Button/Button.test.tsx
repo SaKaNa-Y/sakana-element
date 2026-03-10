@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, it, test, vi } from 'vitest';
+import { defineComponent, h } from 'vue';
 import Icon from '../Icon/Icon.vue';
 import Button from './Button.vue';
 import ButtonGroup from './ButtonGroup.vue';
@@ -93,6 +94,20 @@ describe('Button.vue', () => {
     });
     // debugWarn is called but is a no-op; verify fallback to 'button'
     expect(wrapper.element.tagName.toLowerCase()).toBe('button');
+  });
+
+  it('should accept a Vue component as tag prop', () => {
+    const CustomComp = defineComponent({
+      setup(_, { slots }) {
+        return () => h('span', { class: 'custom-tag' }, slots.default?.());
+      },
+    });
+    const wrapper = mount(Button, {
+      props: { tag: CustomComp as any },
+      slots: { default: 'Click me' },
+    });
+    expect(wrapper.find('.custom-tag').exists()).toBe(true);
+    expect(wrapper.text()).toContain('Click me');
   });
 
   // Events: click

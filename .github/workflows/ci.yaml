@@ -37,3 +37,26 @@ jobs:
 
       - name: Run tests
         run: pnpm test
+
+      - name: Extract coverage percentage
+        if: github.ref == 'refs/heads/master'
+        id: coverage
+        run: |
+          COVERAGE=$(node -e "
+            const r = require('./coverage/coverage-summary.json');
+            console.log(r.total.lines.pct);
+          ")
+          echo "pct=$COVERAGE" >> "$GITHUB_OUTPUT"
+
+      - name: Upload coverage badge
+        if: github.ref == 'refs/heads/master'
+        uses: Schneegans/dynamic-badges-action@v1.7.0
+        with:
+          auth: ${{ secrets.GIST_SECRET }}
+          gistID: 9b47a8dfe272b270312684dcef500c2e
+          filename: coverage.json
+          label: coverage
+          message: ${{ steps.coverage.outputs.pct }}%
+          valColorRange: ${{ steps.coverage.outputs.pct }}
+          minColorRange: 0
+          maxColorRange: 100

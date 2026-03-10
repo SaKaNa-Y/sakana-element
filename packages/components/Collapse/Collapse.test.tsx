@@ -735,3 +735,133 @@ describe('Collapse/transitionEvents.ts', () => {
     expect(wrapper.element.style.overflow).toBe('');
   });
 });
+
+describe('CollapseItem focus guard paths', () => {
+  test('trigger="focus" + disabled item: focus should NOT open', async () => {
+    const fn = vi.fn();
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]} trigger="focus" {...{ onChange: fn }}>
+          <CollapseItem name="a" title="title a" disabled>
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      { global: { stubs: ['PxIcon'] }, attachTo: document.body },
+    );
+    await wrapper.find('.px-collapse-item__header').trigger('focus');
+    expect(fn).not.toHaveBeenCalled();
+  });
+
+  test('trigger="focus" + forceOpen item: focus should be no-op', async () => {
+    const fn = vi.fn();
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]} trigger="focus" {...{ onChange: fn }}>
+          <CollapseItem name="a" title="title a" forceOpen>
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      { global: { stubs: ['PxIcon'] }, attachTo: document.body },
+    );
+    await wrapper.find('.px-collapse-item__header').trigger('focus');
+    expect(fn).not.toHaveBeenCalled();
+  });
+
+  test('trigger="focus" + forceClose item: focus should be no-op', async () => {
+    const fn = vi.fn();
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]} trigger="focus" {...{ onChange: fn }}>
+          <CollapseItem name="a" title="title a" forceClose>
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      { global: { stubs: ['PxIcon'] }, attachTo: document.body },
+    );
+    await wrapper.find('.px-collapse-item__header').trigger('focus');
+    expect(fn).not.toHaveBeenCalled();
+  });
+
+  test('trigger="focus" + already active item: focus should be no-op', async () => {
+    const fn = vi.fn();
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={['a']} trigger="focus" {...{ onChange: fn }}>
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      { global: { stubs: ['PxIcon'] }, attachTo: document.body },
+    );
+    await wrapper.find('.px-collapse-item__header').trigger('focus');
+    expect(fn).not.toHaveBeenCalled();
+  });
+
+  test('trigger="focus" + inactive item: focusout should be no-op', async () => {
+    const fn = vi.fn();
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]} trigger="focus" {...{ onChange: fn }}>
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      { global: { stubs: ['PxIcon'] }, attachTo: document.body },
+    );
+    await wrapper.find('.px-collapse-item__header').trigger('focusout');
+    expect(fn).not.toHaveBeenCalled();
+  });
+
+  test('trigger="focus" + disabled item: focusout should be no-op', async () => {
+    const fn = vi.fn();
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={['a']} trigger="focus" {...{ onChange: fn }}>
+          <CollapseItem name="a" title="title a" disabled>
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      { global: { stubs: ['PxIcon'] }, attachTo: document.body },
+    );
+    await wrapper.find('.px-collapse-item__header').trigger('focusout');
+    expect(fn).not.toHaveBeenCalled();
+  });
+
+  test('trigger="focus" + forceOpen item: focusout should be no-op', async () => {
+    const fn = vi.fn();
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={['a']} trigger="focus" {...{ onChange: fn }}>
+          <CollapseItem name="a" title="title a" forceOpen>
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      { global: { stubs: ['PxIcon'] }, attachTo: document.body },
+    );
+    await wrapper.find('.px-collapse-item__header').trigger('focusout');
+    expect(fn).not.toHaveBeenCalled();
+  });
+});
+
+describe('Collapse color undefined', () => {
+  test('does not crash when color is undefined', () => {
+    const wrapper = mount(
+      () => (
+        <Collapse modelValue={[]} color={undefined}>
+          <CollapseItem name="a" title="title a">
+            content a
+          </CollapseItem>
+        </Collapse>
+      ),
+      { global: { stubs: ['PxIcon'] }, attachTo: document.body },
+    );
+    expect(wrapper.find('.px-collapse').exists()).toBe(true);
+  });
+});

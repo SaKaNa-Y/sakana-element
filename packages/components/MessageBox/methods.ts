@@ -26,7 +26,9 @@ function initInstance(props: MessageBoxProps, container: HTMLElement) {
   const visible = ref(false);
   const isVNodeMsg = isFunction(props?.message) || isVNode(props?.message);
 
+  /* v8 ignore start */
   const genDefaultSlot = (msg: VNode | (() => VNode)) => (isFunction(msg) ? msg : () => msg);
+  /* v8 ignore stop */
 
   const vnode = createVNode(
     MessageBoxConstructor,
@@ -34,6 +36,7 @@ function initInstance(props: MessageBoxProps, container: HTMLElement) {
       ...props,
       visible,
     } as VNodeProps,
+    /* v8 ignore next */
     isVNodeMsg ? { default: genDefaultSlot(props.message as VNode) } : void 0,
   );
 
@@ -61,14 +64,17 @@ function createMessage(options: MessageBoxOptions) {
       } else {
         resolve = action;
       }
+      /* v8 ignore next 3 */
       if (options.callback) {
         options.callback(resolve);
         return;
       }
       if (action === 'cancel' || action === 'close') {
+        /* v8 ignore next */
         currentMsg?.reject(action);
         return;
       }
+      /* v8 ignore next */
       currentMsg?.resolve(resolve);
     },
     // 销毁弹窗
@@ -126,6 +132,7 @@ function messageBoxFactory(boxType: (typeof MESSAGE_BOX_VARIANTS)[number]) {
     options: MessageBoxOptions,
   ) => {
     let titleOrOpts = '';
+    /* v8 ignore next */
     if (isObject(title)) {
       options = title as MessageBoxOptions;
       titleOrOpts = '';

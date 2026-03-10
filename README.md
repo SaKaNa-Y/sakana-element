@@ -3,6 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/sakana-element.svg)](https://www.npmjs.com/package/sakana-element)
 [![npm downloads](https://img.shields.io/npm/dm/sakana-element.svg)](https://www.npmjs.com/package/sakana-element)
 [![license](https://img.shields.io/npm/l/sakana-element.svg)](https://github.com/yu859/sakana-element/blob/master/LICENSE)
+[![coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/yu859/9b47a8dfe272b270312684dcef500c2e/raw/coverage.json)](https://github.com/yu859/sakana-element/actions)
 
 A Vue 3 + TypeScript component library with pixel art design aesthetic.
 

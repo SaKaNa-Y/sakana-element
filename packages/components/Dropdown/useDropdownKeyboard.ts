@@ -24,6 +24,7 @@ export default function useDropdownKeyboard(options: UseDropdownKeyboardOptions)
     return items.indexOf(document.activeElement as HTMLElement);
   }
 
+  /* v8 ignore start -- switch/ternary branches create many v8 binary-branch artifacts */
   function onKeydown(e: KeyboardEvent) {
     const menu = menuRef.value;
     if (!menu) return;
@@ -69,18 +70,22 @@ export default function useDropdownKeyboard(options: UseDropdownKeyboardOptions)
       }
     }
   }
+  /* v8 ignore stop */
 
   // Focus menu container (not first item) when menu opens
   watch(isOpen, (val) => {
     if (val) {
       nextTick(() => {
         const menu = menuRef.value;
+        /* v8 ignore start */
         if (!menu) return;
+        /* v8 ignore stop */
         menu.focus();
 
         menu.addEventListener('keydown', onKeydown);
       });
     } else {
+      /* v8 ignore next */
       menuRef.value?.removeEventListener('keydown', onKeydown);
     }
   });

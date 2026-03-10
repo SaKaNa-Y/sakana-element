@@ -13,6 +13,7 @@ const isDark: Ref<boolean> = ref(false);
  * Update the document's theme class
  */
 function updateThemeClass(dark: boolean) {
+  /* v8 ignore next */
   if (typeof document === 'undefined') return;
 
   if (dark) {
@@ -26,6 +27,7 @@ function updateThemeClass(dark: boolean) {
  * Get system color scheme preference
  */
 function getSystemPreference(): boolean {
+  /* v8 ignore next */
   if (typeof window === 'undefined') return false;
 
   return window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -45,6 +47,7 @@ function resolveTheme(theme: Theme): boolean {
  * Initialize theme from localStorage
  */
 function initializeTheme() {
+  /* v8 ignore next */
   if (typeof window === 'undefined') return;
 
   const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;

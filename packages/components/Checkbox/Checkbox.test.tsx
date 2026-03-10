@@ -1,6 +1,5 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, it, vi } from 'vitest';
-import { ref } from 'vue';
 import Checkbox from './Checkbox.vue';
 import CheckboxGroup from './CheckboxGroup.vue';
 import { PxCheckbox, PxCheckboxGroup } from './index';
@@ -201,6 +200,20 @@ describe('Checkbox.vue', () => {
     });
     const input = wrapper.find('input');
     expect(input.attributes('aria-checked')).toBe('false');
+  });
+
+  it('should update indeterminate prop dynamically via watch', async () => {
+    const wrapper = mount(Checkbox, {
+      props: { modelValue: false, indeterminate: false },
+    });
+    const input = wrapper.find('input').element as HTMLInputElement;
+    expect(input.indeterminate).toBe(false);
+
+    await wrapper.setProps({ indeterminate: true });
+    expect(input.indeterminate).toBe(true);
+
+    await wrapper.setProps({ indeterminate: false });
+    expect(input.indeterminate).toBe(false);
   });
 });
 

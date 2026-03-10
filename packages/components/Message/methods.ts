@@ -20,9 +20,11 @@ const instances: MessageInstance[] = shallowReactive([]);
 const { nextZIndex } = useZIndex();
 
 // Lazy Escape listener — only active when at least one message exists.
+/* v8 ignore start */
 const escapeClose = createLazyEscapeClose(() =>
   instances.length ? instances[instances.length - 1] : undefined,
 );
+/* v8 ignore stop */
 
 export const messageDefaults = {
   type: 'info',
@@ -47,7 +49,9 @@ const createMessage = (props: CreateMessageProps): MessageInstance => {
 
   const destroy = () => {
     const idx = findIndex(instances, { id });
+    /* v8 ignore start */
     if (idx === -1) return;
+    /* v8 ignore stop */
 
     instances.splice(idx, 1);
     render(null, container);

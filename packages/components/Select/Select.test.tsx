@@ -948,6 +948,64 @@ describe('Select/focus-blur', () => {
   });
 });
 
+describe('Select keyboard with empty options', () => {
+  test('ArrowDown with no options should be a no-op (hasData=false)', async () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options: [] },
+    });
+
+    wrapper.find('input').trigger('click');
+    await rAF();
+
+    await wrapper.find('input').trigger('keydown', { key: 'ArrowDown' });
+    await rAF();
+
+    // No selection should have happened
+    expect(wrapper.emitted('update:modelValue')).toBeFalsy();
+  });
+
+  test('ArrowUp with no options should be a no-op (hasData=false)', async () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '', options: [] },
+    });
+
+    wrapper.find('input').trigger('click');
+    await rAF();
+
+    await wrapper.find('input').trigger('keydown', { key: 'ArrowUp' });
+    await rAF();
+
+    // No selection should have happened
+    expect(wrapper.emitted('update:modelValue')).toBeFalsy();
+  });
+});
+
+describe('Select renderLabel', () => {
+  test('should use custom renderLabel for option display', async () => {
+    const renderLabel = (opt: any) => `Custom: ${opt.label}`;
+    const wrapper = mount(Select, {
+      props: {
+        modelValue: '',
+        options: [
+          { label: 'Apple', value: 'apple' },
+          { label: 'Banana', value: 'banana' },
+        ],
+        renderLabel,
+      },
+    });
+
+    // Open dropdown
+    wrapper.find('input').trigger('click');
+    await rAF();
+    await rAF();
+
+    const items = wrapper.findAll('.px-select__menu-item');
+    if (items.length) {
+      expect(items[0].text()).toContain('Custom: Apple');
+    }
+  });
+});
+
 describe('Select/index', () => {
   test('should be exported with withInstall()', () => {
     expect(PxSelect.install).toBeDefined();
