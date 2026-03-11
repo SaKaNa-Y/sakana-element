@@ -126,6 +126,10 @@ Combine `icon` and `color` props to create social login buttons. All 486 pixelar
 demo-preview=../../demo/button/Login.vue
 :::
 
+## Pixel 3D Effect
+
+Buttons feature an automatic bevel highlight — a bright inset on the top-left and a dark inset on the bottom-right — creating a raised pixel surface inspired by classic RPG UI and Windows 95. The bevel inverts on `:active` for a pressed-in feel. Flat variants (`ghost`, `link`, `dash`) and disabled buttons have no bevel.
+
 ## Custom Tag
 
 Use `tag` property to customize the button's HTML tag.

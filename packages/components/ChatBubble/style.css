@@ -1,0 +1,219 @@
+/* ChatBubble Variables */
+.px-chat {
+  --px-chat-bubble-bg-color: var(--px-fill-color-light);
+  --px-chat-bubble-text-color: var(--px-text-color-primary);
+  --px-chat-bubble-border-color: var(--px-border-color);
+  --px-chat-bubble-shadow-color: var(--px-shadow-color);
+  --px-chat-header-color: var(--px-text-color-secondary);
+  --px-chat-footer-color: var(--px-text-color-placeholder);
+
+  /* Beveled inset for 3D raised-bubble depth */
+  --px-chat-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.2);
+  --px-chat-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Base ChatBubble Styles - Pixel Game Aesthetic */
+.px-chat {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-family: var(--px-font-family);
+  font-size: var(--px-font-size-base);
+  box-sizing: border-box;
+  transition: none;
+}
+
+/* Placement variants */
+.px-chat--start {
+  flex-direction: row;
+
+  & .px-chat__header {
+    text-align: left;
+  }
+
+  & .px-chat__footer {
+    text-align: left;
+  }
+
+  /* Tail pointing left — positioned inside bubble */
+  & .px-chat__tail {
+    left: -6px;
+
+    /* Border layer: 4-step staircase pointing left */
+    background: var(--px-chat-bubble-border-color);
+    clip-path: polygon(
+      6px 0, 8px 0,
+      8px 8px,
+      0 8px, 0 6px,
+      2px 6px, 2px 4px,
+      4px 4px, 4px 2px,
+      6px 2px
+    );
+
+    /* Fill layer */
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--px-chat-bubble-bg-color);
+      clip-path: polygon(
+        6px 2px, 8px 2px,
+        8px 6px,
+        4px 6px, 4px 4px,
+        6px 4px
+      );
+    }
+  }
+}
+
+.px-chat--end {
+  flex-direction: row-reverse;
+
+  & .px-chat__header {
+    text-align: right;
+  }
+
+  & .px-chat__footer {
+    text-align: right;
+  }
+
+  /* Tail pointing right — mirror of left */
+  & .px-chat__tail {
+    right: -6px;
+    left: auto;
+
+    /* Border layer: 4-step staircase pointing right */
+    background: var(--px-chat-bubble-border-color);
+    clip-path: polygon(
+      0 0, 2px 0,
+      2px 2px, 4px 2px,
+      4px 4px, 6px 4px,
+      6px 6px, 8px 6px,
+      8px 8px, 0 8px
+    );
+
+    /* Fill layer */
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--px-chat-bubble-bg-color);
+      clip-path: polygon(
+        0 2px, 2px 2px,
+        2px 4px, 4px 4px,
+        4px 6px, 0 6px
+      );
+    }
+  }
+}
+
+/* Avatar */
+.px-chat__avatar {
+  flex-shrink: 0;
+}
+
+/* Content wrapper */
+.px-chat__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 80%;
+}
+
+/* Header */
+.px-chat__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--px-font-size-small);
+  color: var(--px-chat-header-color);
+  line-height: 1.2;
+}
+
+.px-chat__name {
+  font-weight: 600;
+}
+
+.px-chat__time {
+  font-size: var(--px-font-size-extra-small);
+  opacity: 0.7;
+}
+
+/* Tail — positioned inside bubble (which is position:relative) */
+.px-chat__tail {
+  position: absolute;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  z-index: 1;
+}
+
+/* Bubble — pixel border via pseudo-elements */
+.px-chat__bubble {
+  position: relative;
+  padding: 8px 12px;
+  color: var(--px-chat-bubble-text-color);
+  background: transparent;
+  border: none;
+  line-height: 1.5;
+  word-break: break-word;
+
+  filter: drop-shadow(2px 2px 0px var(--px-chat-bubble-shadow-color));
+
+  /* Border layer */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-chat-bubble-border-color);
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0,
+      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+    z-index: -1;
+  }
+
+  /* Fill layer */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-chat-bubble-bg-color);
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0,
+      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+    box-shadow: var(--px-chat-inset-highlight), var(--px-chat-inset-shadow);
+    z-index: -1;
+  }
+}
+
+/* Footer */
+.px-chat__footer {
+  font-size: var(--px-font-size-extra-small);
+  color: var(--px-chat-footer-color);
+  line-height: 1.2;
+}
+
+/* Type variants */
+@each $val in primary, success, info, warning, danger {
+  .px-chat--$(val) {
+    --px-chat-bubble-text-color: var(--px-color-white);
+    --px-chat-bubble-bg-color: var(--px-color-$(val));
+    --px-chat-bubble-border-color: var(--px-color-$(val)-dark);
+    --px-chat-bubble-shadow-color: var(--px-color-$(val)-dark);
+  }
+}
+
+/* Dark mode */
+html.dark .px-chat,
+.px-dark .px-chat {
+  --px-chat-bubble-bg-color: var(--px-fill-color-light);
+  --px-chat-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.08);
+  --px-chat-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.15);
+}

@@ -20,6 +20,10 @@
   --px-button-active-bg-color: var(--px-active-bg-color);
   --px-button-outline-color: var(--px-color-primary-light-5);
   --px-button-shadow-color: var(--px-shadow-color);
+
+  /* Beveled inset for 3D raised-button depth */
+  --px-button-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.2);
+  --px-button-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.1);
 }
 
 /* Base Button Styles - Pixel Game Aesthetic */
@@ -69,7 +73,7 @@
     z-index: -1;
   }
 
-  /* Fill layer — inset by border width, filled with bg color */
+  /* Fill layer — inset by border width, filled with bg color, beveled */
   &::after {
     content: '';
     position: absolute;
@@ -81,6 +85,7 @@
       100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
       4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
     );
+    box-shadow: var(--px-button-inset-highlight), var(--px-button-inset-shadow);
     z-index: -1;
   }
 
@@ -99,6 +104,8 @@
     }
     &::after {
       background: var(--px-button-hover-bg-color);
+      box-shadow: inset 2px 2px 0 0 rgba(255, 255, 255, 0.3),
+                  inset -2px -2px 0 0 rgba(0, 0, 0, 0.12);
     }
   }
 
@@ -113,6 +120,7 @@
     }
     &::after {
       background: var(--px-button-active-bg-color);
+      box-shadow: var(--px-button-inset-shadow), var(--px-button-inset-highlight);
     }
   }
 
@@ -132,6 +140,8 @@
 
   /* Dash variant - Dashed border on the button itself, no pixel shadow */
   &.is-dash {
+    --px-button-inset-highlight: none;
+    --px-button-inset-shadow: none;
     border: 2px dashed var(--px-button-border-color);
     filter: none;
     isolation: isolate;
@@ -171,6 +181,8 @@
 
   /* Ghost variant - No border/background, subtle hover fill */
   &.is-ghost {
+    --px-button-inset-highlight: none;
+    --px-button-inset-shadow: none;
     filter: none;
     isolation: isolate;
     --px-button-shadow-color: transparent;
@@ -222,6 +234,8 @@
 
   /* Link variant - Underlined text, no border/background/shadow */
   &.is-link {
+    --px-button-inset-highlight: none;
+    --px-button-inset-shadow: none;
     filter: none;
     --px-button-shadow-color: transparent;
     --px-button-hover-text-color: var(--px-hover-bg-color);
@@ -346,6 +360,8 @@
   &[disabled],
   &[disabled]:hover,
   &[disabled]:focus {
+    --px-button-inset-highlight: none;
+    --px-button-inset-shadow: none;
     color: var(--px-button-disabled-text-color);
     cursor: not-allowed;
     filter: drop-shadow(1px 1px 0px rgba(0, 0, 0, 0.1));
@@ -367,9 +383,18 @@
   }
 }
 
+/* Dark mode bevel override */
+html.dark .px-button,
+.px-dark .px-button {
+  --px-button-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.1);
+  --px-button-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.2);
+}
+
 /* Type variants - Colored buttons */
 @each $val in primary, success, warning, info, danger {
   .px-button--$(val) {
+    --px-button-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.25);
+    --px-button-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.15);
     --px-button-text-color: var(--px-color-white);
     --px-button-bg-color: var(--px-color-$(val));
     --px-button-border-color: var(--px-color-$(val)-dark);

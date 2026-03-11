@@ -126,6 +126,10 @@ demo-preview=../../demo/button/Color.vue
 demo-preview=../../demo/button/Login.vue
 :::
 
+## 像素 3D 效果
+
+按钮带有自动斜面高光效果——左上方的亮色内嵌和右下方的暗色内嵌——营造出凸起的像素表面，灵感来自经典 RPG UI 和 Windows 95。点击时斜面翻转，产生按下的手感。扁平样式（`ghost`、`link`、`dash`）和禁用按钮没有斜面效果。
+
 ## 自定义标签
 
 使用 `tag` 属性来自定义按钮的 HTML 标签。

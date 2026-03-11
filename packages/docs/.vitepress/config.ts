@@ -69,6 +69,10 @@ const getDataItems = (lang: 'zh' | 'en') => [
     link: `/${lang}/components/badge`,
   },
   {
+    text: lang === 'zh' ? 'ChatBubble 聊天气泡' : 'ChatBubble',
+    link: `/${lang}/components/chat-bubble`,
+  },
+  {
     text: lang === 'zh' ? 'Indicator 指示器' : 'Indicator',
     link: `/${lang}/components/indicator`,
   },
