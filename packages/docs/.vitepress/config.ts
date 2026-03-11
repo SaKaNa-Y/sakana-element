@@ -261,10 +261,10 @@ export default defineConfig({
         name: 'Sakana Element',
         description: 'A pixel-style Vue 3 component library with retro game aesthetics',
         url: `${HOSTNAME}/`,
-        codeRepository: 'https://github.com/yu859/sakana-element',
+        codeRepository: 'https://github.com/SaKaNa-Y/sakana-element',
         programmingLanguage: ['TypeScript', 'Vue'],
         runtimePlatform: 'Vue 3',
-        license: 'https://opensource.org/licenses/MIT',
+        license: 'https://opensource.org/licenses/ISC',
       }),
     ],
   ],
@@ -395,7 +395,7 @@ export default defineConfig({
         },
       },
     },
-    socialLinks: [{ icon: 'github', link: 'https://github.com/yu859/sakana-element' }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/SaKaNa-Y/sakana-element' }],
   },
   markdown: {
     config: (md) => {

@@ -1,11 +1,11 @@
 # Default code owners for all files
-* @yu859
+* @SaKaNa-Y
 
 # CI/CD and workflow changes require explicit review
-.github/ @yu859
+.github/ @SaKaNa-Y
 
 # Published packages require review
-packages/core/ @yu859
-packages/components/ @yu859
-packages/hooks/ @yu859
-packages/utils/ @yu859
+packages/core/ @SaKaNa-Y
+packages/components/ @SaKaNa-Y
+packages/hooks/ @SaKaNa-Y
+packages/utils/ @SaKaNa-Y

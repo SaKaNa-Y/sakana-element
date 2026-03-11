@@ -2,13 +2,13 @@
 
 [![npm version](https://img.shields.io/npm/v/sakana-element.svg)](https://www.npmjs.com/package/sakana-element)
 [![npm downloads](https://img.shields.io/npm/dm/sakana-element.svg)](https://www.npmjs.com/package/sakana-element)
-[![license](https://img.shields.io/npm/l/sakana-element.svg)](https://github.com/yu859/sakana-element/blob/master/LICENSE)
+[![license](https://img.shields.io/npm/l/sakana-element.svg)](https://github.com/SaKaNa-Y/sakana-element/blob/master/LICENSE)
 
 A Vue 3 + TypeScript component library with pixel art design aesthetic.
 
 像素风格的 Vue 3 + TypeScript 组件库。
 
-**[Documentation / 文档](https://sakana-element-docs.vercel.app)** | **[GitHub](https://github.com/yu859/sakana-element)**
+**[Documentation / 文档](https://sakana-element-docs.vercel.app)** | **[GitHub](https://github.com/SaKaNa-Y/sakana-element)**
 
 ---
 
@@ -148,10 +148,10 @@ Add the `px-dark` or `dark` class to an ancestor element:
 ## Links / 链接
 
 - [Documentation / 文档](https://sakana-element-docs.vercel.app)
-- [GitHub](https://github.com/yu859/sakana-element)
+- [GitHub](https://github.com/SaKaNa-Y/sakana-element)
 - [npm](https://www.npmjs.com/package/sakana-element)
-- [Changelog](https://github.com/yu859/sakana-element/blob/master/CHANGELOG.md)
+- [Changelog](https://github.com/SaKaNa-Y/sakana-element/blob/master/CHANGELOG.md)
 
 ## License / 许可证
 
-[ISC](https://github.com/yu859/sakana-element/blob/master/LICENSE)
+[ISC](https://github.com/SaKaNa-Y/sakana-element/blob/master/LICENSE)
