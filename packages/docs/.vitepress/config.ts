@@ -46,6 +46,10 @@ const getFormItems = (lang: 'zh' | 'en') => [
     link: `/${lang}/components/radio`,
   },
   {
+    text: lang === 'zh' ? 'Filter 过滤器' : 'Filter',
+    link: `/${lang}/components/filter`,
+  },
+  {
     text: lang === 'zh' ? 'Switch 开关' : 'Switch',
     link: `/${lang}/components/switch`,
   },

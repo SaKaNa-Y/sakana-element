@@ -13,6 +13,7 @@ export * from './Divider';
 export * from './Drawer';
 export * from './Dropdown';
 export * from './FileInput';
+export * from './Filter';
 export * from './Form';
 export * from './Icon';
 export * from './Indicator';

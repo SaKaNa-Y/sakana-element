@@ -1,0 +1,293 @@
+/* Filter Container */
+.px-filter {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+
+  /* Shared pixel corner clip-path — 2px staircase */
+  --px-filter-clip: polygon(
+    0 2px,
+    2px 2px,
+    2px 0,
+    calc(100% - 2px) 0,
+    calc(100% - 2px) 2px,
+    100% 2px,
+    100% calc(100% - 2px),
+    calc(100% - 2px) calc(100% - 2px),
+    calc(100% - 2px) 100%,
+    2px 100%,
+    2px calc(100% - 2px),
+    0 calc(100% - 2px)
+  );
+}
+
+/* Reset Button — pixel chip with close icon */
+.px-filter__reset {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+  color: var(--px-text-color-primary);
+  background: transparent;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: transform 0.1s;
+
+  /* Border layer */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--px-border-color);
+    clip-path: var(--px-filter-clip);
+    z-index: 0;
+  }
+
+  /* Fill layer with 3D bevel */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: var(--px-fill-color-blank);
+    clip-path: var(--px-filter-clip);
+    box-shadow:
+      inset 2px 2px 0 0 rgba(255, 255, 255, 0.2),
+      inset -2px -2px 0 0 rgba(0, 0, 0, 0.1);
+    z-index: 0;
+  }
+
+  filter: drop-shadow(
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-shadow-color)
+  );
+
+  /* Icon sits above pseudo-elements */
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover {
+    transform: translateY(-1px);
+
+    &::after {
+      box-shadow:
+        inset 2px 2px 0 0 rgba(255, 255, 255, 0.35),
+        inset -2px -2px 0 0 rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &:active {
+    transform: translateY(1px);
+    filter: drop-shadow(2px 2px 0px var(--px-shadow-color));
+
+    &::after {
+      box-shadow:
+        inset -2px -2px 0 0 rgba(255, 255, 255, 0.2),
+        inset 2px 2px 0 0 rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+/* Filter Item Variables */
+.px-filter-item {
+  --px-filter-item-height: 30px;
+  --px-filter-item-color: var(--px-text-color-primary);
+  --px-filter-item-bg-color: var(--px-fill-color-blank);
+  --px-filter-item-border-color: var(--px-border-color);
+  --px-filter-item-shadow-color: var(--px-shadow-color);
+  --px-filter-item-active-color: var(--px-color-primary);
+  --px-filter-item-active-border-color: var(--px-color-primary-dark);
+  --px-filter-item-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.2);
+  --px-filter-item-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Base Filter Item Styles — Pixel Chip */
+.px-filter-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--px-filter-item-height);
+  padding: 0 12px;
+  font-family: var(--px-font-family);
+  font-size: var(--px-font-size-base);
+  line-height: 1;
+  color: var(--px-filter-item-color);
+  background: transparent;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: transform 0.1s, width 0.2s, padding 0.2s, opacity 0.15s;
+
+  /* Border layer */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--px-filter-item-border-color);
+    clip-path: var(--px-filter-clip);
+    z-index: 0;
+  }
+
+  /* Fill layer with 3D bevel */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: var(--px-filter-item-bg-color);
+    clip-path: var(--px-filter-clip);
+    box-shadow:
+      var(--px-filter-item-inset-highlight),
+      var(--px-filter-item-inset-shadow);
+    z-index: 0;
+  }
+
+  /* Pixel shadow via filter */
+  filter: drop-shadow(
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-filter-item-shadow-color)
+  );
+
+  /* Hover: lift */
+  &:hover:not(.is-disabled):not(.is-hidden) {
+    transform: translateY(-1px);
+
+    &::after {
+      --px-filter-item-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.35);
+    }
+  }
+
+  /* Active/pressed: push down */
+  &:active:not(.is-disabled):not(.is-hidden) {
+    transform: translateY(1px);
+    filter: drop-shadow(2px 2px 0px var(--px-filter-item-shadow-color));
+
+    &::after {
+      --px-filter-item-inset-highlight: inset -2px -2px 0 0 rgba(255, 255, 255, 0.2);
+      --px-filter-item-inset-shadow: inset 2px 2px 0 0 rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  /* Selected / Active state */
+  &.is-active {
+    --px-filter-item-color: var(--px-fill-color-blank);
+
+    &::before {
+      background: var(--px-filter-item-active-border-color);
+    }
+
+    &::after {
+      background: var(--px-filter-item-active-color);
+    }
+
+    filter: drop-shadow(
+      var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-filter-item-active-border-color)
+    );
+  }
+
+  /* Disabled state */
+  &.is-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Hidden / collapsed state (single-select with active selection) */
+  &.is-hidden {
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+    filter: none;
+    margin: 0;
+    border: 0;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+}
+
+/* Hidden native input */
+.px-filter-item__original {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  margin: 0;
+  outline: none;
+
+  &:focus-visible ~ .px-filter-item__label {
+    outline: 2px dashed var(--px-filter-item-active-color);
+    outline-offset: 2px;
+  }
+}
+
+/* Label */
+.px-filter-item__label {
+  position: relative;
+  z-index: 1;
+  font-family: var(--px-font-family);
+  font-size: inherit;
+  line-height: 1;
+  color: inherit;
+  pointer-events: none;
+}
+
+/* Size variants */
+.px-filter-item--large {
+  --px-filter-item-height: 36px;
+  padding: 0 16px;
+  font-size: var(--px-font-size-base);
+}
+
+.px-filter-item--small {
+  --px-filter-item-height: 24px;
+  padding: 0 8px;
+  font-size: var(--px-font-size-small);
+
+  filter: drop-shadow(2px 2px 0px var(--px-filter-item-shadow-color));
+
+  &.is-active {
+    filter: drop-shadow(2px 2px 0px var(--px-filter-item-active-border-color));
+  }
+}
+
+/* Reset button size matching */
+.px-filter-item--large ~ .px-filter__reset,
+.px-filter__reset:has(~ .px-filter-item--large) {
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+}
+
+.px-filter-item--small ~ .px-filter__reset,
+.px-filter__reset:has(~ .px-filter-item--small) {
+  width: 24px;
+  height: 24px;
+  font-size: 12px;
+}
+
+/* Type variants */
+@each $val in primary, success, info, warning, danger {
+  .px-filter-item--$(val) {
+    --px-filter-item-active-color: var(--px-color-$(val));
+    --px-filter-item-active-border-color: var(--px-color-$(val)-dark);
+  }
+
+  .px-filter-item--$(val).is-active {
+    filter: drop-shadow(
+      var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-color-$(val)-dark)
+    );
+  }
+}
+
+/* Dark mode bevel adjustment */
+html.dark .px-filter-item {
+  --px-filter-item-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.08);
+  --px-filter-item-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.2);
+}
