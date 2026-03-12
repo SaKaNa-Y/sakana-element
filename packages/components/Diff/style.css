@@ -1,0 +1,112 @@
+/* Diff Variables */
+.px-diff {
+  --px-diff-handle-color: var(--px-text-color-primary);
+  --px-diff-handle-bg: var(--px-fill-color-blank);
+}
+
+/* Base Diff Container */
+.px-diff {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  font-size: 0;
+  line-height: 0;
+  box-sizing: border-box;
+
+}
+
+/* After panel flows normally — establishes container height */
+.px-diff__after {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Before panel overlays — clipped to show left side */
+.px-diff__before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+/* Images fill the container */
+.px-diff__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.px-diff__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+
+/* Handle — centers the grip vertically */
+.px-diff__handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(-50%);
+  outline: none;
+  pointer-events: none;
+
+  /* Vertical divider line */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    transform: translateX(-50%);
+    background: var(--px-diff-handle-bg);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.12);
+    pointer-events: none;
+  }
+}
+
+/* Grip button — circular pill shape (daisyUI-style) */
+.px-diff__handle-grip {
+  width: 20px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--px-diff-handle-bg);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+  cursor: ew-resize;
+  pointer-events: auto;
+  flex-shrink: 0;
+}
+
+/* Focus ring */
+.px-diff__handle:focus-visible .px-diff__handle-grip {
+  box-shadow: 0 0 0 2px var(--px-diff-handle-color), 0 1px 4px rgba(0, 0, 0, 0.18);
+}
+
+/* Color variants */
+@each $val in primary, success, warning, info, danger {
+  .px-diff--$(val) {
+    --px-diff-handle-color: var(--px-color-$(val));
+  }
+}
+
+/* Dark mode */
+html.dark .px-diff,
+.px-dark .px-diff {
+  --px-diff-handle-bg: var(--px-fill-color-light);
+}

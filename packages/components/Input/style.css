@@ -10,6 +10,10 @@
   --px-input-clear-hover-color: var(--px-text-color-primary);
   --px-input-shadow-color: var(--px-shadow-color);
   --px-input-focus-shadow-color: var(--px-shadow-color-dark);
+
+  /* Inset 3D bevel — sunken field look (reversed from PxButton's raised bevel) */
+  --px-input-inset-shadow: inset 2px 2px 0 0 rgba(0, 0, 0, 0.08);
+  --px-input-inset-highlight: inset -2px -2px 0 0 rgba(255, 255, 255, 0.15);
 }
 
 /* Base Input Styles */
@@ -172,12 +176,13 @@
     z-index: -1;
   }
 
-  /* Fill layer — inset by border width, filled with bg color */
+  /* Fill layer — inset by border width, filled with bg color, with sunken bevel */
   &::after {
     content: "";
     position: absolute;
     inset: 2px;
     background: var(--px-input-bg-color);
+    box-shadow: var(--px-input-inset-shadow), var(--px-input-inset-highlight);
     clip-path: polygon(
       0 4px,
       2px 4px,
@@ -324,6 +329,7 @@
   .px-input__wrapper {
     filter: none;
     &::before { background: transparent; }
+    &::after { box-shadow: none; }
     &:hover {
       &::before { background: var(--px-input-hover-border-color); }
       filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-input-shadow-color));

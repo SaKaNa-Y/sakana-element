@@ -31,6 +31,7 @@ export * from './icon-map';
 export * from './icon-registry';
 export * from './install';
 export * from './instance-management';
+export * from './pixelate';
 export * from './sanitize-svg';
 export * from './style';
 export * from './test';

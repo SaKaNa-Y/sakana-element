@@ -8,6 +8,7 @@ export * from './ChatBubble';
 export * from './Checkbox';
 export * from './Collapse';
 export * from './ConfigProvider';
+export * from './Diff';
 export * from './Divider';
 export * from './Drawer';
 export * from './Dropdown';

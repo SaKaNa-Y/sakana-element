@@ -100,6 +100,10 @@ const getDataItems = (lang: 'zh' | 'en') => [
     text: lang === 'zh' ? 'Pixelate 像素化' : 'Pixelate',
     link: `/${lang}/components/pixelate`,
   },
+  {
+    text: lang === 'zh' ? 'Diff 对比' : 'Diff',
+    link: `/${lang}/components/diff`,
+  },
 ];
 
 const getLayoutItems = (lang: 'zh' | 'en') => [
