@@ -6,6 +6,14 @@
   --px-switch-off-border-color: var(--px-border-color);
   --px-switch-shadow-color: var(--px-shadow-color);
   --px-switch-handle-color: var(--px-color-white);
+
+  /* Track groove (sunken bevel) */
+  --px-switch-inset-shadow: inset 2px 2px 0 0 rgba(0, 0, 0, 0.12);
+  --px-switch-inset-highlight: inset -2px -2px 0 0 rgba(255, 255, 255, 0.1);
+
+  /* Handle (raised bevel) */
+  --px-switch-handle-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.3);
+  --px-switch-handle-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.12);
 }
 
 /* Base Switch Styles - Pixel Toggle */
@@ -47,6 +55,8 @@
       }
       &::after {
         background: var(--px-switch-on-color);
+        box-shadow: inset 2px 2px 0 0 rgba(0, 0, 0, 0.06),
+                    inset -2px -2px 0 0 rgba(255, 255, 255, 0.15);
       }
 
       filter: drop-shadow(
@@ -162,7 +172,7 @@
     z-index: 0;
   }
 
-  /* Fill layer — pixel shape */
+  /* Fill layer — pixel shape with sunken groove bevel */
   &::after {
     content: "";
     position: absolute;
@@ -190,6 +200,7 @@
       2px calc(100% - 4px),
       0 calc(100% - 4px)
     );
+    box-shadow: var(--px-switch-inset-shadow), var(--px-switch-inset-highlight);
     z-index: 0;
   }
 
@@ -200,7 +211,7 @@
     width: 18px;
     height: 18px;
     background: transparent;
-    transition: none;
+    transition: left 0.15s steps(3);
     z-index: 2;
     display: flex;
     align-items: center;
@@ -228,7 +239,7 @@
       );
     }
 
-    /* Handle fill layer */
+    /* Handle fill layer — raised bevel like a game D-pad button */
     &::after {
       content: "";
       position: absolute;
@@ -248,6 +259,7 @@
         2px calc(100% - 2px),
         0 calc(100% - 2px)
       );
+      box-shadow: var(--px-switch-handle-highlight), var(--px-switch-handle-shadow);
     }
   }
 
@@ -297,4 +309,12 @@
       var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-color-$(val)-dark)
     );
   }
+}
+
+/* Dark mode bevel adjustments */
+html.dark .px-switch {
+  --px-switch-inset-shadow: inset 2px 2px 0 0 rgba(0, 0, 0, 0.25);
+  --px-switch-inset-highlight: inset -2px -2px 0 0 rgba(255, 255, 255, 0.05);
+  --px-switch-handle-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.15);
+  --px-switch-handle-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.2);
 }

@@ -1,0 +1,114 @@
+/* Kbd Variables */
+.px-kbd {
+  --px-kbd-text-color: var(--px-text-color-primary);
+  --px-kbd-bg-color: var(--px-fill-color-blank);
+  --px-kbd-border-color: var(--px-border-color);
+  --px-kbd-shadow-color: var(--px-shadow-color);
+  --px-kbd-font-size: var(--px-font-size-extra-small);
+  --px-kbd-height: 24px;
+  --px-kbd-padding: 0 6px;
+  --px-kbd-inset-shadow: inset 2px 2px 0 0 rgba(0, 0, 0, 0.08);
+  --px-kbd-inset-highlight: inset -2px -2px 0 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Base Kbd Styles - Pixel Keycap Aesthetic */
+.px-kbd {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--px-font-family);
+  vertical-align: middle;
+}
+
+/* Individual key element */
+.px-kbd__key {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: var(--px-kbd-height);
+  min-width: var(--px-kbd-height);
+  padding: var(--px-kbd-padding);
+  font-size: var(--px-kbd-font-size);
+  font-family: var(--px-font-family);
+  font-weight: 500;
+  color: var(--px-kbd-text-color);
+  line-height: 1;
+  white-space: nowrap;
+  box-sizing: border-box;
+  position: relative;
+  background: transparent;
+
+  border: none;
+
+  /* Pixel shadow via drop-shadow */
+  filter: drop-shadow(2px 2px 0px var(--px-kbd-shadow-color));
+
+  transition: none;
+
+  /* Border layer — pixel shape with 2px staircase corners */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-kbd-border-color);
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0,
+      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+    z-index: -1;
+  }
+
+  /* Fill layer — sunken keycap bevel */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-kbd-bg-color);
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0,
+      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+    box-shadow: var(--px-kbd-inset-shadow), var(--px-kbd-inset-highlight);
+    z-index: -1;
+  }
+}
+
+/* Abbr element — remove default underline */
+.px-kbd__abbr {
+  text-decoration: none;
+  position: relative;
+  z-index: 1;
+}
+
+/* Icon inside key */
+.px-kbd__key .px-icon {
+  position: relative;
+  z-index: 1;
+}
+
+/* Size variants */
+.px-kbd--large {
+  --px-kbd-height: 30px;
+  --px-kbd-padding: 0 10px;
+  --px-kbd-font-size: var(--px-font-size-base);
+}
+
+.px-kbd--small {
+  --px-kbd-height: 20px;
+  --px-kbd-padding: 0 4px;
+  --px-kbd-font-size: 10px;
+
+  .px-kbd__key {
+    filter: drop-shadow(1px 1px 0px var(--px-kbd-shadow-color));
+  }
+}
+
+/* Dark mode */
+html.dark .px-kbd {
+  --px-kbd-inset-shadow: inset 2px 2px 0 0 rgba(0, 0, 0, 0.2);
+  --px-kbd-inset-highlight: inset -2px -2px 0 0 rgba(255, 255, 255, 0.08);
+}

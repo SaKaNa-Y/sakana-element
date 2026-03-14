@@ -112,6 +112,10 @@ const getDataItems = (lang: 'zh' | 'en') => [
     text: lang === 'zh' ? 'Diff 对比' : 'Diff',
     link: `/${lang}/components/diff`,
   },
+  {
+    text: lang === 'zh' ? 'Kbd 键盘按键' : 'Kbd',
+    link: `/${lang}/components/kbd`,
+  },
 ];
 
 const getLayoutItems = (lang: 'zh' | 'en') => [
