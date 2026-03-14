@@ -1,0 +1,30 @@
+.px-validator {
+  display: inline-flex;
+  flex-direction: column;
+  font-family: var(--px-font-family);
+}
+
+.px-validator__content {
+  display: contents;
+}
+
+.px-validator__hint {
+  min-height: 1.4em;
+  padding-top: 4px;
+  font-size: var(--px-font-size-small);
+  color: var(--px-color-danger);
+  line-height: 1.4;
+  transition: opacity 0.15s ease;
+}
+
+.px-validator__hint.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.px-validator__hint-text {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+

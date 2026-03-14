@@ -6,6 +6,10 @@
   --px-radio-border-color: var(--px-border-color);
   --px-radio-bg-color: var(--px-fill-color-blank);
   --px-radio-shadow-color: var(--px-shadow-color);
+
+  /* 3D bevel — sunken look (unchecked) */
+  --px-radio-inset-highlight: inset -2px -2px 0 0 rgba(255, 255, 255, 0.2);
+  --px-radio-inset-shadow: inset 2px 2px 0 0 rgba(0, 0, 0, 0.1);
 }
 
 /* Base Radio Styles */
@@ -29,8 +33,11 @@
     }
   }
 
-  /* Checked state */
+  /* Checked state — raised bevel */
   &.is-checked {
+    --px-radio-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.2);
+    --px-radio-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.1);
+
     .px-radio__inner {
       &::before {
         background: var(--px-radio-checked-border-color);
@@ -49,6 +56,17 @@
         var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-radio-checked-border-color)
       );
     }
+  }
+
+  /* Hover feedback */
+  &:hover:not(.is-disabled) {
+    --px-radio-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.35);
+  }
+
+  /* Active/pressed feedback */
+  &:active:not(.is-disabled) {
+    --px-radio-inset-highlight: inset -2px -2px 0 0 rgba(255, 255, 255, 0.2);
+    --px-radio-inset-shadow: inset 2px 2px 0 0 rgba(0, 0, 0, 0.15);
   }
 }
 
@@ -155,13 +173,16 @@
     z-index: 0;
   }
 
-  /* Fill layer – pixel diamond */
+  /* Fill layer – pixel diamond with 3D bevel */
   &::after {
     content: "";
     position: absolute;
     inset: 2px;
     background: var(--px-radio-bg-color);
     clip-path: var(--px-radio-pixel-shape);
+    box-shadow:
+      var(--px-radio-inset-highlight),
+      var(--px-radio-inset-shadow);
     z-index: 0;
   }
 }
@@ -199,6 +220,17 @@
       var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-color-$(val)-dark)
     );
   }
+}
+
+/* Dark mode bevel adjustment */
+html.dark .px-radio {
+  --px-radio-inset-highlight: inset -2px -2px 0 0 rgba(255, 255, 255, 0.08);
+  --px-radio-inset-shadow: inset 2px 2px 0 0 rgba(0, 0, 0, 0.2);
+}
+
+html.dark .px-radio.is-checked {
+  --px-radio-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.08);
+  --px-radio-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.2);
 }
 
 /* Radio Group */

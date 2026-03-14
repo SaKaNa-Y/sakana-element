@@ -65,6 +65,10 @@ const getFormItems = (lang: 'zh' | 'en') => [
     text: lang === 'zh' ? 'Form 表单' : 'Form',
     link: `/${lang}/components/form`,
   },
+  {
+    text: lang === 'zh' ? 'Validator 验证器' : 'Validator',
+    link: `/${lang}/components/validator`,
+  },
 ];
 
 const getDataItems = (lang: 'zh' | 'en') => [
