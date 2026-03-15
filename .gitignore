@@ -41,3 +41,5 @@ packages/play/storybook-static
 
 # Husky v9 bug artifact (husky --version creates this directory)
 --version/
+.vercel
+.env*.local

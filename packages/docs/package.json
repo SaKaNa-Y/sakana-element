@@ -18,5 +18,8 @@
     "sakana-element": "workspace:*",
     "vitepress": "1.6.4",
     "vitepress-preview-component": "workspace:*"
+  },
+  "dependencies": {
+    "redis": "^5.11.0"
   }
 }
