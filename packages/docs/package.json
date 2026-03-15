@@ -20,6 +20,7 @@
     "vitepress-preview-component": "workspace:*"
   },
   "dependencies": {
+    "@vercel/node": "^5.6.15",
     "redis": "^5.11.0"
   }
 }

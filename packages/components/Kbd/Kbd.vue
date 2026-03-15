@@ -25,7 +25,7 @@ function isArrowKey(key: KbdKey): boolean {
   <span class="px-kbd" :class="kbdClasses">
     <template v-for="key in keys" :key="key">
       <kbd v-if="isArrowKey(key)" class="px-kbd__key">
-        <px-icon :icon="KBD_KEY_MAP[key].icon" size="xs" />
+        <px-icon :icon="(KBD_KEY_MAP[key].icon as string)" size="xs" />
       </kbd>
       <kbd v-else class="px-kbd__key">
         <abbr :title="key" class="px-kbd__abbr">{{ KBD_KEY_MAP[key].label }}</abbr>
