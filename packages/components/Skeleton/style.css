@@ -1,0 +1,225 @@
+/* ─── Skeleton Variables ─── */
+.px-skeleton {
+  --px-skeleton-bg-color: var(--px-fill-color-darker, #e0e0e0);
+  --px-skeleton-shimmer-color: var(--px-fill-color-light, #f5f5f5);
+  --px-skeleton-border-color: var(--px-border-color, #c0c0c0);
+  --px-skeleton-shadow-color: var(--px-shadow-color, rgba(0, 0, 0, 0.15));
+
+  /* Inset bevels (sunken look — opposite of Button's raised look) */
+  --px-skeleton-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.3);
+  --px-skeleton-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.12);
+
+  /* Dither overlay color */
+  --px-skeleton-dither-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Base bone / row — positioned container ─── */
+.px-skeleton__bone,
+.px-skeleton__row {
+  display: block;
+  position: relative;
+  background: transparent;
+
+  /* Pixel drop-shadow traces the pseudo-element shapes */
+  filter: drop-shadow(2px 2px 0 var(--px-skeleton-shadow-color));
+
+  /* Border layer */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-skeleton-border-color);
+    z-index: -1;
+  }
+
+  /* Fill layer — inset by border width */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-skeleton-bg-color);
+    box-shadow:
+      var(--px-skeleton-inset-highlight),
+      var(--px-skeleton-inset-shadow);
+    z-index: -1;
+  }
+}
+
+.px-skeleton__bone {
+  width: 100%;
+  height: 16px;
+}
+
+/* ─── Clip-paths per variant ─── */
+
+/* Rectangular / Text — 2px chamfered pixel corners */
+.px-skeleton--rectangular,
+.px-skeleton--text {
+  .px-skeleton__bone::before,
+  .px-skeleton__bone::after,
+  .px-skeleton__row::before,
+  .px-skeleton__row::after {
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0,
+      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+  }
+}
+
+/* Rounded — 4px staircase corners */
+.px-skeleton--rounded {
+  .px-skeleton__bone::before,
+  .px-skeleton__bone::after {
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+  }
+}
+
+/* Circular — 4-step staircase pixel circle (matching Avatar/Button) */
+.px-skeleton--circular {
+  .px-skeleton__bone::before,
+  .px-skeleton__bone::after {
+    clip-path: polygon(
+      0 10px, 2px 10px, 2px 6px, 4px 6px, 4px 4px, 6px 4px, 6px 2px, 10px 2px, 10px 0,
+      calc(100% - 10px) 0, calc(100% - 10px) 2px, calc(100% - 6px) 2px, calc(100% - 6px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 6px, calc(100% - 2px) 6px, calc(100% - 2px) 10px, 100% 10px,
+      100% calc(100% - 10px), calc(100% - 2px) calc(100% - 10px), calc(100% - 2px) calc(100% - 6px), calc(100% - 4px) calc(100% - 6px), calc(100% - 4px) calc(100% - 4px), calc(100% - 6px) calc(100% - 4px), calc(100% - 6px) calc(100% - 2px), calc(100% - 10px) calc(100% - 2px), calc(100% - 10px) 100%,
+      10px 100%, 10px calc(100% - 2px), 6px calc(100% - 2px), 6px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 6px), 2px calc(100% - 6px), 2px calc(100% - 10px), 0 calc(100% - 10px)
+    );
+  }
+}
+
+/* ─── Animation: Shimmer — Scanline sweep ─── */
+@keyframes px-skeleton-shimmer {
+  0%   { background-position: -30% 0, 0 0; }
+  100% { background-position: 130% 0, 0 0; }
+}
+
+.px-skeleton.is-animated.is-animation-shimmer {
+  .px-skeleton__bone::after,
+  .px-skeleton__row::after {
+    background:
+      /* Narrow hard-edged highlight band — scanline-like */
+      linear-gradient(
+        90deg,
+        transparent 0%,
+        transparent 40%,
+        var(--px-skeleton-shimmer-color) 45%,
+        var(--px-skeleton-shimmer-color) 55%,
+        transparent 60%,
+        transparent 100%
+      ),
+      var(--px-skeleton-bg-color);
+    background-size: 200% 100%, 100% 100%;
+    animation: px-skeleton-shimmer 1.5s steps(12, jump-none) infinite;
+  }
+}
+
+/* ─── Animation: Pulse — Two-frame blink ─── */
+@keyframes px-skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+.px-skeleton.is-animated.is-animation-pulse {
+  .px-skeleton__bone::after,
+  .px-skeleton__row::after {
+    animation: px-skeleton-pulse 1.2s steps(2, jump-none) infinite;
+  }
+}
+
+/* ─── Animation: Dither — Checkerboard dissolve ─── */
+@keyframes px-skeleton-dither {
+  0%   { background-position: 0 0, 0 0; }
+  25%  { background-position: 2px 0, 0 0; }
+  50%  { background-position: 2px 2px, 0 0; }
+  75%  { background-position: 0 2px, 0 0; }
+  100% { background-position: 0 0, 0 0; }
+}
+
+.px-skeleton.is-animated.is-animation-dither {
+  .px-skeleton__bone::after,
+  .px-skeleton__row::after {
+    background:
+      /* 2×2 pixel checkerboard dither pattern */
+      repeating-conic-gradient(
+        var(--px-skeleton-dither-color) 0% 25%,
+        transparent 0% 50%
+      ) 0 0 / 4px 4px,
+      var(--px-skeleton-bg-color);
+    animation: px-skeleton-dither 1.6s steps(4, jump-none) infinite;
+  }
+}
+
+/* ─── Text variant — thin horizontal bars ─── */
+.px-skeleton--text {
+  .px-skeleton__bone {
+    height: 12px;
+  }
+
+  .px-skeleton__row {
+    height: 12px;
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+/* ─── Circular variant ─── */
+.px-skeleton--circular {
+  .px-skeleton__bone {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* ─── Size: Large ─── */
+.px-skeleton--large {
+  .px-skeleton__bone {
+    height: 24px;
+  }
+
+  .px-skeleton__row {
+    height: 18px;
+  }
+
+  &.px-skeleton--circular .px-skeleton__bone {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+/* ─── Size: Small ─── */
+.px-skeleton--small {
+  .px-skeleton__bone {
+    height: 12px;
+  }
+
+  .px-skeleton__row {
+    height: 10px;
+    margin-bottom: 6px;
+  }
+
+  &.px-skeleton--circular .px-skeleton__bone {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* ─── Dark mode ─── */
+.px-dark .px-skeleton {
+  --px-skeleton-bg-color: var(--px-fill-color-darker, #3a3a3a);
+  --px-skeleton-shimmer-color: var(--px-fill-color, #4a4a4a);
+  --px-skeleton-border-color: var(--px-border-color, #555);
+  --px-skeleton-shadow-color: rgba(0, 0, 0, 0.3);
+  --px-skeleton-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.08);
+  --px-skeleton-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.2);
+  --px-skeleton-dither-color: rgba(255, 255, 255, 0.08);
+}

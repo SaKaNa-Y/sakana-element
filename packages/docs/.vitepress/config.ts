@@ -173,6 +173,10 @@ const getFeedbackItems = (lang: 'zh' | 'en') => [
     text: lang === 'zh' ? 'Dropdown 下拉菜单' : 'Dropdown',
     link: `/${lang}/components/dropdown`,
   },
+  {
+    text: lang === 'zh' ? 'Skeleton 骨架屏' : 'Skeleton',
+    link: `/${lang}/components/skeleton`,
+  },
 ];
 
 const getSidebar = (lang: 'zh' | 'en') => [

@@ -78,7 +78,7 @@
     cursor: pointer;
     transition: none;
 
-    /* Pixel selector indicator - small square */
+    /* Pixel selector indicator - arrow shape on interaction */
     &::before {
       content: '';
       position: absolute;
@@ -89,6 +89,8 @@
       height: 6px;
       background: transparent;
       border: 2px solid transparent;
+      /* Pixel arrow — right-pointing triangle, visible when colored */
+      clip-path: polygon(0 0, 100% 50%, 0 100%);
       z-index: 2;
     }
 
@@ -107,10 +109,19 @@
     &:hover {
       &::after {
         background-color: var(--px-select-item-hover-bg-color);
+        /* CRT scanline overlay - subtle retro stripe effect */
+        background-image: repeating-linear-gradient(
+          0deg,
+          transparent 0px,
+          transparent 2px,
+          rgba(0, 0, 0, 0.03) 2px,
+          rgba(0, 0, 0, 0.03) 4px
+        );
       }
 
       &::before {
         border-color: var(--px-hover-border-color);
+        background: var(--px-hover-border-color);
       }
     }
 
@@ -137,6 +148,7 @@
 
       &::before {
         border-color: var(--px-select-item-highlighted-border-color);
+        background: var(--px-select-item-highlighted-border-color);
       }
     }
 
@@ -261,6 +273,65 @@
       --px-select-item-selected-bg-color: var(--px-color-$(val)-light-9);
       --px-select-item-indicator-color: var(--px-color-$(val));
       --px-select-item-highlighted-border-color: var(--px-color-$(val));
+    }
+  }
+
+  /* Pixel scrollbar - RPG-style scrollbar for long option lists */
+  .px-select__menu {
+    scrollbar-width: thin;
+    scrollbar-color: var(--px-border-color) var(--px-fill-color-light);
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--px-fill-color-light);
+      border-left: 2px solid var(--px-border-color);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--px-border-color);
+      border: 2px solid var(--px-fill-color-light);
+
+      &:hover {
+        background: var(--px-text-color-secondary);
+      }
+    }
+  }
+}
+
+/* Dark mode overrides for Select enhancements */
+.px-dark .px-select {
+  .px-select__menu-item {
+    &:hover {
+      &::after {
+        background-image: repeating-linear-gradient(
+          0deg,
+          transparent 0px,
+          transparent 2px,
+          rgba(255, 255, 255, 0.03) 2px,
+          rgba(255, 255, 255, 0.03) 4px
+        );
+      }
+    }
+  }
+
+  .px-select__menu {
+    scrollbar-color: var(--px-border-color) var(--px-fill-color-darker);
+
+    &::-webkit-scrollbar-track {
+      background: var(--px-fill-color-darker);
+      border-left-color: var(--px-border-color);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--px-border-color);
+      border-color: var(--px-fill-color-darker);
+
+      &:hover {
+        background: var(--px-text-color-secondary);
+      }
     }
   }
 }
