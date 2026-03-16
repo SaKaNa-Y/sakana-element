@@ -1,7 +1,7 @@
 import { rAF } from '@sakana-element/utils';
 import { mount } from '@vue/test-utils';
 import { describe, expect, it, vi } from 'vitest';
-import { defineComponent, h, inject, nextTick, ref } from 'vue';
+import { defineComponent, inject, nextTick, ref } from 'vue';
 import { z } from 'zod';
 import Input from '../Input/Input.vue';
 import { FORM_ITEM_CTX_KEY } from './constants';

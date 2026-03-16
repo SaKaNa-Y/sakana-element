@@ -16,11 +16,7 @@ const slots = useSlots();
 
 const customColorStyle = computed(() => {
   if (!props.color) return {};
-  return resolveColorVars(
-    createColorPalette(props.color),
-    'px-chat',
-    CHAT_COLOR_TEMPLATES['default'],
-  );
+  return resolveColorVars(createColorPalette(props.color), 'px-chat', CHAT_COLOR_TEMPLATES.default);
 });
 </script>
 

@@ -29,7 +29,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method === 'POST') {
     const cookies = parseCookies(req.headers.cookie || '');
 
-    if (!cookies['visitor_id']) {
+    if (!cookies.visitor_id) {
       const id = crypto.randomUUID();
       res.setHeader(
         'Set-Cookie',
