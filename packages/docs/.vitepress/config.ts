@@ -2,11 +2,12 @@ import { resolve } from 'node:path';
 import { componentPreview, containerPreview } from '@vitepress-demo-preview/plugin';
 import type { HeadConfig } from 'vitepress';
 import { defineConfig } from 'vitepress';
+import { CATEGORIES, getCategorySidebarItems, type Locale } from './data/componentData';
 
 const HOSTNAME = 'https://sakana-element-docs.vercel.app';
 
 // Shared sidebar configuration
-const getGuideItems = (lang: 'zh' | 'en') => [
+const getGuideItems = (lang: Locale) => [
   {
     text: lang === 'zh' ? '快速开始' : 'Getting Started',
     link: `/${lang}/get-started`,
@@ -21,200 +22,21 @@ const getGuideItems = (lang: 'zh' | 'en') => [
   },
 ];
 
-const getBasicItems = (lang: 'zh' | 'en') => [
+const getSidebar = (lang: Locale) => [
   {
-    text: lang === 'zh' ? 'Button 按钮' : 'Button',
-    link: `/${lang}/components/button`,
+    text: lang === 'zh' ? '组件总览' : 'All Components',
+    link: `/${lang}/components/`,
   },
-  {
-    text: lang === 'zh' ? 'Icon 图标' : 'Icon',
-    link: `/${lang}/components/icon`,
-  },
-];
-
-const getFormItems = (lang: 'zh' | 'en') => [
-  {
-    text: lang === 'zh' ? 'Input 输入框' : 'Input',
-    link: `/${lang}/components/input`,
-  },
-  {
-    text: lang === 'zh' ? 'Checkbox 多选框' : 'Checkbox',
-    link: `/${lang}/components/checkbox`,
-  },
-  {
-    text: lang === 'zh' ? 'Radio 单选框' : 'Radio',
-    link: `/${lang}/components/radio`,
-  },
-  {
-    text: lang === 'zh' ? 'Filter 过滤器' : 'Filter',
-    link: `/${lang}/components/filter`,
-  },
-  {
-    text: lang === 'zh' ? 'Switch 开关' : 'Switch',
-    link: `/${lang}/components/switch`,
-  },
-  {
-    text: lang === 'zh' ? 'Select 选择器' : 'Select',
-    link: `/${lang}/components/select`,
-  },
-  {
-    text: lang === 'zh' ? 'FileInput 文件输入' : 'FileInput',
-    link: `/${lang}/components/file-input`,
-  },
-  {
-    text: lang === 'zh' ? 'Form 表单' : 'Form',
-    link: `/${lang}/components/form`,
-  },
-  {
-    text: lang === 'zh' ? 'Validator 验证器' : 'Validator',
-    link: `/${lang}/components/validator`,
-  },
-];
-
-const getDataItems = (lang: 'zh' | 'en') => [
-  {
-    text: lang === 'zh' ? 'Badge 徽章' : 'Badge',
-    link: `/${lang}/components/badge`,
-  },
-  {
-    text: lang === 'zh' ? 'ChatBubble 聊天气泡' : 'ChatBubble',
-    link: `/${lang}/components/chat-bubble`,
-  },
-  {
-    text: lang === 'zh' ? 'Indicator 指示器' : 'Indicator',
-    link: `/${lang}/components/indicator`,
-  },
-  {
-    text: lang === 'zh' ? 'Avatar 头像' : 'Avatar',
-    link: `/${lang}/components/avatar`,
-  },
-  {
-    text: lang === 'zh' ? 'Card 卡片' : 'Card',
-    link: `/${lang}/components/card`,
-  },
-  {
-    text: lang === 'zh' ? 'Progress 进度条' : 'Progress',
-    link: `/${lang}/components/progress`,
-  },
-  {
-    text: lang === 'zh' ? 'Table 表格' : 'Table',
-    link: `/${lang}/components/table`,
-  },
-  {
-    text: lang === 'zh' ? 'Collapse 折叠面板' : 'Collapse',
-    link: `/${lang}/components/collapse`,
-  },
-  {
-    text: lang === 'zh' ? 'Pixelate 像素化' : 'Pixelate',
-    link: `/${lang}/components/pixelate`,
-  },
-  {
-    text: lang === 'zh' ? 'Diff 对比' : 'Diff',
-    link: `/${lang}/components/diff`,
-  },
-  {
-    text: lang === 'zh' ? 'Kbd 键盘按键' : 'Kbd',
-    link: `/${lang}/components/kbd`,
-  },
-];
-
-const getLayoutItems = (lang: 'zh' | 'en') => [
-  {
-    text: lang === 'zh' ? 'Divider 分割线' : 'Divider',
-    link: `/${lang}/components/divider`,
-  },
-  {
-    text: lang === 'zh' ? 'Drawer 抽屉' : 'Drawer',
-    link: `/${lang}/components/drawer`,
-  },
-];
-
-const getNavigationItems = (lang: 'zh' | 'en') => [
-  {
-    text: lang === 'zh' ? 'Link 链接' : 'Link',
-    link: `/${lang}/components/link`,
-  },
-  {
-    text: lang === 'zh' ? 'Breadcrumb 面包屑' : 'Breadcrumb',
-    link: `/${lang}/components/breadcrumb`,
-  },
-];
-
-const getFeedbackItems = (lang: 'zh' | 'en') => [
-  {
-    text: lang === 'zh' ? 'Alert 提示' : 'Alert',
-    link: `/${lang}/components/alert`,
-  },
-  {
-    text: lang === 'zh' ? 'Tooltip 文字提示' : 'Tooltip',
-    link: `/${lang}/components/tooltip`,
-  },
-  {
-    text: lang === 'zh' ? 'Message 消息' : 'Message',
-    link: `/${lang}/components/message`,
-  },
-  {
-    text: lang === 'zh' ? 'Notification 通知' : 'Notification',
-    link: `/${lang}/components/notification`,
-  },
-  {
-    text: lang === 'zh' ? 'Popconfirm 气泡确认框' : 'Popconfirm',
-    link: `/${lang}/components/popconfirm`,
-  },
-  {
-    text: lang === 'zh' ? 'MessageBox 消息弹框' : 'MessageBox',
-    link: `/${lang}/components/message-box`,
-  },
-  {
-    text: lang === 'zh' ? 'Loading 加载' : 'Loading',
-    link: `/${lang}/components/loading`,
-  },
-  {
-    text: lang === 'zh' ? 'Dropdown 下拉菜单' : 'Dropdown',
-    link: `/${lang}/components/dropdown`,
-  },
-  {
-    text: lang === 'zh' ? 'Skeleton 骨架屏' : 'Skeleton',
-    link: `/${lang}/components/skeleton`,
-  },
-];
-
-const getSidebar = (lang: 'zh' | 'en') => [
   {
     text: lang === 'zh' ? '指南' : 'Guide',
     collapsed: false,
     items: getGuideItems(lang),
   },
-  {
-    text: lang === 'zh' ? '基础组件' : 'Basic',
+  ...CATEGORIES.map((cat) => ({
+    text: cat.name[lang],
     collapsed: false,
-    items: getBasicItems(lang),
-  },
-  {
-    text: lang === 'zh' ? '表单组件' : 'Form',
-    collapsed: false,
-    items: getFormItems(lang),
-  },
-  {
-    text: lang === 'zh' ? '数据展示' : 'Data Display',
-    collapsed: false,
-    items: getDataItems(lang),
-  },
-  {
-    text: lang === 'zh' ? '布局组件' : 'Layout',
-    collapsed: false,
-    items: getLayoutItems(lang),
-  },
-  {
-    text: lang === 'zh' ? '导航组件' : 'Navigation',
-    collapsed: false,
-    items: getNavigationItems(lang),
-  },
-  {
-    text: lang === 'zh' ? '反馈组件' : 'Feedback',
-    collapsed: false,
-    items: getFeedbackItems(lang),
-  },
+    items: getCategorySidebarItems(cat, lang),
+  })),
 ];
 
 // https://vitepress.dev/reference/site-config
@@ -350,7 +172,7 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: '指南', link: '/zh/get-started' },
-          { text: '组件', link: '/zh/components/button' },
+          { text: '组件', link: '/zh/components/' },
         ],
         sidebar: {
           '/zh/': getSidebar('zh'),
@@ -378,7 +200,7 @@ export default defineConfig({
       themeConfig: {
         nav: [
           { text: 'Guide', link: '/en/get-started' },
-          { text: 'Components', link: '/en/components/button' },
+          { text: 'Components', link: '/en/components/' },
         ],
         sidebar: {
           '/en/': getSidebar('en'),

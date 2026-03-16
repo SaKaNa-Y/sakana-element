@@ -15,7 +15,7 @@ hero:
       link: /en/get-started
     - theme: alt
       text: View Components
-      link: /en/components/button
+      link: /en/components/
     - theme: alt
       text: 中文
       link: /zh/
