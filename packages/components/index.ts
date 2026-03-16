@@ -28,6 +28,7 @@ export * from './Pixelate';
 export * from './Popconfirm';
 export * from './Progress';
 export * from './Radio';
+export * from './Resizable';
 export * from './Select';
 export * from './Skeleton';
 export * from './Switch';

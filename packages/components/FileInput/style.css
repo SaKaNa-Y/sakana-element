@@ -12,6 +12,18 @@
   --px-file-input-trigger-hover-bg-color: var(--px-fill-color-darker);
   --px-file-input-icon-color: var(--px-text-color-secondary);
   --px-file-input-clear-hover-color: var(--px-text-color-primary);
+
+  /* Raised bevel for trigger button (same as PxButton) */
+  --px-file-input-trigger-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.2);
+  --px-file-input-trigger-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.1);
+
+  /* Sunken bevel for filename area (same as PxInput) */
+  --px-file-input-inset-shadow: inset 2px 2px 0 0 rgba(0, 0, 0, 0.08);
+  --px-file-input-inset-highlight: inset -2px -2px 0 0 rgba(255, 255, 255, 0.15);
+
+  /* Hover-state bevel (slightly stronger) */
+  --px-file-input-trigger-hover-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.3);
+  --px-file-input-trigger-hover-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.12);
 }
 
 /* Base FileInput Styles */
@@ -131,9 +143,13 @@
       0 calc(100% - 4px)
     );
     z-index: -1;
+    /* Sunken bevel on the filename area */
+    box-shadow: var(--px-file-input-inset-shadow), var(--px-file-input-inset-highlight);
   }
 
   &:hover {
+    transform: translate(-1px, -1px);
+    filter: drop-shadow(4px 4px 0px var(--px-file-input-shadow-color));
     &::before {
       background: var(--px-file-input-hover-border-color);
     }
@@ -168,6 +184,9 @@
   border-right: 2px solid var(--px-file-input-border-color);
   user-select: none;
 
+  /* Raised bevel at rest */
+  box-shadow: var(--px-file-input-trigger-inset-highlight), var(--px-file-input-trigger-inset-shadow);
+
   /* Notch top-left and bottom-left corners to match the pixel staircase border */
   clip-path: polygon(
     0 2px,
@@ -182,6 +201,11 @@
 
   &:hover {
     background: var(--px-file-input-trigger-hover-bg-color);
+    box-shadow: var(--px-file-input-trigger-hover-highlight), var(--px-file-input-trigger-hover-shadow);
+  }
+
+  &:active {
+    box-shadow: var(--px-file-input-trigger-inset-shadow), var(--px-file-input-trigger-inset-highlight);
   }
 }
 
@@ -301,4 +325,12 @@
       }
     }
   }
+}
+
+/* Dark mode bevel adjustment */
+html.dark .px-file-input {
+  --px-file-input-trigger-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.08);
+  --px-file-input-trigger-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.3);
+  --px-file-input-inset-shadow: inset 2px 2px 0 0 rgba(0, 0, 0, 0.2);
+  --px-file-input-inset-highlight: inset -2px -2px 0 0 rgba(255, 255, 255, 0.05);
 }

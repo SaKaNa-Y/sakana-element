@@ -277,6 +277,16 @@ export const CATEGORIES: ComponentCategory[] = [
           zh: '从屏幕任意边缘滑入的面板。',
         },
       },
+      {
+        name: 'Resizable',
+        zhName: '可调面板',
+        slug: 'resizable',
+        icon: 'sliders',
+        description: {
+          en: 'Resizable panels with draggable dividers for flexible layouts.',
+          zh: '可调整大小的面板，通过拖拽分隔线实现灵活布局。',
+        },
+      },
     ],
   },
   {

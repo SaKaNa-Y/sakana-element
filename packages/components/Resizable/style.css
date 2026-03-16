@@ -1,0 +1,106 @@
+/* Resizable Group */
+.px-resizable-group {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.px-resizable-group.is-horizontal {
+  flex-direction: row;
+}
+
+.px-resizable-group.is-vertical {
+  flex-direction: column;
+}
+
+/* Resizable Panel */
+.px-resizable-panel {
+  overflow: auto;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.px-resizable-panel.is-collapsed {
+  overflow: hidden;
+}
+
+/* Resizable Handle */
+.px-resizable-handle {
+  flex: 0 0 8px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  z-index: 1;
+  cursor: col-resize;
+  transition: none;
+  background: var(--px-border-color);
+  box-sizing: border-box;
+
+  /* Pixel border effect via clip-path */
+  clip-path: polygon(
+    0 2px,
+    2px 2px,
+    2px 0,
+    calc(100% - 2px) 0,
+    calc(100% - 2px) 2px,
+    100% 2px,
+    100% calc(100% - 2px),
+    calc(100% - 2px) calc(100% - 2px),
+    calc(100% - 2px) 100%,
+    2px 100%,
+    2px calc(100% - 2px),
+    0 calc(100% - 2px)
+  );
+
+  &:hover {
+    background: var(--px-hover-border-color);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--px-color-primary);
+    outline-offset: -2px;
+  }
+}
+
+/* Expanded hit area via ::before pseudo-element (not clipped by clip-path) */
+.px-resizable-handle.has-hit-area::before {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--px-handle-hit-area, 0px));
+  z-index: -1;
+}
+
+/* Vertical handle */
+.px-resizable-handle.is-vertical {
+  flex: 0 0 8px;
+  cursor: row-resize;
+  clip-path: polygon(
+    2px 0,
+    calc(100% - 2px) 0,
+    calc(100% - 2px) 2px,
+    100% 2px,
+    100% calc(100% - 2px),
+    calc(100% - 2px) calc(100% - 2px),
+    calc(100% - 2px) 100%,
+    2px 100%,
+    2px calc(100% - 2px),
+    0 calc(100% - 2px),
+    0 2px,
+    2px 2px
+  );
+}
+
+/* Dragging state */
+.px-resizable-handle.is-dragging {
+  background: var(--px-color-primary);
+}
+
+/* Disabled state */
+.px-resizable-handle.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
