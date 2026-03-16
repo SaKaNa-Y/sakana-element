@@ -10,12 +10,7 @@ import {
   triggerRef,
 } from 'vue';
 import { RESIZABLE_GROUP_CTX_KEY } from './constants';
-import type {
-  PanelData,
-  ResizableGroupContext,
-  ResizableGroupEmits,
-  ResizableGroupProps,
-} from './types';
+import type { PanelData, ResizableGroupEmits, ResizableGroupProps } from './types';
 
 defineOptions({
   name: 'PxResizableGroup',
@@ -183,7 +178,7 @@ let cachedRect: DOMRect | null = null;
 let resizeHandleIndex = -1;
 let dragEndCallback: (() => void) | null = null;
 
-function startResize(handleId: number, event: MouseEvent | TouchEvent, onDragEnd?: () => void) {
+function startResize(handleId: number, onDragEnd?: () => void) {
   const handleIdx = handles.indexOf(handleId);
   if (handleIdx < 0) return;
 

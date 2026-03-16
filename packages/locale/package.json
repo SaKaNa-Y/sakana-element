@@ -1,6 +1,6 @@
 {
   "name": "@sakana-element/locale",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "private": true,
   "description": "",
   "main": "index.ts",
@@ -10,6 +10,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.7.0"
+  "license": "ISC"
 }

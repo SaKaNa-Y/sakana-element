@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<ResizableHandleProps>(), {
 
 const emit = defineEmits<ResizableHandleEmits>();
 
-const ctx = inject(RESIZABLE_GROUP_CTX_KEY);
+const ctx = inject(RESIZABLE_GROUP_CTX_KEY)!;
 if (!ctx) {
   throw new Error('PxResizableHandle must be used inside PxResizableGroup');
 }
@@ -33,14 +33,14 @@ onBeforeUnmount(() => {
 
 const isVertical = computed(() => ctx.direction.value === 'vertical');
 
-function onPointerDown(e: MouseEvent | TouchEvent) {
+function onPointerDown() {
   if (props.disabled) return;
   isDragging.value = true;
   emit('dragging', true);
 
   // Pass a callback so the Group notifies us when drag ends,
   // avoiding duplicate window event listeners
-  ctx.startResize(handleId, e, () => {
+  ctx.startResize(handleId, () => {
     isDragging.value = false;
     emit('dragging', false);
   });

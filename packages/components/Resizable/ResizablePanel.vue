@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<ResizablePanelProps>(), {
 
 const emit = defineEmits<ResizablePanelEmits>();
 
-const ctx = inject(RESIZABLE_GROUP_CTX_KEY);
+const ctx = inject(RESIZABLE_GROUP_CTX_KEY)!;
 if (!ctx) {
   throw new Error('PxResizablePanel must be used inside PxResizableGroup');
 }

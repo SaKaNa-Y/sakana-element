@@ -1,7 +1,7 @@
 {
   "name": "@sakana-element/play",
   "private": true,
-  "version": "2.2.0",
+  "version": "2.3.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -20,7 +20,6 @@
     "@storybook/vue3": "8.5.4",
     "@storybook/vue3-vite": "8.5.4",
     "@vitejs/plugin-vue": "^6.0.4",
-    "@vue/tsconfig": "^0.7.0",
     "storybook": "8.5.4"
   }
 }

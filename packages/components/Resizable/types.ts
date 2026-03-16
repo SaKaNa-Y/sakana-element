@@ -52,7 +52,7 @@ export interface ResizableGroupContext {
   unregisterPanel(id: number): void;
   getPanelSize(id: number): number;
   setPanelSize(id: number, size: number, force?: boolean): void;
-  startResize(handleId: number, event: MouseEvent | TouchEvent, onDragEnd?: () => void): void;
+  startResize(handleId: number, onDragEnd?: () => void): void;
   keyboardResize(handleId: number, delta: number): void;
   getNextHandleId(): number;
   registerHandle(id: number): void;

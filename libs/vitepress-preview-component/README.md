@@ -27,13 +27,13 @@ pnpm add @vitepress-demo-preview/component @vitepress-demo-preview/plugin
 configure in your vitepress/theme entry file
 
 ```ts
-import { AntDesignContainer, ElementPlusContainer, NaiveUIContainer } from '@vitepress-demo-preview/component'
+import { ElementPlusContainer } from '@vitepress-demo-preview/component'
 import '@vitepress-demo-preview/component/dist/style.css'
 
 export default {
   ...DefaultTheme,
   enhanceApp({ app }: { app: App }) {
-    app.component('demo-preview', AntDesignContainer)
+    app.component('demo-preview', ElementPlusContainer)
   }
 }
 ```
@@ -96,11 +96,9 @@ demo-preview=./xxx/xx.vue
 
 ### `@vitepress-demo-preview/component`
 
-`@vitepress-demo-preview/component` is a component library that provides presentation components. It mainly provides three containers. These are **Ant Design Container**, **ElementPlus Container**, and **Naive UI Container**, which mimic the styles associated with the preview of each UI framework component.
+`@vitepress-demo-preview/component` is a component library that provides the **ElementPlus Container** presentation component, which mimics the style associated with the ElementPlus UI framework component preview.
 
-Of course, we will also consider providing similar component containers for other component libraries.
-
-**Tip:** `@vitepress-demo-preview/component` is not necessary. You can also consider just using the `@vitepress-demo-preview/plugin`, which is not bound to each other. You can implement your own component container according to your own preferences and needs. For details, refer to the source code of the above three containers.
+**Tip:** `@vitepress-demo-preview/component` is not necessary. You can also consider just using the `@vitepress-demo-preview/plugin`, which is not bound to each other. You can implement your own component container according to your own preferences and needs.
 
 ## 📑 License
 

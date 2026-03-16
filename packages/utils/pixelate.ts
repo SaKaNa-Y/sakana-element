@@ -2,7 +2,7 @@
  * Shared pixelation utilities used by PxPixelate and PxDiff.
  */
 
-export function hexToRgb(hex: string): number[] {
+function hexToRgb(hex: string): number[] {
   const h = hex.replace('#', '');
   return [
     parseInt(h.substring(0, 2), 16),
@@ -11,11 +11,11 @@ export function hexToRgb(hex: string): number[] {
   ];
 }
 
-export function normalizePalette(palette: string[] | number[][]): number[][] {
+function normalizePalette(palette: string[] | number[][]): number[][] {
   return palette.map((c) => (typeof c === 'string' ? hexToRgb(c) : c));
 }
 
-export function findNearestColor(r: number, g: number, b: number, palette: number[][]): number[] {
+function findNearestColor(r: number, g: number, b: number, palette: number[][]): number[] {
   if (palette.length === 0) return [r, g, b];
   let minDist = Infinity;
   let nearest = palette[0];
