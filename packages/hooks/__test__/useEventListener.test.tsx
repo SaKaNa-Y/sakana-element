@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, it, vi } from 'vitest';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, nextTick, ref } from 'vue';
 
 import useEventListener from '../useEventListener';
 
@@ -39,13 +39,16 @@ describe('hooks/useEventListener', () => {
       }),
     );
 
-    await document.getElementById('container')?.click();
+    // The watch on the ref is lazy — wait for it to fire and attach the listener
+    await nextTick();
+
     await target.value?.click();
-
     expect(handler).toHaveBeenCalledOnce();
 
+    // Reassigning the ref should move the listener to the new element
     target.value = document.createElement('div');
-    await document.getElementById('container')?.click();
-    expect(handler).toHaveBeenCalledOnce();
+    await nextTick();
+    await target.value?.click();
+    expect(handler).toHaveBeenCalledTimes(2);
   });
 });

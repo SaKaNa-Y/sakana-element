@@ -6,9 +6,14 @@ import PxInput from '../Input/Input.vue';
 import { SELECT_CTX_KEY } from './constants';
 import { PxOption, PxSelect } from './index';
 import Option from './Option.vue';
-
 import Select from './Select.vue';
 import type { SelectOptionProps } from './types';
+
+// Select uses lodash-es debounce: 100ms for local filter, 300ms for remote.
+// These helpers wait past the debounce threshold so the callback fires.
+const FILTER_DEBOUNCE = 100;
+const REMOTE_DEBOUNCE = 300;
+const waitForDebounce = (ms: number) => new Promise((r) => setTimeout(r, ms + 50));
 
 const options = [
   { value: '1', label: 'option 1' },
@@ -277,8 +282,7 @@ describe('Select', () => {
 
     const input = wrapper.find('input');
     await input.setValue('option 1');
-    // Wait for debounce (100ms default)
-    await new Promise((r) => setTimeout(r, 150));
+    await waitForDebounce(FILTER_DEBOUNCE);
     await rAF();
   });
 
@@ -364,8 +368,7 @@ describe('Select', () => {
 
     const input = wrapper.find('input');
     await input.setValue('opt');
-    // Wait for remote debounce (300ms default)
-    await new Promise((r) => setTimeout(r, 400));
+    await waitForDebounce(REMOTE_DEBOUNCE);
     await rAF();
     // Remote method should have been invoked with the query
     expect(remoteMethod).toHaveBeenCalled();
@@ -529,6 +532,28 @@ describe('Select', () => {
     });
 
     expect(wrapper.classes()).toContain('is-disabled');
+  });
+
+  test('Option should fallback to label when renderLabel is not provided', () => {
+    const ctx = {
+      handleSelect: vi.fn(),
+      selectStates: {
+        selectedOption: null,
+      },
+    };
+    const wrapper = mount(Option, {
+      props: {
+        value: '1',
+        label: 'plain label',
+      },
+      global: {
+        provide: {
+          [SELECT_CTX_KEY as any]: ctx,
+        },
+      },
+    });
+
+    expect(wrapper.text()).toContain('plain label');
   });
 });
 
@@ -761,8 +786,7 @@ describe('Select/filterable', () => {
     const input = wrapper.find('input');
     await input.setValue('test');
     await rAF();
-    // Wait for debounce
-    await new Promise((r) => setTimeout(r, 200));
+    await waitForDebounce(FILTER_DEBOUNCE);
 
     expect(filterMethod).toHaveBeenCalledWith('test');
   });
@@ -785,8 +809,7 @@ describe('Select/filterable', () => {
     const input = wrapper.find('input');
     await input.setValue('search');
     await rAF();
-    // Wait for debounce (remote timeout is 300ms)
-    await new Promise((r) => setTimeout(r, 400));
+    await waitForDebounce(REMOTE_DEBOUNCE);
 
     expect(remoteMethod).toHaveBeenCalledWith('search');
   });
@@ -850,8 +873,7 @@ describe('Select/filterable with slot children', () => {
     const input = wrapper.find('input');
     await input.setValue('Apple');
     await rAF();
-    // Wait for debounce
-    await new Promise((r) => setTimeout(r, 200));
+    await waitForDebounce(FILTER_DEBOUNCE);
     await rAF();
   });
 
@@ -877,7 +899,7 @@ describe('Select/filterable with slot children', () => {
     const input = wrapper.find('input');
     await input.setValue('App');
     await rAF();
-    await new Promise((r) => setTimeout(r, 200));
+    await waitForDebounce(FILTER_DEBOUNCE);
 
     expect(filterMethod).toHaveBeenCalledWith('App');
   });
@@ -902,7 +924,7 @@ describe('Select/filterable with slot children', () => {
     const input = wrapper.find('input');
     await input.setValue('search');
     await rAF();
-    await new Promise((r) => setTimeout(r, 400));
+    await waitForDebounce(REMOTE_DEBOUNCE);
 
     expect(remoteMethod).toHaveBeenCalledWith('search');
   });
@@ -1000,9 +1022,8 @@ describe('Select renderLabel', () => {
     await rAF();
 
     const items = wrapper.findAll('.px-select__menu-item');
-    if (items.length) {
-      expect(items[0].text()).toContain('Custom: Apple');
-    }
+    expect(items.length).toBeGreaterThan(0);
+    expect(items[0].text()).toContain('Custom: Apple');
   });
 });
 
@@ -1015,5 +1036,36 @@ describe('Select/index', () => {
   test('component should be exported', () => {
     expect(PxSelect).toBe(Select);
     expect(PxOption).toBe(Option);
+  });
+});
+
+describe('Select edge cases', () => {
+  test('should handle missing options prop (defaults to empty)', () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '' },
+    });
+    expect(wrapper.find('.px-select').exists()).toBe(true);
+    expect(wrapper.find('.px-select-option').exists()).toBe(false);
+  });
+
+  test('should treat non-boolean disabled attribute on PxOption slot as disabled', async () => {
+    const wrapper = mount(Select, {
+      props: { modelValue: '' },
+      slots: {
+        default: () => [
+          h(Option, { value: '1', label: 'One', disabled: '' as unknown as boolean }),
+          h(Option, { value: '2', label: 'Two' }),
+        ],
+      },
+    });
+
+    // Open the dropdown
+    await wrapper.find('.px-select').trigger('click');
+    await rAF();
+
+    const items = wrapper.findAll('li');
+    expect(items.length).toBeGreaterThan(0);
+    // The first option with disabled="" should be treated as disabled
+    expect(items[0].classes()).toContain('is-disabled');
   });
 });

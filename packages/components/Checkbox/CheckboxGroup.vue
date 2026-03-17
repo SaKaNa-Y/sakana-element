@@ -14,7 +14,6 @@ const { formItem } = useFormItem();
 const changeEvent: CheckboxGroupContext['changeEvent'] = (value) => {
   emits('update:modelValue', value);
   emits('change', value);
-  /* v8 ignore next */
   formItem?.validate('change').catch((err: Error) => console.debug(err));
 };
 

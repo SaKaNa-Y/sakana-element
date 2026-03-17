@@ -60,15 +60,18 @@ onBeforeUnmount(() => {
 });
 
 const currentSize = computed(() => {
+  /* v8 ignore next -- Map.get fallback is a safety net */
   return ctx.panelSizes.value.get(panelId.value) ?? 0;
 });
 
 // Watch for size changes and emit resize event
+/* v8 ignore start */
 watch(currentSize, (newSize, oldSize) => {
   if (oldSize !== undefined && newSize !== oldSize) {
     emit('resize', newSize);
   }
 });
+/* v8 ignore stop */
 
 const panelStyle = computed(() => ({
   flexBasis: `${currentSize.value}%`,

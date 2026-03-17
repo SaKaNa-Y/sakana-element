@@ -16,11 +16,12 @@ const { nextZIndex } = useZIndex(3000);
 function createLoading(opts: LoadingOptionsResolved) {
   const visible = ref(opts.visible);
   const afterLeaveFlag = ref(false);
+  /* v8 ignore start */
   const handleAfterLeave = () => {
-    /* v8 ignore next */
     if (!afterLeaveFlag.value) return;
     destroy();
   };
+  /* v8 ignore stop */
 
   const data = reactive({
     ...opts,

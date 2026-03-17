@@ -207,7 +207,7 @@ describe('hooks/useFocusTrap', () => {
     wrapper.unmount();
 
     const keydownCalls = removeSpy.mock.calls.filter(([type]) => type === 'keydown');
-    expect(keydownCalls.length).toBeGreaterThanOrEqual(1);
+    expect(keydownCalls.length).toBe(1);
 
     removeSpy.mockRestore();
   });

@@ -39,6 +39,7 @@ describe('utils/style', () => {
     });
 
     it('should return undefined and warn for invalid type', () => {
+      // `as any` intentionally bypasses TS to test runtime safety for JS callers
       expect(addUnit(true as any)).toBeUndefined();
     });
   });

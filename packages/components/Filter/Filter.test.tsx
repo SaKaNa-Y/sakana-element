@@ -354,6 +354,16 @@ describe('Multi-select mode (multiple: true)', () => {
     expect(wrapper.emitted().change[0]).toEqual([[]]);
   });
 
+  it('should handle selection when modelValue is undefined in multiple mode', async () => {
+    const wrapper = mount(Filter, {
+      props: { modelValue: undefined, options, multiple: true },
+    });
+    // Click first item — should treat undefined modelValue as []
+    await wrapper.find('.px-filter-item').trigger('click');
+    expect(wrapper.emitted()['update:modelValue'][0]).toEqual([['a']]);
+    expect(wrapper.emitted().change[0]).toEqual([['a']]);
+  });
+
   it('should use checkbox input type in multi mode', () => {
     const wrapper = mount(Filter, {
       props: { modelValue: [], options, multiple: true },

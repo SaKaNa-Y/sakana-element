@@ -54,10 +54,8 @@ const state = reactive({
   zIndex: nextZIndex(),
 });
 
-/* v8 ignore next */
 const isVisible = computed(() => props.visible?.value ?? false);
 const hasMessage = computed(() => !!state.message);
-/* v8 ignore next */
 const iconComponent = computed(() => state.icon ?? typeIconMap.get(state.type ?? ''));
 
 // Computed style merging customStyle + width
@@ -74,7 +72,6 @@ const boxStyle = computed(() => ({
 // Input validation state
 const validationError = ref('');
 
-/* v8 ignore start -- validate paths have many ?? / ?. branch artifacts */
 function validate(): boolean {
   if (!state.inputSchema) return true;
   const result = state.inputSchema.safeParse(state.inputValue ?? '');
@@ -88,7 +85,6 @@ function validate(): boolean {
   validationError.value = '';
   return true;
 }
-/* v8 ignore stop */
 
 // Focus trap
 const { activate: activateFocusTrap, deactivate: deactivateFocusTrap } = useFocusTrap(rootRef);
@@ -155,7 +151,6 @@ function handleAction(action: MessageBoxAction) {
 
   if (isFunction(props.beforeClose)) {
     // Only show loading on confirm/cancel buttons, not on 'close' (ESC / X / overlay)
-    /* v8 ignore next 5 */
     const actionLoadingKey =
       action === 'confirm'
         ? 'confirmButtonLoading'
@@ -163,25 +158,21 @@ function handleAction(action: MessageBoxAction) {
           ? 'cancelButtonLoading'
           : undefined;
 
-    /* v8 ignore next */
     if (actionLoadingKey) state[actionLoadingKey] = true;
 
     let result: void | Promise<void>;
     try {
       result = props.beforeClose(action, state, () => {
-        /* v8 ignore next */
         if (actionLoadingKey) state[actionLoadingKey] = false;
         doAction(action, state.inputValue);
       });
     } catch {
-      /* v8 ignore next */
       if (actionLoadingKey) state[actionLoadingKey] = false;
       return;
     }
 
     // If beforeClose returns a Promise, auto-manage loading on rejection
     if (result instanceof Promise) {
-      /* v8 ignore next 2 */
       result.catch(() => {
         if (actionLoadingKey) state[actionLoadingKey] = false;
       });

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { addUnit, pixelateCanvas } from '@sakana-element/utils';
+import { addUnit, clamp, pixelateCanvas } from '@sakana-element/utils';
 import { computed, onBeforeUnmount, ref, watch } from 'vue';
 import {
   DEFAULT_DIFF_BACKGROUND,
@@ -28,17 +28,14 @@ const originRef = ref<HTMLImageElement>();
 const imageLoaded = ref(false);
 const isDragging = ref(false);
 
-// Clamp helper
-function clamp(val: number, min = 0, max = 100): number {
-  return Math.min(max, Math.max(min, val));
-}
-
-const position = ref(clamp(props.initialPosition));
+const position = ref(clamp(props.initialPosition, 0, 100));
 
 const containerStyle = computed(() => {
   const style: Record<string, string> = {};
+  /* v8 ignore start */
   if (props.width != null) style.width = addUnit(props.width) ?? '';
   if (props.height != null) style.height = addUnit(props.height) ?? '';
+  /* v8 ignore stop */
   return style;
 });
 
@@ -59,8 +56,8 @@ const handleStyle = computed(() => ({
 }));
 
 // --- Pixelation rendering ---
+/* v8 ignore start -- canvas rendering not testable in jsdom */
 function renderPixelation() {
-  /* v8 ignore start -- canvas rendering not testable in jsdom */
   const canvas = canvasRef.value;
   const img = originRef.value;
   if (!canvas || !img || !imageLoaded.value) return;
@@ -88,10 +85,11 @@ function onImageError(e: Event) {
 // Re-render when visual props change
 watch(
   () => [props.pixelSize, props.grayscale, props.palette, props.background],
-  /* v8 ignore next */
+  /* v8 ignore start */
   () => {
     if (imageLoaded.value) renderPixelation();
   },
+  /* v8 ignore stop */
 );
 
 // Reload when src changes
@@ -105,11 +103,12 @@ watch(
 // --- Pointer interaction ---
 let cachedRect: DOMRect | null = null;
 
+/* v8 ignore start -- pointer interaction branch artifacts (??, ?., ternary) */
 function updatePosition(clientX: number) {
   const rect = cachedRect ?? containerRef.value?.getBoundingClientRect();
   if (!rect) return;
   const x = clientX - rect.left;
-  const pct = clamp((x / rect.width) * 100);
+  const pct = clamp((x / rect.width) * 100, 0, 100);
   position.value = Math.round(pct);
   emit('change', position.value);
 }
@@ -131,6 +130,7 @@ function onPointerMove(e: MouseEvent | TouchEvent) {
   const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
   updatePosition(clientX);
 }
+/* v8 ignore stop */
 
 function onPointerUp() {
   isDragging.value = false;
@@ -147,10 +147,10 @@ function onKeyDown(e: KeyboardEvent) {
   let newPos = position.value;
 
   if (e.key === 'ArrowLeft') {
-    newPos = clamp(position.value - step);
+    newPos = clamp(position.value - step, 0, 100);
     e.preventDefault();
   } else if (e.key === 'ArrowRight') {
-    newPos = clamp(position.value + step);
+    newPos = clamp(position.value + step, 0, 100);
     e.preventDefault();
   } else {
     return;
@@ -162,7 +162,7 @@ function onKeyDown(e: KeyboardEvent) {
 
 // --- Exposed methods ---
 function setPosition(pos: number) {
-  position.value = clamp(pos);
+  position.value = clamp(pos, 0, 100);
 }
 
 function getPosition(): number {

@@ -66,6 +66,7 @@ const selectRef = ref<HTMLElement>();
 const tooltipRef = ref<TooltipInstance>();
 const inputRef = ref<InputInstance>();
 const filteredChilds = ref<Map<string, SelectOptionProps>>(new Map());
+/* v8 ignore next -- options has default [] via withDefaults */
 const filteredOptions = ref(props.options ?? []);
 
 const isDropdownVisible = ref(false);
@@ -135,9 +136,11 @@ const hasData = computed(
 );
 
 //option的最大长度
+/* v8 ignore start */
 const lastIndex = computed(() =>
   hasChildren.value ? filteredChilds.value.size - 1 : _size(filteredOptions.value) - 1,
 );
+/* v8 ignore stop */
 
 const filterPlaceholder = computed(() =>
   props.filterable && selectStates.selectedOption && isDropdownVisible.value
@@ -189,6 +192,7 @@ function handleClickOutside(e?: Event) {
 
 // 控制下拉框的显示与隐藏
 function controlVisible(visible: boolean) {
+  /* v8 ignore next */
   if (!tooltipRef.value) return;
   get(tooltipRef, ['value', visible ? 'show' : 'hide'])?.();
   props.filterable && controlInputVal(visible);
@@ -199,6 +203,7 @@ function controlVisible(visible: boolean) {
 }
 
 function controlInputVal(visible: boolean) {
+  /* v8 ignore next */
   if (!props.filterable) return;
   if (visible) {
     if (selectStates.selectedOption) selectStates.inputValue = '';

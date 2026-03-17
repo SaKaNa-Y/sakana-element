@@ -104,7 +104,6 @@ function attachEvents() {
     events.value.click = togglePopper;
     return;
   }
-  /* v8 ignore start */
   if (props.trigger === 'contextmenu') {
     events.value.contextmenu = (e) => {
       e.preventDefault();
@@ -112,7 +111,6 @@ function attachEvents() {
     };
     return;
   }
-  /* v8 ignore stop */
 }
 
 let popperInstance: null | Instance;
@@ -143,9 +141,7 @@ const toggle: TooltipInstance['toggle'] = () => {
 watch(
   visible,
   (val) => {
-    /* v8 ignore start */
     if (!val) return;
-    /* v8 ignore stop */
     if (triggerNode.value && popperNode.value) {
       popperInstance = createPopper(triggerNode.value, popperNode.value, popperOptions.value);
     }

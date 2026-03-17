@@ -30,12 +30,10 @@ const textareaRef = shallowRef<HTMLTextAreaElement>();
 
 const attrs = useAttrs(); //useAttrs获取父组件传入的属性
 const { formItem } = useFormItem();
-/* v8 ignore next */
 const _ref = computed(() => inputRef.value || textareaRef.value);
 
 const isDisabled = computed(() => props.disabled); //是否禁用
 
-/* v8 ignore next */
 const isPresetColor = computed(() => PRESET_INPUT_COLORS.has(props.color ?? ''));
 const isCustomColor = computed(() => !!props.color && !isPresetColor.value);
 
@@ -59,7 +57,6 @@ const showPwdArea = computed(
 const { wrapperRef, isFocused, handleFocus, handleBlur } = useFocusController(_ref, {
   afterBlur() {
     // form 校验
-    /* v8 ignore next */
     formItem?.validate('blur').catch((err) => debugWarn(err));
   },
 });
@@ -69,7 +66,6 @@ const clear: InputInstance['clear'] = () => {
   each(['input', 'change', 'update:modelValue'], (e) => emits(e as any, ''));
   emits('clear');
   // 清空表单校验
-  /* v8 ignore next */
   formItem?.clearValidate();
 };
 const focus: InputInstance['focus'] = async () => {
@@ -78,12 +74,10 @@ const focus: InputInstance['focus'] = async () => {
 };
 
 const blur: InputInstance['blur'] = () => {
-  /* v8 ignore next */
   _ref.value?.blur();
 };
 
 const select: InputInstance['select'] = () => {
-  /* v8 ignore next */
   _ref.value?.select();
 };
 
@@ -105,7 +99,6 @@ watch(
   (newVal) => {
     innerValue.value = newVal;
     // 表单校验触发
-    /* v8 ignore next */
     formItem?.validate('change').catch((err) => debugWarn(err));
   },
 );

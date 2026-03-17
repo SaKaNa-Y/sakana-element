@@ -1,8 +1,11 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
-import { nextTick, ref } from 'vue';
+import { defineComponent, inject, nextTick, ref } from 'vue';
 import { z } from 'zod';
+import { FORM_ITEM_CTX_KEY } from '../Form/constants';
+import type { FormItemContext } from '../Form/types';
 import { PxValidator } from './index';
+import type { ValidatorInstance } from './types';
 import Validator from './Validator.vue';
 
 describe('Validator.vue', () => {
@@ -23,9 +26,7 @@ describe('Validator.vue', () => {
       slots: { default: () => <input /> },
     });
 
-    const vm = wrapper.vm as unknown as {
-      validate: (trigger?: string) => Promise<boolean>;
-    };
+    const vm = wrapper.vm as unknown as ValidatorInstance;
     await vm.validate().catch(() => {});
 
     const hint = wrapper.find('.px-validator__hint');
@@ -42,9 +43,7 @@ describe('Validator.vue', () => {
       slots: { default: () => <input /> },
     });
 
-    const vm = wrapper.vm as unknown as {
-      validate: (trigger?: string) => Promise<boolean>;
-    };
+    const vm = wrapper.vm as unknown as ValidatorInstance;
     await vm.validate();
 
     const hint = wrapper.find('.px-validator__hint');
@@ -74,9 +73,7 @@ describe('Validator.vue', () => {
       slots: { default: () => <input /> },
     });
 
-    const vm = wrapper.vm as unknown as {
-      validate: (trigger?: string) => Promise<boolean>;
-    };
+    const vm = wrapper.vm as unknown as ValidatorInstance;
     await vm.validate().catch(() => {});
 
     const hint = wrapper.find('.px-validator__hint');
@@ -93,9 +90,7 @@ describe('Validator.vue', () => {
       slots: { default: () => <input /> },
     });
 
-    const vm = wrapper.vm as unknown as {
-      validate: (trigger?: string) => Promise<boolean>;
-    };
+    const vm = wrapper.vm as unknown as ValidatorInstance;
     await vm.validate().catch(() => {});
 
     expect(wrapper.find('.px-validator__hint').text()).toBe('Custom error');
@@ -113,9 +108,7 @@ describe('Validator.vue', () => {
       },
     });
 
-    const vm = wrapper.vm as unknown as {
-      validate: (trigger?: string) => Promise<boolean>;
-    };
+    const vm = wrapper.vm as unknown as ValidatorInstance;
     await vm.validate().catch(() => {});
 
     expect(wrapper.find('.custom-hint').exists()).toBe(true);
@@ -133,9 +126,7 @@ describe('Validator.vue', () => {
     });
 
     // Validate with 'blur' trigger — should pass (no matching rules)
-    const vm = wrapper.vm as unknown as {
-      validate: (trigger?: string) => Promise<boolean>;
-    };
+    const vm = wrapper.vm as unknown as ValidatorInstance;
     const blurResult = await vm.validate('blur');
     expect(blurResult).toBe(true);
 
@@ -153,12 +144,7 @@ describe('Validator.vue', () => {
       slots: { default: () => <input /> },
     });
 
-    const vm = wrapper.vm as unknown as {
-      validate: (trigger?: string) => Promise<boolean>;
-      reset: () => void;
-      validateStatus: { value: string };
-      validateMessage: { value: string };
-    };
+    const vm = wrapper.vm as unknown as ValidatorInstance;
 
     // Validate — should reject
     const result = await vm.validate().catch(() => false);
@@ -180,9 +166,7 @@ describe('Validator.vue', () => {
       slots: { default: () => <input /> },
     });
 
-    const vm = wrapper.vm as unknown as {
-      validate: (trigger?: string) => Promise<boolean>;
-    };
+    const vm = wrapper.vm as unknown as ValidatorInstance;
     await vm.validate().catch(() => {});
 
     expect(wrapper.find('.px-validator').classes()).toContain('is-error');
@@ -197,9 +181,7 @@ describe('Validator.vue', () => {
       slots: { default: () => <input /> },
     });
 
-    const vm = wrapper.vm as unknown as {
-      validate: (trigger?: string) => Promise<boolean>;
-    };
+    const vm = wrapper.vm as unknown as ValidatorInstance;
     await vm.validate();
 
     expect(wrapper.find('.px-validator').classes()).toContain('is-success');
@@ -229,9 +211,7 @@ describe('Validator.vue', () => {
       slots: { default: () => <input /> },
     });
 
-    const vm = wrapper.vm as unknown as {
-      validate: (trigger?: string) => Promise<boolean>;
-    };
+    const vm = wrapper.vm as unknown as ValidatorInstance;
     await vm.validate().catch(() => {});
 
     expect(wrapper.emitted().validate).toBeTruthy();
@@ -247,12 +227,168 @@ describe('Validator.vue', () => {
       slots: { default: () => <input /> },
     });
 
-    const vm = wrapper.vm as unknown as {
-      validate: (trigger?: string) => Promise<boolean>;
-    };
+    const vm = wrapper.vm as unknown as ValidatorInstance;
     await vm.validate();
 
     expect(wrapper.emitted().validate).toBeTruthy();
     expect(wrapper.emitted().validate![0]).toEqual([true, '']);
+  });
+
+  it('should auto-validate on modelValue change when rule has change trigger', async () => {
+    const wrapper = mount(Validator, {
+      props: {
+        modelValue: 'valid',
+        rules: [{ schema: z.string().min(3, 'Too short'), trigger: 'change' }],
+      },
+      slots: { default: () => <input /> },
+    });
+
+    // Initially no error
+    expect(wrapper.find('.px-validator').classes()).not.toContain('is-error');
+
+    // Update to invalid value — triggers the watcher
+    await wrapper.setProps({ modelValue: 'ab' });
+    // Wait for watcher + async validate
+    await nextTick();
+    await nextTick();
+
+    expect(wrapper.find('.px-validator').classes()).toContain('is-error');
+    expect(wrapper.find('.px-validator__hint-text').text()).toBe('Too short');
+  });
+
+  it('should not auto-validate when no rules have change trigger', async () => {
+    const wrapper = mount(Validator, {
+      props: {
+        modelValue: 'valid',
+        rules: [{ schema: z.string().min(3, 'Too short'), trigger: 'blur' }],
+      },
+      slots: { default: () => <input /> },
+    });
+
+    await wrapper.setProps({ modelValue: 'ab' });
+    await nextTick();
+    await nextTick();
+
+    // Should not show error because rule trigger is 'blur', not 'change'
+    expect(wrapper.find('.px-validator').classes()).not.toContain('is-error');
+  });
+
+  it('should provide FormItemContext with validate that catches errors', async () => {
+    let injectedCtx: FormItemContext | undefined;
+
+    const Child = defineComponent({
+      setup() {
+        injectedCtx = inject(FORM_ITEM_CTX_KEY);
+        return () => <span>child</span>;
+      },
+    });
+
+    mount(Validator, {
+      props: {
+        modelValue: '',
+        rules: [{ schema: z.string().min(1, 'Required') }],
+      },
+      slots: { default: () => <Child /> },
+    });
+
+    expect(injectedCtx).toBeDefined();
+
+    // The provided validate should catch rejection and return false
+    const result = await injectedCtx!.validate('');
+    expect(result).toBe(false);
+  });
+
+  it('should pass validation when rules prop is omitted (defaults to empty)', async () => {
+    const wrapper = mount(Validator, {
+      props: { modelValue: '' },
+      slots: { default: () => <input /> },
+    });
+
+    const vm = wrapper.vm as unknown as ValidatorInstance;
+    const result = await vm.validate();
+    expect(result).toBe(true);
+  });
+
+  it('should filter rules by array trigger when trigger is in the array', async () => {
+    const wrapper = mount(Validator, {
+      props: {
+        modelValue: '',
+        rules: [{ schema: z.string().min(1, 'Required'), trigger: ['change', 'blur'] }],
+      },
+      slots: { default: () => <input /> },
+    });
+
+    const vm = wrapper.vm as unknown as ValidatorInstance;
+    // 'change' is in the trigger array, should fail
+    await vm.validate('change').catch(() => {});
+    expect(wrapper.find('.px-validator').classes()).toContain('is-error');
+  });
+
+  it('should skip rules with no schema and no required flag', async () => {
+    const wrapper = mount(Validator, {
+      props: {
+        modelValue: 'anything',
+        rules: [{ trigger: 'change' }],
+      },
+      slots: { default: () => <input /> },
+    });
+
+    const vm = wrapper.vm as unknown as ValidatorInstance;
+    // Rule has no schema and no required — should be skipped, validation passes
+    const result = await vm.validate();
+    expect(result).toBe(true);
+  });
+
+  it('should use default fallback message when rule has no message and schema error has none', async () => {
+    // Create a custom schema whose error has no message
+    const customSchema = z.any().refine(() => false);
+
+    const wrapper = mount(Validator, {
+      props: {
+        modelValue: 'test',
+        rules: [{ schema: customSchema }],
+      },
+      slots: { default: () => <input /> },
+    });
+
+    const vm = wrapper.vm as unknown as ValidatorInstance;
+    await vm.validate().catch(() => {});
+
+    // Should show the Zod default message (from issues[0].message)
+    expect(wrapper.find('.px-validator__hint-text').text()).toBe('Invalid input');
+  });
+
+  it('should match rule without trigger property against any trigger string', async () => {
+    // Rule has NO trigger property — should match all triggers
+    const wrapper = mount(Validator, {
+      props: {
+        modelValue: '',
+        rules: [{ schema: z.string().min(1, 'Required') /* no trigger */ }],
+      },
+      slots: { default: () => <input /> },
+    });
+
+    const vm = wrapper.vm as unknown as ValidatorInstance;
+    // Validate with a specific trigger — rule without trigger should still apply
+    await vm.validate('blur').catch(() => {});
+    expect(wrapper.find('.px-validator').classes()).toContain('is-error');
+    expect(wrapper.find('.px-validator__hint-text').text()).toBe('Required');
+  });
+
+  it('should use Zod issues[0].message when rule has no custom message', async () => {
+    // Schema with a specific Zod message, but rule has NO message property
+    const wrapper = mount(Validator, {
+      props: {
+        modelValue: 'ab',
+        rules: [{ schema: z.string().min(5, 'Must be at least 5 chars') }],
+      },
+      slots: { default: () => <input /> },
+    });
+
+    const vm = wrapper.vm as unknown as ValidatorInstance;
+    await vm.validate().catch(() => {});
+
+    // The fallback chain: rule.message (undefined) ?? issues[0].message → Zod message
+    expect(wrapper.find('.px-validator__hint-text').text()).toBe('Must be at least 5 chars');
   });
 });

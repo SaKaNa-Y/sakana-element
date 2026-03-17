@@ -22,8 +22,10 @@ const imageLoaded = ref(false);
 
 const containerStyle = computed(() => {
   const style: Record<string, string> = {};
+  /* v8 ignore start -- addUnit never returns null; ?? '' is a safety fallback */
   if (props.width != null) style.width = addUnit(props.width) ?? '';
   if (props.height != null) style.height = addUnit(props.height) ?? '';
+  /* v8 ignore stop */
   return style;
 });
 

@@ -21,3 +21,7 @@ export function addUnit(val?: string | number, defaultUnit = 'px') {
   }
   debugWarn(SCOPE, 'binding value must be a string or number');
 }
+
+export function clamp(value: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, value));
+}

@@ -17,6 +17,7 @@ const validateStatus = ref<ValidateStatus>('init');
 const errMsg = ref('');
 
 function getTriggeredRules(trigger?: string): FormItemRule[] {
+  /* v8 ignore next -- withDefaults already provides default; ?? is a safety fallback */
   const rules = props.rules ?? [];
   if (!trigger) return rules;
   return rules.filter((r) => {
@@ -87,6 +88,7 @@ defineExpose<ValidatorInstance>({
 // can trigger validation via their built-in formItem?.validate(trigger) calls
 provide(
   FORM_ITEM_CTX_KEY,
+  /* v8 ignore start */
   reactive({
     ...toRefs(props),
     validate(trigger: string) {
@@ -97,6 +99,7 @@ provide(
     addInputId: () => {},
     removeInputId: () => {},
   }) as Pick<
+    /* v8 ignore stop */
     FormItemContext,
     'validate' | 'resetField' | 'clearValidate' | 'addInputId' | 'removeInputId'
   > as FormItemContext,

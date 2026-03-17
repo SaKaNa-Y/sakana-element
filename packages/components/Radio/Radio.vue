@@ -27,14 +27,11 @@ const checked = computed(() => {
   return props.modelValue === props.value;
 });
 
-/* v8 ignore start */
 const isDisabled = computed(() => {
   if (radioGroup?.disabled.value) return true;
   return props.disabled;
 });
-/* v8 ignore stop */
 
-/* v8 ignore next 4 */
 const mergedSize = computed(() => props.size ?? radioGroup?.size.value);
 const mergedType = computed(() => props.type ?? radioGroup?.type.value);
 const mergedColor = computed(() => props.color ?? radioGroup?.color.value);
@@ -48,7 +45,6 @@ const customColorStyle = computed(() => {
 });
 
 const focus: RadioInstance['focus'] = () => {
-  /* v8 ignore next */
   inputRef.value?.focus();
 };
 
@@ -65,7 +61,6 @@ function handleChange() {
     emits('change', val);
   }
 
-  /* v8 ignore next 3 */
   if (!isGroup) {
     formItem?.validate('change').catch((err: Error) => console.debug(err));
   }

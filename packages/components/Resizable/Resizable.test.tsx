@@ -1,6 +1,6 @@
 import { mount, type VueWrapper } from '@vue/test-utils';
 import { afterEach, describe, expect, test, vi } from 'vitest';
-import { nextTick } from 'vue';
+import { nextTick, ref } from 'vue';
 import { PxResizableGroup, PxResizableHandle, PxResizablePanel } from './index';
 import ResizableGroup from './ResizableGroup.vue';
 import ResizableHandle from './ResizableHandle.vue';
@@ -36,6 +36,23 @@ describe('Resizable withInstall', () => {
   });
   test('PxResizableHandle should have install method', () => {
     expect(PxResizableHandle.install).toBeDefined();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Error handling: components used outside group
+// ---------------------------------------------------------------------------
+describe('Error when used outside ResizableGroup', () => {
+  test('PxResizablePanel should throw when mounted without group', () => {
+    expect(() => {
+      mount(ResizablePanel, { attachTo: document.body });
+    }).toThrow('PxResizablePanel must be used inside PxResizableGroup');
+  });
+
+  test('PxResizableHandle should throw when mounted without group', () => {
+    expect(() => {
+      mount(ResizableHandle, { attachTo: document.body });
+    }).toThrow('PxResizableHandle must be used inside PxResizableGroup');
   });
 });
 
@@ -585,6 +602,32 @@ describe('Keyboard interaction', () => {
     wrapper.unmount();
   });
 
+  test.each([
+    'horizontal',
+    'vertical',
+  ] as const)('non-arrow key (Tab) should not resize in %s mode', async (direction) => {
+    const wrapper = mount(
+      () => (
+        <ResizableGroup direction={direction}>
+          <ResizablePanel defaultSize={50}>A</ResizablePanel>
+          <ResizableHandle />
+          <ResizablePanel defaultSize={50}>B</ResizablePanel>
+        </ResizableGroup>
+      ),
+      { attachTo: document.body },
+    );
+
+    const handle = wrapper.find('.px-resizable-handle');
+    await handle.trigger('keydown', { key: 'Tab' });
+    await nextTick();
+
+    const panels = wrapper.findAll('.px-resizable-panel');
+    // Sizes should remain unchanged
+    expect(panels[0].attributes('style')).toContain('50');
+    expect(panels[1].attributes('style')).toContain('50');
+    wrapper.unmount();
+  });
+
   test('custom keyboardResizeBy should change step size', async () => {
     const wrapper = mount(
       () => (
@@ -947,6 +990,148 @@ describe('Nested groups', () => {
     expect(groups.length).toBe(2);
     expect(groups[0].classes()).toContain('is-vertical');
     expect(groups[1].classes()).toContain('is-horizontal');
+    wrapper.unmount();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Dynamic panel registration / unregistration
+// ---------------------------------------------------------------------------
+describe('Dynamic panel registration', () => {
+  test('removing a panel via v-if should unregister it', async () => {
+    const showThird = ref(true);
+    const wrapper = mount(
+      {
+        setup() {
+          return { showThird };
+        },
+        render() {
+          return (
+            <ResizableGroup direction="horizontal">
+              <ResizablePanel defaultSize={33}>A</ResizablePanel>
+              <ResizableHandle />
+              <ResizablePanel defaultSize={34}>B</ResizablePanel>
+              {this.showThird && <ResizableHandle />}
+              {this.showThird && <ResizablePanel defaultSize={33}>C</ResizablePanel>}
+            </ResizableGroup>
+          );
+        },
+      },
+      { attachTo: document.body },
+    );
+
+    await nextTick();
+    expect(wrapper.findAll('.px-resizable-panel').length).toBe(3);
+    expect(wrapper.findAll('.px-resizable-handle').length).toBe(2);
+
+    showThird.value = false;
+    await nextTick();
+    await nextTick();
+
+    expect(wrapper.findAll('.px-resizable-panel').length).toBe(2);
+    expect(wrapper.findAll('.px-resizable-handle').length).toBe(1);
+    wrapper.unmount();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Reactive prop sync on ResizablePanel
+// ---------------------------------------------------------------------------
+describe('ResizablePanel reactive prop sync', () => {
+  test('should update panel data when minSize/maxSize/collapsible/collapsedSize props change', async () => {
+    const wrapper = mount(
+      {
+        setup() {
+          const minSize = ref(10);
+          const maxSize = ref(90);
+          const collapsible = ref(false);
+          const collapsedSize = ref(0);
+          return { minSize, maxSize, collapsible, collapsedSize };
+        },
+        render() {
+          return (
+            <ResizableGroup direction="horizontal">
+              <ResizablePanel
+                defaultSize={50}
+                minSize={this.minSize}
+                maxSize={this.maxSize}
+                collapsible={this.collapsible}
+                collapsedSize={this.collapsedSize}
+              >
+                A
+              </ResizablePanel>
+              <ResizableHandle />
+              <ResizablePanel defaultSize={50}>B</ResizablePanel>
+            </ResizableGroup>
+          );
+        },
+      },
+      { attachTo: document.body },
+    );
+
+    // Update props reactively
+    wrapper.vm.minSize = 20;
+    wrapper.vm.maxSize = 80;
+    wrapper.vm.collapsible = true;
+    wrapper.vm.collapsedSize = 5;
+    await nextTick();
+
+    // The watcher should have synced the new values — verify the panel is still functional
+    const panels = wrapper.findAll('.px-resizable-panel');
+    expect(panels.length).toBe(2);
+
+    wrapper.unmount();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Handle hitAreaMargins
+// ---------------------------------------------------------------------------
+describe('ResizableHandle hitAreaMargins', () => {
+  test('should set --px-handle-hit-area CSS variable when hitAreaMargins is provided', () => {
+    const wrapper = mount(
+      () => (
+        <ResizableGroup direction="horizontal">
+          <ResizablePanel defaultSize={50}>A</ResizablePanel>
+          <ResizableHandle hitAreaMargins={10} />
+          <ResizablePanel defaultSize={50}>B</ResizablePanel>
+        </ResizableGroup>
+      ),
+      { attachTo: document.body },
+    );
+
+    const handle = wrapper.find('.px-resizable-handle');
+    expect(handle.classes()).toContain('has-hit-area');
+    expect(handle.attributes('style')).toContain('--px-handle-hit-area: 10px');
+    wrapper.unmount();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Panel expand when not collapsed
+// ---------------------------------------------------------------------------
+describe('ResizablePanel expand when not collapsed', () => {
+  test('expand() on already-expanded panel should be a no-op', async () => {
+    const onExpand = vi.fn();
+    const wrapper = mount(
+      () => (
+        <ResizableGroup direction="horizontal">
+          <ResizablePanel defaultSize={50} collapsible collapsedSize={0} onExpand={onExpand}>
+            A
+          </ResizablePanel>
+          <ResizableHandle />
+          <ResizablePanel defaultSize={50}>B</ResizablePanel>
+        </ResizableGroup>
+      ),
+      { attachTo: document.body },
+    );
+
+    const panel = wrapper.findComponent(ResizablePanel);
+    // Panel is not collapsed — expand should be a no-op
+    (panel.vm as any).expand();
+    await nextTick();
+
+    expect(onExpand).not.toHaveBeenCalled();
     wrapper.unmount();
   });
 });

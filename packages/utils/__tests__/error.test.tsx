@@ -8,7 +8,7 @@ describe('error', () => {
       throwError('scope', 'msg');
     }).toThrowError('[scope]:msg');
   });
-  it('debugWarn should be worked', () => {
+  it('debugWarn should be a no-op (currently disabled)', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     debugWarn('scope', 'msg');
     debugWarn(new SyntaxError('custom error'));

@@ -63,7 +63,7 @@ describe('hooks/useDisabledStyle', () => {
     expect(wrapper.find('button').exists()).toBe(true);
   });
 
-  it('should apply disabled styles to slot children when disabled', () => {
+  it('should not crash when applying disabled styles to slot children (smoke test)', () => {
     const wrapper = mount(TestWrapper, {
       props: { disabled: true },
       slots: { default: () => <button style="cursor: pointer">click</button> },
@@ -77,7 +77,7 @@ describe('hooks/useDisabledStyle', () => {
     expect(btn.text()).toBe('click');
   });
 
-  it('should restore styles when disabled goes from true to false', async () => {
+  it('should not crash when restoring styles on disabled toggle (smoke test)', async () => {
     const wrapper = mount(TestWrapper, {
       props: { disabled: false },
       slots: { default: () => <button style="cursor: pointer">click</button> },
