@@ -123,8 +123,8 @@ defineExpose<InputInstance>({
       'is-disabled': isDisabled,
       'is-prepend': $slots.prepend,
       'is-append': $slots.append,
-      'is-prefix': $slots.prefix,
-      'is-suffix': $slots.suffix,
+      'is-prefix': $slots.prefix || prefixIcon,
+      'is-suffix': $slots.suffix || suffixIcon,
       'is-focus': isFocused,
     }"
     :style="customColorStyle"
@@ -134,8 +134,10 @@ defineExpose<InputInstance>({
         <slot name="prepend"></slot>
       </div>
       <div class="px-input__wrapper" ref="wrapperRef">
-        <span v-if="$slots.prefix" class="px-input__prefix">
-          <slot name="prefix"></slot>
+        <span v-if="$slots.prefix || prefixIcon" class="px-input__prefix">
+          <slot name="prefix">
+            <Icon v-if="prefixIcon" :icon="prefixIcon" />
+          </slot>
         </span>
         <input
           class="px-input__inner"
@@ -156,10 +158,12 @@ defineExpose<InputInstance>({
           @blur="handleBlur"
         />
         <span
-          v-if="$slots.suffix || showClear || showPwdArea"
+          v-if="$slots.suffix || suffixIcon || showClear || showPwdArea"
           class="px-input__suffix"
         >
-          <slot name="suffix"></slot>
+          <slot name="suffix">
+            <Icon v-if="suffixIcon" :icon="suffixIcon" />
+          </slot>
           <Icon
             icon="close-box"
             v-if="showClear"

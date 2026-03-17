@@ -15,6 +15,9 @@ export interface InputProps {
   autocomplete?: string;
   autofocus?: boolean;
 
+  prefixIcon?: string;
+  suffixIcon?: string;
+
   form?: string;
 }
 
