@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.4.0 (2026-03-17)
+
+* feat(components): add PxChatBubble component and button 3D bevel effect ([46ab328](https://github.com/yu859/sakana-element/commit/46ab328))
+* feat(components): add PxDiff component and input 3D bevel effect ([22caa59](https://github.com/yu859/sakana-element/commit/22caa59))
+* feat(components): add PxFilter component and checkbox 3D bevel effect ([a3e70d3](https://github.com/yu859/sakana-element/commit/a3e70d3))
+* feat(components): add PxKbd component and switch 3D bevel effect ([aff11b8](https://github.com/yu859/sakana-element/commit/aff11b8))
+* feat(components): add PxResizable component and enhance FileInput pixel effects ([d28d1bb](https://github.com/yu859/sakana-element/commit/d28d1bb))
+* feat(components): add PxSkeleton component and enhance Select pixel effects ([d92f088](https://github.com/yu859/sakana-element/commit/d92f088))
+* feat(components): add PxValidator component and radio 3D bevel effect ([d703e54](https://github.com/yu859/sakana-element/commit/d703e54))
+* feat(docs): add component overview page and centralize component metadata ([a549edc](https://github.com/yu859/sakana-element/commit/a549edc))
+* feat(docs): add visitor counter with Redis-backed Vercel API ([155dc4d](https://github.com/yu859/sakana-element/commit/155dc4d))
+* fix: clean up lint warnings and unused imports ([dcd72af](https://github.com/yu859/sakana-element/commit/dcd72af))
+* fix(docs): restrict visitor counter to home page and fix Kbd type error ([d0b60fc](https://github.com/yu859/sakana-element/commit/d0b60fc))
+* chore: update GitHub username and fix license references ([0a7f7f0](https://github.com/yu859/sakana-element/commit/0a7f7f0))
+
 ## 2.3.0 (2026-03-09)
 
 * feat(checkbox): add PxCheckbox and PxCheckboxGroup components ([ac9c7e5](https://github.com/yu859/sakana-element/commit/ac9c7e5))

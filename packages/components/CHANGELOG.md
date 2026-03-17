@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.4.0 (2026-03-17)
+
+* refactor: remove unnecessary v8 ignore comments and improve test coverage ([cf6fcd7](https://github.com/yu859/sakana-element/commit/cf6fcd7))
+* chore: clean up unused code, dependencies, and bump internal versions ([b97f0cf](https://github.com/yu859/sakana-element/commit/b97f0cf))
+* feat(components): add PxChatBubble component and button 3D bevel effect ([46ab328](https://github.com/yu859/sakana-element/commit/46ab328))
+* feat(components): add PxDiff component and input 3D bevel effect ([22caa59](https://github.com/yu859/sakana-element/commit/22caa59))
+* feat(components): add PxFilter component and checkbox 3D bevel effect ([a3e70d3](https://github.com/yu859/sakana-element/commit/a3e70d3))
+* feat(components): add PxKbd component and switch 3D bevel effect ([aff11b8](https://github.com/yu859/sakana-element/commit/aff11b8))
+* feat(components): add PxResizable component and enhance FileInput pixel effects ([d28d1bb](https://github.com/yu859/sakana-element/commit/d28d1bb))
+* feat(components): add PxSkeleton component and enhance Select pixel effects ([d92f088](https://github.com/yu859/sakana-element/commit/d92f088))
+* feat(components): add PxValidator component and radio 3D bevel effect ([d703e54](https://github.com/yu859/sakana-element/commit/d703e54))
+* fix: clean up lint warnings and unused imports ([dcd72af](https://github.com/yu859/sakana-element/commit/dcd72af))
+* fix(docs): restrict visitor counter to home page and fix Kbd type error ([d0b60fc](https://github.com/yu859/sakana-element/commit/d0b60fc))
+* test: improve test coverage and add CI coverage badge ([fdde024](https://github.com/yu859/sakana-element/commit/fdde024))
+
 ## 2.3.0 (2026-03-09)
 
 * feat(card): pixel-art redesign with 3-step staircase corners and beveled depth ([23c6a00](https://github.com/yu859/sakana-element/commit/23c6a00))

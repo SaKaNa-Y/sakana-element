@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.4.0 (2026-03-17)
+
+* chore: clean up unused code, dependencies, and bump internal versions ([b97f0cf](https://github.com/yu859/sakana-element/commit/b97f0cf))
+
 ## <small>2.1.5 (2026-02-22)</small>
 
 * chore(release): publish new version 2.1.4 ([99d3c18](https://github.com/yu859/sakana-element/commit/99d3c18))

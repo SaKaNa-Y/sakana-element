@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.4.0 (2026-03-17)
+
+* refactor: remove unnecessary v8 ignore comments and improve test coverage ([cf6fcd7](https://github.com/yu859/sakana-element/commit/cf6fcd7))
+* chore: clean up unused code, dependencies, and bump internal versions ([b97f0cf](https://github.com/yu859/sakana-element/commit/b97f0cf))
+* feat(components): add PxDiff component and input 3D bevel effect ([22caa59](https://github.com/yu859/sakana-element/commit/22caa59))
+* test: improve test coverage and add CI coverage badge ([fdde024](https://github.com/yu859/sakana-element/commit/fdde024))
+
 ## 2.3.0 (2026-03-09)
 
 * fix(notification,message): pause timer bar on hover and deduplicate error CSS ([7a2de90](https://github.com/yu859/sakana-element/commit/7a2de90))
