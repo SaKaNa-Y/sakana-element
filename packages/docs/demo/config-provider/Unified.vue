@@ -18,14 +18,13 @@
 
     <px-config-provider :locale="currentLocale">
       <div style="display: flex; align-items: flex-start; gap: 24px; flex-wrap: wrap">
-        <!-- Select: shows translated "No data" -->
+        <!-- Select: shows translated placeholder and "No data" -->
         <div>
           <p style="margin: 0 0 8px; font-weight: bold">Select</p>
           <px-select
             v-model="selectVal"
             :options="emptyOptions"
             filterable
-            placeholder="Select"
             style="width: 200px"
           />
         </div>
@@ -46,6 +45,22 @@
           </px-button>
         </div>
       </div>
+
+      <!-- Translation Preview -->
+      <table class="translation-table">
+        <thead>
+          <tr>
+            <th class="translation-key">Key</th>
+            <th>Translation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="row in translationPreview" :key="row.key">
+            <td class="translation-key">{{ row.key }}</td>
+            <td>{{ row.value }}</td>
+          </tr>
+        </tbody>
+      </table>
     </px-config-provider>
   </div>
 </template>
@@ -73,6 +88,18 @@ const currentLocale = computed(() => localeMap[localeKey.value].locale);
 const selectVal = ref('');
 const emptyOptions = ref([]);
 
+const translationPreview = computed(() => {
+  const el = currentLocale.value.el;
+  return [
+    { key: 'select.placeholder', value: el.select.placeholder },
+    { key: 'select.noData', value: el.select.noData },
+    { key: 'popconfirm.confirmButtonText', value: el.popconfirm.confirmButtonText },
+    { key: 'popconfirm.cancelButtonText', value: el.popconfirm.cancelButtonText },
+    { key: 'messagebox.confirm', value: el.messagebox.confirm },
+    { key: 'messagebox.cancel', value: el.messagebox.cancel },
+  ];
+});
+
 async function openMessageBox() {
   const msgLocale = currentLocale.value.el.messagebox;
   try {
@@ -88,3 +115,26 @@ async function openMessageBox() {
   }
 }
 </script>
+
+<style scoped>
+.translation-table {
+  margin-top: 16px;
+  border-collapse: collapse;
+  font-size: 14px;
+  text-align: left;
+}
+
+.translation-table th {
+  padding: 4px 12px 4px 0;
+  border-bottom: 1px solid var(--px-border-color);
+}
+
+.translation-table td {
+  padding: 4px 12px 4px 0;
+}
+
+.translation-key {
+  color: var(--px-text-color-secondary);
+  font-family: monospace;
+}
+</style>

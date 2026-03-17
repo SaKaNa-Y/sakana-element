@@ -289,6 +289,19 @@
     display: flex;
     width: 100%;
     margin-left: 0;
+
+    &:focus-visible {
+      outline-offset: -4px;
+    }
+
+    &:hover:not(.is-disabled):not(.is-loading) {
+      transform: none;
+      filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-button-shadow-color));
+    }
+
+    &:active:not(.is-disabled):not(.is-loading) {
+      transform: none;
+    }
   }
 
   /* Responsive variant - Viewport-adaptive sizing */
