@@ -17,6 +17,10 @@ const getGuideItems = (lang: Locale) => [
     link: `/${lang}/dark-mode`,
   },
   {
+    text: lang === 'zh' ? '组合式函数' : 'Composables',
+    link: `/${lang}/composables`,
+  },
+  {
     text: lang === 'zh' ? 'ConfigProvider 全局配置' : 'ConfigProvider',
     link: `/${lang}/components/config-provider`,
   },

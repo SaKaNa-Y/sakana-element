@@ -2,7 +2,7 @@ import { isFunction } from 'lodash-es';
 import { getCurrentInstance, type Ref, ref } from 'vue';
 import useEventListener from './useEventListener';
 
-interface UseFocusControllerOptions {
+export interface UseFocusControllerOptions {
   afterFocus?(): void; //聚焦后执行
   beforeBlur?(event: FocusEvent): boolean | undefined; //聚焦前执行
   afterBlur?(): void; //失去焦点后执行

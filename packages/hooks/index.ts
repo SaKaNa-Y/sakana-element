@@ -9,6 +9,8 @@ import useLocale from './useLocale';
 import useOffset from './useOffset';
 import useZIndex from './useZIndex';
 
+export type { UseDraggableOptions } from './useDraggable';
+export type { UseFocusControllerOptions } from './useFocusController';
 export { useSystemTheme } from './useSystemTheme';
 export { type Theme, useTheme } from './useTheme';
 
