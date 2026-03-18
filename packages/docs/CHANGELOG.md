@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.4.2 (2026-03-18)</small>
+
+**Note:** Version bump only for package @sakana-element/docs
+
 ## <small>2.4.1 (2026-03-17)</small>
 
 * docs(components): enhance Icon docs and add Composables guide with public API exports ([37a60dd](https://github.com/yu859/sakana-element/commit/37a60dd))

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.4.2 (2026-03-18)</small>
+
+* fix(hooks): use shared Symbol.for injection key to fix cross-chunk i18n provide/inject ([f4ba251](https://github.com/yu859/sakana-element/commit/f4ba251))
+
 ## <small>2.4.1 (2026-03-17)</small>
 
 * feat(components): add prefixIcon and suffixIcon props to PxInput ([ac020b7](https://github.com/yu859/sakana-element/commit/ac020b7))
