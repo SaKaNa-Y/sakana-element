@@ -2,8 +2,8 @@ import English from '@sakana-element/locale/lang/en';
 import { mount } from '@vue/test-utils';
 import { describe, expect, it } from 'vitest';
 import { defineComponent, provide, ref } from 'vue';
-import { createI18n, i18nSymbol } from 'vue3-i18n';
-import { useLocale } from '../useLocale';
+import { createI18n } from 'vue3-i18n';
+import { I18N_INJECTION_KEY, useLocale } from '../useLocale';
 
 describe('hooks/useLocale', () => {
   it('should return a computed ref', () => {
@@ -80,7 +80,7 @@ describe('hooks/useLocale', () => {
     mount(
       defineComponent({
         setup() {
-          provide(i18nSymbol, ref(i18n));
+          provide(I18N_INJECTION_KEY, ref(i18n));
           return () => <Child />;
         },
       }),

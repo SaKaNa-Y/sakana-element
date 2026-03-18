@@ -11,6 +11,7 @@ import useZIndex from './useZIndex';
 
 export type { UseDraggableOptions } from './useDraggable';
 export type { UseFocusControllerOptions } from './useFocusController';
+export { I18N_INJECTION_KEY } from './useLocale';
 export { useSystemTheme } from './useSystemTheme';
 export { type Theme, useTheme } from './useTheme';
 

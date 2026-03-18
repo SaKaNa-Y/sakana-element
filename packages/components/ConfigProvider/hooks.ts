@@ -1,10 +1,11 @@
+import { I18N_INJECTION_KEY } from '@sakana-element/hooks';
 import type { TranslatePair } from '@sakana-element/locale';
 import English from '@sakana-element/locale/lang/en';
 import { debugWarn } from '@sakana-element/utils';
 import { mergeWith } from 'lodash-es';
 import type { App, MaybeRef, Ref } from 'vue';
 import { computed, getCurrentInstance, inject, provide, ref, unref, watch } from 'vue';
-import { createI18n, i18nSymbol } from 'vue3-i18n';
+import { createI18n } from 'vue3-i18n';
 import { type ConfigProviderContext, configProviderContextKey } from './constants';
 
 const DANGEROUS_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
@@ -106,7 +107,7 @@ export function provideGlobalConfig(
 
   //注入context和i18n实例
   provideFn(configProviderContextKey, context);
-  provideFn(i18nSymbol, i18n);
+  provideFn(I18N_INJECTION_KEY, i18n);
 
   //如果global为true，或者globalConfig.value不存在，则将context.value赋值给globalConfig.value
   if (global || !globalConfig.value) globalConfig.value = context.value;

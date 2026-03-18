@@ -1,18 +1,27 @@
 import type { Language } from '@sakana-element/locale';
 import English from '@sakana-element/locale/lang/en'; // 导入英文语言包
 import { omit } from 'lodash-es'; //用于从对象中排除指定属性
-import { computed, inject, type Ref, ref, unref } from 'vue'; //inject用于注入依赖，ref创建响应式数据，unref获取响应式数据的值，computed创建计算属性，Ref是类型声明
-import { createI18n, type I18nInstance, i18nSymbol } from 'vue3-i18n';
+import { computed, type InjectionKey, inject, type Ref, ref, unref } from 'vue'; //inject用于注入依赖，ref创建响应式数据，unref获取响应式数据的值，computed创建计算属性，Ref是类型声明
+import { createI18n, type I18nInstance } from 'vue3-i18n';
+
+/**
+ * Shared injection key for the i18n instance provided by ConfigProvider.
+ *
+ * Uses `Symbol.for()` instead of vue3-i18n's `i18nSymbol` (which uses `Symbol()`)
+ * to guarantee a single identity across all build chunks. Without this, Vite's
+ * manual chunking can duplicate the Symbol, breaking provide/inject across chunks.
+ */
+export const I18N_INJECTION_KEY: InjectionKey<Ref<I18nInstance>> =
+  Symbol.for('sakana-element-i18n');
 
 const omitInstall = (obj: I18nInstance) => omit(obj, 'install'); //从i18n实例中移除install方法
 
 export function useLocale(localeOverrides?: Ref<Language>) {
   if (!localeOverrides) {
     //如果没有提供localeOverrides
-    const i18n: Ref<I18nInstance> = inject(
-      i18nSymbol,
-      ref(createI18n({ locale: English.name, messages: { en: English.el } })),
-    );
+    const i18n: Ref<I18nInstance> =
+      inject(I18N_INJECTION_KEY) ??
+      ref(createI18n({ locale: English.name, messages: { en: English.el } }));
 
     return computed(() => omitInstall(unref(i18n))); //返回一个计算属性，移除了i18n实例中的install方法
   }
