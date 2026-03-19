@@ -16,10 +16,16 @@
 }
 
 .px-form-item {
+  --px-form-item-error-border: var(--px-color-danger);
+  --px-form-item-success-border: var(--px-color-success);
+
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   margin-bottom: 18px;
+  position: relative;
+  border-left: 4px solid transparent;
+  padding-left: 8px;
 }
 
 .px-form-item__label {
@@ -43,28 +49,83 @@
   min-width: 0;
 }
 
+/* Error message — pixel-art badge */
 .px-form-item__error-msg {
   color: var(--px-color-danger);
   font-size: var(--px-font-size-small);
   line-height: 1;
-  padding-top: 4px;
+  padding: 4px 8px;
   position: absolute;
   top: 100%;
   left: 0;
+
+  /* Pixel-art background badge */
+  background: var(--px-color-danger-light-9);
+  clip-path: polygon(
+    0 2px,
+    2px 2px,
+    2px 0,
+    calc(100% - 2px) 0,
+    calc(100% - 2px) 2px,
+    100% 2px,
+    100% calc(100% - 2px),
+    calc(100% - 2px) calc(100% - 2px),
+    calc(100% - 2px) 100%,
+    2px 100%,
+    2px calc(100% - 2px),
+    0 calc(100% - 2px)
+  );
+}
+
+/* Error state — left accent bar */
+.px-form-item.is-error {
+  border-left-color: var(--px-form-item-error-border);
+}
+
+.px-form-item.is-error .px-form-item__content {
+  background: var(--px-color-danger-light-9);
 }
 
 .px-form-item.is-error .px-input__wrapper {
   border-color: var(--px-color-danger);
+  filter: drop-shadow(2px 2px 0px var(--px-color-danger-dark));
+}
+
+/* Success state */
+.px-form-item.is-success {
+  border-left-color: var(--px-form-item-success-border);
+}
+
+.px-form-item.is-success .px-form-item__content {
+  background: var(--px-color-success-light-9);
 }
 
 .px-form-item.is-success .px-input__wrapper {
   border-color: var(--px-color-success);
+  filter: drop-shadow(2px 2px 0px var(--px-color-success-dark));
 }
 
+/* Required asterisk — pixel star shape */
 .px-form-item.is-required .px-form-item__label::before {
-  content: "*";
-  color: var(--px-color-danger);
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
   margin-right: 4px;
+  vertical-align: middle;
+  background: var(--px-color-danger);
+  clip-path: polygon(
+    50% 0%,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
 }
 
 /* Input wrapper for status icon alignment */
@@ -80,6 +141,7 @@
   position: absolute;
   right: 8px;
   z-index: 1;
+  filter: drop-shadow(1px 1px 0px currentColor);
 }
 
 .px-form-item__status-icon.is-success {

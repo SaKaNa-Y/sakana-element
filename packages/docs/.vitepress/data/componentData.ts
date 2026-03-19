@@ -192,6 +192,16 @@ export const CATEGORIES: ComponentCategory[] = [
         },
       },
       {
+        name: 'Carousel',
+        zhName: '走马灯',
+        slug: 'carousel',
+        icon: 'animation',
+        description: {
+          en: 'Cycle through slides with pixel-art arrows and indicators.',
+          zh: '使用像素风格箭头和指示器循环展示幻灯片。',
+        },
+      },
+      {
         name: 'Progress',
         zhName: '进度条',
         slug: 'progress',

@@ -1,0 +1,285 @@
+/* Carousel Variables */
+.px-carousel {
+  --px-carousel-border-color: var(--px-border-color);
+  --px-carousel-bg-color: var(--px-fill-color-blank);
+  --px-carousel-shadow-color: var(--px-shadow-color);
+  --px-carousel-indicator-color: var(--px-border-color-darker);
+  --px-carousel-indicator-active-color: var(--px-color-primary);
+  --px-carousel-arrow-color: var(--px-text-color-primary);
+  --px-carousel-arrow-bg-color: var(--px-fill-color-blank);
+  --px-carousel-arrow-hover-bg-color: var(--px-fill-color-light);
+
+  /* Pixel-style container */
+  position: relative;
+  background: transparent;
+  border: none;
+  font-family: var(--px-font-family);
+  outline: none;
+  overflow: visible;
+
+  /* Pixel shadow via drop-shadow */
+  filter: drop-shadow(
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-carousel-shadow-color)
+  );
+
+  /* Border layer — pixel shape */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--px-carousel-border-color);
+    clip-path: polygon(
+      0 4px,
+      2px 4px,
+      2px 2px,
+      4px 2px,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px calc(100% - 4px),
+      0 calc(100% - 4px)
+    );
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Fill layer — pixel shape */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: var(--px-carousel-bg-color);
+    clip-path: polygon(
+      0 4px,
+      2px 4px,
+      2px 2px,
+      4px 2px,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px calc(100% - 4px),
+      0 calc(100% - 4px)
+    );
+    z-index: 0;
+    pointer-events: none;
+  }
+}
+
+/* Viewport — clips overflow */
+.px-carousel__viewport {
+  position: absolute;
+  overflow: hidden;
+  z-index: 1;
+  inset: 2px;
+
+  /* Clip to match inner pixel-art contour — prevents background bleed at corners */
+  clip-path: polygon(
+    0 2px,
+    2px 2px,
+    2px 0,
+    calc(100% - 2px) 0,
+    calc(100% - 2px) 2px,
+    100% 2px,
+    100% calc(100% - 2px),
+    calc(100% - 2px) calc(100% - 2px),
+    calc(100% - 2px) 100%,
+    2px 100%,
+    2px calc(100% - 2px),
+    0 calc(100% - 2px)
+  );
+}
+
+/* Track — slides container */
+.px-carousel__track {
+  display: flex;
+  height: 100%;
+  transition: transform 150ms steps(3);
+}
+
+/* Vertical track */
+.px-carousel.is-vertical .px-carousel__track {
+  flex-direction: column;
+}
+
+/* Carousel Item */
+.px-carousel-item {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* Arrows container */
+.px-carousel__arrows {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Arrow hover mode — hide until hover */
+.px-carousel__arrows.is-hover .px-carousel__arrow {
+  opacity: 0;
+  transition: opacity 100ms steps(2);
+}
+
+.px-carousel:hover .px-carousel__arrows.is-hover .px-carousel__arrow {
+  opacity: 1;
+}
+
+/* Arrow button — pixel styled */
+.px-carousel__arrow {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--px-carousel-border-color);
+  background: var(--px-carousel-arrow-bg-color);
+  color: var(--px-carousel-arrow-color);
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 3;
+  padding: 0;
+  font-size: 14px;
+
+  /* Pixel corners */
+  clip-path: polygon(
+    0 2px,
+    2px 2px,
+    2px 0,
+    calc(100% - 2px) 0,
+    calc(100% - 2px) 2px,
+    100% 2px,
+    100% calc(100% - 2px),
+    calc(100% - 2px) calc(100% - 2px),
+    calc(100% - 2px) 100%,
+    2px 100%,
+    2px calc(100% - 2px),
+    0 calc(100% - 2px)
+  );
+
+  &:hover {
+    background: var(--px-carousel-arrow-hover-bg-color);
+  }
+
+  &:disabled,
+  &:disabled:hover {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: var(--px-carousel-arrow-bg-color);
+  }
+}
+
+/* Horizontal arrow positions */
+.px-carousel__arrow--prev {
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.px-carousel__arrow--next {
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Horizontal arrows active state — preserve centering transform */
+.px-carousel__arrow--prev:active:not(:disabled),
+.px-carousel__arrow--next:active:not(:disabled) {
+  transform: translateY(-50%) translate(1px, 1px);
+}
+
+/* Vertical arrow positions */
+.px-carousel.is-vertical .px-carousel__arrow--prev {
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.px-carousel.is-vertical .px-carousel__arrow--next {
+  bottom: 8px;
+  top: auto;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Vertical arrows active state — preserve centering transform */
+.px-carousel.is-vertical .px-carousel__arrow--prev:active:not(:disabled),
+.px-carousel.is-vertical .px-carousel__arrow--next:active:not(:disabled) {
+  transform: translateX(-50%) translate(1px, 1px);
+}
+
+/* Indicators container */
+.px-carousel__indicators {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+
+/* Vertical indicators */
+.px-carousel.is-vertical .px-carousel__indicators {
+  bottom: auto;
+  right: 8px;
+  left: auto;
+  top: 50%;
+  transform: translateY(-50%);
+  flex-direction: column;
+}
+
+/* Individual indicator — pixel square */
+.px-carousel__indicator {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 2px solid var(--px-carousel-indicator-color);
+  background: transparent;
+  cursor: pointer;
+
+  /* No border-radius — pixel squares */
+  &:hover {
+    background: var(--px-carousel-indicator-color);
+  }
+
+  &.is-active {
+    background: var(--px-carousel-indicator-active-color);
+    border-color: var(--px-carousel-indicator-active-color);
+  }
+}
+
+/* Preset color variants */
+@each $val in primary, success, warning, info, danger {
+  .px-carousel--$(val) {
+    --px-carousel-border-color: var(--px-color-$(val)-dark);
+    --px-carousel-shadow-color: var(--px-color-$(val)-dark);
+    --px-carousel-indicator-active-color: var(--px-color-$(val));
+    --px-carousel-arrow-color: var(--px-color-$(val));
+  }
+}
