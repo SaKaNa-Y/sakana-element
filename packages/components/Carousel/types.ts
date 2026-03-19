@@ -18,10 +18,10 @@ export interface CarouselEmits {
 export interface CarouselContext {
   currentIndex: Ref<number>;
   direction: Readonly<Ref<'horizontal' | 'vertical'>>;
-  registerItem: (uid: number) => void;
-  unregisterItem: (uid: number) => void;
+  registerItem: (uid: symbol) => void;
+  unregisterItem: (uid: symbol) => void;
   totalItems: ComputedRef<number>;
-  items: Ref<number[]>;
+  items: Ref<symbol[]>;
 }
 
 export interface CarouselInstance {

@@ -1,7 +1,3 @@
-<script lang="ts">
-const nextId = 0;
-</script>
-
 <script setup lang="ts">
 import { computed, inject, onBeforeUnmount } from 'vue';
 import { CAROUSEL_CTX_KEY } from './constants';
@@ -10,7 +6,7 @@ defineOptions({
   name: 'PxCarouselItem',
 });
 const ctx = inject(CAROUSEL_CTX_KEY, void 0);
-const uid = nextId++;
+const uid = Symbol();
 
 const itemIndex = computed(() => {
   if (!ctx) return -1;

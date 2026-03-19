@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<CarouselProps>(), {
 const emits = defineEmits<CarouselEmits>();
 
 const currentIndex = ref(props.modelValue ?? 0);
-const items = ref<number[]>([]);
+const items = ref<symbol[]>([]);
 
 const totalItems = computed(() => items.value.length);
 
@@ -44,11 +44,11 @@ const trackStyle = computed(() => {
   return { transform: `translateX(-${currentIndex.value * 100}%)` };
 });
 
-function registerItem(uid: number) {
+function registerItem(uid: symbol) {
   items.value.push(uid);
 }
 
-function unregisterItem(uid: number) {
+function unregisterItem(uid: symbol) {
   const index = items.value.indexOf(uid);
   if (index > -1) {
     items.value.splice(index, 1);
