@@ -52,3 +52,11 @@ demo-preview=../../demo/validator/Trigger.vue
 ::: preview
 demo-preview=../../demo/validator/Programmatic.vue
 :::
+
+## 像素艺术样式
+
+验证器具有 RPG 游戏风格的视觉效果：带像素边框的对话气泡错误提示、感叹号图标、错误时的抖动动画，以及成功时的像素对勾徽章。
+
+::: preview
+demo-preview=../../demo/validator/PixelStyle.vue
+:::

@@ -19,9 +19,10 @@ const omitInstall = (obj: I18nInstance) => omit(obj, 'install'); //从i18n实例
 export function useLocale(localeOverrides?: Ref<Language>) {
   if (!localeOverrides) {
     //如果没有提供localeOverrides
-    const i18n: Ref<I18nInstance> =
-      inject(I18N_INJECTION_KEY) ??
-      ref(createI18n({ locale: English.name, messages: { en: English.el } }));
+    const i18n: Ref<I18nInstance> = inject(
+      I18N_INJECTION_KEY,
+      ref(createI18n({ locale: English.name, messages: { en: English.el } })),
+    );
 
     return computed(() => omitInstall(unref(i18n))); //返回一个计算属性，移除了i18n实例中的install方法
   }

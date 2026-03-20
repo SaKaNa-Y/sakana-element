@@ -52,3 +52,11 @@ Access `validate()` and `reset()` via template ref for manual control.
 ::: preview
 demo-preview=../../demo/validator/Programmatic.vue
 :::
+
+## Pixel Art Styles
+
+The validator features RPG game-inspired visuals: speech-bubble error messages with pixel borders, exclamation icons, a shake animation on error, and a pixel checkmark badge on success.
+
+::: preview
+demo-preview=../../demo/validator/PixelStyle.vue
+:::

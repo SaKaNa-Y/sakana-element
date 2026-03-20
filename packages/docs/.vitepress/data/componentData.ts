@@ -232,6 +232,16 @@ export const CATEGORIES: ComponentCategory[] = [
         },
       },
       {
+        name: 'Collapsible',
+        zhName: '折叠块',
+        slug: 'collapsible',
+        icon: 'chevron-down',
+        description: {
+          en: 'Simple single-toggle component to show or hide a content block.',
+          zh: '简单的单项折叠切换组件，用于显示或隐藏内容块。',
+        },
+      },
+      {
         name: 'Pixelate',
         zhName: '像素化',
         slug: 'pixelate',

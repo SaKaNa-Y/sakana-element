@@ -21,5 +21,10 @@ export default {
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
     },
+    validator: {
+      validated: 'Validated',
+      required: 'This field is required',
+      failed: 'Validation failed',
+    },
   },
 };

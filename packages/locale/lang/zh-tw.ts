@@ -21,5 +21,10 @@ export default {
       confirmButtonText: '確認',
       cancelButtonText: '取消',
     },
+    validator: {
+      validated: '驗證通過',
+      required: '此欄位為必填',
+      failed: '驗證失敗',
+    },
   },
 };

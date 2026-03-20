@@ -15,7 +15,7 @@ The repository uses pnpm workspaces with the following key packages:
 - `packages/hooks` - Reusable Vue composition functions (private, not published)
 - `packages/utils` - Shared utility functions (private)
 - `packages/theme` - CSS theme files and Houdini Paint Worklets (private)
-- `packages/locale` - Internationalization support (private)
+- `packages/locale` - Internationalization support for 5 locales: EN, ZH-CN, ZH-TW, JA, KO (private)
 - `packages/docs` - VitePress documentation site (private)
 - `packages/play` - Development playground with Storybook (private)
 - `libs/vite-plugins` - Custom Vite plugins for build process
@@ -39,7 +39,18 @@ pnpm test-utils       # Run utils tests only
 pnpm test-hooks       # Run hooks tests only
 ```
 
-All tests use Vitest with jsdom environment. Component tests require hooks to be built first.
+All tests use Vitest. Utils/hooks tests run in jsdom (`vitest.config.ts`); component tests run in Playwright Chromium browser (`vitest.browser.config.ts`). Component tests require hooks to be built first.
+
+### Linting & Formatting
+```bash
+pnpm lint             # Check with Biome
+pnpm lint:fix         # Auto-fix lint issues
+pnpm format           # Format with Biome
+pnpm check            # Lint + format check
+pnpm check:fix        # Lint + format auto-fix
+```
+
+Uses [Biome](https://biomejs.dev/) (not ESLint/Prettier). Config in `biome.json`: 100 char line width, single quotes for JS, double quotes for JSX. Husky pre-commit hook runs `lint-staged` which applies Biome to staged files.
 
 ### Building
 ```bash
@@ -151,26 +162,31 @@ The following are marked as external in the ES build (peer dependencies):
 - `@popperjs/core`
 - `async-validator`
 
+### Font Extraction
+
+The ES build uses a custom `extractBase64FontsPlugin()` that extracts the Zpix pixel font (~6.9MB woff2) from base64-encoded CSS data URLs into separate font files. This prevents stack overflows in downstream Vite consumers that would otherwise process the massive inline font.
+
 ### PostCSS Configuration
 
-Styles use PostCSS with:
+Styles use PostCSS (`postcss.config.cjs`) with:
 - `postcss-nested` - Nesting support
 - `postcss-each-variables` - Variable loops
-- `postcss-each` - Loop syntax
+- `postcss-each` - Loop syntax (with `postcss-for` and `postcss-color-mix` as `beforeEach` plugins)
 - `postcss-for` - For loops
 - `postcss-color-mix` - Color mixing functions
 
 ## Testing
 
-Tests use Vitest with Vue Test Utils in jsdom environment.
+Two separate Vitest configurations:
 
-Setup (`vitest.setup.ts`):
-- Registers default pixel icons globally before tests
+- `vitest.config.ts` — jsdom environment for utils and hooks tests
+- `vitest.browser.config.ts` — Playwright Chromium browser for component tests
 
-Global test config (`vitest.config.ts`):
-- Globals enabled
-- Environment: jsdom
-- Excludes: node_modules, dist, coverage
+Setup files:
+- `vitest.setup.ts` — Registers pixel icons, suppresses specific Vue warnings
+- `vitest.browser.setup.ts` — Same as above, plus disables CSS transitions/animations for deterministic component tests
+
+Both configs have globals enabled and exclude node_modules, dist, coverage.
 
 When testing components that use hooks, build the hooks package first:
 ```bash
@@ -187,7 +203,12 @@ cross-env NODE_ENV=test pnpm --filter @sakana-element/hooks build
 - Includes all `.ts`, `.tsx`, `.vue` files in `packages/`
 - `env.d.ts` provides Vite client types (`import.meta.env`) and CSS Houdini Paint API types
 
-Build-specific config (`tsconfig.build.json`) is used for type generation during builds.
+Three tsconfig files: `tsconfig.json` (main), `tsconfig.build.json` (type generation during builds), `tsconfig.node.json` (Node.js tooling files).
+
+## Git Hooks
+
+Husky manages Git hooks:
+- **pre-commit**: Runs `pnpm exec lint-staged` which applies Biome check/format to staged files
 
 ## Commit Convention
 

@@ -34,7 +34,7 @@ describe('Validator.vue', () => {
     expect(hint.text()).toBe('Required field');
   });
 
-  it('should hide hint with is-hidden class when valid', async () => {
+  it('should show success bubble (not hidden) when validation passes', async () => {
     const wrapper = mount(Validator, {
       props: {
         modelValue: 'hello',
@@ -47,7 +47,8 @@ describe('Validator.vue', () => {
     await vm.validate();
 
     const hint = wrapper.find('.px-validator__hint');
-    expect(hint.classes()).toContain('is-hidden');
+    expect(hint.classes()).not.toContain('is-hidden');
+    expect(wrapper.find('.px-validator__bubble--success').exists()).toBe(true);
   });
 
   it('should accept rules prop with schema and optional trigger/message', () => {
@@ -390,5 +391,104 @@ describe('Validator.vue', () => {
 
     // The fallback chain: rule.message (undefined) ?? issues[0].message → Zod message
     expect(wrapper.find('.px-validator__hint-text').text()).toBe('Must be at least 5 chars');
+  });
+
+  // ── Pixel-Art Style Tests ──
+
+  it('should render speech bubble with pixel border on error', async () => {
+    const wrapper = mount(Validator, {
+      props: {
+        modelValue: '',
+        rules: [{ schema: z.string().min(1, 'Required') }],
+      },
+      slots: { default: () => <input /> },
+    });
+
+    const vm = wrapper.vm as unknown as ValidatorInstance;
+    await vm.validate().catch(() => {});
+
+    expect(wrapper.find('.px-validator__bubble').exists()).toBe(true);
+  });
+
+  it('should render bubble arrow (triangle pointer) on error', async () => {
+    const wrapper = mount(Validator, {
+      props: {
+        modelValue: '',
+        rules: [{ schema: z.string().min(1, 'err') }],
+      },
+      slots: { default: () => <input /> },
+    });
+
+    const vm = wrapper.vm as unknown as ValidatorInstance;
+    await vm.validate().catch(() => {});
+
+    expect(wrapper.find('.px-validator__bubble-arrow').exists()).toBe(true);
+  });
+
+  it('should render pixel exclamation icon on error', async () => {
+    const wrapper = mount(Validator, {
+      props: {
+        modelValue: '',
+        rules: [{ schema: z.string().min(1, 'err') }],
+      },
+      slots: { default: () => <input /> },
+    });
+
+    const vm = wrapper.vm as unknown as ValidatorInstance;
+    await vm.validate().catch(() => {});
+
+    expect(wrapper.find('.px-validator__hint-icon').exists()).toBe(true);
+  });
+
+  it('should render success bubble on successful validation', async () => {
+    const wrapper = mount(Validator, {
+      props: {
+        modelValue: 'valid',
+        rules: [{ schema: z.string().min(1) }],
+      },
+      slots: { default: () => <input /> },
+    });
+
+    const vm = wrapper.vm as unknown as ValidatorInstance;
+    await vm.validate();
+
+    expect(wrapper.find('.px-validator__hint').classes()).not.toContain('is-hidden');
+    expect(wrapper.find('.px-validator__bubble--success').exists()).toBe(true);
+    expect(wrapper.find('.px-validator__success-icon').exists()).toBe(true);
+  });
+
+  it('should not render success bubble when status is not success', () => {
+    const wrapper = mount(Validator, {
+      props: { modelValue: '' },
+      slots: { default: () => <input /> },
+    });
+
+    // In init state, hint is hidden and no success bubble is rendered
+    expect(wrapper.find('.px-validator__hint').classes()).toContain('is-hidden');
+    expect(wrapper.find('.px-validator__bubble--success').exists()).toBe(false);
+  });
+
+  it('should add is-error class on error state (drives shake animation)', async () => {
+    const wrapper = mount(Validator, {
+      props: {
+        modelValue: '',
+        rules: [{ schema: z.string().min(1, 'err') }],
+      },
+      slots: { default: () => <input /> },
+    });
+
+    const vm = wrapper.vm as unknown as ValidatorInstance;
+    await vm.validate().catch(() => {});
+
+    expect(wrapper.find('.px-validator').classes()).toContain('is-error');
+  });
+
+  it('should not have is-error class when not in error state', () => {
+    const wrapper = mount(Validator, {
+      props: { modelValue: 'valid' },
+      slots: { default: () => <input /> },
+    });
+
+    expect(wrapper.find('.px-validator').classes()).not.toContain('is-error');
   });
 });

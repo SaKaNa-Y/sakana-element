@@ -1,0 +1,213 @@
+/* Collapsible Variables */
+.px-collapsible {
+  --px-collapsible-border-color: var(--px-border-color);
+  --px-collapsible-shadow-color: var(--px-shadow-color);
+  --px-collapsible-bg-color: var(--px-fill-color-blank);
+  --px-collapsible-text-color: var(--px-text-color-primary);
+  --px-collapsible-trigger-hover-bg: var(--px-fill-color-light);
+  --px-collapsible-font-size: var(--px-font-size-base);
+
+  /* Pixel-style container */
+  position: relative;
+  background: transparent;
+  border: none;
+  font-family: var(--px-font-family);
+
+  /* Pixel shadow via drop-shadow */
+  filter: drop-shadow(
+    var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-collapsible-shadow-color)
+  );
+
+  /* Border layer — pixel shape */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--px-collapsible-border-color);
+    clip-path: polygon(
+      0 4px,
+      2px 4px,
+      2px 2px,
+      4px 2px,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px calc(100% - 4px),
+      0 calc(100% - 4px)
+    );
+    z-index: 0;
+  }
+
+  /* Fill layer — pixel shape */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: var(--px-collapsible-bg-color);
+    clip-path: polygon(
+      0 4px,
+      2px 4px,
+      2px 2px,
+      4px 2px,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px calc(100% - 4px),
+      0 calc(100% - 4px)
+    );
+    z-index: 0;
+  }
+
+  /* Disabled state */
+  &.is-disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+}
+
+/* Trigger */
+.px-collapsible-trigger {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: var(--px-collapsible-font-size);
+  font-family: var(--px-font-family);
+  color: var(--px-collapsible-text-color);
+  user-select: none;
+  outline: none;
+
+  /* Background layer for hover — pixel corners match container fill */
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 2px;
+    background: transparent;
+    z-index: -1;
+    clip-path: polygon(
+      0 4px,
+      2px 4px,
+      2px 2px,
+      4px 2px,
+      4px 0,
+      calc(100% - 4px) 0,
+      calc(100% - 4px) 2px,
+      calc(100% - 2px) 2px,
+      calc(100% - 2px) 4px,
+      100% 4px,
+      100% calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 4px),
+      calc(100% - 2px) calc(100% - 2px),
+      calc(100% - 4px) calc(100% - 2px),
+      calc(100% - 4px) 100%,
+      4px 100%,
+      4px calc(100% - 2px),
+      2px calc(100% - 2px),
+      2px calc(100% - 4px),
+      0 calc(100% - 4px)
+    );
+  }
+
+  &:hover {
+    &::after {
+      background-color: var(--px-collapsible-trigger-hover-bg);
+    }
+  }
+
+  &:focus-visible {
+    &::after {
+      background-color: var(--px-collapsible-trigger-hover-bg);
+    }
+  }
+
+  &[data-disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+/* Content Wrapper (v-show target) */
+.px-collapsible-content__wrapper {
+  overflow: hidden;
+}
+
+/* Content */
+.px-collapsible-content {
+  position: relative;
+  z-index: 1;
+  padding: 0 16px 12px;
+  font-size: var(--px-collapsible-font-size);
+  font-family: var(--px-font-family);
+  color: var(--px-collapsible-text-color);
+
+  /* Pixel-style dashed border at top */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 4px;
+    right: 4px;
+    height: 2px;
+    background-image: repeating-linear-gradient(
+      to right,
+      var(--px-collapsible-border-color) 0px,
+      var(--px-collapsible-border-color) 6px,
+      transparent 6px,
+      transparent 12px
+    );
+  }
+}
+
+/* Ghost variant — no pixel border/shadow */
+.px-collapsible.is-ghost {
+  filter: none;
+
+  &::before,
+  &::after {
+    display: none;
+  }
+}
+
+.px-collapsible.is-ghost .px-collapsible-content::before {
+  display: none;
+}
+
+/* Preset color variants */
+@each $val in primary, success, warning, info, danger {
+  .px-collapsible--$(val) {
+    --px-collapsible-border-color: var(--px-color-$(val)-dark);
+    --px-collapsible-shadow-color: var(--px-color-$(val)-dark);
+    --px-collapsible-trigger-hover-bg: var(--px-color-$(val)-light-9);
+  }
+}
+
+/* Transition */
+.px-collapsible-slide-enter-active,
+.px-collapsible-slide-leave-active {
+  transition: none;
+}

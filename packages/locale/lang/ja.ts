@@ -21,5 +21,10 @@ export default {
       confirmButtonText: 'はい',
       cancelButtonText: 'いいえ',
     },
+    validator: {
+      validated: '検証済み',
+      required: 'この項目は必須です',
+      failed: '検証に失敗しました',
+    },
   },
 };

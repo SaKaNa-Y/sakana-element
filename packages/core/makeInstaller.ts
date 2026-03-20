@@ -9,7 +9,7 @@ export function makeInstaller(components: Plugin[]) {
     each(components, (c) => app.use(c));
     // each 是 lodash-es 提供的方法，它接收一个数组 components 和一个函数，函数的参数是 components 的每一项
     // app.use 是 vue 提供的方法，它接收一个 Plugin
-    if (opts) provideGlobalConfig(opts, app, true);
+    provideGlobalConfig(opts, app, true);
   };
 
   return installer as Plugin;

@@ -1,16 +1,25 @@
+/* ── Validator ── RPG Game-Inspired Pixel-Art Styles ── */
+
 .px-validator {
   display: inline-flex;
   flex-direction: column;
   font-family: var(--px-font-family);
 }
 
+/* ── Content area ── */
 .px-validator__content {
   display: contents;
 }
 
+/* Error state: pixel border highlight on content children */
+.px-validator.is-error .px-validator__content {
+  position: relative;
+}
+
+/* ── Hint area ── */
 .px-validator__hint {
   min-height: 1.4em;
-  padding-top: 4px;
+  padding-top: 6px;
   font-size: var(--px-font-size-small);
   color: var(--px-color-danger);
   line-height: 1.4;
@@ -22,9 +31,189 @@
   pointer-events: none;
 }
 
+/* ── Speech bubble (NPC dialog style) ── */
+.px-validator__bubble {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: var(--px-fill-color-blank);
+  color: var(--px-color-danger);
+  font-family: var(--px-font-family);
+  font-size: var(--px-font-size-small);
+
+  /* Pixel border via clip-path */
+  clip-path: polygon(
+    0 4px,
+    2px 4px,
+    2px 2px,
+    4px 2px,
+    4px 0,
+    calc(100% - 4px) 0,
+    calc(100% - 4px) 2px,
+    calc(100% - 2px) 2px,
+    calc(100% - 2px) 4px,
+    100% 4px,
+    100% calc(100% - 4px),
+    calc(100% - 2px) calc(100% - 4px),
+    calc(100% - 2px) calc(100% - 2px),
+    calc(100% - 4px) calc(100% - 2px),
+    calc(100% - 4px) 100%,
+    4px 100%,
+    4px calc(100% - 2px),
+    2px calc(100% - 2px),
+    2px calc(100% - 4px),
+    0 calc(100% - 4px)
+  );
+
+  /* Pixel-art border simulation via box-shadow */
+  box-shadow:
+    inset 0 0 0 2px var(--px-color-danger);
+
+  filter: drop-shadow(
+    var(--px-shadow-offset-x, 2px) var(--px-shadow-offset-y, 2px) 0px var(--px-color-danger-dark)
+  );
+}
+
+/* Triangle pointer (speech bubble arrow) */
+.px-validator__bubble-arrow {
+  position: absolute;
+  top: -6px;
+  left: 12px;
+  width: 0;
+  height: 0;
+
+  /* Pixel-style triangle: 3 stacked rectangles */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 2px;
+    width: 4px;
+    height: 2px;
+    background: var(--px-color-danger);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 8px;
+    height: 2px;
+    background: var(--px-color-danger);
+  }
+}
+
+/* ── Pixel exclamation icon ── */
+.px-validator__hint-icon {
+  display: inline-block;
+  width: 10px;
+  height: 12px;
+  position: relative;
+  flex-shrink: 0;
+
+  /* Exclamation bar */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 6px;
+    background: var(--px-color-danger);
+  }
+
+  /* Exclamation dot */
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 2px;
+    background: var(--px-color-danger);
+  }
+}
+
+/* ── Hint text ── */
 .px-validator__hint-text {
   display: inline-flex;
   align-items: center;
   gap: 4px;
 }
 
+/* ── Shake animation (pixel-stepped) ── */
+@keyframes pixel-shake {
+  0%   { transform: translateX(0); }
+  20%  { transform: translateX(-2px); }
+  40%  { transform: translateX(2px); }
+  60%  { transform: translateX(-2px); }
+  80%  { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+
+.px-validator.is-error .px-validator__hint {
+  animation: pixel-shake 0.3s steps(1) 1;
+}
+
+/* ── Success state (must come after base bubble rules to win cascade) ── */
+
+.px-validator__bubble--success {
+  background: var(--px-color-success-light-9);
+  color: var(--px-color-success);
+  box-shadow: inset 0 0 0 2px var(--px-color-success);
+  filter: drop-shadow(
+    var(--px-shadow-offset-x, 2px) var(--px-shadow-offset-y, 2px) 0px var(--px-color-success-dark)
+  );
+}
+
+.px-validator__bubble--success .px-validator__bubble-arrow {
+  &::before {
+    background: var(--px-color-success);
+  }
+
+  &::after {
+    background: var(--px-color-success);
+  }
+}
+
+/* Pixel checkmark icon (success) */
+.px-validator__success-icon {
+  display: inline-block;
+  width: 10px;
+  height: 12px;
+  position: relative;
+  flex-shrink: 0;
+
+  /* Checkmark: L-shape rotated */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-45deg);
+    width: 8px;
+    height: 6px;
+    border-left: 2px solid var(--px-color-success);
+    border-bottom: 2px solid var(--px-color-success);
+  }
+}
+
+/* Success hint entrance animation */
+@keyframes pixel-pop {
+  0%   { transform: scale(0); opacity: 0; }
+  50%  { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.px-validator.is-success .px-validator__hint {
+  color: var(--px-color-success);
+}
+
+.px-validator.is-success .px-validator__bubble {
+  animation: pixel-pop 0.25s steps(3) 1;
+}

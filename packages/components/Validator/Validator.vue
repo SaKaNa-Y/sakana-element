@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useLocale } from '@sakana-element/hooks';
 import { provide, reactive, ref, toRefs, watch } from 'vue';
 import { type ZodType, z } from 'zod';
 import { FORM_ITEM_CTX_KEY } from '../Form/constants';
@@ -13,6 +14,7 @@ const props = withDefaults(defineProps<ValidatorProps>(), {
 
 const emit = defineEmits<ValidatorEmits>();
 
+const locale = useLocale();
 const validateStatus = ref<ValidateStatus>('init');
 const errMsg = ref('');
 
@@ -31,15 +33,15 @@ async function doValidate(rules: FormItemRule[]): Promise<boolean> {
   for (const rule of rules) {
     let schema: ZodType | null = rule.schema ?? null;
     if (!schema && rule.required) {
-      schema = z
-        .string({ message: rule.message ?? 'This field is required' })
-        .min(1, rule.message ?? 'This field is required');
+      const requiredMsg = rule.message ?? locale.value.t('validator.required');
+      schema = z.string({ message: requiredMsg }).min(1, requiredMsg);
     }
     if (!schema) continue;
 
     const result = schema.safeParse(props.modelValue);
     if (!result.success) {
-      const msg = rule.message ?? result.error.issues[0]?.message ?? 'Validation failed';
+      const msg =
+        rule.message ?? result.error.issues[0]?.message ?? locale.value.t('validator.failed');
       validateStatus.value = 'error';
       errMsg.value = msg;
       emit('validate', false, msg);
@@ -119,11 +121,26 @@ provide(
     </div>
     <div
       class="px-validator__hint"
-      :class="{ 'is-hidden': validateStatus !== 'error' }"
+      :class="{ 'is-hidden': validateStatus === 'init' }"
     >
-      <slot name="hint" :message="errMsg">
-        <span class="px-validator__hint-text">{{ errMsg }}</span>
-      </slot>
+      <template v-if="validateStatus === 'error'">
+        <slot name="hint" :message="errMsg">
+          <div class="px-validator__bubble">
+            <span class="px-validator__bubble-arrow" />
+            <span class="px-validator__hint-icon" />
+            <span class="px-validator__hint-text">{{ errMsg }}</span>
+          </div>
+        </slot>
+      </template>
+      <template v-else-if="validateStatus === 'success'">
+        <slot name="success-hint">
+          <div class="px-validator__bubble px-validator__bubble--success">
+            <span class="px-validator__bubble-arrow" />
+            <span class="px-validator__success-icon" />
+            <span class="px-validator__hint-text">{{ locale.t('validator.validated') }}</span>
+          </div>
+        </slot>
+      </template>
     </div>
   </div>
 </template>

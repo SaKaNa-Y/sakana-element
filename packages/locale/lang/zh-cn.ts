@@ -21,5 +21,10 @@ export default {
       confirmButtonText: '确定',
       cancelButtonText: '取消',
     },
+    validator: {
+      validated: '验证通过',
+      required: '此字段为必填项',
+      failed: '验证失败',
+    },
   },
 };

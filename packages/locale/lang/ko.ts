@@ -21,5 +21,10 @@ export default {
       confirmButtonText: '예',
       cancelButtonText: '아니오',
     },
+    validator: {
+      validated: '검증됨',
+      required: '필수 항목입니다',
+      failed: '검증 실패',
+    },
   },
 };
