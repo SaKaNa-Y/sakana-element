@@ -78,6 +78,22 @@ demo-preview=../../demo/badge/Outline.vue
 demo-preview=../../demo/badge/Dash.vue
 :::
 
+## 闪光效果
+
+使用 `shine` 属性添加动画闪光扫过效果。闪光动画使用阶梯计时以保持像素美学风格。
+
+::: preview
+demo-preview=../../demo/badge/Shine.vue
+:::
+
+## 像素纹理
+
+使用 `pixel` 属性添加可见网格抖动纹理。在徽章填充上创建复古 CRT 风格的图案叠加。
+
+::: preview
+demo-preview=../../demo/badge/Pixel.vue
+:::
+
 ## 自定义颜色
 
 使用 `color` 属性来设置自定义十六进制颜色。可与默认、轮廓和虚线样式搭配使用。

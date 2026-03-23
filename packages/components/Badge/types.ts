@@ -9,4 +9,6 @@ export interface BadgeProps {
   color?: string;
   round?: boolean;
   icon?: string;
+  shine?: boolean;
+  pixel?: boolean;
 }

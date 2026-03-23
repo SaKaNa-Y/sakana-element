@@ -221,6 +221,88 @@ describe('Badge.vue', () => {
     expect(classes).toContain('px-badge--danger');
     expect(classes).toContain('px-badge--small');
   });
+  // Shine and Pixel props
+  it.each([
+    ['shine'],
+    ['pixel'],
+  ] as const)('should apply is-%s class when %s prop is true', (prop) => {
+    const wrapper = mount(Badge, {
+      props: { [prop]: true },
+      slots: { default: 'Badge' },
+    });
+    expect(wrapper.find('.px-badge').classes()).toContain(`is-${prop}`);
+  });
+
+  it.each([['shine'], ['pixel']] as const)('should not apply is-%s class by default', (prop) => {
+    const wrapper = mount(Badge, {
+      slots: { default: 'Badge' },
+    });
+    expect(wrapper.find('.px-badge').classes()).not.toContain(`is-${prop}`);
+  });
+
+  it('should apply both is-shine and is-pixel classes when both props are true', () => {
+    const wrapper = mount(Badge, {
+      props: { shine: true, pixel: true },
+      slots: { default: 'Badge' },
+    });
+    const classes = wrapper.find('.px-badge').classes();
+    expect(classes).toContain('is-shine');
+    expect(classes).toContain('is-pixel');
+  });
+
+  // Shine/Pixel with a type
+  it.each([
+    ['shine', 'danger'],
+    ['pixel', 'primary'],
+  ] as [string, BadgeType][])('should apply is-%s with type %s', (effect, type) => {
+    const wrapper = mount(Badge, {
+      props: { type, [effect]: true },
+      slots: { default: 'Badge' },
+    });
+    const classes = wrapper.find('.px-badge').classes();
+    expect(classes).toContain(`is-${effect}`);
+    expect(classes).toContain(`px-badge--${type}`);
+  });
+
+  // Shine/Pixel with variant props
+  it.each([
+    ['shine', 'outline'],
+    ['shine', 'dash'],
+    ['shine', 'round'],
+    ['pixel', 'outline'],
+    ['pixel', 'dash'],
+    ['pixel', 'round'],
+  ])('should apply is-%s with %s', (effect, variant) => {
+    const wrapper = mount(Badge, {
+      props: { [effect]: true, [variant]: true },
+      slots: { default: 'Badge' },
+    });
+    const classes = wrapper.find('.px-badge').classes();
+    expect(classes).toContain(`is-${effect}`);
+    expect(classes).toContain(`is-${variant}`);
+  });
+
+  // Shine/Pixel with custom color
+  it.each([['shine'], ['pixel']] as const)('should apply is-%s with custom color', (effect) => {
+    const wrapper = mount(Badge, {
+      props: { [effect]: true, color: '#ff6600' },
+      slots: { default: 'Badge' },
+    });
+    const classes = wrapper.find('.px-badge').classes();
+    expect(classes).toContain(`is-${effect}`);
+    const style = wrapper.find('.px-badge').attributes('style');
+    expect(style).toContain('--px-badge-bg-color');
+  });
+
+  // Shine/Pixel on empty badge
+  it.each([['shine'], ['pixel']] as const)('should apply is-%s on empty badge', (effect) => {
+    const wrapper = mount(Badge, {
+      props: { [effect]: true },
+    });
+    const classes = wrapper.find('.px-badge').classes();
+    expect(classes).toContain(`is-${effect}`);
+    expect(classes).toContain('is-empty');
+  });
 });
 
 describe('Badge/index', () => {

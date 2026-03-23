@@ -51,6 +51,20 @@ export const badgeApi: ApiSection[] = [
         type: 'string',
         desc: { zh: '图标名称', en: 'Icon name' },
       },
+      {
+        name: 'shine',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: { zh: '动画闪光扫过效果', en: 'Animated shimmer sweep effect' },
+      },
+      {
+        name: 'pixel',
+        category: 'style',
+        type: 'boolean',
+        default: 'false',
+        desc: { zh: '可见网格/抖动纹理填充', en: 'Visible grid dithering texture fill' },
+      },
     ],
   },
   {

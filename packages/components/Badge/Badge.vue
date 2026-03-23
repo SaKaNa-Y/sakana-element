@@ -41,6 +41,8 @@ const customColorStyle = computed(() => {
       'is-outline': outline,
       'is-dash': dash,
       'is-round': round,
+      'is-shine': shine,
+      'is-pixel': pixel,
       'is-empty': isEmpty,
     }"
     :style="customColorStyle"

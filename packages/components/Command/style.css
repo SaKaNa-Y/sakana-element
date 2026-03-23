@@ -1,0 +1,242 @@
+/* Command palette container */
+.px-command {
+  --px-command-highlight-bg-color: var(--px-color-primary-light-9);
+  --px-command-highlight-text-color: var(--px-text-color-primary);
+  --px-command-highlight-icon-color: var(--px-color-primary);
+
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  font-family: var(--px-font-family);
+  background: transparent;
+  position: relative;
+  overflow: hidden;
+
+  /* Border layer — pixel-corner clip-path */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-border-color);
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0,
+      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+    z-index: 0;
+  }
+
+  /* Fill layer — inset background behind content */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-bg-color-overlay);
+    z-index: 0;
+  }
+
+  filter: drop-shadow(3px 3px 0px var(--px-border-color));
+}
+
+/* Search input area */
+.px-command-input {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 2px dashed var(--px-border-color);
+  position: relative;
+  z-index: 1;
+}
+
+.px-command-input__icon {
+  color: var(--px-text-color-placeholder);
+  flex-shrink: 0;
+}
+
+.px-command-input__input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--px-font-family);
+  font-size: var(--px-font-size-base);
+  color: var(--px-text-color-primary);
+  padding: 0;
+  line-height: 1.5;
+
+  &::placeholder {
+    color: var(--px-text-color-placeholder);
+  }
+}
+
+/* Scrollable list container */
+.px-command-list {
+  overflow-y: auto;
+  padding: 4px 2px;
+  position: relative;
+  z-index: 1;
+
+  /* Pixel scrollbar */
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--px-bg-color-page);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--px-border-color);
+  }
+}
+
+/* Individual command item */
+.px-command-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  position: relative;
+  font-size: var(--px-font-size-base);
+  color: var(--px-text-color-primary);
+  user-select: none;
+  transition: none;
+
+  /* RPG menu cursor arrow on highlight */
+  &.is-highlighted {
+    background: var(--px-command-highlight-bg-color);
+    color: var(--px-command-highlight-text-color);
+
+    &::before {
+      content: '\25B6';
+      position: absolute;
+      left: 2px;
+      font-size: 8px;
+      color: var(--px-command-highlight-icon-color);
+    }
+  }
+
+  &.is-disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  &.is-hidden {
+    display: none;
+  }
+}
+
+.px-command-item__icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.px-command-item__label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.px-command-item__shortcut {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+  flex-shrink: 0;
+
+  & kbd {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 4px;
+    font-family: var(--px-font-family);
+    font-size: 10px;
+    background: var(--px-bg-color-page);
+    border: 1px solid var(--px-border-color);
+    color: var(--px-text-color-secondary);
+  }
+}
+
+/* Group with heading */
+.px-command-group {
+  &.is-hidden {
+    display: none;
+  }
+}
+
+.px-command-group__heading {
+  padding: 8px 12px 4px;
+  font-size: var(--px-font-size-extra-small);
+  font-weight: 600;
+  color: var(--px-text-color-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px dashed var(--px-border-color-light);
+}
+
+/* Pixel separator line */
+.px-command-separator {
+  height: 2px;
+  margin: 4px 8px;
+  background: var(--px-border-color-light);
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--px-border-color) 0px,
+    var(--px-border-color) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+/* Empty state */
+.px-command-empty {
+  padding: 24px 12px;
+  text-align: center;
+  font-size: var(--px-font-size-base);
+  color: var(--px-text-color-placeholder);
+
+  &.is-hidden {
+    display: none;
+  }
+}
+
+/* Dialog mode */
+.px-command-dialog {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 15vh;
+}
+
+.px-command-dialog__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.px-command-dialog__content {
+  position: relative;
+  width: 90%;
+  max-width: 520px;
+  z-index: 1;
+
+  /* Override .px-command shadow in dialog mode */
+  & .px-command {
+    filter: drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.3));
+  }
+}
+
+.px-dark .px-command,
+.dark .px-command {
+  --px-command-highlight-text-color: var(--px-color-white);
+  --px-command-highlight-icon-color: var(--px-color-primary-light-3);
+}

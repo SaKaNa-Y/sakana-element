@@ -7,6 +7,11 @@
   --px-badge-font-size: var(--px-font-size-extra-small);
   --px-badge-height: 22px;
   --px-badge-padding: 0 8px;
+
+  /* Internal gradient layers — reused across shine/pixel/combined variants */
+  --_bevel: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%, rgba(0,0,0,0.12) 100%);
+  --_shine: linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.35) 45%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0.35) 55%, transparent 70%);
+  --_pixel: repeating-conic-gradient(rgba(0,0,0,0.06) 0% 25%, transparent 0% 50%) 0 0 / 4px 4px;
 }
 
 /* Base Badge Styles - Pixel Game Aesthetic */
@@ -36,27 +41,27 @@
 
   transition: none;
 
-  /* Border layer — filled with border color, clipped to pixel shape */
+  /* Border layer — filled with border color, clipped to 4px staircase pixel shape */
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     background: var(--px-badge-border-color);
     clip-path: polygon(
-      0 2px, 2px 2px, 2px 0,
-      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
-      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
-      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+      0 4px, 4px 4px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
     );
     z-index: -1;
   }
 
-  /* Fill layer — inset by border width, filled with bg color */
+  /* Fill layer — inset by border width, filled with bg color + inner bevel for 3D depth */
   &::after {
     content: '';
     position: absolute;
-    inset: 2px;
-    background: var(--px-badge-bg-color);
+    inset: 4px;
+    background: var(--_bevel), var(--px-badge-bg-color);
     clip-path: polygon(
       0 2px, 2px 2px, 2px 0,
       calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
@@ -102,17 +107,60 @@
     }
   }
 
-  /* Round - Pixel-style rounded corners */
+  /* Round - Pixel-style rounded corners with 4px border steps */
   &.is-round {
-    padding: 0 10px;
+    padding: 0 12px;
 
     &::before, &::after {
       clip-path: polygon(
-        0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
-        calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
-        100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
-        4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+        0 6px, 2px 6px, 2px 4px, 4px 4px, 4px 2px, 6px 2px, 6px 0,
+        calc(100% - 6px) 0, calc(100% - 6px) 2px, calc(100% - 4px) 2px, calc(100% - 4px) 4px, calc(100% - 2px) 4px, calc(100% - 2px) 6px, 100% 6px,
+        100% calc(100% - 6px), calc(100% - 2px) calc(100% - 6px), calc(100% - 2px) calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) calc(100% - 2px), calc(100% - 6px) calc(100% - 2px), calc(100% - 6px) 100%,
+        6px 100%, 6px calc(100% - 2px), 4px calc(100% - 2px), 4px calc(100% - 4px), 2px calc(100% - 4px), 2px calc(100% - 6px), 0 calc(100% - 6px)
       );
+    }
+  }
+
+  /* Shine - Animated shimmer sweep effect */
+  &.is-shine {
+    &::after {
+      background: var(--_shine), var(--_bevel), var(--px-badge-bg-color);
+      background-size: 200% 100%, 100% 100%, 100% 100%;
+      animation: px-badge-shine 2s steps(8) infinite;
+    }
+  }
+
+  /* Shine for outline/dash variants (no clip-path on ::after) */
+  &.is-shine.is-outline,
+  &.is-shine.is-dash {
+    &::after {
+      background: var(--_shine), var(--px-badge-bg-color);
+      background-size: 200% 100%, 100% 100%;
+      animation: px-badge-shine 2s steps(8) infinite;
+    }
+  }
+
+  /* Pixel - Grid overlay texture */
+  &.is-pixel {
+    &::after {
+      background: var(--_pixel), var(--_bevel), var(--px-badge-bg-color);
+    }
+  }
+
+  /* Pixel for outline/dash variants */
+  &.is-pixel.is-outline,
+  &.is-pixel.is-dash {
+    &::after {
+      background: var(--_pixel), var(--px-badge-bg-color);
+    }
+  }
+
+  /* Shine + Pixel combined */
+  &.is-shine.is-pixel {
+    &::after {
+      background: var(--_shine), var(--_pixel), var(--_bevel), var(--px-badge-bg-color);
+      background-size: 200% 100%, 4px 4px, 100% 100%, 100% 100%;
+      animation: px-badge-shine 2s steps(8) infinite;
     }
   }
 
@@ -120,6 +168,15 @@
   &.is-empty {
     width: var(--px-badge-height);
     padding: 0;
+  }
+}
+
+@keyframes px-badge-shine {
+  0% {
+    background-position: 200% 0, 0 0, 0 0, 0 0;
+  }
+  100% {
+    background-position: -200% 0, 0 0, 0 0, 0 0;
   }
 }
 

@@ -333,6 +333,16 @@ export const CATEGORIES: ComponentCategory[] = [
           zh: '通过面包屑导航显示当前页面路径。',
         },
       },
+      {
+        name: 'Command',
+        zhName: '命令面板',
+        slug: 'command',
+        icon: 'search',
+        description: {
+          en: 'Searchable command palette with keyboard navigation and dialog mode.',
+          zh: '可搜索的命令面板，支持键盘导航和弹窗模式。',
+        },
+      },
     ],
   },
   {

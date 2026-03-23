@@ -78,6 +78,22 @@ Use `dash` property to display a dashed border with a light background.
 demo-preview=../../demo/badge/Dash.vue
 :::
 
+## Shine
+
+Use `shine` property to add an animated shimmer sweep effect. The shine animation uses stepped timing to maintain the pixel aesthetic.
+
+::: preview
+demo-preview=../../demo/badge/Shine.vue
+:::
+
+## Pixel
+
+Use `pixel` property to add a visible grid dithering texture. Creates a retro CRT-style pattern overlay on the badge fill.
+
+::: preview
+demo-preview=../../demo/badge/Pixel.vue
+:::
+
 ## Custom Color
 
 Use `color` property to set a custom hex color. Works with default, outline, and dash variants.
