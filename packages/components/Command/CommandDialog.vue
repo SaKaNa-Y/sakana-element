@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTheme, useZIndex } from '@sakana-element/hooks';
+import { useZIndex } from '@sakana-element/hooks';
 import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import type { CommandDialogEmits, CommandDialogProps } from './types';
 
@@ -14,7 +14,6 @@ const props = withDefaults(defineProps<CommandDialogProps>(), {
 
 const emits = defineEmits<CommandDialogEmits>();
 
-const { isDark } = useTheme();
 const { nextZIndex } = useZIndex();
 const zIndex = ref(0);
 const dialogRef = ref<HTMLElement>();
@@ -89,7 +88,7 @@ onBeforeUnmount(() => {
 
 <template>
   <Teleport to="body">
-    <div v-if="modelValue" ref="dialogRef" class="px-command-dialog" :class="{ 'px-dark': isDark }" :style="{ zIndex }" @keydown="onKeydown">
+    <div v-if="modelValue" ref="dialogRef" class="px-command-dialog" :style="{ zIndex }" @keydown="onKeydown">
       <div class="px-command-dialog__overlay" @click="close" />
       <div class="px-command-dialog__content">
         <slot />

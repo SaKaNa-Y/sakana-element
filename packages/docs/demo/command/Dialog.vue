@@ -30,7 +30,7 @@ import { ref } from 'vue';
 
 const open = ref(false);
 
-function onSelect(value: string) {
+function onSelect() {
   open.value = false;
 }
 </script>
