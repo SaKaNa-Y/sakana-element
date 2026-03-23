@@ -235,8 +235,8 @@
   }
 }
 
-.px-dark .px-command,
-.dark .px-command {
+html.dark .px-command,
+.px-dark .px-command {
   --px-command-highlight-text-color: var(--px-color-white);
   --px-command-highlight-icon-color: var(--px-color-primary-light-3);
 }

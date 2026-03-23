@@ -716,4 +716,67 @@ describe('Carousel.vue', () => {
       expect(onUpdateModelValue).toHaveBeenCalledWith(0);
     });
   });
+
+  describe('dynamic item removal', () => {
+    test('should adjust currentIndex when last item is removed while active', async () => {
+      const showThird = ref(true);
+      wrapper = mount(
+        () => (
+          <Carousel
+            modelValue={2}
+            onUpdate:modelValue={(v: number) => {
+              onUpdateModelValue(v);
+            }}
+          >
+            <CarouselItem>Slide 1</CarouselItem>
+            <CarouselItem>Slide 2</CarouselItem>
+            {showThird.value && <CarouselItem>Slide 3</CarouselItem>}
+          </Carousel>
+        ),
+        {
+          global: { stubs: ['PxIcon'] },
+          attachTo: document.body,
+        },
+      );
+
+      // Remove the third slide while it's active (index 2)
+      showThird.value = false;
+      await nextTick();
+      await rAF();
+
+      // currentIndex should adjust to last available (index 1)
+      expect(onUpdateModelValue).toHaveBeenCalledWith(1);
+    });
+  });
+
+  describe('external modelValue update', () => {
+    test('should navigate to slide when modelValue prop changes', async () => {
+      const modelValue = ref(0);
+      wrapper = mount(
+        () => (
+          <Carousel
+            modelValue={modelValue.value}
+            onUpdate:modelValue={(v: number) => {
+              modelValue.value = v;
+            }}
+          >
+            <CarouselItem>Slide 1</CarouselItem>
+            <CarouselItem>Slide 2</CarouselItem>
+            <CarouselItem>Slide 3</CarouselItem>
+          </Carousel>
+        ),
+        {
+          global: { stubs: ['PxIcon'] },
+          attachTo: document.body,
+        },
+      );
+
+      modelValue.value = 2;
+      await nextTick();
+      await rAF();
+
+      const items = wrapper.findAll('.px-carousel-item');
+      expect(items[2].classes()).toContain('is-active');
+    });
+  });
 });

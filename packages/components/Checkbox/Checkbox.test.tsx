@@ -345,3 +345,14 @@ describe('Checkbox/index', () => {
     expect(PxCheckboxGroup).toBe(CheckboxGroup);
   });
 });
+
+describe('Checkbox indeterminate on mount', () => {
+  it('should set native indeterminate property on initial mount', () => {
+    const wrapper = mount(Checkbox, {
+      props: { modelValue: false, indeterminate: true },
+    });
+    const input = wrapper.find('input[type="checkbox"]').element as HTMLInputElement;
+    expect(input.indeterminate).toBe(true);
+    wrapper.unmount();
+  });
+});

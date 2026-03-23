@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
-import { describe, expect, it, vi } from 'vitest';
-import { h, nextTick } from 'vue';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { h, nextTick, ref } from 'vue';
 import Command from './Command.vue';
 import CommandDialog from './CommandDialog.vue';
 import CommandEmpty from './CommandEmpty.vue';
@@ -601,5 +601,336 @@ describe('Command theme styles', () => {
 
     wrapper.unmount();
     host.remove();
+  });
+});
+
+describe('Command modelValue handling', () => {
+  it('should treat undefined modelValue as empty string', async () => {
+    const wrapper = mount(Command, {
+      props: { modelValue: undefined },
+      slots: {
+        default: () => [
+          h(CommandInput, { placeholder: 'Search...' }),
+          h(CommandList, null, {
+            default: () => h(CommandItem, { value: 'a' }, { default: () => 'A' }),
+          }),
+        ],
+      },
+    });
+    const input = wrapper.find('.px-command-input__input');
+    expect((input.element as HTMLInputElement).value).toBe('');
+    wrapper.unmount();
+  });
+
+  it('should update searchTerm when modelValue changes to undefined', async () => {
+    const wrapper = mount(Command, {
+      props: { modelValue: 'test' },
+      slots: {
+        default: () => [
+          h(CommandInput, { placeholder: 'Search...' }),
+          h(CommandList, null, {
+            default: () => h(CommandItem, { value: 'a' }, { default: () => 'A' }),
+          }),
+        ],
+      },
+    });
+    await wrapper.setProps({ modelValue: undefined });
+    await nextTick();
+    const input = wrapper.find('.px-command-input__input');
+    expect((input.element as HTMLInputElement).value).toBe('');
+    wrapper.unmount();
+  });
+});
+
+describe('Command Home/End keyboard navigation', () => {
+  it('should highlight first item on Home key', async () => {
+    const wrapper = mountCommand();
+    const input = wrapper.find('.px-command-input__input');
+    // Navigate to last item first
+    await input.trigger('keydown', { key: 'ArrowDown' });
+    await nextTick();
+    await input.trigger('keydown', { key: 'ArrowDown' });
+    await nextTick();
+    await input.trigger('keydown', { key: 'ArrowDown' });
+    await nextTick();
+
+    // Press Home
+    await input.trigger('keydown', { key: 'Home' });
+    await nextTick();
+
+    const items = wrapper.findAll('.px-command-item');
+    expect(items[0].classes()).toContain('is-highlighted');
+  });
+
+  it('should highlight last item on End key', async () => {
+    const wrapper = mountCommand();
+    const input = wrapper.find('.px-command-input__input');
+    // Navigate to first item
+    await input.trigger('keydown', { key: 'ArrowDown' });
+    await nextTick();
+
+    // Press End
+    await input.trigger('keydown', { key: 'End' });
+    await nextTick();
+
+    const items = wrapper.findAll('.px-command-item');
+    expect(items[items.length - 1].classes()).toContain('is-highlighted');
+  });
+
+  it('should skip disabled items with Home key', async () => {
+    const wrapper = mountCommand({
+      items: [
+        { value: 'a', label: 'A', disabled: true },
+        { value: 'b', label: 'B' },
+        { value: 'c', label: 'C' },
+      ],
+    });
+    const input = wrapper.find('.px-command-input__input');
+    await input.trigger('keydown', { key: 'Home' });
+    await nextTick();
+
+    const items = wrapper.findAll('.px-command-item');
+    expect(items[1].classes()).toContain('is-highlighted');
+  });
+});
+
+describe('Command pointer interaction', () => {
+  it('should highlight item on pointerenter', async () => {
+    const wrapper = mountCommand();
+    const items = wrapper.findAll('.px-command-item');
+    await items[1].trigger('pointerenter');
+    await nextTick();
+
+    expect(items[1].classes()).toContain('is-highlighted');
+  });
+
+  it('should not highlight disabled item on pointerenter', async () => {
+    const wrapper = mountCommand({
+      items: [
+        { value: 'a', label: 'A', disabled: true },
+        { value: 'b', label: 'B' },
+      ],
+    });
+    const items = wrapper.findAll('.px-command-item');
+    await items[0].trigger('pointerenter');
+    await nextTick();
+
+    expect(items[0].classes()).not.toContain('is-highlighted');
+  });
+});
+
+describe('Command exposed focus method', () => {
+  it('should focus the input via exposed focus()', async () => {
+    const wrapper = mount(Command, {
+      attachTo: document.body,
+      slots: {
+        default: () => [
+          h(CommandInput, { placeholder: 'Search...' }),
+          h(CommandList, null, {
+            default: () => h(CommandItem, { value: 'a' }, { default: () => 'A' }),
+          }),
+        ],
+      },
+    });
+    (wrapper.vm as any).focus();
+    await nextTick();
+
+    const input = wrapper.find('.px-command-input__input').element;
+    expect(document.activeElement).toBe(input);
+    wrapper.unmount();
+  });
+});
+
+describe('CommandItem reactivity', () => {
+  it('should update registration when props change', async () => {
+    const disabled = ref(false);
+    const wrapper = mount(Command, {
+      slots: {
+        default: () => [
+          h(CommandInput, { placeholder: 'Search...' }),
+          h(CommandList, null, {
+            default: () =>
+              h(CommandItem, { value: 'a', disabled: disabled.value }, { default: () => 'A' }),
+          }),
+        ],
+      },
+    });
+
+    // Item should not be disabled
+    let item = wrapper.find('.px-command-item');
+    expect(item.classes()).not.toContain('is-disabled');
+
+    // Change disabled prop
+    disabled.value = true;
+    await nextTick();
+
+    item = wrapper.find('.px-command-item');
+    expect(item.attributes('aria-disabled')).toBe('true');
+    wrapper.unmount();
+  });
+});
+
+describe('CommandDialog', () => {
+  const dialogStubs = { global: { stubs: { teleport: true } } };
+
+  afterEach(() => {
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+  });
+
+  describe('keyboard shortcut', () => {
+    it('should open on Ctrl+K', async () => {
+      const wrapper = mount(CommandDialog, {
+        props: { modelValue: false, shortcut: true },
+        ...dialogStubs,
+        slots: {
+          default: () =>
+            h(Command, null, {
+              default: () => h(CommandInput, { placeholder: 'Search...' }),
+            }),
+        },
+      });
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true }));
+      await nextTick();
+
+      expect(wrapper.emitted('update:modelValue')).toBeTruthy();
+      expect(wrapper.emitted('update:modelValue')![0]).toEqual([true]);
+      expect(wrapper.emitted('open')).toBeTruthy();
+      wrapper.unmount();
+    });
+
+    it('should close on Ctrl+K when already open', async () => {
+      const wrapper = mount(CommandDialog, {
+        props: { modelValue: true, shortcut: true },
+        ...dialogStubs,
+        slots: {
+          default: () =>
+            h(Command, null, {
+              default: () => h(CommandInput, { placeholder: 'Search...' }),
+            }),
+        },
+      });
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true }));
+      await nextTick();
+
+      expect(wrapper.emitted('update:modelValue')).toBeTruthy();
+      expect(wrapper.emitted('update:modelValue')![0]).toEqual([false]);
+      expect(wrapper.emitted('close')).toBeTruthy();
+      wrapper.unmount();
+    });
+
+    it('should not respond to Ctrl+K when shortcut is disabled', async () => {
+      const wrapper = mount(CommandDialog, {
+        props: { modelValue: false, shortcut: false },
+        ...dialogStubs,
+        slots: {
+          default: () =>
+            h(Command, null, {
+              default: () => h(CommandInput, { placeholder: 'Search...' }),
+            }),
+        },
+      });
+
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', ctrlKey: true }));
+      await nextTick();
+
+      expect(wrapper.emitted('update:modelValue')).toBeFalsy();
+      wrapper.unmount();
+    });
+  });
+
+  describe('scroll locking', () => {
+    it('should lock scroll when opened', async () => {
+      const wrapper = mount(CommandDialog, {
+        props: { modelValue: false },
+        ...dialogStubs,
+        slots: {
+          default: () =>
+            h(Command, null, {
+              default: () => h(CommandInput, { placeholder: 'Search...' }),
+            }),
+        },
+      });
+
+      await wrapper.setProps({ modelValue: true });
+      await nextTick();
+
+      expect(document.body.style.overflow).toBe('hidden');
+      wrapper.unmount();
+    });
+
+    it('should unlock scroll when closed', async () => {
+      const wrapper = mount(CommandDialog, {
+        props: { modelValue: true },
+        ...dialogStubs,
+        slots: {
+          default: () =>
+            h(Command, null, {
+              default: () => h(CommandInput, { placeholder: 'Search...' }),
+            }),
+        },
+      });
+
+      await wrapper.setProps({ modelValue: false });
+      await nextTick();
+
+      expect(document.body.style.overflow).toBe('');
+      wrapper.unmount();
+    });
+
+    it('should cleanup on unmount', async () => {
+      const spy = vi.spyOn(document, 'removeEventListener');
+      const wrapper = mount(CommandDialog, {
+        props: { modelValue: true, shortcut: true },
+        ...dialogStubs,
+        slots: {
+          default: () =>
+            h(Command, null, {
+              default: () => h(CommandInput, { placeholder: 'Search...' }),
+            }),
+        },
+      });
+
+      wrapper.unmount();
+      expect(spy).toHaveBeenCalledWith('keydown', expect.any(Function));
+      expect(document.body.style.overflow).toBe('');
+      spy.mockRestore();
+    });
+  });
+});
+
+describe('CommandInput icon', () => {
+  it('should not render icon when icon prop is empty string', () => {
+    const wrapper = mount(Command, {
+      slots: {
+        default: () =>
+          h(CommandList, null, {
+            default: () => [
+              h(CommandInput, { icon: '' }),
+              h(CommandItem, { value: 'a' }, { default: () => 'A' }),
+            ],
+          }),
+      },
+    });
+    expect(wrapper.find('.px-command-input__icon').exists()).toBe(false);
+  });
+});
+
+describe('CommandGroup heading', () => {
+  it('should not render heading div when no heading prop', () => {
+    const wrapper = mount(Command, {
+      slots: {
+        default: () =>
+          h(CommandList, null, {
+            default: () =>
+              h(CommandGroup, null, {
+                default: () => h(CommandItem, { value: 'a' }, { default: () => 'A' }),
+              }),
+          }),
+      },
+    });
+    expect(wrapper.find('.px-command-group__heading').exists()).toBe(false);
   });
 });

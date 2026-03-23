@@ -429,3 +429,17 @@ describe('Input/index', () => {
     expect(PxInput).toBe(Input);
   });
 });
+
+describe('Input prefixIcon prop', () => {
+  test('should render icon when prefixIcon prop is provided', () => {
+    const wrapper = mount(Input, {
+      props: {
+        type: 'text',
+        modelValue: '',
+        prefixIcon: 'search',
+      },
+    });
+    expect(wrapper.find('.px-input__prefix').exists()).toBe(true);
+    wrapper.unmount();
+  });
+});
