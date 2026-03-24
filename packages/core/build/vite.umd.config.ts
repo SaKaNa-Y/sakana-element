@@ -3,7 +3,6 @@
 
 import { readFile } from 'node:fs'; //同步读取文件
 import { resolve } from 'node:path'; //路径解析
-import terser from '@rollup/plugin-terser'; //压缩插件
 import { hooksPlugin as hooks } from '@sakana-element/vite-plugins'; //导入hooksPlugin
 import vue from '@vitejs/plugin-vue'; //vue插件，不引入jsx是因为jsx只在测试中使用
 import { defer, delay } from 'lodash-es'; //延迟函数
@@ -61,7 +60,16 @@ export default defineConfig({
       include: /.(cjs|css)$/i,
     }),
     extractBase64FontsPlugin(),
-    terser({
+    hooks({
+      rmFiles: ['./dist/umd', './dist/index.css'],
+      afterBuild: moveStyles,
+    }),
+  ], //插件
+  build: {
+    //构建配置
+    outDir: 'dist/umd', //输出目录
+    minify: 'terser', //使用terser压缩
+    terserOptions: {
       compress: {
         drop_console: true, // 删除所有console语句
         drop_debugger: true,
@@ -72,15 +80,20 @@ export default defineConfig({
           '@TEST': JSON.stringify(isTest),
         },
       },
-    }),
-    hooks({
-      rmFiles: ['./dist/umd', './dist/index.css'],
-      afterBuild: moveStyles,
-    }),
-  ], //插件
-  build: {
-    //构建配置
-    outDir: 'dist/umd', //输出目录
+      format: {
+        semicolons: false,
+        shorthand: true,
+        braces: false,
+        beautify: false,
+        comments: false,
+      },
+      mangle: {
+        toplevel: true,
+        eval: true,
+        keep_classnames: false,
+        keep_fnames: false,
+      },
+    },
     lib: {
       //库配置
       entry: resolve(__dirname, '../index.ts'), //入口文件
@@ -89,8 +102,8 @@ export default defineConfig({
       formats: ['umd'], //格式
       cssFileName: 'style', //保持CSS文件名为style.css，兼容Vite 6
     },
-    rollupOptions: {
-      //rollup配置,rollup是vite的打包工具
+    rolldownOptions: {
+      //rolldown配置,rolldown是vite 8的打包工具
       external: ['vue'], //外部依赖，为了让用户安装时只要额外安装vue即可，导致包会变大
       output: {
         //输出配置
@@ -102,7 +115,13 @@ export default defineConfig({
         assetFileNames: (assetInfo) => {
           // 如果是 style.css 文件，则重命名为 index.css
           if (assetInfo.name === 'style.css') return 'index.css';
-          return assetInfo.name as string;
+          return (assetInfo.name as string) ?? '[name].[ext]';
+        },
+      },
+      // UMD格式不支持import.meta，Rolldown会替换为空对象，此为预期行为
+      transform: {
+        define: {
+          'import.meta': '{}',
         },
       },
     },

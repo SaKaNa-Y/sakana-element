@@ -12,7 +12,7 @@ export default defineConfig({
       fileName: 'preview-component',
       formats: ['es'],
     },
-    rollupOptions: {
+    rolldownOptions: {
       external: ['vue'],
       output: {
         globals: {

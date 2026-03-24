@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { describe, expect, it, test, vi } from 'vitest';
-import { defineComponent, h } from 'vue';
+import { defineComponent, h, markRaw } from 'vue';
 import Icon from '../Icon/Icon.vue';
 import Button from './Button.vue';
 import ButtonGroup from './ButtonGroup.vue';
@@ -97,11 +97,13 @@ describe('Button.vue', () => {
   });
 
   it('should accept a Vue component as tag prop', () => {
-    const CustomComp = defineComponent({
-      setup(_, { slots }) {
-        return () => h('span', { class: 'custom-tag' }, slots.default?.());
-      },
-    });
+    const CustomComp = markRaw(
+      defineComponent({
+        setup(_, { slots }) {
+          return () => h('span', { class: 'custom-tag' }, slots.default?.());
+        },
+      }),
+    );
     const wrapper = mount(Button, {
       props: { tag: CustomComp as any },
       slots: { default: 'Click me' },

@@ -531,7 +531,7 @@ html.dark .px-button,
   filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-shadow-color));
 
   /* Buttons keep their pseudo-element borders, group provides unified shadow */
-  & > :deep(.px-button) {
+  & > .px-button {
     filter: none;
     margin-left: 0;
 
@@ -552,7 +552,7 @@ html.dark .px-button,
   }
 
   /* First button (multi): notched left, straight right */
-  & > :deep(.px-button:first-child:not(:last-child)) {
+  & > .px-button:first-child:not(:last-child) {
     &::before, &::after {
       clip-path: polygon(
         0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
@@ -564,7 +564,7 @@ html.dark .px-button,
   }
 
   /* Last button (multi): straight left, notched right */
-  & > :deep(.px-button:last-child:not(:first-child)) {
+  & > .px-button:last-child:not(:first-child) {
     &::before, &::after {
       clip-path: polygon(
         0 0,
@@ -576,7 +576,7 @@ html.dark .px-button,
   }
 
   /* Middle buttons: straight rectangle, no notches */
-  & > :deep(.px-button:not(:first-child):not(:last-child)) {
+  & > .px-button:not(:first-child):not(:last-child) {
     &::before, &::after {
       clip-path: none;
     }

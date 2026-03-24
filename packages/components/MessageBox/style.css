@@ -120,7 +120,7 @@
     user-select: none;
   }
 
-  :deep(.px-icon) {
+  .px-icon {
     @each $val in info, success, warning, danger {
       &.px-icon-$(val) {
         color: var(--px-color-$(val)) !important;

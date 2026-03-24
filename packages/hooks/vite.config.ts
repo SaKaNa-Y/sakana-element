@@ -23,7 +23,7 @@ export default defineConfig({
       fileName: 'index',
       formats: ['es'],
     },
-    rollupOptions: {
+    rolldownOptions: {
       external: ['vue', 'lodash-es', 'vue3-i18n'],
       output: {
         manualChunks(id) {

@@ -22,7 +22,7 @@
   font-family: var(--px-font-family);
 
   /* Tooltip popper styling - pixel style inherited from Tooltip */
-  :deep(.px-tooltip__popper) {
+  .px-tooltip__popper {
     padding: 0;
 
     /* Override tooltip background to match select dropdown */
@@ -32,7 +32,7 @@
   }
 
   /* Input with dropdown arrow */
-  :deep(.px-input) {
+  .px-input {
     .header-angle {
       transition: none;
 
@@ -211,7 +211,7 @@
   }
 
   /* Input pointer cursor */
-  :deep(.px-input__inner) {
+  .px-input__inner {
     cursor: pointer;
   }
 
@@ -223,7 +223,7 @@
 
   /* Ghost style - transparent at rest, Input handles border/shadow via prop */
   &.is-ghost {
-    :deep(.px-tooltip__popper) {
+    .px-tooltip__popper {
       &::after {
         background: var(--px-select-dropdown-bg-color);
       }

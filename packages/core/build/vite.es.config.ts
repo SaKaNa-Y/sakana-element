@@ -4,7 +4,6 @@
 import { Buffer } from 'node:buffer';
 import { readdir, readdirSync } from 'node:fs';
 import { resolve } from 'node:path'; //路径解析
-import terser from '@rollup/plugin-terser'; //压缩插件
 import { hooksPlugin as hooks } from '@sakana-element/vite-plugins'; //导入hooksPlugin
 import vue from '@vitejs/plugin-vue'; //vue插件，不引入jsx是因为jsx只在测试中使用
 import { defer, delay, filter, map } from 'lodash-es';
@@ -110,7 +109,12 @@ export default defineConfig({
       afterBuild: moveStyles,
     }), //删除文件
     extractBase64FontsPlugin(),
-    terser({
+  ], //插件
+  build: {
+    //构建配置
+    outDir: 'dist/es', //输出目录
+    minify: 'terser', //使用terser压缩
+    terserOptions: {
       compress: {
         sequences: isProd, // 在生产环境下启用序列优化，将多个语句合并成一条语句
         arguments: isProd, // 在生产环境下启用参数优化，将多个参数合并成一个参数
@@ -136,12 +140,7 @@ export default defineConfig({
         keep_classnames: isDev, // 在开发环境下保留类名
         keep_fnames: isDev, // 在开发环境下保留函数名
       },
-    }), //压缩插件
-  ], //插件
-  build: {
-    //构建配置
-    outDir: 'dist/es', //输出目录
-    minify: false, //压缩配置
+    },
     cssCodeSplit: true, //css代码分割
     lib: {
       //库配置
@@ -151,8 +150,8 @@ export default defineConfig({
       formats: ['es'], //格式
       cssFileName: 'style', //保持CSS文件名为style.css，兼容Vite 6
     },
-    rollupOptions: {
-      //rollup配置,rollup是vite的打包工具
+    rolldownOptions: {
+      //rolldown配置,rolldown是vite 8的打包工具
       external: ['vue', '@popperjs/core', 'zod'], //外部依赖
       output: {
         //输出配置
@@ -177,7 +176,7 @@ export default defineConfig({
           ) {
             return 'theme/[name].[ext]';
           }
-          return assetInfo.name as string;
+          return (assetInfo.name as string) ?? '[name].[ext]';
         },
         manualChunks(id) {
           //手动分包

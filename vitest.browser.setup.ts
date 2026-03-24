@@ -8,7 +8,8 @@ console.warn = (...args: unknown[]) => {
     if (
       args[0].includes('decodeEntities option is passed') ||
       args[0].includes('Slot "default" invoked outside of the render function') ||
-      args[0].includes('did not pass the `from` option')
+      args[0].includes('did not pass the `from` option') ||
+      args[0].includes('injection "Symbol(')
     )
       return;
   }

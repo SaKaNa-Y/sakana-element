@@ -129,7 +129,7 @@
         transform: translate(1px, 1px);
       }
 
-      :deep(.px-icon) {
+      .px-icon {
         vertical-align: top;
       }
     }
