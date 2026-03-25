@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.5.0 (2026-03-25)
+
+* fix(Command): remove unused imports and variables in CommandDialog ([12ab6ee](https://github.com/yu859/sakana-element/commit/12ab6ee))
+* feat(components): add Badge shine/pixel props and register Command components ([511b87c](https://github.com/yu859/sakana-element/commit/511b87c))
+* feat(components): add Carousel component and enhance Form pixel-art styles ([1142814](https://github.com/yu859/sakana-element/commit/1142814))
+* feat(components): add Collapsible component and enhance Validator with pixel-art styles ([06997c4](https://github.com/yu859/sakana-element/commit/06997c4))
+
 ## <small>2.4.2 (2026-03-18)</small>
 
 **Note:** Version bump only for package @sakana-element/docs

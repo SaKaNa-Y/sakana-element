@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.5.0 (2026-03-25)
+
+* chore: migrate to Vite 8 with Rolldown bundler ([ee6fbb7](https://github.com/yu859/sakana-element/commit/ee6fbb7))
+* fix(Carousel): use Symbol for CarouselItem uid instead of broken numeric counter ([7460e24](https://github.com/yu859/sakana-element/commit/7460e24))
+* fix(Command): remove unused imports and variables in CommandDialog ([12ab6ee](https://github.com/yu859/sakana-element/commit/12ab6ee))
+*  test: add tests for Carousel, Checkbox, Command, and Input ([0dadd53](https://github.com/yu859/sakana-element/commit/0dadd53))
+* feat(components): add Badge shine/pixel props and register Command components ([511b87c](https://github.com/yu859/sakana-element/commit/511b87c))
+* feat(components): add Carousel component and enhance Form pixel-art styles ([1142814](https://github.com/yu859/sakana-element/commit/1142814))
+* feat(components): add Collapsible component and enhance Validator with pixel-art styles ([06997c4](https://github.com/yu859/sakana-element/commit/06997c4))
+
 ## <small>2.4.2 (2026-03-18)</small>
 
 * fix(hooks): use shared Symbol.for injection key to fix cross-chunk i18n provide/inject ([f4ba251](https://github.com/yu859/sakana-element/commit/f4ba251))

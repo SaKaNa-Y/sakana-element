@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 2.5.0 (2026-03-25)
+
+* chore: migrate to Vite 8 with Rolldown bundler ([ee6fbb7](https://github.com/SaKaNa-Y/sakana-element/commit/ee6fbb7))
+* feat(components): add Badge shine/pixel props and register Command components ([511b87c](https://github.com/SaKaNa-Y/sakana-element/commit/511b87c))
+* feat(components): add Carousel component and enhance Form pixel-art styles ([1142814](https://github.com/SaKaNa-Y/sakana-element/commit/1142814))
+* feat(components): add Collapsible component and enhance Validator with pixel-art styles ([06997c4](https://github.com/SaKaNa-Y/sakana-element/commit/06997c4))
+
 ## <small>2.4.2 (2026-03-18)</small>
 
 **Note:** Version bump only for package sakana-element
