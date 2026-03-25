@@ -32,7 +32,20 @@
     "build-umd:watch": "vite build --watch --config build/vite.umd.config.ts",
     "build-es:watch": "vite build --watch --config build/vite.es.config.ts"
   },
-  "keywords": [],
+  "keywords": [
+    "vue",
+    "vue3",
+    "component-library",
+    "pixel-art",
+    "pixel",
+    "typescript",
+    "ui",
+    "css-houdini",
+    "catppuccin",
+    "dark-mode",
+    "i18n",
+    "tree-shakable"
+  ],
   "author": "",
   "license": "ISC",
   "repository": {

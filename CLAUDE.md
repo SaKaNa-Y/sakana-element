@@ -170,10 +170,10 @@ Build cleanup is handled by a custom Vite plugin (`libs/vite-plugins/hooksPlugin
 
 ### External Dependencies
 
-The following are marked as external in the ES build (peer dependencies):
-- `vue`
-- `@popperjs/core`
-- `async-validator`
+The following are marked as external in the ES build:
+- `vue` (peer dependency)
+- `@popperjs/core` (direct dependency)
+- `zod` (peer dependency)
 
 ### Font Extraction
 

@@ -131,8 +131,8 @@ export const CATEGORIES: ComponentCategory[] = [
         slug: 'validator',
         icon: 'check',
         description: {
-          en: 'Standalone validation component with async-validator integration.',
-          zh: '独立验证组件，集成 async-validator。',
+          en: 'Standalone validation component with zod integration.',
+          zh: '独立验证组件，集成 zod。',
         },
       },
     ],
