@@ -6,6 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Sakana-Element is a Vue 3 + TypeScript component library with a pixel art design aesthetic. It's a monorepo managed by pnpm workspaces and Lerna, providing a comprehensive UI component library with extensive bilingual documentation.
 
+## Prerequisites
+
+- Node.js >= 18
+- pnpm >= 8
+
 ## Monorepo Structure
 
 The repository uses pnpm workspaces with the following key packages:
@@ -41,6 +46,12 @@ pnpm test-hooks       # Run hooks tests only
 
 All tests use Vitest. Utils/hooks tests run in jsdom (`vitest.config.ts`); component tests run in Playwright Chromium browser (`vitest.browser.config.ts`). Component tests require hooks to be built first.
 
+Running a single test file or package:
+```bash
+pnpm vitest run packages/components/Button/Button.test.tsx    # Single component test file
+pnpm --filter @sakana-element/hooks test                       # Single package tests
+```
+
 ### Linting & Formatting
 ```bash
 pnpm lint             # Check with Biome
@@ -50,7 +61,7 @@ pnpm check            # Lint + format check
 pnpm check:fix        # Lint + format auto-fix
 ```
 
-Uses [Biome](https://biomejs.dev/) (not ESLint/Prettier). Config in `biome.json`: 100 char line width, single quotes for JS, double quotes for JSX. Husky pre-commit hook runs `lint-staged` which applies Biome to staged files.
+Uses [Biome](https://biomejs.dev/) (not ESLint/Prettier). Config in `biome.json`: 2-space indentation, LF line endings, 100 char line width, single quotes for JS, double quotes for JSX, semicolons always, trailing commas. Husky pre-commit hook runs `lint-staged` which applies Biome to staged files. Component folders use PascalCase (e.g., `packages/components/Button/`).
 
 ### Building
 ```bash
@@ -109,17 +120,9 @@ export const PxComponent = withInstall(Component);
 
 All components are prefixed with `Px` (e.g., `PxButton`, `PxInput`, `PxIcon`).
 
-### Button Variants
+### Color Pattern (shared across Button, Input, Select)
 
-`PxButton` supports the following boolean style props: `plain`, `round`, `circle`, `dash`, `ghost`, `link`, `block`, `responsive`. These can be combined with `type` (primary, success, warning, danger, info) and `color` for custom colors.
-
-### Input Variants
-
-`PxInput` supports `color` (preset theme name or hex string) and `ghost` (boolean) props. Preset colors (primary, success, warning, danger, info) use CSS `@each` classes; custom hex colors use inline CSS variables via `createColorPalette()` + `resolveColorVars()`. The `type` prop accepts all native HTML input types (text, password, textarea, date, time, url, etc.).
-
-### Select Variants
-
-`PxSelect` supports `color` (preset theme name or hex string), `ghost` (boolean), and `size` (`'large' | 'small'`) props, which are forwarded to the inner `PxInput`. Preset colors (primary, success, warning, danger, info) use CSS `@each` classes; custom hex colors use inline CSS variables via `createColorPalette()` + `resolveColorVars()`. Options can be provided via the `options` prop (array of `{ value, label, disabled? }`) or via `<px-option>` slot children. Class naming follows the library convention: `is-ghost` for boolean flags, `px-select--${size}` for size variants, `px-select--${color}` for preset colors.
+Components that accept a `color` prop follow a shared pattern: preset theme names (primary, success, warning, danger, info) use CSS `@each`-generated classes, while custom hex strings use inline CSS variables via `createColorPalette()` + `resolveColorVars()` from `@sakana-element/utils`. Class naming convention: `is-{flag}` for boolean state flags, `px-{component}--{variant}` for variant classes.
 
 ### Component Exports
 
@@ -137,6 +140,16 @@ The project uses a custom SVG-based pixel icon system (not FontAwesome):
 - Icons defined in `packages/components/Icon/icons/`
 - Registered via `registerPixelIcons()` from `@sakana-element/utils`
 - Used through the `PxIcon` component
+
+## Dark Mode
+
+Dark mode activates via `px-dark` or `dark` class on an ancestor element (e.g., `<html class="px-dark">`). Uses Catppuccin color palette. System preference auto-detection available via `useTheme()` / `useSystemTheme()` hooks.
+
+## CSS Houdini Paint Worklets
+
+Components use CSS Paint API worklets for pixel-style rendering, registered automatically at library install. Key CSS custom properties:
+- `pixel-border` worklet: `--px-border-color`, `--px-border-width`, `--px-border-pixel-size`
+- `pixel-shadow` worklet: `--px-shadow-color`, `--px-shadow-offset`, `--px-border-pixel-size`
 
 ## Build System
 

@@ -93,7 +93,7 @@
     "onlyBuiltDependencies": [
       "esbuild",
       "@parcel/watcher",
-      "@rolldown/binding-win32-x64-msvc"
+      "rolldown"
     ]
   }
 }
