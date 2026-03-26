@@ -1,0 +1,8 @@
+/* Cross-component overrides (unscoped) — targets SVG injected via v-html */
+.px-icon__pixel svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}

@@ -18,12 +18,6 @@
   height: 100%;
 }
 
-.px-icon__pixel svg {
-  width: 100%;
-  height: 100%;
-  fill: currentColor;
-}
-
 /* Fallback for missing icons */
 .px-icon__fallback {
   display: flex;
@@ -122,10 +116,4 @@
 }
 .px-icon--fade {
   animation: px-fade 1s steps(4) infinite;
-}
-
-/* Ensure image-rendering for crisp pixels */
-.px-icon__pixel svg {
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
 }

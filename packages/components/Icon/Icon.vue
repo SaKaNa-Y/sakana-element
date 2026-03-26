@@ -81,3 +81,7 @@ const iconStyles = computed(() => {
 <style scoped>
 @import './style.css';
 </style>
+
+<style>
+@import './deep.css';
+</style>

@@ -21,27 +21,6 @@
   line-height: 32px;
   font-family: var(--px-font-family);
 
-  /* Tooltip popper styling - pixel style inherited from Tooltip */
-  .px-tooltip__popper {
-    padding: 0;
-
-    /* Override tooltip background to match select dropdown */
-    &::after {
-      background: var(--px-select-dropdown-bg-color);
-    }
-  }
-
-  /* Input with dropdown arrow */
-  .px-input {
-    .header-angle {
-      transition: none;
-
-      &.is-active {
-        transform: rotate(180deg);
-      }
-    }
-  }
-
   /* No data / Loading states */
   .px-select__nodata,
   .px-select__loading {
@@ -210,24 +189,10 @@
     }
   }
 
-  /* Input pointer cursor */
-  .px-input__inner {
-    cursor: pointer;
-  }
-
   /* Disabled state */
   &.is-disabled {
     opacity: 0.6;
     cursor: not-allowed;
-  }
-
-  /* Ghost style - transparent at rest, Input handles border/shadow via prop */
-  &.is-ghost {
-    .px-tooltip__popper {
-      &::after {
-        background: var(--px-select-dropdown-bg-color);
-      }
-    }
   }
 
   /* Size: Large */

@@ -1,0 +1,31 @@
+/* Cross-component overrides (unscoped) — targets PxTooltip and PxInput child elements */
+/* Use .px-select .px-tooltip to boost specificity over Tooltip's own scoped CSS */
+.px-select .px-tooltip .px-tooltip__popper {
+  padding: 0;
+
+  /* Override tooltip background to match select dropdown */
+  &::after {
+    background: var(--px-select-dropdown-bg-color);
+  }
+}
+
+.px-select .px-input {
+  .header-angle {
+    transition: none;
+
+    &.is-active {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.px-select .px-input__inner {
+  cursor: pointer;
+}
+
+/* Ghost style - transparent at rest */
+.px-select.is-ghost .px-tooltip .px-tooltip__popper {
+  &::after {
+    background: var(--px-select-dropdown-bg-color);
+  }
+}

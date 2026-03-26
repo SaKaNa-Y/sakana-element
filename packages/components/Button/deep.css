@@ -1,0 +1,51 @@
+/* Cross-component overrides (unscoped) — targets slot-provided PxButton children */
+.px-button-group > .px-button {
+  filter: none;
+  margin-left: 0;
+
+  &:not(:first-child) {
+    margin-left: -2px;
+  }
+
+  &:hover:not(.is-disabled):not(.is-loading) {
+    transform: none;
+    filter: none;
+    z-index: 1;
+  }
+
+  &:active:not(.is-disabled):not(.is-loading) {
+    transform: none;
+    filter: none;
+  }
+}
+
+/* First button (multi): notched left, straight right */
+.px-button-group > .px-button:first-child:not(:last-child) {
+  &::before, &::after {
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      100% 0,
+      100% 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+  }
+}
+
+/* Last button (multi): straight left, notched right */
+.px-button-group > .px-button:last-child:not(:first-child) {
+  &::before, &::after {
+    clip-path: polygon(
+      0 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      0 100%
+    );
+  }
+}
+
+/* Middle buttons: straight rectangle, no notches */
+.px-button-group > .px-button:not(:first-child):not(:last-child) {
+  &::before, &::after {
+    clip-path: none;
+  }
+}
