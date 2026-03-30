@@ -3,14 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.5.1 (2026-03-30)</small>
+
+* fix(styles): extract cross-component CSS to unscoped deep.css files ([9712591](https://github.com/yu859/sakana-element/commit/9712591))
+
 ## 2.5.0 (2026-03-25)
 
 * chore: migrate to Vite 8 with Rolldown bundler ([ee6fbb7](https://github.com/yu859/sakana-element/commit/ee6fbb7))
+
 * fix(Carousel): use Symbol for CarouselItem uid instead of broken numeric counter ([7460e24](https://github.com/yu859/sakana-element/commit/7460e24))
+
 * fix(Command): remove unused imports and variables in CommandDialog ([12ab6ee](https://github.com/yu859/sakana-element/commit/12ab6ee))
+
 *  test: add tests for Carousel, Checkbox, Command, and Input ([0dadd53](https://github.com/yu859/sakana-element/commit/0dadd53))
+
 * feat(components): add Badge shine/pixel props and register Command components ([511b87c](https://github.com/yu859/sakana-element/commit/511b87c))
+
 * feat(components): add Carousel component and enhance Form pixel-art styles ([1142814](https://github.com/yu859/sakana-element/commit/1142814))
+
 * feat(components): add Collapsible component and enhance Validator with pixel-art styles ([06997c4](https://github.com/yu859/sakana-element/commit/06997c4))
 
 ## <small>2.4.2 (2026-03-18)</small>
@@ -20,54 +30,91 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ## <small>2.4.1 (2026-03-17)</small>
 
 * feat(components): add prefixIcon and suffixIcon props to PxInput ([ac020b7](https://github.com/yu859/sakana-element/commit/ac020b7))
+
 * docs(components): enhance Icon docs and add Composables guide with public API exports ([37a60dd](https://github.com/yu859/sakana-element/commit/37a60dd))
+
 * fix(components): stabilize block button hover/active and enhance ConfigProvider demo with translatio ([0786e44](https://github.com/yu859/sakana-element/commit/0786e44))
 
 ## 2.4.0 (2026-03-17)
 
 * refactor: remove unnecessary v8 ignore comments and improve test coverage ([cf6fcd7](https://github.com/yu859/sakana-element/commit/cf6fcd7))
+
 * chore: clean up unused code, dependencies, and bump internal versions ([b97f0cf](https://github.com/yu859/sakana-element/commit/b97f0cf))
+
 * feat(components): add PxChatBubble component and button 3D bevel effect ([46ab328](https://github.com/yu859/sakana-element/commit/46ab328))
+
 * feat(components): add PxDiff component and input 3D bevel effect ([22caa59](https://github.com/yu859/sakana-element/commit/22caa59))
+
 * feat(components): add PxFilter component and checkbox 3D bevel effect ([a3e70d3](https://github.com/yu859/sakana-element/commit/a3e70d3))
+
 * feat(components): add PxKbd component and switch 3D bevel effect ([aff11b8](https://github.com/yu859/sakana-element/commit/aff11b8))
+
 * feat(components): add PxResizable component and enhance FileInput pixel effects ([d28d1bb](https://github.com/yu859/sakana-element/commit/d28d1bb))
+
 * feat(components): add PxSkeleton component and enhance Select pixel effects ([d92f088](https://github.com/yu859/sakana-element/commit/d92f088))
+
 * feat(components): add PxValidator component and radio 3D bevel effect ([d703e54](https://github.com/yu859/sakana-element/commit/d703e54))
+
 * fix: clean up lint warnings and unused imports ([dcd72af](https://github.com/yu859/sakana-element/commit/dcd72af))
+
 * fix(docs): restrict visitor counter to home page and fix Kbd type error ([d0b60fc](https://github.com/yu859/sakana-element/commit/d0b60fc))
+
 * test: improve test coverage and add CI coverage badge ([fdde024](https://github.com/yu859/sakana-element/commit/fdde024))
 
 ## 2.3.0 (2026-03-09)
 
 * feat(card): pixel-art redesign with 3-step staircase corners and beveled depth ([23c6a00](https://github.com/yu859/sakana-element/commit/23c6a00))
+
 * feat(checkbox): add PxCheckbox and PxCheckboxGroup components ([ac9c7e5](https://github.com/yu859/sakana-element/commit/ac9c7e5))
+
 * feat(components): add PxDivider and PxRadio components ([2c9ab95](https://github.com/yu859/sakana-element/commit/2c9ab95))
+
 * feat(dropdown): add icon, maxHeight, hoverColor, showArrow props, keyboard navigation, and pixel-art ([02b900a](https://github.com/yu859/sakana-element/commit/02b900a))
+
 * feat(indicator): add PxIndicator component and extract status dot from Avatar ([401f37f](https://github.com/yu859/sakana-element/commit/401f37f))
+
 * feat(messagebox): add draggable, focus trap, input validation, and enhanced close controls ([0c7532a](https://github.com/yu859/sakana-element/commit/0c7532a))
+
 * feat(notification): pixel-art redesign with staircase corners and beveled depth ([a1e5eb5](https://github.com/yu859/sakana-element/commit/a1e5eb5))
+
 * feat(popconfirm): fix dark-theme title, action layout, and add placement/disabled/arrow/effect props ([0f8b1fa](https://github.com/yu859/sakana-element/commit/0f8b1fa))
+
 * feat(progress): pixel-art redesign with chunked fill and beveled depth ([7ade4cf](https://github.com/yu859/sakana-element/commit/7ade4cf))
+
 * feat(table): add outline, ghost, and hoverable variants; remove redundant dash ([c92e94c](https://github.com/yu859/sakana-element/commit/c92e94c))
+
 * feat(messagebox, dropdown, popconfirm, loading): pixel-art redesign for visual consistency ([0181d9a](https://github.com/yu859/sakana-element/commit/0181d9a))
+
 * feat(pixelate,select): add PxPixelate component and fix Select arrow centering ([d8717e1](https://github.com/yu859/sakana-element/commit/d8717e1))
+
 * feat(tooltip, drawer): enhance Tooltip variants and add Drawer component ([d0d527c](https://github.com/yu859/sakana-element/commit/d0d527c))
+
 * fix(message,progress): fix test regressions, typo, and docs inconsistencies ([2a18196](https://github.com/yu859/sakana-element/commit/2a18196))
+
 * fix(notification,message): pause timer bar on hover and deduplicate error CSS ([7a2de90](https://github.com/yu859/sakana-element/commit/7a2de90))
+
 * fix(progress): remove generic from defineExpose to fix vite:dts TS2322 ([5f556dc](https://github.com/yu859/sakana-element/commit/5f556dc))
+
 * fix(table): fix full-width layout and enhance pixel border style ([2bd50ca](https://github.com/yu859/sakana-element/commit/2bd50ca))
 
 ## 2.2.0 (2026-02-26)
 
 * fix: fix typos, suppress test warnings, and improve test coverage ([37d5fbe](https://github.com/yu859/sakana-element/commit/37d5fbe))
+
 * fix(notification): add default position to imperative API, document extendsI18nMsg ([673649c](https://github.com/yu859/sakana-element/commit/673649c))
+
 * feat(card,form,loading): add card variants, migrate form to zod, add LoadingIndicator ([d6bef4c](https://github.com/yu859/sakana-element/commit/d6bef4c))
+
 * feat(avatar): add PxAvatar component with pixel-art initials, status indicator, and border ([6c75f31](https://github.com/yu859/sakana-element/commit/6c75f31))
+
 * feat(badge): add icon prop, empty badge styling, and reorganize docs ([a65b04d](https://github.com/yu859/sakana-element/commit/a65b04d))
+
 * feat(breadcrumb): add disabled prop, fix hover jitter, and prevent link navigation ([a052ab0](https://github.com/yu859/sakana-element/commit/a052ab0))
+
 * feat(collapse): add showArrow and icon props with custom indicator support ([7da7422](https://github.com/yu859/sakana-element/commit/7da7422))
+
 * feat(file-input): add PxFileInput component with browse trigger, clearable, and ghost support ([81ef7ec](https://github.com/yu859/sakana-element/commit/81ef7ec))
+
 * feat(link): add PxLink component and fix MessageBox close icon centering ([9eeba57](https://github.com/yu859/sakana-element/commit/9eeba57))
 
 ## <small>2.1.5 (2026-02-22)</small>
@@ -77,15 +124,21 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ## <small>2.1.4 (2026-02-22)</small>
 
 * fix: audit — computed side-effects, debounce leaks, bundle size, typos ([a7aba5b](https://github.com/yu859/sakana-element/commit/a7aba5b))
+
 * fix(theme): improve dark mode shadow visibility across all components ([3e144f3](https://github.com/yu859/sakana-element/commit/3e144f3)), closes [#11111](https://github.com/yu859/sakana-element/issues/11111) [#585b70](https://github.com/yu859/sakana-element/issues/585b70) [#000000](https://github.com/yu859/sakana-element/issues/000000) [#45475](https://github.com/yu859/sakana-element/issues/45475)
+
 * feat(button): add link, block, responsive variants and inversion hover for default buttons ([1c37243](https://github.com/yu859/sakana-element/commit/1c37243))
+
 * feat(input): add color variants, ghost style, and fix focus border to inversion system ([817ddde](https://github.com/yu859/sakana-element/commit/817ddde))
+
 * feat(select): add color variants with preset themes and custom hex support ([f64275b](https://github.com/yu859/sakana-element/commit/f64275b))
+
 * feat(select): add ghost/size variants, fix VNode caching bug, and rewrite docs ([973c233](https://github.com/yu859/sakana-element/commit/973c233))
 
 ## <small>2.1.3 (2026-02-18)</small>
 
 * refactor(color): replace imperative if-chain customColorStyle with declarative template pattern ([b48b184](https://github.com/yu859/sakana-element/commit/b48b184))
+
 * feat: add Badge component with various styles and custom color support ([319f95d](https://github.com/yu859/sakana-element/commit/319f95d))
 
 ## <small>2.1.2 (2026-02-17)</small>
@@ -99,43 +152,83 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ## 2.0.0 (2026-02-15)
 
 * fix: Fix deployment ([014e1a4](https://github.com/yu859/sakana-element/commit/014e1a4))
+
 * fix: Fix wrong ([7c939be](https://github.com/yu859/sakana-element/commit/7c939be))
+
 * fix(security): Harden components against XSS and prototype pollution ([c1bd775](https://github.com/yu859/sakana-element/commit/c1bd775))
+
 * feat: add Chinese documentation for various components and get started guide ([e6a3730](https://github.com/yu859/sakana-element/commit/e6a3730))
+
 * feat: Add custom color support, update the Button component, and update documentation and examples. ([11b85a6](https://github.com/yu859/sakana-element/commit/11b85a6))
+
 * feat: add pixel art icons and icon registry ([ed2f18d](https://github.com/yu859/sakana-element/commit/ed2f18d))
+
 * feat: add pixel border and shadow paint worklets; implement component renaming script ([eb02960](https://github.com/yu859/sakana-element/commit/eb02960))
+
 * feat: Add VitePress deployment and theme configuration documentation ([89cafd6](https://github.com/yu859/sakana-element/commit/89cafd6))
+
 * feat: Enhance form item layout and label positioning; remove console logs and improve popconfirm tex ([ffb9d18](https://github.com/yu859/sakana-element/commit/ffb9d18))
+
 * feat: refactor button components and update styling; remove legacy variables ([59a4914](https://github.com/yu859/sakana-element/commit/59a4914))
+
 * feat: Refactor button styles to use pixel borders and drop shadows; enhance button group appearance ([20f0459](https://github.com/yu859/sakana-element/commit/20f0459))
+
 * feat: Update icon names, improve component consistency, and add support for custom icon registration ([0e2e4e3](https://github.com/yu859/sakana-element/commit/0e2e4e3))
+
 * feat(tests): Add unit tests for ConfigProvider, Form, Icon, and Overlay components ([e868fc0](https://github.com/yu859/sakana-element/commit/e868fc0))
+
 * refactor: Update styles for Input, Message, Select, Switch, Tooltip components ([013ea92](https://github.com/yu859/sakana-element/commit/013ea92))
+
 * :tada: first commit ([9df6968](https://github.com/yu859/sakana-element/commit/9df6968))
+
 * 提高测试覆盖率 ([62b82da](https://github.com/yu859/sakana-element/commit/62b82da))
+
 * 提高Tooltip测试覆盖率 ([a0b1355](https://github.com/yu859/sakana-element/commit/a0b1355))
+
 * 项目打包 ([76975f6](https://github.com/yu859/sakana-element/commit/76975f6))
+
 * Alert ([0fcada0](https://github.com/yu859/sakana-element/commit/0fcada0))
+
 * Button-01 ([47bf8cb](https://github.com/yu859/sakana-element/commit/47bf8cb))
+
 * Button-02 ([fd8543e](https://github.com/yu859/sakana-element/commit/fd8543e))
+
 * ButtonGroup ([f194165](https://github.com/yu859/sakana-element/commit/f194165))
+
 * Collapse-01 ([c5df629](https://github.com/yu859/sakana-element/commit/c5df629))
+
 * Collapse-02、打包优化 ([fc277ba](https://github.com/yu859/sakana-element/commit/fc277ba))
+
 * docs:README.md ([edfa957](https://github.com/yu859/sakana-element/commit/edfa957))
+
 * Dropdown ([caa9cad](https://github.com/yu859/sakana-element/commit/caa9cad))
+
 * feat:Form-01 ([1f42467](https://github.com/yu859/sakana-element/commit/1f42467))
+
 * Input ([3f7bce3](https://github.com/yu859/sakana-element/commit/3f7bce3))
+
 * Loading ([f6766a5](https://github.com/yu859/sakana-element/commit/f6766a5))
+
 * Message-01 ([ca5191a](https://github.com/yu859/sakana-element/commit/ca5191a))
+
 * Message-02 ([27431b2](https://github.com/yu859/sakana-element/commit/27431b2))
+
 * MessageBox ([a2d875f](https://github.com/yu859/sakana-element/commit/a2d875f))
+
 * Notification-01 ([b9eced4](https://github.com/yu859/sakana-element/commit/b9eced4))
+
 * Notification-02 ([4d667e7](https://github.com/yu859/sakana-element/commit/4d667e7))
+
 * Popconfirm ([df43eee](https://github.com/yu859/sakana-element/commit/df43eee))
+
 * Select-01 ([37ae9ed](https://github.com/yu859/sakana-element/commit/37ae9ed))
+
 * Select-02 ([b917a92](https://github.com/yu859/sakana-element/commit/b917a92))
+
 * Switch ([59635c0](https://github.com/yu859/sakana-element/commit/59635c0))
+
 * Tooltip-01 ([649b67c](https://github.com/yu859/sakana-element/commit/649b67c))
+
 * Tooltip-02、hooks分包build ([2d1e652](https://github.com/yu859/sakana-element/commit/2d1e652))
+
 * useDisabledStyle、国际化 ([8085b8e](https://github.com/yu859/sakana-element/commit/8085b8e))

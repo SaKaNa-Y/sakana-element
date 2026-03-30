@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.5.1 (2026-03-30)</small>
+
+* fix(styles): extract cross-component CSS to unscoped deep.css files ([9712591](https://github.com/yu859/sakana-element/commit/9712591))
+* docs: update component catalog and dependency references ([b86abbd](https://github.com/yu859/sakana-element/commit/b86abbd))
+
 ## 2.5.0 (2026-03-25)
 
 * fix(Carousel): use Symbol for CarouselItem uid instead of broken numeric counter ([7460e24](https://github.com/yu859/sakana-element/commit/7460e24))

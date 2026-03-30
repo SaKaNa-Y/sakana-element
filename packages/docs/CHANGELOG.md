@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## <small>2.5.1 (2026-03-30)</small>
+
+* docs: update component catalog and dependency references ([b86abbd](https://github.com/yu859/sakana-element/commit/b86abbd))
+
 ## 2.5.0 (2026-03-25)
 
 * fix(Command): remove unused imports and variables in CommandDialog ([12ab6ee](https://github.com/yu859/sakana-element/commit/12ab6ee))
