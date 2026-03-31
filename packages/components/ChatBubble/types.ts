@@ -8,4 +8,5 @@ export interface ChatBubbleProps {
   name?: string;
   time?: string;
   status?: string;
+  typing?: boolean;
 }

@@ -53,6 +53,14 @@ demo-preview=../../demo/chat-bubble/HeaderFooter.vue
 demo-preview=../../demo/chat-bubble/CustomColor.vue
 :::
 
+## 打字指示器
+
+使用 `typing` 属性显示带有弹跳像素点的打字中动画。
+
+::: preview
+demo-preview=../../demo/chat-bubble/Typing.vue
+:::
+
 ## 对话
 
 组合多个聊天气泡来构建完整的对话布局。

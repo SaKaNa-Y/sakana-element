@@ -116,6 +116,16 @@ export const CATEGORIES: ComponentCategory[] = [
         },
       },
       {
+        name: 'Calendar',
+        zhName: '日历',
+        slug: 'calendar',
+        icon: 'calendar',
+        description: {
+          en: 'Pixel-art calendar for date selection with month navigation and keyboard support.',
+          zh: '像素风格日历组件，支持日期选择、月份导航和键盘操作。',
+        },
+      },
+      {
         name: 'Form',
         zhName: '表单',
         slug: 'form',

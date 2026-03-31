@@ -154,6 +154,35 @@ describe('ChatBubble.vue', () => {
     expect(wrapper.find('.px-chat__avatar').exists()).toBe(false);
   });
 
+  // Typing indicator
+  it('should show typing indicator when typing is true', () => {
+    const wrapper = mount(ChatBubble, {
+      props: { typing: true },
+      slots: { default: 'Hi' },
+    });
+    expect(wrapper.find('.px-chat__typing').exists()).toBe(true);
+    const dots = wrapper.findAll('.px-chat__typing-dot');
+    expect(dots).toHaveLength(3);
+  });
+
+  it('should not show typing indicator when typing is false', () => {
+    const wrapper = mount(ChatBubble, {
+      props: { typing: false },
+      slots: { default: 'Hi' },
+    });
+    expect(wrapper.find('.px-chat__typing').exists()).toBe(false);
+  });
+
+  it('should hide slot content when typing is true', () => {
+    const wrapper = mount(ChatBubble, {
+      props: { typing: true },
+      slots: { default: 'Hello World' },
+    });
+    // The default slot content should not be visible in the main bubble
+    const bubble = wrapper.find('.px-chat__bubble');
+    expect(bubble.text()).not.toContain('Hello World');
+  });
+
   // Combination test
   it('should handle placement + type + name + time together', () => {
     const wrapper = mount(ChatBubble, {

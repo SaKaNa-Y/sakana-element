@@ -53,6 +53,14 @@ Use `color` property to set a custom hex color for the bubble.
 demo-preview=../../demo/chat-bubble/CustomColor.vue
 :::
 
+## Typing Indicator
+
+Use the `typing` prop to show an animated typing indicator with bouncing pixel dots.
+
+::: preview
+demo-preview=../../demo/chat-bubble/Typing.vue
+:::
+
 ## Conversation
 
 Combine multiple chat bubbles to build a full conversation layout.

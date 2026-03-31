@@ -1,0 +1,310 @@
+/* Calendar Variables */
+.px-calendar {
+  --px-calendar-bg-color: var(--px-fill-color-blank);
+  --px-calendar-text-color: var(--px-text-color-primary);
+  --px-calendar-border-color: var(--px-border-color);
+  --px-calendar-shadow-color: var(--px-shadow-color);
+  --px-calendar-header-color: var(--px-text-color-primary);
+  --px-calendar-weekday-color: var(--px-text-color-secondary);
+  --px-calendar-outside-color: var(--px-text-color-placeholder);
+  --px-calendar-hover-bg-color: var(--px-fill-color-light);
+  --px-calendar-selected-bg-color: var(--px-color-primary);
+  --px-calendar-selected-text-color: var(--px-color-white);
+  --px-calendar-selected-border-color: var(--px-color-primary-dark);
+  --px-calendar-today-border-color: var(--px-color-primary);
+  --px-calendar-disabled-color: var(--px-text-color-placeholder);
+
+  /* Beveled inset for 3D raised-panel depth */
+  --px-calendar-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.2);
+  --px-calendar-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.06);
+
+  /* Button/select beveled inset (normal + pressed/active) */
+  --px-calendar-btn-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.15);
+  --px-calendar-btn-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.05);
+  --px-calendar-btn-highlight-active: inset -2px -2px 0 0 rgba(255, 255, 255, 0.15);
+  --px-calendar-btn-shadow-active: inset 2px 2px 0 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Base Calendar Styles */
+.px-calendar {
+  display: inline-flex;
+  flex-direction: column;
+  font-family: var(--px-font-family);
+  font-size: var(--px-font-size-base);
+  color: var(--px-calendar-text-color);
+  background: transparent;
+  position: relative;
+  padding: 12px;
+  box-sizing: border-box;
+  transition: none;
+
+  /* Pixel shadow */
+  filter: drop-shadow(var(--px-shadow-offset-x) var(--px-shadow-offset-y) 0px var(--px-calendar-shadow-color));
+
+  /* Border layer — 4px staircase corners */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-calendar-border-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    z-index: -1;
+  }
+
+  /* Fill layer — inset by border width */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-calendar-bg-color);
+    clip-path: polygon(
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
+    );
+    box-shadow: var(--px-calendar-inset-highlight), var(--px-calendar-inset-shadow);
+    z-index: -1;
+  }
+}
+
+/* Header */
+.px-calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 0 8px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Month/year selectors */
+.px-calendar__selectors {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+  padding: 0 4px;
+}
+
+/* Select wrappers */
+.px-calendar__month-select,
+.px-calendar__year-select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  cursor: pointer;
+}
+
+.px-calendar__month-select {
+  width: 110px;
+}
+
+.px-calendar__year-select {
+  width: 80px;
+}
+
+/* Inner native select — transparent, sits above pseudo-element layers */
+.px-calendar__select-inner {
+  appearance: none;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: var(--px-font-family);
+  font-size: var(--px-font-size-small);
+  color: var(--px-calendar-text-color);
+  padding: 0 20px 0 6px;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='6' fill='none'%3E%3Cpath d='M0 0h8L4 6z' fill='%23666'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px var(--px-calendar-today-border-color);
+  }
+}
+
+/* Nav buttons */
+.px-calendar__nav-prev,
+.px-calendar__nav-next {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  font-family: var(--px-font-family);
+  font-size: var(--px-font-size-small);
+  color: var(--px-calendar-text-color);
+  position: relative;
+  transition: none;
+}
+
+/* Shared 2px staircase pixel border for selects and nav buttons */
+.px-calendar__month-select,
+.px-calendar__year-select,
+.px-calendar__nav-prev,
+.px-calendar__nav-next {
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--px-calendar-border-color);
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0,
+      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+    z-index: -1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: var(--px-calendar-bg-color);
+    clip-path: polygon(
+      0 2px, 2px 2px, 2px 0,
+      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
+      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
+      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+    );
+    box-shadow: var(--px-calendar-btn-highlight), var(--px-calendar-btn-shadow);
+    z-index: -1;
+  }
+
+  &:hover {
+    &::after {
+      background: var(--px-calendar-hover-bg-color);
+    }
+  }
+
+  &:active {
+    transform: translate(1px, 1px);
+    &::after {
+      box-shadow: var(--px-calendar-btn-highlight-active), var(--px-calendar-btn-shadow-active);
+    }
+  }
+}
+
+/* Grid */
+.px-calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Weekday headers */
+.px-calendar__weekday {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 24px;
+  font-size: var(--px-font-size-extra-small);
+  color: var(--px-calendar-weekday-color);
+  font-weight: 600;
+  user-select: none;
+}
+
+/* Day cells */
+.px-calendar__day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  font-family: var(--px-font-family);
+  font-size: var(--px-font-size-small);
+  color: var(--px-calendar-text-color);
+  position: relative;
+  transition: none;
+  outline: none;
+  padding: 0;
+
+  &:hover:not(.is-disabled):not(.is-selected) {
+    background: var(--px-calendar-hover-bg-color);
+  }
+
+  /* Focus ring — pixel style */
+  &:focus-visible:not(.is-disabled) {
+    box-shadow: 0 0 0 2px var(--px-calendar-today-border-color);
+  }
+}
+
+/* Selected day */
+.px-calendar__day.is-selected {
+  background: var(--px-calendar-selected-bg-color);
+  color: var(--px-calendar-selected-text-color);
+  font-weight: 600;
+
+  &:hover {
+    background: var(--px-calendar-selected-bg-color);
+  }
+}
+
+/* Today indicator */
+.px-calendar__day.is-today:not(.is-selected) {
+  box-shadow: inset 0 0 0 2px var(--px-calendar-today-border-color);
+  font-weight: 600;
+}
+
+/* Outside days */
+.px-calendar__day.is-outside {
+  color: var(--px-calendar-outside-color);
+  opacity: 0.4;
+}
+
+/* Disabled days */
+.px-calendar__day.is-disabled {
+  color: var(--px-calendar-disabled-color);
+  opacity: 0.35;
+  cursor: not-allowed;
+
+  &:hover {
+    background: transparent;
+  }
+}
+
+/* Type variants */
+@each $val in primary, success, info, warning, danger {
+  .px-calendar--$(val) {
+    --px-calendar-selected-bg-color: var(--px-color-$(val));
+    --px-calendar-selected-text-color: var(--px-color-white);
+    --px-calendar-selected-border-color: var(--px-color-$(val)-dark);
+    --px-calendar-today-border-color: var(--px-color-$(val));
+    --px-calendar-hover-bg-color: var(--px-color-$(val)-light-5);
+  }
+}
+
+/* Dark mode */
+html.dark .px-calendar,
+.px-dark .px-calendar {
+  --px-calendar-bg-color: var(--px-fill-color-blank);
+  --px-calendar-inset-highlight: inset 2px 2px 0 0 rgba(255, 255, 255, 0.08);
+  --px-calendar-inset-shadow: inset -2px -2px 0 0 rgba(0, 0, 0, 0.15);
+}
+
+html.dark .px-calendar__select-inner,
+.px-dark .px-calendar__select-inner {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='6' fill='none'%3E%3Cpath d='M0 0h8L4 6z' fill='%23aaa'/%3E%3C/svg%3E");
+}

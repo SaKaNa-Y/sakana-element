@@ -16,7 +16,7 @@ A Vue 3 + TypeScript component library with pixel art design aesthetic.
 ## Features / 特性
 
 - 🎨 **CSS Houdini Pixel Rendering** — Pixel borders and shadows drawn natively via CSS Paint API worklets / CSS Houdini Paint Worklet 原生绘制像素边框和阴影
-- 🧩 **40 Components** — Buttons, forms, tables, cards, notifications, and more, each with pixel-art styling / 40 个像素风格组件，涵盖按钮、表单、表格、卡片、通知等
+- 🧩 **41 Components** — Buttons, forms, tables, cards, notifications, and more, each with pixel-art styling / 41 个像素风格组件，涵盖按钮、表单、表格、卡片、通知等
 - ⭐ **486 Pixel Icons** — Full pixelarticons set bundled with flip, rotation, and animation support / 内置 486 个像素图标，支持翻转、旋转和动画
 - 🌙 **Catppuccin Dark Mode** — One-class theme toggle with system preference auto-detection / Catppuccin 配色暗色模式，支持系统偏好自动检测
 - 🔧 **Vue 3 + TypeScript** — Full Composition API & type safety with IntelliSense / 完整的组合式 API 和类型安全
@@ -66,6 +66,7 @@ createApp(App).use(SakanaElement).mount('#app')
 | `PxFileInput` | File upload input / 文件输入 |
 | `PxForm` | Form layout with validation / 表单（支持验证） |
 | `PxValidator` | Standalone validation with zod integration / 独立验证器（集成 zod） |
+| `PxCalendar` | Date selection calendar with pixel-art styling / 日历（像素风格日期选择） |
 
 ### Data Display / 数据展示
 

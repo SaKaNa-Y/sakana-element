@@ -10,6 +10,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<ChatBubbleProps>(), {
   placement: 'start',
+  typing: false,
 });
 
 const slots = useSlots();
@@ -41,7 +42,16 @@ const customColorStyle = computed(() => {
       </div>
       <div class="px-chat__bubble">
         <span class="px-chat__tail"></span>
-        <slot></slot>
+        <template v-if="typing">
+          <span class="px-chat__typing">
+            <span class="px-chat__typing-dot"></span>
+            <span class="px-chat__typing-dot"></span>
+            <span class="px-chat__typing-dot"></span>
+          </span>
+        </template>
+        <template v-else>
+          <slot></slot>
+        </template>
       </div>
       <div v-if="slots.footer || status" class="px-chat__footer">
         <slot name="footer">

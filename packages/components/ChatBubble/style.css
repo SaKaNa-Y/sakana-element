@@ -35,19 +35,21 @@
     text-align: left;
   }
 
-  /* Tail pointing left — positioned inside bubble */
+  /* Tail pointing left — 6-step staircase (12×12px) */
   & .px-chat__tail {
-    left: -6px;
+    left: -10px;
 
-    /* Border layer: 4-step staircase pointing left */
+    /* Border layer */
     background: var(--px-chat-bubble-border-color);
     clip-path: polygon(
-      6px 0, 8px 0,
-      8px 8px,
-      0 8px, 0 6px,
-      2px 6px, 2px 4px,
-      4px 4px, 4px 2px,
-      6px 2px
+      10px 0, 12px 0,
+      12px 12px,
+      0 12px, 0 10px,
+      2px 10px, 2px 8px,
+      4px 8px, 4px 6px,
+      6px 6px, 6px 4px,
+      8px 4px, 8px 2px,
+      10px 2px
     );
 
     /* Fill layer */
@@ -57,10 +59,12 @@
       inset: 0;
       background: var(--px-chat-bubble-bg-color);
       clip-path: polygon(
-        6px 2px, 8px 2px,
-        8px 6px,
-        4px 6px, 4px 4px,
-        6px 4px
+        10px 2px, 12px 2px,
+        12px 10px,
+        4px 10px, 4px 8px,
+        6px 8px, 6px 6px,
+        8px 6px, 8px 4px,
+        10px 4px
       );
     }
   }
@@ -77,19 +81,21 @@
     text-align: right;
   }
 
-  /* Tail pointing right — mirror of left */
+  /* Tail pointing right — 6-step staircase (12×12px), mirrored */
   & .px-chat__tail {
-    right: -6px;
+    right: -10px;
     left: auto;
 
-    /* Border layer: 4-step staircase pointing right */
+    /* Border layer */
     background: var(--px-chat-bubble-border-color);
     clip-path: polygon(
       0 0, 2px 0,
       2px 2px, 4px 2px,
       4px 4px, 6px 4px,
       6px 6px, 8px 6px,
-      8px 8px, 0 8px
+      8px 8px, 10px 8px,
+      10px 10px, 12px 10px,
+      12px 12px, 0 12px
     );
 
     /* Fill layer */
@@ -101,7 +107,9 @@
       clip-path: polygon(
         0 2px, 2px 2px,
         2px 4px, 4px 4px,
-        4px 6px, 0 6px
+        4px 6px, 6px 6px,
+        6px 8px, 8px 8px,
+        8px 10px, 0 10px
       );
     }
   }
@@ -144,12 +152,12 @@
 .px-chat__tail {
   position: absolute;
   top: 8px;
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   z-index: 1;
 }
 
-/* Bubble — pixel border via pseudo-elements */
+/* Bubble — pixel border via pseudo-elements (4px staircase corners) */
 .px-chat__bubble {
   position: relative;
   padding: 8px 12px;
@@ -161,17 +169,17 @@
 
   filter: drop-shadow(2px 2px 0px var(--px-chat-bubble-shadow-color));
 
-  /* Border layer */
+  /* Border layer — 4px staircase corners */
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     background: var(--px-chat-bubble-border-color);
     clip-path: polygon(
-      0 2px, 2px 2px, 2px 0,
-      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
-      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
-      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
     );
     z-index: -1;
   }
@@ -183,10 +191,10 @@
     inset: 2px;
     background: var(--px-chat-bubble-bg-color);
     clip-path: polygon(
-      0 2px, 2px 2px, 2px 0,
-      calc(100% - 2px) 0, calc(100% - 2px) 2px, 100% 2px,
-      100% calc(100% - 2px), calc(100% - 2px) calc(100% - 2px), calc(100% - 2px) 100%,
-      2px 100%, 2px calc(100% - 2px), 0 calc(100% - 2px)
+      0 4px, 2px 4px, 2px 2px, 4px 2px, 4px 0,
+      calc(100% - 4px) 0, calc(100% - 4px) 2px, calc(100% - 2px) 2px, calc(100% - 2px) 4px, 100% 4px,
+      100% calc(100% - 4px), calc(100% - 2px) calc(100% - 4px), calc(100% - 2px) calc(100% - 2px), calc(100% - 4px) calc(100% - 2px), calc(100% - 4px) 100%,
+      4px 100%, 4px calc(100% - 2px), 2px calc(100% - 2px), 2px calc(100% - 4px), 0 calc(100% - 4px)
     );
     box-shadow: var(--px-chat-inset-highlight), var(--px-chat-inset-shadow);
     z-index: -1;
@@ -198,6 +206,36 @@
   font-size: var(--px-font-size-extra-small);
   color: var(--px-chat-footer-color);
   line-height: 1.2;
+}
+
+/* ─── Typing Indicator ─────────────────────────────────────── */
+
+.px-chat__typing {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.px-chat__typing-dot {
+  width: 4px;
+  height: 4px;
+  background: currentColor;
+  will-change: transform;
+  animation: px-typing-bounce 1.2s ease-in-out infinite;
+}
+
+.px-chat__typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.px-chat__typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes px-typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
 }
 
 /* Type variants */

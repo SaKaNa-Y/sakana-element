@@ -41,6 +41,16 @@ export const chatBubbleApi: ApiSection[] = [
         type: 'string',
         desc: { zh: '底部状态文本', en: 'Footer status text' },
       },
+      {
+        name: 'typing',
+        category: 'state',
+        type: 'boolean',
+        default: 'false',
+        desc: {
+          zh: '显示打字中指示器（替代消息内容）',
+          en: 'Show typing indicator (replaces message content)',
+        },
+      },
     ],
   },
   {
