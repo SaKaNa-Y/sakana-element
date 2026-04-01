@@ -50,7 +50,7 @@ jobs:
 
       - name: Upload coverage badge
         if: github.ref == 'refs/heads/master'
-        uses: Schneegans/dynamic-badges-action@v1.7.0
+        uses: Schneegans/dynamic-badges-action@v1.8.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: 9b47a8dfe272b270312684dcef500c2e
