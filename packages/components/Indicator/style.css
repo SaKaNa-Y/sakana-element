@@ -116,10 +116,32 @@
   );
 }
 
-/* ─── Dot mode ─── */
+/* ─── Dot mode — 3D bevel effect ─── */
 .px-indicator__item.is-dot {
   border: none;
-  filter: drop-shadow(1px 1px 0px var(--px-indicator-shadow-color));
+  box-shadow:
+    inset 2px 2px 0 0 rgba(255, 255, 255, 0.3),
+    inset -1px -1px 0 0 rgba(0, 0, 0, 0.15);
+  filter:
+    drop-shadow(1px 1px 0px var(--px-indicator-shadow-color))
+    drop-shadow(2px 2px 0px var(--px-indicator-shadow-color));
+}
+
+/* ─── Processing dot — pixel glow aura ─── */
+.px-indicator__item.is-dot.is-processing {
+  --_dot-base-filter:
+    drop-shadow(1px 1px 0px var(--px-indicator-shadow-color))
+    drop-shadow(2px 2px 0px var(--px-indicator-shadow-color));
+  animation: px-indicator-glow 1s steps(2, end) infinite alternate;
+}
+
+@keyframes px-indicator-glow {
+  0% {
+    filter: var(--_dot-base-filter);
+  }
+  100% {
+    filter: var(--_dot-base-filter) drop-shadow(0 0 2px var(--px-indicator-bg-color));
+  }
 }
 
 /* ─── Processing ping animation ─── */
@@ -128,7 +150,7 @@
   z-index: 0;
   opacity: 0.75;
   pointer-events: none;
-  animation: px-indicator-ping 1.5s steps(4, end) infinite;
+  animation: px-indicator-ping 1.5s steps(3, end) infinite;
 }
 
 @keyframes px-indicator-ping {
@@ -136,8 +158,16 @@
     scale: 1;
     opacity: 0.75;
   }
-  75%, 100% {
+  33% {
+    scale: 1.5;
+    opacity: 0.5;
+  }
+  66% {
     scale: 2;
+    opacity: 0.25;
+  }
+  100% {
+    scale: 2.5;
     opacity: 0;
   }
 }

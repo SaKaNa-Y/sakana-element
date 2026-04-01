@@ -449,6 +449,16 @@ export const CATEGORIES: ComponentCategory[] = [
           zh: '带动画效果的骨架屏占位加载状态。',
         },
       },
+      {
+        name: 'ContextMenu',
+        zhName: '右键菜单',
+        slug: 'context-menu',
+        icon: 'menu',
+        description: {
+          en: 'Right-click activated menu with items, submenus, checkbox and radio items.',
+          zh: '右键激活的菜单，支持子菜单、复选框和单选项。',
+        },
+      },
     ],
   },
 ];

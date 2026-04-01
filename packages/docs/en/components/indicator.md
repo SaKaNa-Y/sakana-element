@@ -9,7 +9,7 @@ import { indicatorApi } from '../../apis/indicator'
 
 # Indicator
 
-A positioning utility that wraps content and places an overlay indicator (badge, dot, text) on any of 9 grid positions.
+A positioning utility that wraps content and places an overlay indicator (badge, dot, text) on any of 9 grid positions. The dot indicator features a 3D bevel effect with inset highlight/shadow, and the processing state uses a stepped pixel glow aura animation.
 
 
 <ApiTable :sections="indicatorApi" lang="en" />

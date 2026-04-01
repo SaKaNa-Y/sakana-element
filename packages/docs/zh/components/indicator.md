@@ -9,7 +9,7 @@ import { indicatorApi } from '../../apis/indicator'
 
 # Indicator 指示器
 
-定位工具组件，包裹内容并将指示器（徽章、圆点、文本）放置在 9 个网格位置之一。
+定位工具组件，包裹内容并将指示器（徽章、圆点、文本）放置在 9 个网格位置之一。圆点指示器具有 3D 斜面效果（内嵌高光/阴影），处理状态使用阶梯式像素光晕动画。
 
 
 <ApiTable :sections="indicatorApi" lang="zh" />

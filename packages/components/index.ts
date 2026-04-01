@@ -12,6 +12,7 @@ export * from './Collapse';
 export * from './Collapsible';
 export * from './Command';
 export * from './ConfigProvider';
+export * from './ContextMenu';
 export * from './Diff';
 export * from './Divider';
 export * from './Drawer';
